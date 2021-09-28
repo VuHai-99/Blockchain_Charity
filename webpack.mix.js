@@ -11,5 +11,19 @@ const mix = require('laravel-mix');
  |
  */
 
+
+const fs = require("fs");
+
 mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
+    .copyDirectory('resources/images', 'public/images');
+
+fs.readdirSync('./resources/sass').forEach(file => {
+    mix.sass(`resources/sass/${file}`, 'public/css')
+        .version()
+});
+
+mix.webpackConfig({
+    watchOptions: {
+        ignored: /node_modules/
+    }
+});

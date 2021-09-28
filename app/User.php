@@ -6,7 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
 
@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'address', 'phone', 'public_key', 'private_key', 'coin', 'otp_code', 'otp_expires_at'
     ];
 
     /**
@@ -36,4 +36,19 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function generateOtp()
+    {
+        $this->otp_code = rand(100000, 999999);
+        $this->otp_expires_at = now()->addMinutes(20);
+        $this->save();
+        return $this->otp_code;
+    }
+
+    public function resetOtp()
+    {
+        $this->otp_code = null;
+        $this->otp_expires_at = null;
+        return $this->save();
+    }
 }

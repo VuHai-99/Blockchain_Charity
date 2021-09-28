@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::post('login/tow-factor', 'Auth\TowFactorController@sendOtp')->name('login.towfactor');
+Route::post('register/custom', 'Auth\RegisterController@storeAccount')->name('register.custom');
+Route::get('verify/otp', 'Auth\TowFactorController@redirectFormConfirmOtp')->middleware('auth')->name('verify.otp.index');
+Route::post('verify/otp', 'Auth\TowFactorController@verifyOtp')->name('verify.otp')->middleware('auth');
+Route::get('resend-otp', 'Auth\TowFactorController@reSendMailOtp')->middleware('auth')->name('resend.otp');
+
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
+
+Auth::routes(['verify' => true]);
+
+Route::get('/home', 'HomeController@index')->name('home');

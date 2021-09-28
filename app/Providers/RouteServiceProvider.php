@@ -22,6 +22,7 @@ class RouteServiceProvider extends ServiceProvider
      * @var string
      */
     public const HOME = '/home';
+    public const VERIFY_OTP = '/verify/otp';
 
     /**
      * Define your route model bindings, pattern filters, etc.
