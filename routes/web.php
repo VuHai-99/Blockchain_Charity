@@ -20,10 +20,6 @@ Route::get('verify/otp', 'Auth\TowFactorController@redirectFormConfirmOtp')->mid
 Route::post('verify/otp', 'Auth\TowFactorController@verifyOtp')->name('verify.otp')->middleware('auth');
 Route::get('resend-otp', 'Auth\TowFactorController@reSendMailOtp')->middleware('auth')->name('resend.otp');
 
-Route::get('/', function () {
-    return view('auth.login');
-});
+Route::get('home', 'FrontEndController@home')->name('home');
 
 Auth::routes(['verify' => true]);
-
-Route::get('/home', 'HomeController@index')->name('home');
