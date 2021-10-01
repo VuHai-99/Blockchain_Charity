@@ -80,6 +80,9 @@ class RegisterController extends Controller
     {
         $data = $request->only('name', 'email', 'address', 'phone');
         $data['password'] = bcrypt($request->password);
+        $data['address'] = $request->address;
+        $data['phone'] = $request->phone;
+        User::create($data);
         return "Đăng kí thành công";
     }
 }

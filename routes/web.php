@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('logout', function () {
+    Auth::logout();
+    return redirect(route('home'));
+});
 Route::post('login/tow-factor', 'Auth\TowFactorController@sendOtp')->name('login.towfactor');
 Route::post('register/custom', 'Auth\RegisterController@storeAccount')->name('register.custom');
 Route::get('verify/otp', 'Auth\TowFactorController@redirectFormConfirmOtp')->middleware('auth')->name('verify.otp.index');
