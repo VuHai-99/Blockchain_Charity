@@ -20,10 +20,13 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('address');
+            $table->tinyInteger('role')->nullable();
             $table->string('phone');
             $table->double('coin')->default(100);
             $table->integer('otp_code')->nullable();
             $table->timestamp('otp_expires_at')->nullable();
+            $table->timestamp('otp_verified_at')->nullable();
+            $table->string('id_card')->nullable();
             $table->string('public_key')->nullable();
             $table->string('private_key')->nullable();
             $table->rememberToken();

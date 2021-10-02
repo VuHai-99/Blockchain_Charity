@@ -16,8 +16,8 @@
         <div class="d-flex justify-content-center form_container">
             <form action="{{ route('login.towfactor') }}" method="post">
                 @csrf
-                @if (Session::has('notify'))
-                    <p class="text-infor">{{ Session::get('notify') }}</p>
+                @if (Session::has('notify_otp'))
+                    <p class="text-danger">{{ Session::get('notify_otp') }}</p>
                 @endif
                 <div class="input-group mb-3">
                     <div class="input-group-append">
@@ -52,7 +52,7 @@
                 Don't have an account? <a href="{{ route('register') }}" class="ml-2">Sign Up</a>
             </div>
             <div class="d-flex justify-content-center links">
-                <a href="#">Forgot your password?</a>
+                <a href="{{ route('password.request') }}">Forgot your password?</a>
             </div>
         </div>
     </div>

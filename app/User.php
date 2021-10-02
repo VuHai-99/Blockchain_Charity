@@ -2,9 +2,10 @@
 
 namespace App;
 
+use App\Notifications\PasswordReset;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -49,6 +50,13 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $this->otp_code = null;
         $this->otp_expires_at = null;
+        $this->otp_verified_at = null;
         return $this->save();
+    }
+
+    // send email reset password
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new PasswordReset($token));
     }
 }

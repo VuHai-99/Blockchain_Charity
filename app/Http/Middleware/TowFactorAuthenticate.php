@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class TowFactorAuthenticate
 {
@@ -16,20 +17,21 @@ class TowFactorAuthenticate
      */
     public function handle($request, Closure $next)
     {
-        $user = auth()->user();
+        if (!Auth::check()) {
+            return redirect(route('login'));
+        }
 
-        if (auth()->check() && $user->code_otp) {
+        $user = auth()->user();
+        if (auth()->check() && $user->otp_verified_at) {
             if (Carbon::parse($user->otp_expires_at)->lt(now())) {
                 $user->resetOtp();
                 Auth::logout();
-
-                return redirect()->route('login')->with('notify-login', 'The two factor code has expired. Please login again.');
-            }
-            if (!$request->is('verify*')) {
-                return redirect()->route('verify.otp.index');
+                return redirect(route('login'))->with('notify_otp', 'Mã OTP của bạn đã hết hạn, vui lòng đăng nhập lại.');
             }
         }
-
+        if (Auth::check() && !$user->otp_verified_at) {
+            return redirect(route('verify.otp.index'));
+        }
         return $next($request);
     }
 }

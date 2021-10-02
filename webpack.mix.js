@@ -21,7 +21,10 @@ fs.readdirSync('./resources/sass').forEach(file => {
     mix.sass(`resources/sass/${file}`, 'public/css')
         .version()
 });
-
+fs.readdirSync('./resources/js/pages').forEach(file => {
+    mix.js(`./resources/js/pages/${file}/index.js`, `public/js/page_${file}.js`)
+        .version()
+});
 mix.webpackConfig({
     watchOptions: {
         ignored: /node_modules/
