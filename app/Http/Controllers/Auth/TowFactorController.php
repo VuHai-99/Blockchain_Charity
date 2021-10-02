@@ -22,7 +22,7 @@ class TowFactorController extends Controller
         $user = Auth::user();
         $otp = $user->generateOtp();
         Mail::to($user->email)->send(new SendMailOtp($otp));
-        return redirect(route('verify.otp.index'));
+        return redirect(route('dashboard'));
     }
     public function redirectFormConfirmOtp()
     {
@@ -37,15 +37,10 @@ class TowFactorController extends Controller
         if ($expireAt->lt(now())) {
             $user->resetOtp();
             Auth::logout();
-            return redirect('login')->with('notify', 'Mã OTP của bạn đã hết hạn, vui lòng đăng nhập lại.');
+            return redirect(route('login'))->with('notify', 'Mã OTP của bạn đã hết hạn, vui lòng đăng nhập lại.');
         }
-        if ($user->otp_code != $otp) {
-            $user->resetOtp();
-            Auth::logout();
-            return redirect('login')->with('notify', 'Mã OTP của bạn không đúng, vui lòng đăng nhập lại.');
-        } else {
-            return 'đăng nhập 2 lớp thành công.';
-        }
+
+        return redirect(route('dashboard'));
     }
 
     public function reSendMailOtp()
@@ -54,5 +49,12 @@ class TowFactorController extends Controller
         $otp = $user->generateOtp();
         Mail::to($user->email)->send(new SendMailOtp($otp));
         return back();
+    }
+
+    public function redirectWhenErrorOtp()
+    {
+        Auth::user()->resetOtp();
+        Auth::logout();
+        return redirect(route('login'));
     }
 }

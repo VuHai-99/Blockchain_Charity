@@ -83,6 +83,6 @@ class RegisterController extends Controller
         $data['address'] = $request->address;
         $data['phone'] = $request->phone;
         User::create($data);
-        return "Đăng kí thành công";
+        return redirect(route('dashboard'));
     }
 }
