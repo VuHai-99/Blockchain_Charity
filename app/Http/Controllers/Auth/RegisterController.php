@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\User;
 use App\Http\Controllers\Controller;
+use App\Services\UploadImageService;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\RegisterRequest;
 use App\Providers\RouteServiceProvider;
-use App\User;
-use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
 {
@@ -31,15 +32,16 @@ class RegisterController extends Controller
      * @var string
      */
     protected $redirectTo = RouteServiceProvider::HOME;
-
+    private $uploadImageService;
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(UploadImageService $uploadImageService)
     {
         $this->middleware('guest');
+        $this->uploadImageService = $uploadImageService;
     }
 
     /**
@@ -73,6 +75,9 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
             'address' => $data['address'],
             'phone' => $data['phone'],
+            'role' => $data['role'],
+            'image_card_front' => $data['image_card_front'],
+            'image_card_back' => $data['image_card_back']
         ]);
     }
 
@@ -82,6 +87,9 @@ class RegisterController extends Controller
         $data['password'] = bcrypt($request->password);
         $data['address'] = $request->address;
         $data['phone'] = $request->phone;
+        $data['role'] = $request->role;
+        $data['image_card_front'] =  $this->uploadImageService->upload($request->image_card_front);
+        $data['image_card_back'] = $this->uploadImageService->upload($request->image_card_back);
         User::create($data);
         return redirect(route('dashboard'));
     }
