@@ -15,6 +15,7 @@ const mix = require('laravel-mix');
 const fs = require("fs");
 
 mix.js('resources/js/app.js', 'public/js')
+    .copyDirectory('resources/theme', 'public/theme')
     .copyDirectory('resources/images', 'public/images');
 
 fs.readdirSync('./resources/sass').forEach(file => {
