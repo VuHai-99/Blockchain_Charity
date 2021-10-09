@@ -23,14 +23,19 @@ class RegisterRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-
+        $rules = [
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|confirmed',
             'address' => 'required|string|max:255',
             'phone' => "required|digits:10",
+            'role' => 'required'
         ];
+        if ($this->role == 1) {
+            $rules['image_card_front'] = 'required';
+            $rules['image_card_back'] = 'required';
+        }
+        return $rules;
     }
 
     public function messages()
@@ -46,7 +51,10 @@ class RegisterRequest extends FormRequest
             'address.required' => 'Vui lòng nhập địa chỉ của bạn.',
             'address.max' => 'Địa chỉ không quá 255 kí tự',
             'phone.required' => 'Vui lòng nhập số điện thoại.',
-            'phone.digits' => 'Số điện thoại không đúng định dạng.'
+            'phone.digits' => 'Số điện thoại không đúng định dạng.',
+            'role.required' => 'Vui lòng chọn loại tài khoản',
+            'image_1.required' => "Vui lòng chọn ảnh căn cước mặt trước",
+            'image_2.required' => "Vui lòng chọn ảnh căn cước mặt sau",
         ];
     }
 }

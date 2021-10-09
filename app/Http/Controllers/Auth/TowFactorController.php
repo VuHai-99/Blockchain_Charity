@@ -39,8 +39,12 @@ class TowFactorController extends Controller
             Auth::logout();
             return redirect(route('login'))->with('notify', 'Mã OTP của bạn đã hết hạn, vui lòng đăng nhập lại.');
         }
-
-        return redirect(route('dashboard'));
+        if ($user->role == 1) {
+            return view('host.index');
+        } else {
+            return view('donator.index');
+        }
+        //return redirect(route('dashboard'));
     }
 
     public function reSendMailOtp()

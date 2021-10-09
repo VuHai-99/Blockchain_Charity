@@ -10,4 +10,9 @@ class FrontEndController extends Controller
     {
         return view('frontEnd.home');
     }
+
+    public function events()
+    {
+        return view('frontEnd.events');
+    }
 }

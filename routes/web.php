@@ -14,16 +14,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('', function () {
-    return view('welcome');
-});
-
 Route::get('logout', function () {
     Auth::user()->resetOtp();
     Auth::logout();
     return redirect(route('home'));
 });
 
+//admin
+Route::get('admin/login', 'AdminController@login')->name('admin.login');
+Route::get('admin', 'AdminController@index')->name('admin.index')->middleware('admin');
+//user
 Route::post('login/tow-factor', 'Auth\TowFactorController@sendOtp')->name('login.towfactor');
 Route::post('register/custom', 'Auth\RegisterController@storeAccount')->name('register.custom');
 Route::get('verify/otp', 'Auth\TowFactorController@redirectFormConfirmOtp')->middleware(['auth'])->name('verify.otp.index');
@@ -32,13 +32,15 @@ Route::get('resend-otp', 'Auth\TowFactorController@reSendMailOtp')->middleware('
 Route::post('api/verify-otp', 'Api\VerifyOtpController@verify')->name('api.verify.otp');
 Route::get('redirect-login', 'Auth\TowFactorController@redirectWhenErrorOtp')->name('redirect.error');
 
-Route::prefix('admin')
+Route::prefix('charity')
     ->middleware(['verified', 'verify_otp'])
     ->group(function () {
         Route::get('dashboard', function () {
             return "Dashboard";
         })->name('dashboard');
     });
-Route::get('home', 'FrontEndController@home')->name('home');
+
+Route::get('/', 'FrontEndController@home')->name('home');
+Route::get('/events', 'FrontendController@events')->name('events');
 
 Auth::routes(['verify' => true]);

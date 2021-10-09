@@ -45,15 +45,17 @@
                         <div class="main-menu">
                             <nav>
                                 <ul id="navigation">
-                                    <li><a href="index.html">home</a></li>
-                                    <li><a href="About.html">About</a></li>
+                                    <li><a href="{{ asset(route('home')) }}">home</a></li>
+                                    <li><a href="#">About</a></li>
                                     <li>
-                                        <a href="#">Events <i class="ti-angle-down"></i></a>
+                                        <a href="{{ asset(route('events')) }}">Events </i></a>
                                     </li>
                                     <li>
-                                        <a href="#">Help <i class="ti-angle-down"></i></a>
+                                        <a href="#">Help </i></a>
                                     </li>
-                                    <li><a href="contact.html">Contact</a></li>
+                                    <li><a href="#">Contact</a></li>
+                                    <li><a href="{{ route('login') }}">Login</a></li>
+                                    <li><a href="{{ route('register') }}">Register</a></li>
                                 </ul>
                             </nav>
 

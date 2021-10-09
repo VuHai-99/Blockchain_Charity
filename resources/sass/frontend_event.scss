@@ -1,0 +1,78 @@
+.manage {
+    width: 90%;
+    margin: 30px auto;
+    .form-search {
+        position: relative;
+        margin: 20px 0px 50px 0px;
+        padding: 0px;
+        .input-group-prepend {
+            position: absolute;
+        }
+        input {
+            padding-left: 30px;
+        }
+    }
+    .list-events {
+        display: flex;
+        .event-happend {
+            width: 70%;
+            .event-item {
+                margin-top: 50px;
+                .image {
+                    width: 40%;
+                    img {
+                        display: block;
+                        width: 100%;
+                        height: auto;
+                        border-radius: 5% 5% 0% 0%;
+                    }
+                }
+                .information {
+                    width: 50%;
+                    margin-left: 20px;
+                }
+            }
+            .event-item:first-child {
+                margin-top: 0px;
+            }
+        }
+        .event-upcoming {
+            width: 30%;
+            border-left: 1px solid rgb(180, 178, 178);
+            li.text {
+                font-size: 1rem;
+                font-weight: 600;
+                color: blue;
+                border-top: 2px solid blue;
+                padding-top: 15px;
+                list-style-type: none;
+            }
+            li.event {
+                position: relative;
+                padding: 5px;
+                border-bottom: 1px solid rgb(180, 178, 178);
+                list-style-type: none;
+                a {
+                    color: black;
+                    font-weight: 600;
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        top: 15px;
+                        left: -5px;
+                        width: 4px;
+                        height: 4px;
+                        border-radius: 50%;
+                        background-color: blue;
+                    }
+                    &:hover {
+                        color: blue;
+                    }
+                }
+            }
+            li.event:last-child {
+                border-bottom: none !important;
+            }
+        }
+    }
+}
