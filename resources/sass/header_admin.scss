@@ -1,0 +1,37 @@
+@import "_variables";
+header {
+    position: relative !important;
+    margin-bottom: 50px;
+    .page-name {
+        margin-left: -30px;
+        font-size: 1.5rem;
+    }
+    #search {
+        margin-right: 10px;
+        border: none;
+        border-bottom: 1px solid $gray;
+        border-radius: 0px;
+    }
+    .btn-search {
+        border-radius: 50%;
+        font-size: 24px;
+        height: 41px;
+        min-width: 41px;
+        width: 41px;
+        padding: 0;
+        overflow: hidden;
+        position: relative;
+        line-height: 41px;
+        .material-icons {
+            margin-top: 0;
+            position: absolute;
+            width: 100%;
+            transform: none;
+            left: 0;
+            top: 0;
+            height: 100%;
+            line-height: 41px;
+            font-size: 20px;
+        }
+    }
+}
