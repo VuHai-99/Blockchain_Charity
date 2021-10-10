@@ -35,9 +35,17 @@ Route::get('redirect-login', 'Auth\TowFactorController@redirectWhenErrorOtp')->n
 Route::prefix('charity')
     ->middleware(['verified', 'verify_otp'])
     ->group(function () {
-        Route::get('dashboard', function () {
-            return "Dashboard";
-        })->name('dashboard');
+        Route::get('profile', 'DonatorController@profile')->name('profile');
+        Route::prefix('donator')
+            ->name('donator.')
+            ->group(function () {
+                Route::get('/', 'DonatorController@index')->name('index');
+            });
+        Route::prefix('host')
+            ->name('host    .')
+            ->group(function () {
+                Route::get('/', 'DonatorController@index')->name('index');
+            });
     });
 
 Route::get('/', 'FrontEndController@home')->name('home');
