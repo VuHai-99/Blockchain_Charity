@@ -13,8 +13,8 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
     <link rel="stylesheet" href="{{ asset('css/header_admin.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/dashboard_default.css') }}">
-
+    <script src="/theme/libs/ckeditor/ckeditor.js"></script>
+    <script src="/theme/libs/ckeditor/config.js"></script>
     @yield('css')
 
 </head>

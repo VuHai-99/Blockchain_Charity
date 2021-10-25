@@ -21,8 +21,9 @@
         <div class="event-happend">
             <div class="event-item row">
                 <div class="image">
-                    <img src="https://tuyengiao.vn/Uploads/2021/9/20/29/tu-viec-thien-nguyen-cua-cac-nghe-si-den-chuyen-minh-bach-trong-sao-ke.jpg"
-                        alt="">
+                    <a href="{{ route('event.detail', 1) }}"><img
+                            src="https://tuyengiao.vn/Uploads/2021/9/20/29/tu-viec-thien-nguyen-cua-cac-nghe-si-den-chuyen-minh-bach-trong-sao-ke.jpg"
+                            alt=""></a>
                 </div>
                 <div class="information">
                     <div class="host">
@@ -42,8 +43,9 @@
             </div>
             <div class="event-item row">
                 <div class="image">
-                    <img src="https://tuyengiao.vn/Uploads/2021/9/20/29/tu-viec-thien-nguyen-cua-cac-nghe-si-den-chuyen-minh-bach-trong-sao-ke.jpg"
-                        alt="">
+                    <a href="{{ route('event.detail', 1) }}"><img
+                            src="https://tuyengiao.vn/Uploads/2021/9/20/29/tu-viec-thien-nguyen-cua-cac-nghe-si-den-chuyen-minh-bach-trong-sao-ke.jpg"
+                            alt=""></a>
                 </div>
                 <div class="information">
                     <div class="host">
@@ -63,8 +65,9 @@
             </div>
             <div class="event-item row">
                 <div class="image">
-                    <img src="https://tuyengiao.vn/Uploads/2021/9/20/29/tu-viec-thien-nguyen-cua-cac-nghe-si-den-chuyen-minh-bach-trong-sao-ke.jpg"
-                        alt="">
+                    <a href="{{ route('event.detail', 1) }}"><img
+                            src="https://tuyengiao.vn/Uploads/2021/9/20/29/tu-viec-thien-nguyen-cua-cac-nghe-si-den-chuyen-minh-bach-trong-sao-ke.jpg"
+                            alt=""></a>
                 </div>
                 <div class="information">
                     <div class="host">
@@ -84,8 +87,9 @@
             </div>
             <div class="event-item row">
                 <div class="image">
-                    <img src="https://tuyengiao.vn/Uploads/2021/9/20/29/tu-viec-thien-nguyen-cua-cac-nghe-si-den-chuyen-minh-bach-trong-sao-ke.jpg"
-                        alt="">
+                    <a href="{{ route('event.detail', 1) }}"><img
+                            src="https://tuyengiao.vn/Uploads/2021/9/20/29/tu-viec-thien-nguyen-cua-cac-nghe-si-den-chuyen-minh-bach-trong-sao-ke.jpg"
+                            alt=""></a>
                 </div>
                 <div class="information">
                     <div class="host">
@@ -105,8 +109,9 @@
             </div>
             <div class="event-item row">
                 <div class="image">
-                    <img src="https://tuyengiao.vn/Uploads/2021/9/20/29/tu-viec-thien-nguyen-cua-cac-nghe-si-den-chuyen-minh-bach-trong-sao-ke.jpg"
-                        alt="">
+                    <a href="{{ route('event.detail', 1) }}"><img
+                            src="https://tuyengiao.vn/Uploads/2021/9/20/29/tu-viec-thien-nguyen-cua-cac-nghe-si-den-chuyen-minh-bach-trong-sao-ke.jpg"
+                            alt=""></a>
                 </div>
                 <div class="information">
                     <div class="host">

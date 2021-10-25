@@ -4,9 +4,38 @@ namespace App\Constants;
 
 class Nav
 {
+    const NAV_SUPPER_ADMIN = [
+        [
+            'url' => 'admin.dashboard.index',
+            'name' => 'Dashboard',
+            'icon' => 'icon-dashboard.png',
+        ],
+
+        [
+            'url' => 'admin.host.list',
+            'name' => 'Danh sách nhà từ thiện',
+            'icon' => 'list.png',
+        ],
+        [
+            'url' => 'admin.project.list',
+            'name' => 'Danh sách sự kiện',
+            'icon' => 'list.png',
+        ],
+        [
+            'url' => 'admin.profile.edit',
+            'name' => 'Quản lí tài khoản',
+            'icon' => 'user.png',
+        ],
+        [
+            'url' => 'admin.create.account',
+            'name' => 'Thêm tài khoản',
+            'icon' => 'user.png',
+        ],
+    ];
+
     const NAV_ADMIN_DONATOR = [
         [
-            'url' => 'donator.index',
+            'url' => 'donator.list.project',
             'name' => 'Danh sach su kien',
             'icon' => 'list.png',
         ],
@@ -29,9 +58,14 @@ class Nav
 
     const NAV_ADMIN_HOST = [
         [
-            'url' => 'donator.index',
+            'url' => 'host.list.project',
             'name' => 'Dự án của bạn',
             'icon' => 'list.png',
+        ],
+        [
+            'url' => 'host.create.project',
+            'name' => 'Tạo dự án',
+            'icon' => 'user.png',
         ],
         [
             'url' => '',

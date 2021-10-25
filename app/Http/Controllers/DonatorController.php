@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 
 class DonatorController extends Controller
 {
-    public function index()
+    public function listProject()
     {
-        return view('donator.index');
+        return view('donator.list_project');
     }
 
     public function profile()

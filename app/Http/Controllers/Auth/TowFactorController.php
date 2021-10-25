@@ -40,9 +40,9 @@ class TowFactorController extends Controller
             return redirect(route('login'))->with('notify', 'Mã OTP của bạn đã hết hạn, vui lòng đăng nhập lại.');
         }
         if ($user->role == 1) {
-            return redirect(route('host.index'));
+            return redirect(route('host.list.project'));
         } else {
-            return redirect(route('donator.index'));
+            return redirect(route('donator.list.project'));
         }
     }
 
