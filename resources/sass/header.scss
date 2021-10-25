@@ -136,6 +136,9 @@
                             color: #222;
                         }
                     }
+                    a.active {
+                        color: orange;
+                    }
                     .submenu {
                         position: absolute;
                         left: 0;

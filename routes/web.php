@@ -18,11 +18,21 @@ Route::get('logout', function () {
     Auth::user()->resetOtp();
     Auth::logout();
     return redirect(route('home'));
-});
+})->name('charity.logout');
 
-//admin
 Route::get('admin/login', 'AdminController@login')->name('admin.login');
-Route::get('admin', 'AdminController@index')->name('admin.index')->middleware('admin');
+Route::post('admin/login', 'AdminController@verify')->name('admin.login.verify');
+Route::get('admin/logout', 'AdminController@logout')->name('admin.logout');
+Route::prefix('admin')
+    ->name('admin.')
+    ->middleware('admin')
+    ->group(function () {
+        Route::get('/', 'AdminController@index')->name('dashboard.index');
+        Route::get('list/host', 'AdminController@listHost')->name('host.list');
+        Route::get('list/project', 'AdminController@listProject')->name('project.list');
+        Route::get('profile', 'AdminController@profile')->name('profile.edit');
+        Route::get('add/account', 'AdminController@createAccount')->name('create.account');
+    });
 //user
 Route::post('login/tow-factor', 'Auth\TowFactorController@sendOtp')->name('login.towfactor');
 Route::post('register/custom', 'Auth\RegisterController@storeAccount')->name('register.custom');
@@ -39,16 +49,19 @@ Route::prefix('charity')
         Route::prefix('donator')
             ->name('donator.')
             ->group(function () {
-                Route::get('/', 'DonatorController@index')->name('index');
+                Route::get('/', 'DonatorController@listProject')->name('list.project');
             });
         Route::prefix('host')
-            ->name('host    .')
+            ->name('host.')
             ->group(function () {
-                Route::get('/', 'DonatorController@index')->name('index');
+                Route::get('/', 'HostController@listProject')->name('list.project');
+                Route::get('create-project', 'HostController@create')->name('create.project');
+                Route::post('store-project', 'HostController@store')->name('store.project');
             });
     });
 
 Route::get('/', 'FrontEndController@home')->name('home');
 Route::get('/events', 'FrontendController@events')->name('events');
+Route::get('/event/{id}', 'FrontendController@detail')->name('event.detail');
 
 Auth::routes(['verify' => true]);

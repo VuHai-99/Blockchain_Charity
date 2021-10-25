@@ -45,15 +45,15 @@
                         <div class="main-menu">
                             <nav>
                                 <ul id="navigation">
-                                    <li><a href="{{ asset(route('home')) }}">home</a></li>
+                                    <li><a href="{{ asset(route('home')) }}" class="nav-link {{strpos(\Request::route()->getName(), 'home') !== false ? 'active' : '' }}">home</a></li>
                                     <li><a href="#">About</a></li>
                                     <li>
-                                        <a href="{{ asset(route('events')) }}">Events </i></a>
+                                        <a href="{{ asset(route('events')) }}" class="nav-link {{strpos(\Request::route()->getName(), 'event') !== false ? 'active' : '' }}">Events </i></a>
                                     </li>
                                     <li>
-                                        <a href="#">Help </i></a>
+                                        <a href="#" class="nav-link {{strpos(\Request::route()->getName(), 'help') !== false ? 'active' : '' }}">Help </i></a>
                                     </li>
-                                    <li><a href="#">Contact</a></li>
+                                    <li><a href="#" class="nav-link {{strpos(\Request::route()->getName(), 'contact') !== false ? 'active' : '' }}">Contact</a></li>
                                     <li><a href="{{ route('login') }}">Login</a></li>
                                     <li><a href="{{ route('register') }}">Register</a></li>
                                 </ul>

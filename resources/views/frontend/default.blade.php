@@ -29,6 +29,7 @@
         </div>
         {{-- end content --}}
 
+        <hr>
         <footer>
             @include('frontend.footer')
         </footer>

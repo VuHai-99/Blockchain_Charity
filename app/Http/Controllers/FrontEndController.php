@@ -15,4 +15,9 @@ class FrontEndController extends Controller
     {
         return view('frontEnd.events');
     }
+
+    public function detail($id)
+    {
+        return view('frontEnd.project_detail');
+    }
 }

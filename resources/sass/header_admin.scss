@@ -3,35 +3,14 @@ header {
     position: relative !important;
     margin-bottom: 50px;
     .page-name {
-        margin-left: -30px;
-        font-size: 1.5rem;
+        margin-left: -45px;
+        font-size: 25px;
+        color: rgb(103, 213, 233);
     }
-    #search {
-        margin-right: 10px;
-        border: none;
-        border-bottom: 1px solid $gray;
-        border-radius: 0px;
+    .wallet {
+        padding-bottom: 0px !important;
     }
-    .btn-search {
-        border-radius: 50%;
-        font-size: 24px;
-        height: 41px;
-        min-width: 41px;
-        width: 41px;
-        padding: 0;
-        overflow: hidden;
-        position: relative;
-        line-height: 41px;
-        .material-icons {
-            margin-top: 0;
-            position: absolute;
-            width: 100%;
-            transform: none;
-            left: 0;
-            top: 0;
-            height: 100%;
-            line-height: 41px;
-            font-size: 20px;
-        }
+    .fa-credit-card-alt {
+        font-size: 20px;
     }
 }
