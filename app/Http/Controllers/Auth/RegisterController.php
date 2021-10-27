@@ -91,6 +91,10 @@ class RegisterController extends Controller
         $data['image_card_front'] =  $this->uploadImageService->upload($request->image_card_front);
         $data['image_card_back'] = $this->uploadImageService->upload($request->image_card_back);
         User::create($data);
-        return redirect(route('dashboard'));
+        if($request->role == 1){
+            return redirect(route('host.list.project'));
+        }else{
+            return redirect(route('donator.list.project'));
+        }
     }
 }

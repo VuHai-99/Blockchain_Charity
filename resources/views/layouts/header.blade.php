@@ -50,7 +50,7 @@
                            @if (Auth::guard('admin')->check())
                             {{ route('admin.login') }}
                         @else
-                            {{ route('user.logout') }}
+                            {{ route('charity.logout') }}
                             @endif
                             ">Log out</a>
                     </div>

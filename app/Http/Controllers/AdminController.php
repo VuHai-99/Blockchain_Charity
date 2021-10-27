@@ -28,7 +28,7 @@ class AdminController extends Controller
         if (!Auth::guard('admin')->attempt($data)) {
             return back()->with('error-login', 'Email hoặc mật khẩu không đúng. Vui lòng kiểm tra lại.')->withInput();
         } else {
-            return redirect(route('admin.index'));
+            return redirect(route('admin.dashboard.index'));
         }
     }
     public function index()

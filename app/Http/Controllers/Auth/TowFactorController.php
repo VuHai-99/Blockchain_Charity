@@ -22,7 +22,10 @@ class TowFactorController extends Controller
         $user = Auth::user();
         $otp = $user->generateOtp();
         Mail::to($user->email)->send(new SendMailOtp($otp));
-        return redirect(route('verify.otp.index'));
+        if($user->role == 1){
+            return redirect(route('host.list.project'));
+        }
+        return redirect(route('host.list.project'));
     }
     public function redirectFormConfirmOtp()
     {
