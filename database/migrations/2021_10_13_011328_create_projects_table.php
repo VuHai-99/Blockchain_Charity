@@ -16,14 +16,13 @@ class CreateProjectsTable extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('host_id');
+            $table->string('host_address');
             $table->text('description');
-            $table->double('donator_number');
-            $table->double('coin');
+            $table->string('minimum_contribution');
+            $table->string('current_balance');
             $table->datetime('date_start');
             $table->datetime('date_end')->nullable();
             $table->string('contract_address')->nullable();
-            $table->integer('approval_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

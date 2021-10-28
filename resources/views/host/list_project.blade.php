@@ -1,43 +1,35 @@
 @extends('layouts.default')
 
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/host_list_project.css') }}">
+<link rel="stylesheet" href="{{ asset('css/host_list_project.css') }}">
 @endsection
 @section('page-name', 'Danh sách sự kiện')
 @section('content')
-    <div class="row create-project">
-        <button class="btn">Create Project</button>
-    </div>
-    <div class="list-project table-responsive">
-        <table class="table table-bordered table-hover">
-            <thead>
-                <th>Mã dự án</th>
-                <th>Tên dự án</th>
-                <th>Ngày bắt đầu</th>
-                <th>Ngày kết thúc</th>
-                <th width="10%">Số người quyên góp</th>
-                <th>Số tiền</th>
-                <th>Action</th>
-            </thead>
-            @for ($i = 1; $i <= 6; $i++)
-                <tr>
-                    <td>EV{{ $i }}</td>
-                    <td>Quỹ trái tim cho em</td>
-                    <td>18-10-2020</td>
-                    <td>20-3-2021</td>
-                    <td>300</td>
-                    <td>{{ number_format(2000000) }}</td>
-                    <td>
-                        <a href=""><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                        &nbsp;
-                        <a href=""><i class="fa fa-trash" aria-hidden="true"></i></a>
-                    </td>
-                </tr>
-            @endfor
+<div class="container-fluid management">
 
-            <tbody>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="text-left">
+                    <h3 class="my-4 text-left">Recent Campaigns</h3>
+                </div>
+            </div>
+            <div class="col-md-12" id="recentCampaigns">
 
-            </tbody>
-        </table>
+            </div>
+        </div>
     </div>
+</div>
 @endsection
+
+@push('scripts')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="{{ asset('js/app.js') }}"></script>
+<script src="{{ asset('js/host_function_listCampaign_blockchain.js') }}"></script>
+<!-- <script src="{{ asset('js/contract.js') }}"></script> -->
+<script src="{{ asset('js/web3.min.js') }}"></script>
+<script src="{{ asset('js/truffle-contract.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<script type="text/javascript" src="{{ asset('js/laroute.js') }}"></script>
+@endpush
+@stack('scripts')

@@ -10,7 +10,7 @@ class Project extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'name', 'description', 'host_id', 'donator_number', 'coin',
-        'date_started', 'date_end', 'approval_id', 'constract_address'
+        'name', 'description', 'host_address', 'current_balance','minimum_contribution',
+        'date_started', 'date_end','contract_address'
     ];
 }

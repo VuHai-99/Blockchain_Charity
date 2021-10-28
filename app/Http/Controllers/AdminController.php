@@ -31,6 +31,7 @@ class AdminController extends Controller
             return redirect(route('admin.dashboard.index'));
         }
     }
+    
     public function index()
     {
         return view('admin.index');
