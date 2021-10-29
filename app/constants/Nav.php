@@ -59,23 +59,18 @@ class Nav
     const NAV_ADMIN_HOST = [
         [
             'url' => 'host.list.project',
-            'name' => 'Dự án của bạn',
+            'name' => 'Danh sách dự án',
             'icon' => 'list.png',
+        ],
+        [
+            'url' => 'host.list.my.project',
+            'name' => 'Dự Án của tôi',
+            'icon' => 'user.png',
         ],
         [
             'url' => 'host.create.project',
             'name' => 'Tạo dự án',
             'icon' => 'user.png',
-        ],
-        [
-            'url' => '',
-            'name' => 'Thong tin ca nhan',
-            'icon' => 'user.png',
-        ],
-        [
-            'url' => '',
-            'name' => 'Quản lí giao dich',
-            'icon' => 'transaction.png',
         ],
         [
             'url' => 'logout',

@@ -17,6 +17,14 @@ class HostController extends Controller
         return view('host.create_project');
     }
 
+    public function listMyProject(){
+        return view('host.list_my_project');
+    }
+
+    public function specificProject(String $blockchainAddress){
+        return view('host.specific_project');
+    }
+
     public function storeProject(Request $request)
     {
         $new_project = new Project();

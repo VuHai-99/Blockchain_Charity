@@ -55,6 +55,8 @@ Route::prefix('charity')
             ->name('host.')
             ->group(function () {
                 Route::get('/', 'HostController@listProject')->name('list.project');
+                Route::get('/my-project', 'HostController@listMyProject')->name('list.my.project');
+                Route::get('/specific-project/{blockchainAddress}', 'HostController@specificProject')->name('list.specific.project');
                 Route::get('create-project', 'HostController@createProject')->name('create.project');
                 Route::post('store-project', 'HostController@storeProject')->name('store.project');
             });
