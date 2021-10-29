@@ -85,6 +85,7 @@ App = {
         App.getAccounts(function (result) {
             current_account = result[0];
         });
+
         let currentUrlParams = (window.location.href).split('/');
         let projectAddress = currentUrlParams[currentUrlParams.length - 1];
         // console.log(projectAddress)
@@ -98,6 +99,13 @@ App = {
         _campaign.getHost.call().then(function (response) {
 
             campaign_host = String(response);
+            if(campaign_host == current_account){
+                console.log('Yess')
+                
+            } else {
+                console.log('I dont know')
+
+            }
             const host_html = document.getElementById('host_');
             host_html.insertAdjacentHTML('beforeend', campaign_host);
 
@@ -205,6 +213,7 @@ App = {
         });
       
     },
+
 
 }
 

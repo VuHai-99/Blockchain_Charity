@@ -91,7 +91,14 @@ contract CampaignFactory is Ownable_CampaignFactory{
     function getHostInHostListAtIndex(uint index) public view returns(address _host) {
         return validatedHostSet.keyAtIndex(index);
     }
-    function getHostList() public view returns(address[] memory){
+    function isHostValidated(address validatedHostAddress) public view returns(bool _result){
+        if(validatedHostSet.exists(validatedHostAddress)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+    function getValidatedHostList() public view returns(address[] memory){
         return validatedHostSet.listKey();
     }
     
@@ -102,7 +109,7 @@ contract CampaignFactory is Ownable_CampaignFactory{
         
         RequestToOpenCampaign memory re = requestsToOpenCampaign[requestToOpenCampaign];
         
-        Campaign w = new Campaign(re.minimumContribution,re.requestHost,tx.origin);
+        Campaign w = new Campaign(re.minimumContribution,re.requestHost,owner);
     
         campaigns[address(w)] = w ;
         campaignSet.insert(address(w));

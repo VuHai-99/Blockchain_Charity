@@ -124,15 +124,20 @@ App = {
             let campaignItem =
                 `<div class="col-md-12">
                 <div class="card mt-4">
+                    <div class="card-header">
+                      <h5 class="card-title">CAMPAIGN #${i}</h5>
+                    </div>
                     <div class="card-body">
                         <h4 class="card-title"><strong><i class="fa fa-calendar text-muted" aria-hidden="true"></i> SOMEDAY</strong></h4>
-                        <h5 class="card-title">CAMPAIGN #${i}</h5>
                         <hr>
                         <h6 class="card-subtitle mb-2"><span class="text-muted">Campaign Address:</span> `+ totalCampaign[i-1] +`</h6>
                         <h6 class="card-subtitle mb-2" id="host_${i}"><span class="text-muted">Campaign Host: </span></h6>
                         <h6 class="card-subtitle mb-2" id="admin_${i}"><span class="text-muted">Campaign Admin: </span></h6>
                         <h6 class="card-subtitle mb-2" id="minimumContribution_${i}"><span class="text-muted">Campaign Minimum Contribution: </span></h6>
                         <h6 class="card-subtitle mb-2" id="balance_${i}"><span class="text-muted">Campaign Balance: </span></h6>
+                    </div>
+                    <div class="card-footer text-muted">
+                      <a type="button" class="btn btn-primary" href="http://127.0.0.1:8000/charity/host/specific-project/`+ totalCampaign[i-1] +`"> Xem chi tiết. </a>
                     </div>
                 </div>
             </div>`;

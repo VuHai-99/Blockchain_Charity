@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use App\User;
 class AdminController extends Controller
 {
     protected $redirectTo = '/admin';
@@ -42,8 +42,17 @@ class AdminController extends Controller
         return view('admin.list_project');
     }
 
+    public function listOpenProjectRequest(){
+        return view('admin.list_open_project_request');
+    }   
+
+    public function listValidateHostRequest(){
+        return view('admin.list_validate_host_request');
+    }
+
     public function listHost()
     {
-        return view('admin.list_host');
+        $users = User::all();
+        return view('admin.list_host',compact('users'));
     }
 }

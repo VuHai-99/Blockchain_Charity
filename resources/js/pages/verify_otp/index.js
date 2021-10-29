@@ -2,6 +2,7 @@ $(function() {
     //console.log(laroute.route('login'));
     var error = 0;
     $('.btn-confirm').click(function(e) {
+        console.log('ok');
         var otp = $(`input[name='otp']`).val();
         axios.post(laroute.route('api.verify.otp'), {
                 'otp': otp,

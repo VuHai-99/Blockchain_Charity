@@ -5,6 +5,7 @@
 /storage/framework/*.*
 /public/hot
 /public/css
+/public/contract
 /public/theme
 /public/images
 /public/storage

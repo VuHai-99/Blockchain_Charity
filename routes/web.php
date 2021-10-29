@@ -30,6 +30,8 @@ Route::prefix('admin')
         Route::get('/', 'AdminController@index')->name('dashboard.index');
         Route::get('list/host', 'AdminController@listHost')->name('host.list');
         Route::get('list/project', 'AdminController@listProject')->name('project.list');
+        Route::get('list/open-project-request', 'AdminController@listOpenProjectRequest')->name('open-project-request.list');
+        Route::get('list/validate-host-request', 'AdminController@listValidateHostRequest')->name('validate-host-request.list');
         Route::get('profile', 'AdminController@profile')->name('profile.edit');
         Route::get('add/account', 'AdminController@createAccount')->name('create.account');
     });

@@ -22,14 +22,14 @@ class Nav
             'icon' => 'list.png',
         ],
         [
-            'url' => 'admin.profile.edit',
-            'name' => 'Quản lí tài khoản',
-            'icon' => 'user.png',
+            'url' => 'admin.open-project-request.list',
+            'name' => 'Danh sách yêu cầu mở dự án',
+            'icon' => 'list.png',
         ],
         [
-            'url' => 'admin.create.account',
-            'name' => 'Thêm tài khoản',
-            'icon' => 'user.png',
+            'url' => 'admin.validate-host-request.list',
+            'name' => 'Danh sách yêu cầu valid host',
+            'icon' => 'list.png',
         ],
     ];
 

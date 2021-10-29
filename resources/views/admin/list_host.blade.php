@@ -6,49 +6,65 @@
 @section('page-name', 'Danh sách nhà từ thiện')
 @section('content')
     <div class="list-host table-responsive">
+        <h3>Danh sách Host</h3>
         <table class="table table-bordered table-hover">
             <thead>
                 <th>Tên Host</th>
-                <th>Ngày đăng kí</th>
+                <th>Email</th>
+                <th>Public Key</th>
                 <th>Trạng thái</th>
-                <th>Action</th>
             </thead>
-            @for ($i = 1; $i <= 5; $i++)
-                <tr>
-                    <td>Phạm Thiện {{ $i }}</td>
-                    <td>18-11-2021</td>
-                    <td class="approved">Approved</td>
-                    <td>
-                        <a href="">
-                            <i class="fa fa-unlock" aria-hidden="true"></i>
-                        </a>
-                        &nbsp;
-                        <a href=""><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                        &nbsp;
-                        <a href=""><i class="fa fa-trash" aria-hidden="true"></i></a>
-                    </td>
-                </tr>
-            @endfor
-            @for ($i = 1; $i <= 5; $i++)
-                <tr>
-                    <td>Kiều Tùng {{ $i }}</td>
-                    <td>18-10-2020</td>
-                    <td class="un-approved">UnApproved</td>
-                    <td>
-                        <a href="">
-                            <i class="fa fa-lock" aria-hidden="true"></i>
-                        </a>
-                        &nbsp;
-                        <a href=""><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                        &nbsp;
-                        <a href=""><i class="fa fa-trash" aria-hidden="true"></i></a>
-                    </td>
-                </tr>
-            @endfor
+            
 
             <tbody>
+            @foreach($users as $user)
+                @if($user->role == 1)
+                    <tr>
+                    <td>{{ $user->name }}</td>
+                    <td>{{ $user->email }}</td>
+                    <td>{{ $user->public_key }}</td>
+                    <td class="host_validation_check" id="{{ $user->public_key }}"></td>
+                    </tr>
+                @endif
 
+            @endforeach
+            </tbody>
+        </table>
+
+        <h3>Danh sách Donator</h3>
+        <table class="table table-bordered table-hover">
+            <thead>
+                <th>Tên Donator</th>
+                <th>Email</th>
+                <th>Public Key</th>
+            </thead>
+            
+
+            <tbody>
+            @foreach($users as $user)
+                @if($user->role == 0)
+                    <tr>
+                    <td>{{ $user->name }}</td>
+                    <td>{{ $user->email }}</td>
+                    <td>{{ $user->public_key }}</td>
+                    </tr>
+                @endif
+            @endforeach
             </tbody>
         </table>
     </div>
 @endsection
+
+
+@push('scripts')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="{{ asset('js/app.js') }}"></script>
+<script src="{{ asset('js/admin_list_host_blockchain.js') }}"></script>
+<!-- <script src="{{ asset('js/contract.js') }}"></script> -->
+<script src="{{ asset('js/web3.min.js') }}"></script>
+<script src="{{ asset('js/truffle-contract.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<script type="text/javascript" src="{{ asset('js/laroute.js') }}"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@endpush
+@stack('scripts')

@@ -97,6 +97,7 @@ $(function () {
   //console.log(laroute.route('login'));
   var error = 0;
   $('.btn-confirm').click(function (e) {
+    console.log('ok');
     var otp = $("input[name='otp']").val();
     axios.post(laroute.route('api.verify.otp'), {
       'otp': otp
@@ -128,7 +129,7 @@ $(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Tum\Study\University\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\js\pages\verify_otp\index.js */"./resources/js/pages/verify_otp/index.js");
+module.exports = __webpack_require__(/*! D:\UNI\Dự Án\Main Project\demo1\blockchain_charity_repo\resources\js\pages\verify_otp\index.js */"./resources/js/pages/verify_otp/index.js");
 
 
 /***/ })
