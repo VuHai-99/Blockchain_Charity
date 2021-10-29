@@ -15,4 +15,8 @@ class DonatorController extends Controller
     {
         return view('layouts.profile');
     }
+
+    public function specificProject(String $blockchainAddress){
+        return view('donator.specific_project');
+    }
 }
