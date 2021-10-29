@@ -31,6 +31,11 @@ class Nav
             'name' => 'Danh sách yêu cầu valid host',
             'icon' => 'list.png',
         ],
+        [
+            'url' => 'admin.withdraw-money-request.list',
+            'name' => 'Danh sách yêu cầu rút tiền',
+            'icon' => 'list.png',
+        ],
     ];
 
     const NAV_ADMIN_DONATOR = [
@@ -70,6 +75,11 @@ class Nav
         [
             'url' => 'host.create.project',
             'name' => 'Tạo dự án',
+            'icon' => 'user.png',
+        ],
+        [
+            'url' => 'host.validate.host',
+            'name' => 'Tạo yêu cầu validate',
             'icon' => 'user.png',
         ],
         [

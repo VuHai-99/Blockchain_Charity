@@ -3,17 +3,16 @@
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/host_list_project.css') }}">
 @endsection
-@section('page-name', 'Danh sách sự kiện')
+
 @section('content')
 <div class="container-fluid management">
 
     <div class="container">
         <div class="row">
-            <div class="col-md-12" id="specificProject">
-
-            </div>
-            <div class="col-md-12" id="withdrawMoneyRequest">
-
+            <div class="col-md-12">
+                <div class="text-left" id="hostValidate">
+                    
+                </div>
             </div>
         </div>
     </div>
@@ -22,9 +21,8 @@
 
 @push('scripts')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="{{ asset('js/bn.js') }}"></script>
 <script src="{{ asset('js/app.js') }}"></script>
-<script src="{{ asset('js/host_specific_project_blockchain.js') }}"></script>
+<script src="{{ asset('js/host_validate_host_blockchain.js') }}"></script>    
 <!-- <script src="{{ asset('js/contract.js') }}"></script> -->
 <script src="{{ asset('js/web3.min.js') }}"></script>
 <script src="{{ asset('js/truffle-contract.js') }}"></script>

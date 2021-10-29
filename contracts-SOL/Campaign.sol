@@ -1,4 +1,4 @@
-pragma solidity 0.5.12;
+pragma solidity 0.5.16;
 
 import "./HitchensUnorderedAddressSet.sol";
 contract Campaign{
@@ -18,15 +18,15 @@ contract Campaign{
     }
 
     modifier onlyHost() {
-        require(msg.sender == host, "You must be host to execute.");
+        require(tx.origin== host, "You must be host to execute.");
         _;
     }
     modifier onlyAdmin() {
-        require(msg.sender == admin ,"You must be admin to execute.");
+        require(tx.origin == admin ,"You must be admin to execute.");
         _;
     }
     modifier onlyHostOrAdmin() {
-        require(((msg.sender == host) || (msg.sender == admin)), "You must be host or admin to execute.");
+        require(((tx.origin == host) || (tx.origin== admin)), "You must be host or admin to execute.");
         _;
     }
     
@@ -36,10 +36,9 @@ contract Campaign{
         // contributers.push(msg.sender);
     }
     
-    function withDrawMoney(uint index) public onlyHost {
-        
+    function withDrawMoney(uint256 index) public onlyAdmin {
+        require(index <= address(this).balance, "Cannot withdraw more than current balance.");
         address(host).transfer(index);
-        
     }
 
     //getter
@@ -54,7 +53,7 @@ contract Campaign{
 
     //setter
     function setHost(address payable new_host) public onlyAdmin { host = new_host; }
-    function setMinimumContribution(uint new_minimum_contribution) public { minimumContribution = new_minimum_contribution; }
+    function setMinimumContribution(uint new_minimum_contribution) public onlyAdmin { minimumContribution = new_minimum_contribution; }
 
     function () external payable{
         

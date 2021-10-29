@@ -34,6 +34,8 @@ Route::prefix('admin')
         Route::get('list/validate-host-request', 'AdminController@listValidateHostRequest')->name('validate-host-request.list');
         Route::get('profile', 'AdminController@profile')->name('profile.edit');
         Route::get('add/account', 'AdminController@createAccount')->name('create.account');
+        Route::get('list/withdraw-money-request', 'AdminController@listWithdrawMoneyRequest')->name('withdraw-money-request.list');
+        
     });
 //user
 Route::post('login/tow-factor', 'Auth\TowFactorController@sendOtp')->name('login.towfactor');
@@ -62,6 +64,8 @@ Route::prefix('charity')
                 Route::get('/specific-project/{blockchainAddress}', 'HostController@specificProject')->name('list.specific.project');
                 Route::get('create-project', 'HostController@createProject')->name('create.project');
                 Route::post('store-project', 'HostController@storeProject')->name('store.project');
+                Route::get('validate-host', 'HostController@validateHost')->name('validate.host');
+                
             });
     });
 

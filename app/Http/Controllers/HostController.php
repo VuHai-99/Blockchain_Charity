@@ -25,6 +25,10 @@ class HostController extends Controller
         return view('host.specific_project');
     }
 
+    public function validateHost(){
+        return view('host.validate_host');
+    }
+
     public function storeProject(Request $request)
     {
         $new_project = new Project();

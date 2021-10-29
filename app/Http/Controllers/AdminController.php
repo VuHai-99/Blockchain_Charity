@@ -50,6 +50,11 @@ class AdminController extends Controller
         return view('admin.list_validate_host_request');
     }
 
+    public function listWithdrawMoneyRequest(){
+        return view('admin.list_withdraw_money_request');
+    }
+    
+
     public function listHost()
     {
         $users = User::all();

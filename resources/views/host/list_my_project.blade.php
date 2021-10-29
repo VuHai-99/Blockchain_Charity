@@ -3,7 +3,7 @@
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/host_list_project.css') }}">
 @endsection
-@section('page-name', 'Danh sách sự kiện')
+
 @section('content')
 <div class="container-fluid management">
 
@@ -11,12 +11,22 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="text-left">
-                    <h3 class="my-4 text-left">Dự án của tôi</h3>
+                    <h3 class="my-4 text-left">Dự án hiện hoạt</h3>
                 </div>
             </div>
+            <!-- <div class="col-md-4">
+                <div class="text-left">
+                    <h3 class="my-4 text-left">Dự án chờ duyệt</h3>
+                </div>
+            </div> -->
+        </div>
+        <div class="row">
             <div class="col-md-12" id="myProjects">
 
             </div>
+            <!-- <div class="col-md-4" id="myPendingProjects">
+
+            </div> -->
         </div>
     </div>
 </div>

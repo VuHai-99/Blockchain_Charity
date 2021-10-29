@@ -91,6 +91,7 @@ App = {
         // console.log(projectAddress)
 
         const campaignTemplate = $('#specificProject');
+        const withdrawMoneyRequest = $('#withdrawMoneyRequest');
         campaignTemplate.html('');
         let _campaign = App.contracts.Campaign.at(projectAddress);
         // console.log(_campaign)
@@ -100,7 +101,27 @@ App = {
 
             campaign_host = String(response);
             if(campaign_host == current_account){
-                console.log('Yess')
+                let withdrawItem =
+                `<div class="col-md-12">
+                    <div class="card mt-4">
+                        <div class="card-body"> 
+                            <h5 class="card-title">Withdraw Money Request</h5>
+                            <label>Amout of money (wei)</label>
+                    
+                            <form class="mb-5" onSubmit="App.createWithdrawMoneyRequest('`+projectAddress+`'); return false">
+                                
+                                
+                                <div class="form-inline">
+                                    <input class="form-control mr-1" name="withdrawAmount">
+                                    <button class="btn btn-primary" type="submit">Create Request</button>
+                                </div>
+                                    
+                            </form>
+                            </h6>
+                        </div>
+                    </div>
+                </div>`;
+                withdrawMoneyRequest.append(withdrawItem)
                 
             } else {
                 console.log('I dont know')
@@ -151,14 +172,14 @@ App = {
                         <h6 class="card-subtitle mb-2" id="balance_"><span class="text-muted">Campaign Balance: </span></h6>
                         <hr>
                         <h6 class="card-subtitle mb-2">
-                          <label>Donate to Campaign</label>
+                          <label>Donate to Campaign (wei)</label>
                 
                           <form class="mb-5" onSubmit="App.donateCampaign('`+projectAddress+`'); return false">
                             
                             
                             <div class="form-inline">
                                 <input class="form-control mr-1" name="donateValue">
-                                <button class="btn btn-primary" type="submit">enter</button>
+                                <button class="btn btn-primary" type="submit">Donate</button>
                             </div>
                                   
                           </form>
@@ -169,6 +190,7 @@ App = {
         // Show the task
 
         campaignTemplate.append(campaignItem)
+        
 
 
 
@@ -213,7 +235,64 @@ App = {
         });
       
     },
-
+    createWithdrawMoneyRequest: async (requestCampaignAddress) =>{
+        // let minimumContribution = $('[name="minimumContribution"]').val();
+      let donateValue = $('[name="withdrawAmount"]').val();
+  
+    //   console.log(requestCampaignAddress);
+      
+      var currentdate = new Date(); 
+      var datetime = String(currentdate.getDate() )
+                      + String(currentdate.getMonth()+1)
+                      + String(currentdate.getFullYear())
+                      + String(currentdate.getHours() )
+                      + String(currentdate.getMinutes())
+                      + String(currentdate.getSeconds());
+      datetime = Number(datetime)
+      let newWithdrawId = "0x"+(new BN(String(datetime))).toTwos(256).toString('hex',64);
+    //   console.log(newWithdrawId)
+  
+      await App.campaignfactory.requestToWithdrawMoney(newWithdrawId,Number(donateValue), requestCampaignAddress)
+        .then((result) => {
+  
+          // const campaign_contract_address = result.logs[0].args.newContract;
+          // const minimumContribution = result.logs[0].args.minimumContribution.toNumber();
+          // const host_address = result.logs[0].args.campaignHost;
+          // const minimum_contribution = donateValueId;
+  
+          // console.log(result);
+          // console.log(result.tx);
+          // console.log(campaign_contract_address,minimumContribution,host_address);
+  
+          Swal.fire({
+            title: 'Successful!',
+            text: 'Successful action',
+            confirmButtonText: 'Close'
+          })
+          // axios.post(laroute.route('host.store.project'), {
+          //   // 'name': project_name,
+          //   // 'minimum_contribution': minimum_contribution,
+          //   // 'date_started': date_start,
+          //   // 'date_end': date_end,
+          //   // 'contract_address': result.tx,
+          // }).then(function(response){
+          //   if(response.status == 200){
+          //     console.log('Successfully store new campaign in database');
+          //   } else {
+          //     console.log('UnSuccessfully store new campaign in database');
+          //   }
+          // })
+        }).catch(error => {   
+          Swal.fire({
+            title: 'Unsuccessful!',
+            text: error.message,
+            icon: 'error',
+            confirmButtonText: 'Close'
+          })
+          console.log(error)
+        });
+      
+    }
 
 }
 
