@@ -4,7 +4,6 @@
 /storage/app
 /storage/framework/*.*
 /public/hot
-/public/js
 /public/css
 /public/theme
 /public/images
