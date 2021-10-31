@@ -1,0 +1,114 @@
+body {
+    background: white;
+    top: 20px;
+    border-top: 25px solid #340100;
+    font-family: 'Roboto', sans-serif;
+}
+
+.nopadding {
+    padding: 0;
+}
+
+.nomargin {
+    margin: 0 !important;
+}
+
+.sidenav-header {
+    height: auto;
+    background: white;
+    img.header-logo {
+        width: 200px;
+    }
+}
+
+.navbar-top {
+    padding: 6px;
+}
+
+.admin-page-name {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 28px;
+    color: black;
+    margin: 46px 0px 0;
+}
+
+#sidenav-main {
+    width: 23% !important;
+    min-height: 700px;
+    border-right: 0;
+    position: relative;
+    .navbar-brand {
+        img {
+            max-height: fit-content;
+        }
+    }
+    .navbar-nav {
+        .nav-item {
+            padding: 5px 0px;
+            margin-right: 2px;
+            max-width: 262px;
+            .nav-link {
+                color: #592C00;
+                font-weight: bold;
+                padding: 5px 45px;
+            }
+            .nav-link-text {
+                font-size: 16px;
+            }
+        }
+    }
+    .nav-link {
+        margin: 0;
+        padding-left: 25px;
+        padding-right: 10px;
+        &.active {
+            background: #F7EBDF;
+            border-radius: 0.375rem;
+        }
+        span {
+            padding-left: 8px;
+        }
+        img {
+            width: 25px;
+        }
+    }
+}
+
+.header-page-name {
+    text-align: center;
+    font-weight: bold;
+    content: " ";
+    &::before {
+        width: 30px;
+        height: 30px;
+        background: black;
+        float: left;
+    }
+}
+
+.management {
+    display: flex;
+}
+
+.main-page {
+    display: flex;
+}
+
+.main-content {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.modal-backdrop {
+    z-index: 50;
+}
+
+.js-default-ok-popup {
+    z-index: 100000;
+}
+
+.js-default-popup {
+    z-index: 100000;
+}

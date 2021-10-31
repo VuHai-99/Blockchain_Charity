@@ -1,0 +1,16 @@
+@import "_variables";
+header {
+    position: relative !important;
+    margin-bottom: 50px;
+    .page-name {
+        margin-left: -45px;
+        font-size: 25px;
+        color: rgb(103, 213, 233);
+    }
+    .wallet {
+        padding-bottom: 0px !important;
+    }
+    .fa-credit-card-alt {
+        font-size: 20px;
+    }
+}
