@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class HostController extends Controller
 {
+    public function home()
+    {
+        return view('frontend.home');
+    }
+    
     public function listProject()
     {
         return view('host.list_project');
@@ -51,5 +56,10 @@ class HostController extends Controller
         $new_project->contract_address = '0x002';
         
         $new_project->save();
+    }
+
+    public function campaignDetail()
+    {
+        return view('campaign.campaign_detail');
     }
 }

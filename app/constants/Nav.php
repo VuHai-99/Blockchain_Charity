@@ -8,18 +8,15 @@ class Nav
         [
             'url' => 'admin.dashboard.index',
             'name' => 'Dashboard',
-            'icon' => 'icon-dashboard.png',
         ],
 
         [
             'url' => 'admin.host.list',
             'name' => 'Danh sách nhà từ thiện',
-            'icon' => 'list.png',
         ],
         [
             'url' => 'admin.project.list',
             'name' => 'Danh sách sự kiện',
-            'icon' => 'list.png',
         ],
         [
             'url' => 'admin.open-project-request.list',
@@ -35,46 +32,51 @@ class Nav
             'url' => 'admin.withdraw-money-request.list',
             'name' => 'Danh sách yêu cầu rút tiền',
             'icon' => 'list.png',
+            'url' => 'admin.profile.edit',
+            'name' => 'Quản lí tài khoản',
+        ],
+        [
+            'url' => 'admin.create.account',
+            'name' => 'Thêm tài khoản',
         ],
     ];
 
     const NAV_ADMIN_DONATOR = [
         [
-            'url' => 'donator.list.project',
-            'name' => 'Danh sach su kien',
-            'icon' => 'list.png',
+            'url' => 'donator.home',
+            'name' => 'Home',
         ],
         [
-            'url' => 'profile',
-            'name' => 'Thong tin ca nhan',
-            'icon' => 'user.png',
+            'url' => 'donator.campaign',
+            'name' => 'Sự kiện tham gia',
         ],
         [
             'url' => '',
-            'name' => 'Quản lí giao dich',
-            'icon' => 'transaction.png',
+            'name' => 'Ví của bạn',
+            'icon' => 'images/icons/walet.png'
+        ],
+        [
+            'url' => 'profile',
+            'name' => 'Thông tin cá nhân',
         ],
         [
             'url' => 'logout',
             'name' => 'Đăng xuất',
-            'icon' => 'logout.png',
         ],
     ];
 
     const NAV_ADMIN_HOST = [
         [
-            'url' => 'host.list.project',
-            'name' => 'Danh sách dự án',
-            'icon' => 'list.png',
+            'url' => 'host.home',
+            'name' => 'Home',
+        ],
+        [
+            'url' => 'host.campaign',
+            'name' => 'Dự án của bạn',
         ],
         [
             'url' => 'host.list.my.project',
             'name' => 'Dự Án của tôi',
-            'icon' => 'user.png',
-        ],
-        [
-            'url' => 'host.create.project',
-            'name' => 'Tạo dự án',
             'icon' => 'user.png',
         ],
         [
@@ -83,10 +85,53 @@ class Nav
             'icon' => 'user.png',
         ],
         [
+            'url' => 'host.campaign.create',
+            'name' => 'Tạo dự án',
+        ],
+        [
+            'url' => '',
+            'name' => 'Profile',
+        ],
+        [
+            'url' => '',
+            'name' => 'Ví của bạn',
+            'icon' => 'images/icons/walet.png'
+        ],
+        [
             'url' => 'logout',
             'name' => 'Đăng xuất',
-            'icon' => 'logout.png',
         ],
 
+    ];
+
+    const NAV_HOME = [
+        [
+            'url' => 'home',
+            'name' => 'Home',
+        ],
+        [
+            'url' => '',
+            'name' => 'About',
+        ],
+        [
+            'url' => 'campaign',
+            'name' => 'Campaign',
+        ],
+        [
+            'url' => '',
+            'name' => 'Help',
+        ],
+        [
+            'url' => '',
+            'name' => 'Contact',
+        ],
+        [
+            'url' => 'login',
+            'name' => 'Login',
+        ],
+        [
+            'url' => 'register',
+            'name' => 'Register',
+        ]
     ];
 }

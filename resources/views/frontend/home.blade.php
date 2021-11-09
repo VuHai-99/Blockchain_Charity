@@ -1,4 +1,4 @@
-@extends('frontend.default')
+@extends('layouts.default')
 
 @section('title', 'Home')
 @section('css')

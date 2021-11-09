@@ -4,11 +4,19 @@
 @import 'variables';
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+body {
+    background-color: $body-bg;
+}
+
+.manage-main {
+    margin-top: 50px;
+}
+
 a {
     color: white;
 }
 
-a:hover {
+a:donator.list.project {
     text-decoration: none;
 }
 
@@ -19,7 +27,7 @@ a:hover {
 .btn-pink {
     background-color: $pink;
     color: $white;
-    &:hover,
+    &:donator.list.project,
     &:focus {
         color: $white;
     }
@@ -70,7 +78,7 @@ a:hover {
 }
 
 .main-content {
-    padding-bottom: 50px;
+    padding: 0px 50px 50px 50px;
 }
 
 button:disabled {
@@ -131,6 +139,10 @@ table th,
 tr,
 td {
     font-size: 1 rem;
+}
+
+th {
+    text-align: center;
 }
 
 .manage {

@@ -5,19 +5,27 @@
 @endsection
 @section('page-name', 'Danh sách sự kiện')
 @section('content')
-<div class="container-fluid management">
-
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="text-left">
-                    <h3 class="my-4 text-left">List tất cả dự án</h3>
+    <div class="row list-campaign">
+        @for ($i = 0; $i < 8; $i++)
+            <div class="campaign">
+                <div class="image">
+                    <img src="https://www.globalgiving.org/pfil/54432/pict_featured.jpg" alt="">
+                </div>
+                <div class="information">
+                    <div class="address">
+                        An Lão / Quảng Trị
+                    </div>
+                    <div class="host">
+                        <a href="#" class="host-name">Tổ chức thiện nguyện Việt Nam</a>
+                    </div>
+                    <div class="action">
+                        <button class="btn detail"><a href="{{ route('donator.campaign.detail', 1) }}">Xem chi
+                                tiết</a></button>
+                        <button class="btn donate">Donate</button>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-12" id="recentProjects">
-
-            </div>
-        </div>
+        @endfor
     </div>
 </div>
 @endsection

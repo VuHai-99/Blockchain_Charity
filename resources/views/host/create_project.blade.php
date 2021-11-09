@@ -4,7 +4,6 @@
 @section('content')
     <div class="row wrap-form">
         <form onSubmit="App.createCampaign(); return false">
-
             <div class="form-group">
                 <label for="project_name">Tên dự án</label>
                 <input type="text" name="project_name" id="project_name" {{ old('name') }} class="form-control"

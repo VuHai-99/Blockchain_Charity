@@ -1,8 +1,8 @@
-@extends('layouts.app')
+@extends('layouts.default')
 
 @section('title', 'Đăng kí')
 
-@section('Css')
+@section('css')
     <link rel="stylesheet" href="{{ asset(mix('css/register.css')) }}">
 @endsection
 

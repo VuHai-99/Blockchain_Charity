@@ -1,8 +1,8 @@
-@extends('layouts.app')
+@extends('layouts.default')
 
 @section('title', 'Đăng nhập')
 
-@section('Css')
+@section('css')
     <link rel="stylesheet" href="{{ asset(mix('css/login.css')) }}">
 @endsection
 
@@ -21,7 +21,7 @@
                 @endif
                 <div class="input-group mb-3">
                     <div class="input-group-append">
-                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        <span class="input-group-text"><i class="fa fa-user"></i></span>
                     </div>
                     <input type="text" name="email" class="form-control input_user" value="{{ old('email', '') }}"
                         placeholder="username">
@@ -31,7 +31,7 @@
                 @enderror
                 <div class="input-group mb-2">
                     <div class="input-group-append">
-                        <span class="input-group-text"><i class="fas fa-key"></i></span>
+                        <span class="input-group-text"><i class="fa fa-key"></i></span>
                     </div>
                     <input type="password" name="password" class="form-control input_pass" placeholder="password">
                 </div>

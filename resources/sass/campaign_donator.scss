@@ -1,0 +1,14 @@
+@import './variables';
+.manage-main {
+    width: 70%;
+    margin: 50px auto;
+    .list-project {
+        margin: 30px auto;
+    }
+    .donator-name {
+        color: $black;
+        &:hover {
+            color: $blue;
+        }
+    }
+}
