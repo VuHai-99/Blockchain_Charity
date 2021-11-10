@@ -10,72 +10,53 @@ html {
     display: none;
 }
 
-.user_card {
-    height: 400px;
-    width: 350px;
-    margin: 50px auto;
-    background: $theme-color;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    padding: 10px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    border-radius: 5px;
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #17a2b8;
+    height: 100vh;
 }
 
-.brand_logo_container {
-    position: absolute;
-    height: 170px;
-    width: 170px;
-    top: -75px;
-    border-radius: 50%;
-    background: #60a3bc;
-    padding: 10px;
+#login .container #login-row #login-column #login-box {
+    margin: 120px auto;
+    max-width: 400px;
+    padding: 20px 0px;
+    height: auto;
+    border: 1px solid #9C9C9C;
+    background-color: #EAEAEA;
+}
+
+.title {
+    color: #3e4b59;
+    font-weight: 600;
+    font-size: 2rem;
+}
+
+#login .container #login-row #login-column #login-box #login-form {
+    padding: 20px;
+}
+
+#login .container #login-row #login-column #login-box #login-form #register-link {
+    margin-top: -85px;
+}
+
+.group-button {
+    margin-top: 30px;
     text-align: center;
 }
 
-.brand_logo {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    border: 2px solid white;
-}
-
-.form_container {
-    margin-top: 100px;
-}
-
-.login_btn {
+.btn-login {
+    display: inline-block;
     width: 100%;
-    background: #2b41c0 !important;
-    color: white !important;
+    padding: 10px 20px;
+    font-weight: 600;
+    border: none;
+    background-color: #acb31a;
 }
 
-.login_btn:focus {
-    box-shadow: none !important;
-    outline: 0px !important;
-}
-
-.login_container {
-    padding: 0 2rem;
-}
-
-.input-group-text {
-    background: #2b41c0 !important;
-    color: white !important;
-    border: 0 !important;
-    border-radius: 0.25rem 0 0 0.25rem !important;
-}
-
-.input_user,
-.input_pass:focus {
-    box-shadow: none !important;
-    outline: 0px !important;
-}
-
-.custom-checkbox .custom-control-input:checked~.custom-control-label::before {
-    background-color: #2b41c0 !important;
+.group-text {
+    text-align: center;
+    a {
+        color: $blue;
+    }
 }

@@ -12,33 +12,30 @@ class Nav
 
         [
             'url' => 'admin.host.list',
-            'name' => 'Danh sách nhà từ thiện',
+            'name' => 'List Host',
         ],
         [
             'url' => 'admin.project.list',
-            'name' => 'Danh sách sự kiện',
+            'name' => 'List Campaign',
         ],
         [
             'url' => 'admin.open-project-request.list',
-            'name' => 'Danh sách yêu cầu mở dự án',
-            'icon' => 'list.png',
+            'name' => 'Approve Campaign',
         ],
         [
             'url' => 'admin.validate-host-request.list',
-            'name' => 'Danh sách yêu cầu valid host',
-            'icon' => 'list.png',
+            'name' => 'Approve Host',
         ],
-        [
-            'url' => 'admin.withdraw-money-request.list',
-            'name' => 'Danh sách yêu cầu rút tiền',
-            'icon' => 'list.png',
-            'url' => 'admin.profile.edit',
-            'name' => 'Quản lí tài khoản',
-        ],
-        [
-            'url' => 'admin.create.account',
-            'name' => 'Thêm tài khoản',
-        ],
+        // [
+        //     'url' => 'admin.withdraw-money-request.list',
+        //     'name' => 'Approve Withdraw ',
+        //     'url' => 'admin.profile.edit',
+        //     'name' => 'Profile',
+        // ],
+        // [
+        //     'url' => 'admin.create.account',
+        //     'name' => 'Add account',
+        // ],
     ];
 
     const NAV_ADMIN_DONATOR = [
