@@ -54,23 +54,58 @@
     .list-donator {
         border-left: 1px solid $gray;
         padding-left: 50px;
+        background-color: $white;
         .title {
-            border-top: 2px solid $blue;
-            padding-top: 10px;
-            color: $blue;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            .donate-once {
+                width: 49%;
+                text-align: center;
+                border: 1px solid $gray;
+            }
+            .donate-monthly {
+                width: 49%;
+                text-align: center;
+                background-color: $gray-color;
+            }
+            a {
+                display: inline-block;
+                padding: 10px;
+                color: $black;
+                font-weight: 600;
+                text-decoration: none;
+            }
         }
         .list-donator-item {
             padding: 0px;
             .item {
-                padding: 10px 0px;
-                border-bottom: 1px solid $white;
+                display: flex;
+                background-color: rgb(233, 188, 106);
+                margin-bottom: 20px;
+                .money {
+                    width: 10%;
+                    padding: 10px;
+                    font-weight: 600;
+                }
                 .donator-name {
+                    width: 70%;
                     margin-right: 10px;
                     color: $black;
                     font-weight: 600;
+                    padding: 20px;
                 }
-                .date {
-                    font-size: 0.8rem;
+                .next {
+                    width: 20%;
+                    padding: 20px;
+                    text-align: center;
+                    background-color: $orange;
+                    a {
+                        display: inline-block;
+                        .fa-chevron-right {
+                            font-size: 26px;
+                        }
+                    }
                 }
             }
             .read-more {
@@ -83,6 +118,18 @@
                     text-transform: uppercase;
                 }
             }
+        }
+    }
+}
+
+.slider_area {
+    .slider_bg_1 {
+        background-image: url('https://www.globalgiving.org/img/banners/hero_give_lg.jpg');
+        height: 25em;
+    }
+    .single_slider .slider_text {
+        h3 {
+            font-size: 64px;
         }
     }
 }
