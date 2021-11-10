@@ -11,13 +11,13 @@ class FrontEndController extends Controller
         return view('frontEnd.home');
     }
 
-    public function events()
+    public function campaign()
     {
-        return view('frontEnd.events');
+        return view('frontEnd.campaign');
     }
 
     public function detail($id)
     {
-        return view('frontEnd.project_detail');
+        return view('frontEnd.campaign_detail');
     }
 }

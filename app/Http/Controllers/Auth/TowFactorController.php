@@ -22,11 +22,12 @@ class TowFactorController extends Controller
         $user = Auth::user();
         $otp = $user->generateOtp();
         Mail::to($user->email)->send(new SendMailOtp($otp));
-        if($user->role == 1){
-            return redirect(route('host.list.project'));
+        if ($user->role == 1) {
+            return redirect(route('host.home'));
         }
-        return redirect(route('host.list.project'));
+        return redirect(route('donator.home'));
     }
+
     public function redirectFormConfirmOtp()
     {
         return view('auth.verify_otp');
@@ -43,9 +44,9 @@ class TowFactorController extends Controller
             return redirect(route('login'))->with('notify', 'Mã OTP của bạn đã hết hạn, vui lòng đăng nhập lại.');
         }
         if ($user->role == 1) {
-            return redirect(route('host.list.project'));
+            return redirect(route('host.home'));
         } else {
-            return redirect(route('donator.list.project'));
+            return redirect(route('donator.home'));
         }
     }
 

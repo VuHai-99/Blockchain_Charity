@@ -1,27 +1,88 @@
-.manage {
-    padding: 10px 30px;
+@import './variables';
+.manage-main {
+    width: 90%;
+    margin: 50px auto;
+    .donate button {
+        display: block;
+        margin: 20px 50px;
+        width: 20%;
+        background-color: $orange;
+        color: $white;
+        font-size: 1rem;
+        font-weight: 600;
+    }
+    p.title {
+        font-style: italic;
+        text-align: center;
+    }
+    .wrap-image {
+        text-align: center;
+    }
+    .text-reference {
+        display: inline-block;
+        margin: 20px 0px;
+        border-bottom: 2px solid rgb(72, 72, 214);
+    }
+    .tab {
+        display: flex;
+        .btn {
+            margin: 50px 20px;
+            padding: 5px 10px;
+            background-color: aquamarine;
+            border-radius: 8px;
+        }
+    }
+    .reference {
+        display: flex;
+        .event-reference {
+            img {
+                width: 100%;
+            }
+        }
+    }
 }
 
-p.title {
-    font-style: italic;
-    text-align: center;
-}
-
-.wrap-image {
-    text-align: center;
-}
-
-.text-reference {
-    display: inline-block;
-    margin: 20px 0px;
-    border-bottom: 2px solid rgb(72, 72, 214);
-}
-
-.reference {
-    display: flex;
-    .event-reference {
-        img {
-            width: 100%;
+#backend .manage-main {
+    .information {
+        text-align: center;
+        .featured {
+            img {
+                width: 100%;
+            }
+        }
+    }
+    .list-donator {
+        border-left: 1px solid $gray;
+        padding-left: 50px;
+        .title {
+            border-top: 2px solid $blue;
+            padding-top: 10px;
+            color: $blue;
+        }
+        .list-donator-item {
+            padding: 0px;
+            .item {
+                padding: 10px 0px;
+                border-bottom: 1px solid $white;
+                .donator-name {
+                    margin-right: 10px;
+                    color: $black;
+                    font-weight: 600;
+                }
+                .date {
+                    font-size: 0.8rem;
+                }
+            }
+            .read-more {
+                border: 1px solid $gray;
+                padding: 10px;
+                text-align: center;
+                a {
+                    color: $blue;
+                    font-size: 1rem;
+                    text-transform: uppercase;
+                }
+            }
         }
     }
 }

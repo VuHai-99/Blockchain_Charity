@@ -53,24 +53,28 @@ Route::prefix('charity')
         Route::prefix('donator')
             ->name('donator.')
             ->group(function () {
-                Route::get('/', 'DonatorController@listProject')->name('list.project');
                 Route::get('/specific-project/{blockchainAddress}', 'DonatorController@specificProject')->name('list.specific.project');
+                Route::get('', 'DonatorController@home')->name('home');
+                Route::get('campaign', 'DonatorController@listProject')->name('campaign');
+                Route::get('campaign-detail/{id}', 'DonatorController@campaignDetail')->name('campaign.detail');
             });
         Route::prefix('host')
             ->name('host.')
             ->group(function () {
-                Route::get('/', 'HostController@listProject')->name('list.project');
+                Route::get('', 'HostController@home')->name('home');
+                Route::get('campaign', 'HostController@listProject')->name('campaign');
                 Route::get('/my-project', 'HostController@listMyProject')->name('list.my.project');
                 Route::get('/specific-project/{blockchainAddress}', 'HostController@specificProject')->name('list.specific.project');
-                Route::get('create-project', 'HostController@createProject')->name('create.project');
-                Route::post('store-project', 'HostController@storeProject')->name('store.project');
+                Route::get('create-campaign', 'HostController@create')->name('campaign.create');
+                Route::post('store-campaign', 'HostController@store')->name('campaign.store');
+                Route::get('campaign_detail/{id}', 'HostController@campaignDetail')->name('campaign.detail');
                 Route::get('validate-host', 'HostController@validateHost')->name('validate.host');
-                
             });
+        Route::get('campaign/list-donator', 'DonatorController@listDonator')->name('campaign.donator');
     });
 
 Route::get('/', 'FrontEndController@home')->name('home');
-Route::get('/events', 'FrontendController@events')->name('events');
-Route::get('/event/{id}', 'FrontendController@detail')->name('event.detail');
+Route::get('/campaign', 'FrontendController@campaign')->name('campaign');
+Route::get('/campaign/{id}', 'FrontendController@detail')->name('campaign.detail');
 
 Auth::routes(['verify' => true]);
