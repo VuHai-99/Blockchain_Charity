@@ -19,9 +19,7 @@
                         <a href="#" class="host-name">Tổ chức thiện nguyện Việt Nam</a>
                     </div>
                     <div class="action">
-                        <button class="btn detail"><a href="{{ route('donator.campaign.detail', 1) }}">Xem chi
-                                tiết</a></button>
-                        <button class="btn donate">Donate</button>
+                        <button class="btn donate"><a href="{{ route('donator.campaign.detail', 1) }}"> Donate <a></button>
                     </div>
                 </div>
             </div>

@@ -67,15 +67,25 @@
             </div>
         </div>
         <div class="list-donator col-md-4">
-            <h4 class="title">Danh sách nhà tài trợ</h4>
+            <div class="title">
+                <div class="donate-once">
+                    <a href="">Donate Once</a>
+                </div>
+                <div class="donate-monthly">
+                    <a href="">Donate Monthly</a>
+                </div>
+            </div>
             <ul class="list-donator-item">
                 @for ($i = 0; $i < 15; $i++)
-                    <li class="item"> 
-                        <span class="donator-name">Phạm Văn Thiện</span>
-                        <span class="date">10-10-2021</span>
+                    <li class="item">
+                        <div class="money"> $20 coins</div>
+                        <div class="donator-name">Phạm Văn Thiện</div>
+                        <div class="next">
+                            <a href=""><i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+                        </div>
                     </li>
                 @endfor
-                <li class="read-more"> <a href="{{route('campaign.donator')}}">Xem chi tiết</a></li>
+                <li class="read-more"> <a href="{{ route('campaign.donator') }}">Xem chi tiết</a></li>
             </ul>
         </div>
 

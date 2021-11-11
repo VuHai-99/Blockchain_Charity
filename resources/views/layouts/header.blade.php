@@ -12,7 +12,7 @@ if (Auth::check()) {
         $navs = $NAV::NAV_ADMIN_DONATOR;
     }
 }
-if (!Auth::check()) {
+if (!Auth::check() && !Auth::guard('admin')->check()) {
     $navs = $NAV::NAV_HOME;
 }
 
@@ -64,7 +64,7 @@ if (!Auth::check()) {
         </div>
     </div>
 
-    <div class="slider_area @if(Request::route()->getName() != 'home') hidden @endif">
+    <div class="slider_area">
         <div class="single_slider  d-flex align-items-center slider_bg_1 overlay2">
             <div class="container">
                 <div class="row">
