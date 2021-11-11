@@ -194,7 +194,7 @@
   "sourceMap": "72:2010:0:-;;;383:187;8:9:-1;5:2;;;30:1;27;20:12;5:2;383:187:0;;;;;;;;;;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;383:187:0;;;;;;;;;;;476:4;:14;;-1:-1:-1;;;;;;476:14:0;;;-1:-1:-1;;;;;476:14:0;;;;;;501:19;:29;;;;-1:-1:-1;541:21:0;;;;;;;;;;;;;;;-1:-1:-1;;;;72:2010:0;;;;",
   "deployedSourceMap": "72:2010:0:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1703:83;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1703:83:0;;;:::i;:::-;;;;;;;;;;;;;;;;1356:64;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1356:64:0;;;:::i;:::-;;;;-1:-1:-1;;;;;1356:64:0;;;;;;;;;;;;;;1426:66;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1426:66:0;;;:::i;1135:199::-;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1135:199:0;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;1135:199:0;;:::i;163:31::-;;8:9:-1;5:2;;;30:1;27;20:12;5:2;163:31:0;;;:::i;1808:80::-;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1808:80:0;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;1808:80:0;-1:-1:-1;;;;;1808:80:0;;:::i;974:149::-;;;:::i;1894:131::-;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1894:131:0;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;1894:131:0;;:::i;102:27::-;;8:9:-1;5:2;;;30:1;27;20:12;5:2;102:27:0;;;:::i;1500:91::-;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1500:91:0;;;:::i;136:20::-;;8:9:-1;5:2;;;30:1;27;20:12;5:2;136:20:0;;;:::i;1703:83::-;1762:21;1703:83;:::o;1356:64::-;1395:7;1413:4;-1:-1:-1;;;;;1413:4:0;;1356:64::o;1426:66::-;1484:5;;-1:-1:-1;;;;;1484:5:0;;1426:66::o;1135:199::-;745:5;;-1:-1:-1;;;;;745:5:0;732:9;:18;724:60;;;;;-1:-1:-1;;;724:60:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;1218:21;1209:5;:30;;1201:85;;;;-1:-1:-1;;;1201:85:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1305:4;;;1297:29;;-1:-1:-1;;;;;1305:4:0;;;;1297:29;;;;;;;;1305:4;1297:29;;1305:4;1297:29;;;;;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;1297:29:0;1135:199;:::o;163:31::-;;;;:::o;1808:80::-;745:5;;-1:-1:-1;;;;;745:5:0;732:9;:18;724:60;;;;;-1:-1:-1;;;724:60:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;1870:4;:15;;-1:-1:-1;;;;;;1870:15:0;-1:-1:-1;;;;;1870:15:0;;;;;;;;;;1808:80::o;974:149::-;1042:19;;1030:9;:31;1022:40;;;;;;974:149::o;1894:131::-;745:5;;-1:-1:-1;;;;;745:5:0;732:9;:18;724:60;;;;;-1:-1:-1;;;724:60:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;1976:19;:46;1894:131::o;102:27::-;;;-1:-1:-1;;;;;102:27:0;;:::o;1500:91::-;1569:19;;1500:91;:::o;136:20::-;;;-1:-1:-1;;;;;136:20:0;;:::o",
   "source": "pragma solidity 0.5.16;\r\n\r\nimport \"./HitchensUnorderedAddressSet.sol\";\r\ncontract Campaign{\r\n    \r\n    address payable public host;\r\n    address public admin;\r\n    uint public minimumContribution;\r\n    // address[] public contributers;\r\n    \r\n    using HitchensUnorderedAddressSetLib for HitchensUnorderedAddressSetLib.Set;\r\n    HitchensUnorderedAddressSetLib.Set campaignSet;\r\n\r\n    constructor (uint minimum, address payable creator, address initial_admin) public {\r\n        host = creator;\r\n        minimumContribution = minimum;\r\n        admin = initial_admin;\r\n    }\r\n\r\n    modifier onlyHost() {\r\n        require(tx.origin== host, \"You must be host to execute.\");\r\n        _;\r\n    }\r\n    modifier onlyAdmin() {\r\n        require(tx.origin == admin ,\"You must be admin to execute.\");\r\n        _;\r\n    }\r\n    modifier onlyHostOrAdmin() {\r\n        require(((tx.origin == host) || (tx.origin== admin)), \"You must be host or admin to execute.\");\r\n        _;\r\n    }\r\n    \r\n    function contribute() public payable {\r\n        require(msg.value > minimumContribution);\r\n        \r\n        // contributers.push(msg.sender);\r\n    }\r\n    \r\n    function withDrawMoney(uint256 index) public onlyAdmin {\r\n        require(index <= address(this).balance, \"Cannot withdraw more than current balance.\");\r\n        address(host).transfer(index);\r\n    }\r\n\r\n    //getter\r\n    function getHost() public view returns(address) { return host; }\r\n    function getAdmin() public view returns(address) { return admin; }\r\n\r\n    function getMinimumContribution() public view returns(uint) { return minimumContribution; }\r\n    \r\n    // function getContributers() public view returns(address[] memory) { return contributers; }\r\n\r\n    function getBalance() public view returns(uint256) {return address(this).balance; }\r\n\r\n    //setter\r\n    function setHost(address payable new_host) public onlyAdmin { host = new_host; }\r\n    function setMinimumContribution(uint new_minimum_contribution) public onlyAdmin { minimumContribution = new_minimum_contribution; }\r\n\r\n    function () external payable{\r\n        \r\n    }\r\n}",
-  "sourcePath": "D:\\UNI\\Dự Án\\blockchain-land-registry-with-laravel\\Smart Contract\\contracts\\Campaign.sol",
+  "sourcePath": "D:\\UNI\\Dự Án\\Main Project\\blockchain_charity_repo\\Blockchain_Truffle\\contracts\\Campaign.sol",
   "ast": {
     "absolutePath": "project:/contracts/Campaign.sol",
     "exportedSymbols": {
@@ -221,7 +221,7 @@
         "id": 2,
         "nodeType": "ImportDirective",
         "scope": 180,
-        "sourceUnit": 1266,
+        "sourceUnit": 1413,
         "src": "27:43:0",
         "symbolAliases": [],
         "unitAlias": ""
@@ -326,10 +326,10 @@
               "id": 9,
               "name": "HitchensUnorderedAddressSetLib",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 1265,
+              "referencedDeclaration": 1412,
               "src": "252:30:0",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_HitchensUnorderedAddressSetLib_$1265",
+                "typeIdentifier": "t_contract$_HitchensUnorderedAddressSetLib_$1412",
                 "typeString": "library HitchensUnorderedAddressSetLib"
               }
             },
@@ -340,10 +340,10 @@
               "id": 10,
               "name": "HitchensUnorderedAddressSetLib.Set",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 1093,
+              "referencedDeclaration": 1240,
               "src": "287:34:0",
               "typeDescriptions": {
-                "typeIdentifier": "t_struct$_Set_$1093_storage_ptr",
+                "typeIdentifier": "t_struct$_Set_$1240_storage_ptr",
                 "typeString": "struct HitchensUnorderedAddressSetLib.Set"
               }
             }
@@ -358,7 +358,7 @@
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_struct$_Set_$1093_storage",
+              "typeIdentifier": "t_struct$_Set_$1240_storage",
               "typeString": "struct HitchensUnorderedAddressSetLib.Set"
             },
             "typeName": {
@@ -366,10 +366,10 @@
               "id": 12,
               "name": "HitchensUnorderedAddressSetLib.Set",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 1093,
+              "referencedDeclaration": 1240,
               "src": "328:34:0",
               "typeDescriptions": {
-                "typeIdentifier": "t_struct$_Set_$1093_storage_ptr",
+                "typeIdentifier": "t_struct$_Set_$1240_storage_ptr",
                 "typeString": "struct HitchensUnorderedAddressSetLib.Set"
               }
             },
@@ -657,7 +657,7 @@
                             "name": "tx",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 1565,
+                            "referencedDeclaration": 1688,
                             "src": "617:2:0",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_transaction",
@@ -733,10 +733,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        1556,
-                        1557
+                        1679,
+                        1680
                       ],
-                      "referencedDeclaration": 1557,
+                      "referencedDeclaration": 1680,
                       "src": "609:7:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -810,7 +810,7 @@
                             "name": "tx",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 1565,
+                            "referencedDeclaration": 1688,
                             "src": "732:2:0",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_transaction",
@@ -886,10 +886,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        1556,
-                        1557
+                        1679,
+                        1680
                       ],
-                      "referencedDeclaration": 1557,
+                      "referencedDeclaration": 1680,
                       "src": "724:7:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -980,7 +980,7 @@
                                       "name": "tx",
                                       "nodeType": "Identifier",
                                       "overloadedDeclarations": [],
-                                      "referencedDeclaration": 1565,
+                                      "referencedDeclaration": 1688,
                                       "src": "858:2:0",
                                       "typeDescriptions": {
                                         "typeIdentifier": "t_magic_transaction",
@@ -1060,7 +1060,7 @@
                                       "name": "tx",
                                       "nodeType": "Identifier",
                                       "overloadedDeclarations": [],
-                                      "referencedDeclaration": 1565,
+                                      "referencedDeclaration": 1688,
                                       "src": "881:2:0",
                                       "typeDescriptions": {
                                         "typeIdentifier": "t_magic_transaction",
@@ -1170,10 +1170,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        1556,
-                        1557
+                        1679,
+                        1680
                       ],
-                      "referencedDeclaration": 1557,
+                      "referencedDeclaration": 1680,
                       "src": "848:7:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -1247,7 +1247,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 1553,
+                            "referencedDeclaration": 1676,
                             "src": "1030:3:0",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -1301,10 +1301,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        1556,
-                        1557
+                        1679,
+                        1680
                       ],
-                      "referencedDeclaration": 1556,
+                      "referencedDeclaration": 1679,
                       "src": "1022:7:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -1403,7 +1403,7 @@
                                 "name": "this",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 1569,
+                                "referencedDeclaration": 1692,
                                 "src": "1226:4:0",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_contract$_Campaign_$179",
@@ -1499,10 +1499,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        1556,
-                        1557
+                        1679,
+                        1680
                       ],
-                      "referencedDeclaration": 1557,
+                      "referencedDeclaration": 1680,
                       "src": "1201:7:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -1966,7 +1966,7 @@
                           "name": "this",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 1569,
+                          "referencedDeclaration": 1692,
                           "src": "1770:4:0",
                           "typeDescriptions": {
                             "typeIdentifier": "t_contract$_Campaign_$179",
@@ -2397,7 +2397,7 @@
       },
       {
         "attributes": {
-          "SourceUnit": 1266,
+          "SourceUnit": 1413,
           "absolutePath": "project:/contracts/HitchensUnorderedAddressSet.sol",
           "file": "./HitchensUnorderedAddressSet.sol",
           "scope": 180,
@@ -2514,7 +2514,7 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "HitchensUnorderedAddressSetLib",
-                  "referencedDeclaration": 1265,
+                  "referencedDeclaration": 1412,
                   "type": "library HitchensUnorderedAddressSetLib"
                 },
                 "id": 9,
@@ -2525,7 +2525,7 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "HitchensUnorderedAddressSetLib.Set",
-                  "referencedDeclaration": 1093,
+                  "referencedDeclaration": 1240,
                   "type": "struct HitchensUnorderedAddressSetLib.Set"
                 },
                 "id": 10,
@@ -2553,7 +2553,7 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "HitchensUnorderedAddressSetLib.Set",
-                  "referencedDeclaration": 1093,
+                  "referencedDeclaration": 1240,
                   "type": "struct HitchensUnorderedAddressSetLib.Set"
                 },
                 "id": 12,
@@ -2894,10 +2894,10 @@
                                 }
                               ],
                               "overloadedDeclarations": [
-                                1556,
-                                1557
+                                1679,
+                                1680
                               ],
-                              "referencedDeclaration": 1557,
+                              "referencedDeclaration": 1680,
                               "type": "function (bool,string memory) pure",
                               "value": "require"
                             },
@@ -2938,7 +2938,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 1565,
+                                      "referencedDeclaration": 1688,
                                       "type": "tx",
                                       "value": "tx"
                                     },
@@ -3062,10 +3062,10 @@
                                 }
                               ],
                               "overloadedDeclarations": [
-                                1556,
-                                1557
+                                1679,
+                                1680
                               ],
-                              "referencedDeclaration": 1557,
+                              "referencedDeclaration": 1680,
                               "type": "function (bool,string memory) pure",
                               "value": "require"
                             },
@@ -3106,7 +3106,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 1565,
+                                      "referencedDeclaration": 1688,
                                       "type": "tx",
                                       "value": "tx"
                                     },
@@ -3230,10 +3230,10 @@
                                 }
                               ],
                               "overloadedDeclarations": [
-                                1556,
-                                1557
+                                1679,
+                                1680
                               ],
-                              "referencedDeclaration": 1557,
+                              "referencedDeclaration": 1680,
                               "type": "function (bool,string memory) pure",
                               "value": "require"
                             },
@@ -3311,7 +3311,7 @@
                                                   "overloadedDeclarations": [
                                                     null
                                                   ],
-                                                  "referencedDeclaration": 1565,
+                                                  "referencedDeclaration": 1688,
                                                   "type": "tx",
                                                   "value": "tx"
                                                 },
@@ -3392,7 +3392,7 @@
                                                   "overloadedDeclarations": [
                                                     null
                                                   ],
-                                                  "referencedDeclaration": 1565,
+                                                  "referencedDeclaration": 1688,
                                                   "type": "tx",
                                                   "value": "tx"
                                                 },
@@ -3547,10 +3547,10 @@
                                 }
                               ],
                               "overloadedDeclarations": [
-                                1556,
-                                1557
+                                1679,
+                                1680
                               ],
-                              "referencedDeclaration": 1556,
+                              "referencedDeclaration": 1679,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -3591,7 +3591,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 1553,
+                                      "referencedDeclaration": 1676,
                                       "type": "msg",
                                       "value": "msg"
                                     },
@@ -3756,10 +3756,10 @@
                                 }
                               ],
                               "overloadedDeclarations": [
-                                1556,
-                                1557
+                                1679,
+                                1680
                               ],
-                              "referencedDeclaration": 1557,
+                              "referencedDeclaration": 1680,
                               "type": "function (bool,string memory) pure",
                               "value": "require"
                             },
@@ -3848,7 +3848,7 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 1569,
+                                          "referencedDeclaration": 1692,
                                           "type": "contract Campaign",
                                           "value": "this"
                                         },
@@ -4433,7 +4433,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1569,
+                                  "referencedDeclaration": 1692,
                                   "type": "contract Campaign",
                                   "value": "this"
                                 },
@@ -4825,7 +4825,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.3",
-  "updatedAt": "2021-10-29T20:02:09.672Z",
+  "updatedAt": "2021-11-09T17:20:49.760Z",
   "devdoc": {
     "methods": {}
   },

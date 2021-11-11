@@ -83,7 +83,7 @@ App = {
     let newContractId = "0x"+(new BN(String(datetime))).toTwos(256).toString('hex',64);
     console.log(newContractId)
 
-    await App.campaignfactory.requestToOpenCamapaign(newContractId,Number(minimum_contribution))
+    await App.campaignfactory.requestToOpenCampaign(newContractId,Number(minimum_contribution))
       .then((result) => {
 
         // const campaign_contract_address = result.logs[0].args.newContract;

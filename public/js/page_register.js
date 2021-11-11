@@ -143,7 +143,7 @@ $(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\UNI\Dự Án\Main Project\demo1\blockchain_charity_repo\resources\js\pages\register\index.js */"./resources/js/pages/register/index.js");
+module.exports = __webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\resources\js\pages\register\index.js */"./resources/js/pages/register/index.js");
 
 
 /***/ })

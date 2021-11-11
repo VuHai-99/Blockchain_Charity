@@ -65,7 +65,7 @@ Route::prefix('charity')
                 Route::get('campaign', 'HostController@listProject')->name('campaign');
                 Route::get('/my-project', 'HostController@listMyProject')->name('list.my.project');
                 Route::get('/specific-project/{blockchainAddress}', 'HostController@specificProject')->name('list.specific.project');
-                Route::get('create-campaign', 'HostController@create')->name('campaign.create');
+                Route::get('create-campaign', 'HostController@createProject')->name('campaign.create');
                 Route::post('store-campaign', 'HostController@store')->name('campaign.store');
                 Route::get('campaign_detail/{id}', 'HostController@campaignDetail')->name('campaign.detail');
                 Route::get('validate-host', 'HostController@validateHost')->name('validate.host');
