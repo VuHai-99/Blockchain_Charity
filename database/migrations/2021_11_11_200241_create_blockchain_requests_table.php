@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProjectPhotosTable extends Migration
+class CreateBlockchainRequestsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateProjectPhotosTable extends Migration
      */
     public function up()
     {
-        Schema::create('project_photos', function (Blueprint $table) {
-            $table->id();
-            $table->integer('project_id');
-            $table->string('image');
-            $table->text('description');
+        Schema::create('blockchain_requests', function (Blueprint $table) {
+            $table->string('request_id')->primary();
+            $table->integer('request_type');
+            $table->string('amount')->nullable();
+            $table->string('requested_user_address');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -30,6 +29,6 @@ class CreateProjectPhotosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('project_photos');
+        Schema::dropIfExists('blockchain_requests');
     }
 }

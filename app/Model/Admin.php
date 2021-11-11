@@ -11,9 +11,10 @@ use Illuminate\Notifications\Notifiable;
 class Admin extends Authenticatable
 {
     use Notifiable, SoftDeletes;
-
+    protected $primaryKey = 'admin_address';
+    public $incrementing = false;
     protected $fillable = [
-        'name', 'email', 'password'
+        'name', 'email', 'password','admin_address','private_key',
     ];
 
 
@@ -23,7 +24,7 @@ class Admin extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token','admin_address','private_key',
     ];
 
     /**

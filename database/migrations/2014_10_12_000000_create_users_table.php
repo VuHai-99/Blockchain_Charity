@@ -14,20 +14,20 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
+            $table->string('user_address')->primary();
             $table->string('name');
             $table->string('email')->unique();
             $table->tinyInteger('role');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('address');
+            $table->string('home_address');
             $table->string('phone');
-            $table->double('coin')->default(100);
+            $table->integer('wallet_type');
+            $table->string('amount_of_money')->nullable();
             $table->integer('otp_code')->nullable();
             $table->timestamp('otp_expires_at')->nullable();
             $table->timestamp('otp_verified_at')->nullable();
-            $table->integer('approval_id')->nullable();
-            $table->string('public_key')->nullable();
+            $table->integer('validate_state')->nullable();
             $table->string('private_key')->nullable();
             $table->string('image_card_front')->nullable();
             $table->string('image_card_back')->nullable();

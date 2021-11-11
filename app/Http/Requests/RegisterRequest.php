@@ -29,11 +29,15 @@ class RegisterRequest extends FormRequest
             'password' => 'required|confirmed',
             'address' => 'required|string|max:255',
             'phone' => "required|digits:10",
-            'role' => 'required'
+            'role' => 'required',
+            'wallet_type' => 'required'
         ];
         if ($this->role == 1) {
             $rules['image_card_front'] = 'required';
             $rules['image_card_back'] = 'required';
+        }
+        if ($this->wallet_type == 0) {
+            $rules['wallet_address'] = 'required';
         }
         return $rules;
     }
@@ -55,6 +59,8 @@ class RegisterRequest extends FormRequest
             'role.required' => 'Vui lòng chọn loại tài khoản',
             'image_1.required' => "Vui lòng chọn ảnh căn cước mặt trước",
             'image_2.required' => "Vui lòng chọn ảnh căn cước mặt sau",
+            'wallet_type' => "Vui lòng chọn loại wallet",
+            'wallet_address.required' => "Vui lòng điền wallet_address ",
         ];
     }
 }

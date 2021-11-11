@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProjectsTable extends Migration
+class CreateCampaignsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,16 @@ class CreateProjectsTable extends Migration
      */
     public function up()
     {
-        Schema::create('projects', function (Blueprint $table) {
-            $table->id();
+        Schema::create('campaigns', function (Blueprint $table) {
+            $table->string('campaign_address')->primary();
             $table->string('name');
             $table->string('host_address');
             $table->text('description');
             $table->string('minimum_contribution');
+            $table->string('target_contribution_amount');
             $table->string('current_balance');
             $table->datetime('date_start');
             $table->datetime('date_end')->nullable();
-            $table->string('contract_address')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
