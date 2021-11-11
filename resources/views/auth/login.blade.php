@@ -23,16 +23,13 @@
                                 <input type="text" name="email" id="username" class="form-control"
                                     value="{{ old('email', '') }}">
                             </div>
-                            @error('email')
-                                <p class="text-danger">{{ $message }}</p>
-                            @enderror
                             <div class="form-group">
                                 <label for="password" class="text-info">Password:</label><br>
                                 <input type="password" name="password" id="password" class="form-control">
                             </div>
-                            @error('password')
-                                <p class="text-danger">{{ $message }}</p>
-                            @enderror
+                            @if (Session::has('error-login'))
+                                <p class="text-danger">{{ Session::get('error-login') }}</p>
+                            @endif
                             <div class="form-group group-button">
                                 <input type="submit" class="btn btn-primary btn-login" value="LOGIN">
                             </div>

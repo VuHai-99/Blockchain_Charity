@@ -81,55 +81,34 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./resources/js/pages/verify_otp/index.js":
-/*!************************************************!*\
-  !*** ./resources/js/pages/verify_otp/index.js ***!
-  \************************************************/
+/***/ "./resources/js/pages/campaign/index.js":
+/*!**********************************************!*\
+  !*** ./resources/js/pages/campaign/index.js ***!
+  \**********************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
 $(function () {
-  //console.log(laroute.route('login'));
-  var error = 0;
-  $('.btn-confirm').click(function (e) {
-    console.log('ok');
-    var otp = $("input[name='otp']").val();
-    axios.post(laroute.route('api.verify.otp'), {
-      'otp': otp
-    }).then(function (response) {
-      if (response.data.status === 1) {
-        error += 1;
-        $('.notify').html('Mã không chính xác. Xin nhập lại.');
-
-        if (error == 3) {
-          showPopupOk('', 'Bạn đã nhập sai mã OTP quá 3 lần, vui lòng quay lại trang đăng nhập', 'OK', function () {});
-        }
-
-        if (error > 3) {
-          window.location.replace(laroute.route('redirect.error'));
-        }
-      } else {
-        $('#form-verify-otp').submit();
-      }
-    });
+  $('.btn-donate').click(function () {
+    showPopupYesNo('', 'Are you sure you want to donate?', 'Yes', 'Cancle');
   });
 });
 
 /***/ }),
 
-/***/ 3:
-/*!******************************************************!*\
-  !*** multi ./resources/js/pages/verify_otp/index.js ***!
-  \******************************************************/
+/***/ 1:
+/*!****************************************************!*\
+  !*** multi ./resources/js/pages/campaign/index.js ***!
+  \****************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! F:\xampp\htdocs\blockchain_charity_repo\resources\js\pages\verify_otp\index.js */"./resources/js/pages/verify_otp/index.js");
+module.exports = __webpack_require__(/*! F:\xampp\htdocs\blockchain_charity_repo\resources\js\pages\campaign\index.js */"./resources/js/pages/campaign/index.js");
 
 
 /***/ })

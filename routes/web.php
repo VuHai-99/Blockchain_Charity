@@ -35,7 +35,6 @@ Route::prefix('admin')
         Route::get('profile', 'AdminController@profile')->name('profile.edit');
         Route::get('add/account', 'AdminController@createAccount')->name('create.account');
         Route::get('list/withdraw-money-request', 'AdminController@listWithdrawMoneyRequest')->name('withdraw-money-request.list');
-        
     });
 //user
 Route::post('login/tow-factor', 'Auth\TowFactorController@sendOtp')->name('login.towfactor');
@@ -51,6 +50,7 @@ Route::prefix('charity')
     ->group(function () {
         Route::get('profile', 'DonatorController@profile')->name('profile');
         Route::prefix('donator')
+            ->middleware('donator-wallet-hard')
             ->name('donator.')
             ->group(function () {
                 Route::get('/specific-project/{blockchainAddress}', 'DonatorController@specificProject')->name('list.specific.project');
@@ -59,6 +59,7 @@ Route::prefix('charity')
                 Route::get('campaign-detail/{id}', 'DonatorController@campaignDetail')->name('campaign.detail');
             });
         Route::prefix('host')
+            ->middleware('host-wallet-hard')
             ->name('host.')
             ->group(function () {
                 Route::get('', 'HostController@home')->name('home');

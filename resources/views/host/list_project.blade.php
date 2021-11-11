@@ -15,7 +15,7 @@
             @for ($i = 0; $i < 10; $i++)
                 <div class="event-item row">
                     <div class="image">
-                        <a href="{{ route('campaign.detail', 1) }}"><img
+                        <a href="{{ route('host.campaign.detail', 1) }}"><img
                                 src="https://tuyengiao.vn/Uploads/2021/9/20/29/tu-viec-thien-nguyen-cua-cac-nghe-si-den-chuyen-minh-bach-trong-sao-ke.jpg"
                                 alt=""></a>
                     </div>
@@ -33,7 +33,7 @@
                         <div class="descripton">
                             Dự án thiện nguyện được thành lập với mục đích cứu trợ cho nhân dân
                             miền Trung bị ảnh hưởng nặng nề trong cơn bão số 10 vừa qua. Với sự ủng hộ của rất nhiều mạnh
-                            thường... <a class="read-more" href="{{ route('campaign.detail', 1) }}">xem thêm</a>
+                            thường... <a class="read-more" href="{{ route('host.campaign.detail', 1) }}">xem thêm</a>
                         </div>
                         <div class="donate">
                             <button class="wrap-inp">
@@ -47,17 +47,18 @@
             @endfor
         </div>
     </div>
-</div>
+    </div>
 @endsection
 
 @push('scripts')
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="{{ asset('js/app.js') }}"></script>
-<script src="{{ asset('js/host_list_project_blockchain.js') }}"></script>
-<!-- <script src="{{ asset('js/contract.js') }}"></script> -->
-<script src="{{ asset('js/web3.min.js') }}"></script>
-<script src="{{ asset('js/truffle-contract.js') }}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-<script type="text/javascript" src="{{ asset('js/laroute.js') }}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/host_list_project_blockchain.js') }}"></script>
+    <!-- <script src="{{ asset('js/contract.js') }}"></script> -->
+    <script src="{{ asset('js/web3.min.js') }}"></script>
+    <script src="{{ asset('js/truffle-contract.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script type="text/javascript" src="{{ asset('js/laroute.js') }}"></script>
+    <script src="{{ asset('js/page_campaign.js') }}"></script>
 @endpush
 @stack('scripts')
