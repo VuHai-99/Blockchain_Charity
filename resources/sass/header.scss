@@ -25,7 +25,7 @@
             flex-direction: row;
             justify-content: flex-end;
             .item {
-                display: flex;
+                text-align: center;
             }
             .active {
                 color: $heading_color2;

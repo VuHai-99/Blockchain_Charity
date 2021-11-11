@@ -66,29 +66,47 @@
                 </div>
             </div>
         </div>
-        <div class="list-donator col-md-4">
-            <div class="title">
-                <div class="donate-once">
-                    <a href="">Donate Once</a>
+        <div class="donator col-md-4">
+            <div class="coin">
+                <span class="coin-donated">$40000 coin</span>/ mục tiêu $5000 coin
+                <div class="goal">
+                    <div class="coin-current"></div>
                 </div>
-                <div class="donate-monthly">
-                    <a href="">Donate Monthly</a>
+                <br>
+                <div class="number-donator">
+                    <span class="number">300 donations</span>
+                    <span class="amount">$2000 to go</span>
+                </div>
+                <div class="triangle triangle_bottom triangle_white">
+
                 </div>
             </div>
-            <ul class="list-donator-item">
-                @for ($i = 0; $i < 15; $i++)
-                    <li class="item">
-                        <div class="money"> $20 coins</div>
-                        <div class="donator-name">Phạm Văn Thiện</div>
-                        <div class="next">
-                            <a href=""><i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                        </div>
-                    </li>
-                @endfor
-                <li class="read-more"> <a href="{{ route('campaign.donator') }}">Xem chi tiết</a></li>
-            </ul>
+            <div class="btn-donate">
+                <button class="btn">DONATE NOW</button>
+            </div>
+            <div class="list-donator">
+                <div class="title">
+                    <div class="donate-once">
+                        <a href="">Top Donator</a>
+                    </div>
+                    <div class="donate-monthly">
+                        <a href="">Donate Monthly</a>
+                    </div>
+                </div>
+                <ul class="list-donator-item">
+                    @for ($i = 0; $i < 15; $i++)
+                        <li class="item">
+                            <div class="money"> ${{ 10 * (15 - $i) }} coins</div>
+                            <div class="donator-name">Phạm Văn Thiện</div>
+                            <div class="next">
+                                <a href=""><i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+                            </div>
+                        </li>
+                    @endfor
+                    <li class="read-more"> <a href="{{ route('campaign.donator') }}">Xem chi tiết</a></li>
+                </ul>
+            </div>
         </div>
-
     </div>
 
     <hr>

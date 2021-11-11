@@ -45,20 +45,20 @@ class Nav
         ],
         [
             'url' => 'donator.campaign',
-            'name' => 'Sự kiện tham gia',
+            'name' => 'List Campaign',
         ],
         [
             'url' => '',
-            'name' => 'Ví của bạn',
-            'icon' => 'images/icons/walet.png'
+            'name' => 'My Wallet',
+            //'icon' => 'images/icons/walet.png'
         ],
         [
             'url' => 'profile',
-            'name' => 'Thông tin cá nhân',
+            'name' => 'Profile',
         ],
         [
             'url' => 'logout',
-            'name' => 'Đăng xuất',
+            'name' => 'Logout',
         ],
     ];
 
@@ -69,21 +69,15 @@ class Nav
         ],
         [
             'url' => 'host.campaign',
-            'name' => 'Dự án của bạn',
-        ],
-        [
-            'url' => 'host.list.my.project',
-            'name' => 'Dự Án của tôi',
-            'icon' => 'user.png',
+            'name' => 'List Campaign',
         ],
         [
             'url' => 'host.validate.host',
-            'name' => 'Tạo yêu cầu validate',
-            'icon' => 'user.png',
+            'name' => 'Create Request',
         ],
         [
             'url' => 'host.campaign.create',
-            'name' => 'Tạo dự án',
+            'name' => 'Create Campaign',
         ],
         [
             'url' => '',
@@ -91,12 +85,12 @@ class Nav
         ],
         [
             'url' => '',
-            'name' => 'Ví của bạn',
-            'icon' => 'images/icons/walet.png'
+            'name' => 'My Wallet',
+            //'icon' => 'images/icons/walet.png'
         ],
         [
             'url' => 'logout',
-            'name' => 'Đăng xuất',
+            'name' => 'Logout',
         ],
 
     ];

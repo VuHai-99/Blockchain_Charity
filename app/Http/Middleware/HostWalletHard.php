@@ -17,7 +17,7 @@ class HostWalletHard
      */
     public function handle($request, Closure $next)
     {
-        if (!Auth::check() || !Auth::user()->type != EnumUser::HOST_WALLET_HARD) {
+        if (!Auth::check() || Auth::user()->wallet_type != EnumUser::HOST_WALLET_HARD) {
             return redirect(route('home'));
         }
         return $next($request);

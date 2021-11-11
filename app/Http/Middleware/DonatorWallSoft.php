@@ -17,7 +17,7 @@ class DonatorWallSoft
      */
     public function handle($request, Closure $next)
     {
-        if (!Auth::check() || !Auth::user()->type != EnumUser::DONATOR_WALLET_SOFT) {
+        if (!Auth::check() || Auth::user()->wallet_type != EnumUser::DONATOR_WALLET_SOFT) {
             return redirect(route('home'));
         }
         return $next($request);
