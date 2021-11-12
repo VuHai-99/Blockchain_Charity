@@ -47,7 +47,15 @@ App = {
     // console.log('accounts', web3.eth.accounts);
 
   },
-
+  getAccounts: (callback) => {
+    web3.eth.getAccounts((error, result) => {
+        if (error) {
+            console.log(error);
+        } else {
+            callback(result);
+        }
+    });
+  },
   loadContract: async () => {
     const campaignfactory = await $.getJSON('/contracts/CampaignFactory.json')
     App.contracts.CampaignFactory = TruffleContract(campaignfactory)
@@ -65,13 +73,18 @@ App = {
   },
 
   createCampaign: async (data) => {
-
-    let project_name = $('[name="project_name"]').val();
+    let current_account;
+    App.getAccounts(function (result) {
+        current_account = result[0];
+    });
+    let campaign_name = $('[name="campaign_name"]').val();
+    let target_contribution_amount = $('[name="target_contribution_amount"]').val();
     let minimum_contribution = $('[name="minimum_contribution"]').val();
+    let description = $('[name="description"]').val();
     let date_start = $('[name="date_start"]').val();
     let date_end = $('[name="date_end"]').val();
     // let description = $('textarea#description').val();
-    // console.log(project_name, minimum_contribution, date_start, date_end);
+    // console.log(campaign_name, minimum_contribution, date_start, date_end);
     var currentdate = new Date(); 
     var datetime = String(currentdate.getDate() )
                     + String(currentdate.getMonth()+1)
@@ -100,19 +113,23 @@ App = {
           text: 'Successful action',
           confirmButtonText: 'Close'
         })
-        // axios.post(laroute.route('host.store.project'), {
-        //   // 'name': project_name,
-        //   // 'minimum_contribution': minimum_contribution,
-        //   // 'date_started': date_start,
-        //   // 'date_end': date_end,
-        //   // 'contract_address': result.tx,
-        // }).then(function(response){
-        //   if(response.status == 200){
-        //     console.log('Successfully store new campaign in database');
-        //   } else {
-        //     console.log('UnSuccessfully store new campaign in database');
-        //   }
-        // })
+        axios.post(('/api/store-blockchain-request'), {
+          "request_id": newContractId,
+          "amount": minimum_contribution,
+          "request_type": 1,
+          "requested_user_address":current_account,
+          "target_contribution_amount":target_contribution_amount,
+          "campaign_name":campaign_name,
+          "date_start":date_start,
+          "date_end":date_end,
+          "description": description
+        }).then(function(response){
+          if(response.status == 200){
+            console.log('Successfully store new validated request in database');
+          } else {
+            console.log('UnSuccessfully store new validated request in database');
+          }
+        })
       }).catch(error => {   
         Swal.fire({
           title: 'Unsuccessful!',

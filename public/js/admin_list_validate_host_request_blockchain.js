@@ -121,17 +121,17 @@ App = {
           text: 'Successfully validated host: '+requestedAccountAddress,
           confirmButtonText: 'Close'
         })
-        // axios.post(laroute.route('create.blockchain.campaign'), {
-        //   'campaign_contract_address': campaign_contract_address,
-        //   'minimum_contribution': minimum_contribution,
-        //   'host_address': host_address,
-        // }).then(function(response){
-        //   if(response.status == 200){
-        //     console.log('Successfully store new campaign in database');
-        //   } else {
-        //     console.log('UnSuccessfully store new campaign in database');
-        //   }
-        // })
+        axios.post(('/api/decide-blockchain-request'), {
+          "request_id": requestedAccountAddress,
+          "decide_type": "Accept",
+          "request_type" : 0
+        }).then(function(response){
+          if(response.status == 200){
+            console.log('Successfully accept new validated host: '+requestedAccountAddress);
+          } else {
+            console.log('UnSuccessfully accept new validated host: '+requestedAccountAddress);
+          }
+        })
         App.renderAllRequestValidateHost();
       }).catch(error => {
         Swal.fire({
@@ -151,17 +151,17 @@ App = {
           text: 'Successfully Reject Host validate request',
           confirmButtonText: 'Close'
         })
-        // axios.post(laroute.route('create.blockchain.campaign'), {
-        //   'campaign_contract_address': campaign_contract_address,
-        //   'minimum_contribution': minimum_contribution,
-        //   'host_address': host_address,
-        // }).then(function(response){
-        //   if(response.status == 200){
-        //     console.log('Successfully store new campaign in database');
-        //   } else {
-        //     console.log('UnSuccessfully store new campaign in database');
-        //   }
-        // })
+        axios.post(('/api/decide-blockchain-request'), {
+          "request_id": requestedAccountAddress,
+          "decide_type": "Decline",
+          "request_type" : 0
+        }).then(function(response){
+          if(response.status == 200){
+            console.log('Successfully reject new validated host: '+requestedAccountAddress);
+          } else {
+            console.log('UnSuccessfully reject new validated host: '+requestedAccountAddress);
+          }
+        })
         App.renderAllRequestValidateHost();
       }).catch(error => {
         Swal.fire({
@@ -171,6 +171,7 @@ App = {
           confirmButtonText: 'Close'
         })
       });
+
     }
     
   },

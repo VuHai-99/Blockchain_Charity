@@ -14,7 +14,9 @@ class HostController extends Controller
     
     public function listProject()
     {
-        return view('host.list_project');
+        $campaigns = Campaign::all();
+        // dd($campaigns);
+        return view('host.list_campaign',compact('campaigns'));
     }
 
     public function createProject()
@@ -26,16 +28,17 @@ class HostController extends Controller
         return view('host.list_my_project');
     }
 
-    public function specificProject(String $blockchainAddress){
-        return view('host.specific_project');
-    }
+    // public function specificProject(String $blockchainAddress){
+    //     return view('host.specific_project');
+    // }
 
     public function validateHost(){
         return view('host.validate_host');
     }
 
-    public function campaignDetail()
+    public function campaignDetail($blockchainAddress)
     {
-        return view('campaign.campaign_detail');
+        $campaign = Campaign::findOrFail($blockchainAddress);
+        return view('campaign.campaign_detail',compact('campaign'));
     }
 }

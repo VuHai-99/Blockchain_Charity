@@ -18,6 +18,12 @@ class CreateBlockchainRequestsTable extends Migration
             $table->integer('request_type');
             $table->string('amount')->nullable();
             $table->string('requested_user_address');
+            $table->string('campaign_address')->nullable();
+            $table->string('campaign_name')->nullable();
+            $table->date('date_start')->nullable();
+            $table->date('date_end')->nullable();
+            $table->string('target_contribution_amount')->nullable();
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

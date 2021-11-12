@@ -112,10 +112,11 @@ App = {
           text: 'Successful action',
           confirmButtonText: 'Close'
         })
-        axios.post(laroute.route('store.blockchain.request'), {
-          'request_id': current_account,
-          'amount': '',
-          'request_type': 0,
+        axios.post(('/api/store-blockchain-request'), {
+          "request_id": current_account,
+          "amount": "",
+          "request_type": 0,
+          "requested_user_address": current_account
         }).then(function(response){
           if(response.status == 200){
             console.log('Successfully store new validated request in database');

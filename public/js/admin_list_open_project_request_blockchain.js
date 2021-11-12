@@ -111,7 +111,7 @@ App = {
     if(response == true){
       await App.campaignfactory.newCampaign(requestIdBytes32)
       .then((result) => {
-        // console.log(result);
+        console.log(result);
         const campaign_contract_address = result.logs[0].args.new_campaign_address;
         // const minimum_contribution = result.logs[0].args.minimum_contribution.toNumber();
         // const host_address = result.logs[0].args.host;
@@ -124,17 +124,20 @@ App = {
           text: 'Successfully create contract : '+campaign_contract_address,
           confirmButtonText: 'Close'
         })
-        // axios.post(laroute.route('create.blockchain.campaign'), {
-        //   'campaign_contract_address': campaign_contract_address,
-        //   'minimum_contribution': minimum_contribution,
-        //   'host_address': host_address,
-        // }).then(function(response){
-        //   if(response.status == 200){
-        //     console.log('Successfully store new campaign in database');
-        //   } else {
-        //     console.log('UnSuccessfully store new campaign in database');
-        //   }
-        // })
+
+
+        axios.post(('/api/decide-blockchain-request'), {
+          "request_id": requestIdBytes32,
+          "decide_type": "Accept",
+          "newCampaignAddress": campaign_contract_address,
+          "request_type" : 1
+        }).then(function(response){
+          if(response.status == 200){
+            console.log('Successfully accept create new campaign in database');
+          } else {
+            console.log('UnSuccessfully accept create new campaign in database');
+          }
+        })
         App.renderAllRequestOpenCampaign();
       }).catch(error => {
         Swal.fire({
@@ -154,17 +157,17 @@ App = {
           text: 'Successfully Reject create contract request',
           confirmButtonText: 'Close'
         })
-        // axios.post(laroute.route('create.blockchain.campaign'), {
-        //   'campaign_contract_address': campaign_contract_address,
-        //   'minimum_contribution': minimum_contribution,
-        //   'host_address': host_address,
-        // }).then(function(response){
-        //   if(response.status == 200){
-        //     console.log('Successfully store new campaign in database');
-        //   } else {
-        //     console.log('UnSuccessfully store new campaign in database');
-        //   }
-        // })
+        axios.post(('/api/decide-blockchain-request'), {
+          "request_id": requestIdBytes32,
+          "decide_type": "Decline",
+          "request_type" : 1
+        }).then(function(response){
+          if(response.status == 200){
+            console.log('Successfully decline create new campaign in database');
+          } else {
+            console.log('UnSuccessfully decline create new campaign in database');
+          }
+        })
         App.renderAllRequestOpenCampaign();
       }).catch(error => {
         Swal.fire({

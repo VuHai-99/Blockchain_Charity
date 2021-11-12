@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Model\Campaign;
 
 class DonatorController extends Controller
 {
@@ -14,7 +15,8 @@ class DonatorController extends Controller
 
     public function listProject()
     {
-        return view('donator.list_project');
+        $campaigns = Campaign::all();
+        return view('donator.list_project',compact('campaigns'));
     }
 
     public function profile()

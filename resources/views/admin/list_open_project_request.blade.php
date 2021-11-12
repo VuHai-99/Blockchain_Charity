@@ -1,4 +1,4 @@
-@extends('layouts.default')
+ @extends('layouts.default')
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/host_list_project.css') }}">

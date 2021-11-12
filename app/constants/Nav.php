@@ -26,6 +26,10 @@ class Nav
             'url' => 'admin.validate-host-request.list',
             'name' => 'Approve Host',
         ],
+        [
+            'url' => 'admin.withdraw-money-request.list',
+            'name' => 'Approve Withdrawal',
+        ],
         // [
         //     'url' => 'admin.withdraw-money-request.list',
         //     'name' => 'Approve Withdraw ',

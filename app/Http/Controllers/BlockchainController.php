@@ -39,89 +39,71 @@ class BlockchainController extends Controller
         $new_transaction->amount = $request->amount;
         $new_transaction->save();
     }
-    public function storeBlockchainRequest(Request $request)
-    {
-        
-        $new_blockchain_request = new BlockchainRequest();
-        // dd($new_blockchain_request);
-        $new_blockchain_request->request_id	 = $request->request_id	;
-        $new_blockchain_request->request_type = $request->request_type;
-        $new_blockchain_request->amount = $request->amount;
-        $new_blockchain_request->requested_user_address = $request->requested_user_address;
-        $new_blockchain_request->save();
-
-        if($new_blockchain_request->request_type == 0){
-            // valid host request
-            $host = User::findOrFail($new_blockchain_request->requested_user_address);
-            $host->validate_state = 1;
-            $host->save();
-        }
-        return response('Store Successfully');   
-    }
     
-    public function decideBlockchainRequest(Request $request)
-    {
-        // 0 is valid host, 1 is open campaign, 2 is withdraw money
-        $request_id = $request->request_id;
-        $decide_type= $request->decide_type;
-        $newCampaignAddress = "";
-        if($request->newCampaignAddress){
-            $newCampaignAddress = $request->newCampaignAddress;
-        }
+    
+    // public function decideBlockchainRequest(Request $request)
+    // {
+    //     // 0 is valid host, 1 is open campaign, 2 is withdraw money
+    //     $request_id = $request->request_id;
+    //     $decide_type= $request->decide_type;
+    //     $newCampaignAddress = "";
+    //     if($request->newCampaignAddress){
+    //         $newCampaignAddress = $request->newCampaignAddress;
+    //     }
         
-        $blockchain_request = BlockchainRequest::findOrFail($request_id);
-        if($blockchain_request){
-            if($decide_type == 'Accept'){
-                if($blockchain_request->request_type == 0){
-                    // valid host request
-                    $host = User::findOrFail($blockchain_request->requested_user_address);
-                    $host->validate_state = 2;
-                    $host->save();
+    //     $blockchain_request = BlockchainRequest::findOrFail($request_id);
+    //     if($blockchain_request){
+    //         if($decide_type == 'Accept'){
+    //             if($blockchain_request->request_type == 0){
+    //                 // valid host request
+    //                 $host = User::findOrFail($blockchain_request->requested_user_address);
+    //                 $host->validate_state = 2;
+    //                 $host->save();
                    
-                } elseif ($blockchain_request->request_type == 1){
-                    // open campaign request
-                    $newCampaign = new Campaign();
-                    $newCampaign->campaign_address = $newCampaignAddress;
-                    $newCampaign->host_address = $blockchain_request->requested_user_address;
-                    $newCampaign->minimum_contribution = $blockchain_request->amount;
-                    $newCampaign->save();
+    //             } elseif ($blockchain_request->request_type == 1){
+    //                 // open campaign request
+    //                 $newCampaign = new Campaign();
+    //                 $newCampaign->campaign_address = $newCampaignAddress;
+    //                 $newCampaign->host_address = $blockchain_request->requested_user_address;
+    //                 $newCampaign->minimum_contribution = $blockchain_request->amount;
+    //                 $newCampaign->save();
                    
-                } elseif ($blockchain_request->request_type == 2){
-                    // withdraw money request
+    //             } elseif ($blockchain_request->request_type == 2){
+    //                 // withdraw money request
                    
-                } 
-                $blockchain_request->delete();
-            } elseif ($decide_type == 'Decline'){
-                if($blockchain_request->request_type == 0){
-                    // valid host request
-                    $host = User::findOrFail($blockchain_request->requested_user_address);
-                    $host->validate_state = 0;
-                    $host->save();
+    //             } 
+    //             $blockchain_request->delete();
+    //         } elseif ($decide_type == 'Decline'){
+    //             if($blockchain_request->request_type == 0){
+    //                 // valid host request
+    //                 $host = User::findOrFail($blockchain_request->requested_user_address);
+    //                 $host->validate_state = 0;
+    //                 $host->save();
                    
-                } elseif ($blockchain_request->request_type == 1){
-                    // open campaign request
-                } elseif ($blockchain_request->request_type == 2){
-                    // withdraw money request
+    //             } elseif ($blockchain_request->request_type == 1){
+    //                 // open campaign request
+    //             } elseif ($blockchain_request->request_type == 2){
+    //                 // withdraw money request
                    
-                } 
-                $blockchain_request->delete();
-            } elseif ($decide_type == 'Cancel'){
-                if($blockchain_request->request_type == 0){
-                    // valid host request
-                    $host = User::findOrFail($blockchain_request->requested_user_address);
-                    $host->validate_state = 0;
-                    $host->save();
+    //             } 
+    //             $blockchain_request->delete();
+    //         } elseif ($decide_type == 'Cancel'){
+    //             if($blockchain_request->request_type == 0){
+    //                 // valid host request
+    //                 $host = User::findOrFail($blockchain_request->requested_user_address);
+    //                 $host->validate_state = 0;
+    //                 $host->save();
                    
-                } elseif ($blockchain_request->request_type == 1){
-                    // open campaign request
-                } elseif ($blockchain_request->request_type == 2){
-                    // withdraw money request
+    //             } elseif ($blockchain_request->request_type == 1){
+    //                 // open campaign request
+    //             } elseif ($blockchain_request->request_type == 2){
+    //                 // withdraw money request
                    
-                } 
-                $blockchain_request->delete();
-            }
-        }
-    }
+    //             } 
+    //             $blockchain_request->delete();
+    //         }
+    //     }
+    // }
 
     public function createValidateHostRequest(Request $request){
         $requested_to_be_host_address = $request->requested_to_be_host_address;

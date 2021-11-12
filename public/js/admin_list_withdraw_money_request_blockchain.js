@@ -97,8 +97,8 @@ App = {
                       <h6 class="card-subtitle mb-2"><span class="text-muted">Amount of money:</span> `+ temp[2].toNumber()+`</h6>
                   </div>
                   <div class="card-footer">
-                    <a type="button" class="btn btn-success text-light" onclick="App.responseRequestWithdrawMoney('`+totalRequestWithdrawMoney[i]+`',true); return false"> Đồng ý </a>
-                    <a type="button" class="btn btn-danger text-light" onclick="App.responseRequestWithdrawMoney('`+totalRequestWithdrawMoney[i]+`',false); return false"> Từ chối </a>
+                    <a type="button" class="btn btn-success text-light" onclick="App.responseRequestWithdrawMoney('`+totalRequestWithdrawMoney[i]+`',true,`+ temp[2]+`); return false"> Đồng ý </a>
+                    <a type="button" class="btn btn-danger text-light" onclick="App.responseRequestWithdrawMoney('`+totalRequestWithdrawMoney[i]+`',false,`+ temp[2]+`); return false"> Từ chối </a>
                   </div>
               </div>
             </form>
@@ -107,34 +107,43 @@ App = {
       campaignTemplate.append(campaignItem)
     }
   },
-  responseRequestWithdrawMoney: async (requestedWithdrawMoneyID, response) => {
+  responseRequestWithdrawMoney: async (requestedWithdrawMoneyID, response,withdrawValue) => {
     if(response == true){
       await App.campaignfactory.withDrawMoneyFunction(requestedWithdrawMoneyID)
       .then((result) => {
-        // console.log(result);
-        // const campaign_contract_address = result.logs[0].args.new_campaign_address;
-        // const minimum_contribution = result.logs[0].args.minimum_contribution.toNumber();
-        // const host_address = result.logs[0].args.host;
-        // const admin_address = result.logs[0].args.admin;
-        // // const minimum_contribution = donateValueId;
-        
-        // console.log(campaign_contract_address,minimum_contribution,host_address,admin_address);
+        console.log(result);
+        const host_contract_address = result.receipt.from;
+        const campaign_contract_address = result.receipt.to;
+        const transaction_hash = result.receipt.transactionHash;
+        const amount_in_wei = withdrawValue;
         Swal.fire({
           title: 'Successful!',
           text: 'Successfully allow money withdrawal ',
           confirmButtonText: 'Close'
         })
-        // axios.post(laroute.route('create.blockchain.campaign'), {
-        //   'campaign_contract_address': campaign_contract_address,
-        //   'minimum_contribution': minimum_contribution,
-        //   'host_address': host_address,
-        // }).then(function(response){
-        //   if(response.status == 200){
-        //     console.log('Successfully store new campaign in database');
-        //   } else {
-        //     console.log('UnSuccessfully store new campaign in database');
-        //   }
-        // })
+        axios.post(('/api/decide-blockchain-request'), {
+          "request_id": requestedWithdrawMoneyID,
+          "decide_type": "Accept"
+        }).then(function(response){
+          if(response.status == 200){
+            console.log('Successfully accept withdraw money campaign in database');
+          } else {
+            console.log('UnSuccessfully accept withdraw money campaign in database');
+          }
+        })
+        axios.post(('/api/store-transaction'), {
+          "transaction_hash": transaction_hash,
+          "sender_address": campaign_contract_address,
+          "receiver_address": host_contract_address,
+          "transaction_type" : 1,
+          "amount":amount_in_wei
+        }).then(function(response){
+          if(response.status == 200){
+            console.log('Successfully store donation info in database');
+          } else {
+            console.log('UnSuccessfully store donation info in database');
+          }
+        })
         App.renderAllRequestWithdrawMoney();
       }).catch(error => {
         Swal.fire({
@@ -154,17 +163,16 @@ App = {
           text: 'Successfully Reject money withdrawal',
           confirmButtonText: 'Close'
         })
-        // axios.post(laroute.route('create.blockchain.campaign'), {
-        //   'campaign_contract_address': campaign_contract_address,
-        //   'minimum_contribution': minimum_contribution,
-        //   'host_address': host_address,
-        // }).then(function(response){
-        //   if(response.status == 200){
-        //     console.log('Successfully store new campaign in database');
-        //   } else {
-        //     console.log('UnSuccessfully store new campaign in database');
-        //   }
-        // })
+        axios.post(('/api/decide-blockchain-request'), {
+          "request_id": requestedWithdrawMoneyID,
+          "decide_type": "Decline"
+        }).then(function(response){
+          if(response.status == 200){
+            console.log('Successfully reject withdraw money campaign in database');
+          } else {
+            console.log('UnSuccessfully reject withdraw money campaign in database');
+          }
+        })
         App.renderAllRequestWithdrawMoney();
       }).catch(error => {
         Swal.fire({

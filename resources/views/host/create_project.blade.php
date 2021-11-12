@@ -8,10 +8,19 @@
     <div class="row wrap-form">
         <form onSubmit="App.createCampaign(); return false">
             <div class="form-group">
-                <label for="project_name">Tên dự án</label>
-                <input type="text" name="project_name" id="project_name" {{ old('name') }} class="form-control"
+                <label for="campaign_name">Tên dự án</label>
+                <input type="text" name="campaign_name" id="campaign_name" {{ old('name') }} class="form-control"
                     placeholder="Nhập tên dự án ...">
-                @error('name')
+                @error('campaign_name')
+                    <p class="text-error">{{ $message }}</p>
+                @enderror
+            </div>
+            <div class="form-group">
+                <label for="target_contribution_amount">Số tiền dự kiến kêu gọi</label>
+                <input type="text" name="target_contribution_amount" id="target_contribution_amount"
+                    value="{{ old('target_contribution_amount') }}" class="form-control"
+                    placeholder="Số tiền ủng hộ tối thiểu (wei)...">
+                @error('target_contribution_amount')
                     <p class="text-error">{{ $message }}</p>
                 @enderror
             </div>
@@ -26,7 +35,7 @@
             </div>
             <div class="form-group">
                 <label for="date_start">Ngày bắt đầu</label>
-                <input type="text" name="date_start" id="date_start" value="{{ old('date_start') }}" class="form-control"
+                <input type="date" name="date_start" id="date_start" value="{{ old('date_start') }}" class="form-control"
                     placeholder="Ngày bắt đầu dự án (d-m-Y) ...">
                 @error('date_start')
                     <p class="text-error">{{ $message }}</p>
@@ -34,24 +43,15 @@
             </div>
             <div class="form-group">
                 <label for="date_end">Ngày kết thúc</label>
-                <input type="text" name="date_end" id="date_end" {{ old('date_end') }} class="form-control"
+                <input type="date" name="date_end" id="date_end" {{ old('date_end') }} class="form-control"
                     placeholder="Ngày kết thúc dự án (d-m-Y) ...">
                 @error('date_end')
                     <p class="text-error">{{ $message }}</p>
                 @enderror
             </div>
             <div class="form-group">
-                <label>Mô tả dự án</label>
-                <textarea name="description" id="description" cols="30" rows="10" class="ckeditor"></textarea>
-                <script type="text/javascript">
-                    var editor = CKEDITOR.replace('description', {
-                        language: 'vi',
-                        filebrowserImageBrowseUrl: "../../theme/libs/ckfinder/ckfinder.html?Type=Images",
-                        filebrowserFlashBrowseUrl: "../../theme/libs/ckfinder/ckfinder.html?Type=Flash",
-                        filebrowserImageUploadUrl: "../../theme/libs/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images",
-                        filebrowserFlashUploadUrl: "../../theme/libs/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash",
-                    });
-                </script>
+                <label for="description">Mô tả dự án</label>
+                <textarea name="description" id="description" class="form-control"></textarea>
                 @error('description')
                     <p class="text-error">{{ $message }}</p>
                 @enderror
