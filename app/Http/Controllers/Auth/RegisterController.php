@@ -99,28 +99,26 @@ class RegisterController extends Controller
         // $data['wallet_type'] = 0;
         $data['image_card_front'] =  $this->uploadImageService->upload($request->image_card_front);
         $data['image_card_back'] = $this->uploadImageService->upload($request->image_card_back);
-        if($request->wallet_type == 0){
-        
+        if ($request->wallet_type == 0) {
+
             $data['user_address'] = $request->wallet_address;
             User::create($data);
             if ($request->role == 1) {
-                return redirect(route('host.campaign'));
+                return redirect(route('host.home'));
             } else {
-                return redirect(route('donator.campaign'));
+                return redirect(route('donator.home'));
             }
-        } elseif($request->wallet_type == 1){
-            $response = Http::get('localhost:3000/create/newAccount'); 
+        } elseif ($request->wallet_type == 1) {
+            $response = Http::get('localhost:3000/create/newAccount');
             $newAccount = $response->json();
             $data['user_address'] = $newAccount['address'];
-            $data['private_key'] = substr($newAccount['privateKey'],2);
+            $data['private_key'] = substr($newAccount['privateKey'], 2);
             User::create($data);
             if ($request->role == 1) {
-                return redirect(route('host.campaign'));    
+                return redirect(route('host.home'));
             } else {
-                return redirect(route('donator.campaign'));
+                return redirect(route('donator.home'));
             }
         }
-        
-        
     }
 }

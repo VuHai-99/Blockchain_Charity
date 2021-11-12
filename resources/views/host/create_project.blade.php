@@ -1,5 +1,8 @@
 @extends('layouts.default')
 
+@section('css')
+    <link rel="stylesheet" href="{{ asset('css/create_campaign.css') }}">
+@endsection
 @section('page-name', 'Thêm dự án')
 @section('content')
     <div class="row wrap-form">
@@ -14,7 +17,8 @@
             </div>
             <div class="form-group">
                 <label for="minimum_contribution">Số tiền ủng hộ tối thiểu</label>
-                <input type="text" name="minimum_contribution" id="minimum_contribution" value="{{ old('minimum_contribution') }}" class="form-control"
+                <input type="text" name="minimum_contribution" id="minimum_contribution"
+                    value="{{ old('minimum_contribution') }}" class="form-control"
                     placeholder="Số tiền ủng hộ tối thiểu (wei)...">
                 @error('minimum_contribution')
                     <p class="text-error">{{ $message }}</p>
@@ -60,15 +64,15 @@
 @endsection
 
 @push('scripts')
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="{{ asset('js/bn.js') }}"></script>
-<script src="{{ asset('js/app.js') }}"></script>
-<script src="{{ asset('js/host_create_project_blockchain.js') }}"></script>
-<!-- <script src="{{ asset('js/contract.js') }}"></script> -->
-<script src="{{ asset('js/web3.min.js') }}"></script>
-<script src="{{ asset('js/truffle-contract.js') }}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-<script type="text/javascript" src="{{ asset('js/laroute.js') }}"></script>
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="{{ asset('js/bn.js') }}"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/host_create_project_blockchain.js') }}"></script>
+    <!-- <script src="{{ asset('js/contract.js') }}"></script> -->
+    <script src="{{ asset('js/web3.min.js') }}"></script>
+    <script src="{{ asset('js/truffle-contract.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script type="text/javascript" src="{{ asset('js/laroute.js') }}"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endpush
 @stack('scripts')

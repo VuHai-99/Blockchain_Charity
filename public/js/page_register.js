@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -132,34 +132,18 @@ $(function () {
   });
   uploadImage('card1', 'img1');
   uploadImage('card2', 'img2');
-
-  if ($('#cold-wallet').prop('checked') == true) {
-    $('.wallet_address').show();
-  }
-
-  $('#hot-wallet').change(function () {
-    if ($(this).prop("checked") == true) {
-      $('.wallet_address').hide();
-    }
-  });
-  $('#cold-wallet').change(function () {
-    if ($(this).prop("checked") == true) {
-      $('.wallet_address').show();
-    }
-  });
-
 });
 
 /***/ }),
 
-/***/ 1:
+/***/ 2:
 /*!****************************************************!*\
   !*** multi ./resources/js/pages/register/index.js ***!
   \****************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\resources\js\pages\register\index.js */"./resources/js/pages/register/index.js");
+module.exports = __webpack_require__(/*! F:\xampp\htdocs\blockchain_charity_repo\resources\js\pages\register\index.js */"./resources/js/pages/register/index.js");
 
 
 /***/ })
