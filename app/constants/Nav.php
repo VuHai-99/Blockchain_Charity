@@ -73,7 +73,7 @@ class Nav
         ],
         [
             'url' => 'host.validate.host',
-            'name' => 'Create Request',
+            'name' => 'Validate Account',
         ],
         [
             'url' => 'host.campaign.create',

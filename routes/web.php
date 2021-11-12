@@ -70,6 +70,7 @@ Route::prefix('charity')
                 Route::post('store-campaign', 'HostController@store')->name('campaign.store');
                 Route::get('campaign_detail/{id}', 'HostController@campaignDetail')->name('campaign.detail');
                 Route::get('validate-host', 'HostController@validateHost')->name('validate.host');
+                
             });
         Route::get('campaign/list-donator', 'DonatorController@listDonator')->name('campaign.donator');
     });
@@ -77,5 +78,5 @@ Route::prefix('charity')
 Route::get('/', 'FrontEndController@home')->name('home');
 Route::get('/campaign', 'FrontendController@campaign')->name('campaign');
 Route::get('/campaign/{id}', 'FrontendController@detail')->name('campaign.detail');
-
 Auth::routes(['verify' => true]);
+Route::get('/store-blockchain-request', 'Api\BlockchainController@storeBlockchainRequest')->name('store.blockchain.request');

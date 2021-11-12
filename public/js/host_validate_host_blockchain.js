@@ -59,7 +59,15 @@ App = {
     App.contracts.Campaign = TruffleContract(campaign)
     App.contracts.Campaign.setProvider(App.web3Provider)
   },
-
+  getAccounts: (callback) => {
+    web3.eth.getAccounts((error, result) => {
+        if (error) {
+            console.log(error);
+        } else {
+            callback(result);
+        }
+    });
+  },
   render: async () => {
     await App.renderValidateState();
   },
@@ -92,7 +100,10 @@ App = {
     }
   },
   requestForValidation: async (data) => {
-
+    let current_account;
+    App.getAccounts(function (result) {
+        current_account = result[0];
+    });
     await App.campaignfactory.requestToBeValidHost()
       .then((result) => {
 
@@ -100,6 +111,17 @@ App = {
           title: 'Successful!',
           text: 'Successful action',
           confirmButtonText: 'Close'
+        })
+        axios.post(laroute.route('store.blockchain.request'), {
+          'request_id': current_account,
+          'amount': '',
+          'request_type': 0,
+        }).then(function(response){
+          if(response.status == 200){
+            console.log('Successfully store new validated request in database');
+          } else {
+            console.log('UnSuccessfully store new validated request in database');
+          }
         })
         App.renderValidateState();
       }).catch(error => {   
