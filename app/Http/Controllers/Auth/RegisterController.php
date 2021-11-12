@@ -115,7 +115,7 @@ class RegisterController extends Controller
             $data['private_key'] = substr($newAccount['privateKey'],2);
             User::create($data);
             if ($request->role == 1) {
-                return redirect(route('host.campaign'));
+                return redirect(route('host.campaign'));    
             } else {
                 return redirect(route('donator.campaign'));
             }
