@@ -37,4 +37,15 @@ class DonatorController extends Controller
     {
         return view('campaign.list_donator');
     }
+
+    //WS 
+    public function WS_listProject(){
+        $campaigns = Campaign::all();
+        return view('donator.list_project_ws',compact('campaigns'));   
+    }
+
+    public function WS_campaignDetail(String $blockchainAddress){
+        $campaign = Campaign::findOrFail($blockchainAddress);
+        return view('donator.specific_project_ws',compact('campaign'));
+    }
 }

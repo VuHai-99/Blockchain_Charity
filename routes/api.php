@@ -21,3 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/store-blockchain-request', 'Api\BlockchainController@storeBlockchainRequest')->name('store.blockchain.request'); 
 Route::post('/decide-blockchain-request', 'Api\BlockchainController@decideBlockchainRequest')->name('decide.blockchain.request'); 
 Route::post('/store-transaction', 'Api\BlockchainController@storeTransaction')->name('store.transaction'); 
+Route::post('/donate/campaign', 'Api\BlockchainController@donateToCampaign')->name('donate.campaign');
+Route::post('/withdraw/campaign', 'Api\BlockchainController@withdrawCampaign')->name('withdraw.campaign');
+Route::post('/host/validate/request', 'Api\BlockchainController@hostValidateRequest')->name('validate.tobehost.request');
+Route::post('/host/openCampaign/request', 'Api\BlockchainController@hostOpenCampaignRequest')->name('validate.openCampaign.request');

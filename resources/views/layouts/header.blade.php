@@ -7,9 +7,19 @@ if (Auth::guard('admin')->check()) {
 }
 if (Auth::check()) {
     if (Auth::user()->role == 1) {
-        $navs = $NAV::NAV_ADMIN_HOST;
+        if (Auth::user()->wallet_type == 0) {
+            $navs = $NAV::NAV_ADMIN_HOST;
+        } else {
+            $navs = $NAV::NAV_ADMIN_HOST_WS;
+        }
+        
     } elseif (Auth::user()->role == 0) {
-        $navs = $NAV::NAV_ADMIN_DONATOR;
+        if (Auth::user()->wallet_type == 0) {
+            $navs = $NAV::NAV_ADMIN_DONATOR;
+        } else {
+            $navs = $NAV::NAV_ADMIN_DONATOR_WS;
+        }
+        
     }
 }
 if (!Auth::check() && !Auth::guard('admin')->check()) {

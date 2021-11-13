@@ -66,6 +66,31 @@ class Nav
         ],
     ];
 
+    const NAV_ADMIN_DONATOR_WS = [
+        [
+            'url' => 'donatorws.home',
+            'name' => 'Home',
+        ],
+        [
+            'url' => 'donatorws.campaign',
+            'name' => 'List Campaign',
+        ],
+        [
+            'url' => '',
+            'name' => 'My Wallet',
+            //'icon' => 'images/icons/walet.png'
+        ],
+        [
+            'url' => 'profile',
+            'name' => 'Profile',
+        ],
+        [
+            'url' => 'logout',
+            'name' => 'Logout',
+        ],
+    ];
+
+
     const NAV_ADMIN_HOST = [
         [
             'url' => 'host.home',
@@ -98,6 +123,41 @@ class Nav
         ],
 
     ];
+
+
+    const NAV_ADMIN_HOST_WS = [
+        [
+            'url' => 'hostws.home',
+            'name' => 'Home',
+        ],
+        [
+            'url' => 'hostws.campaign',
+            'name' => 'List Campaign',
+        ],
+        [
+            'url' => 'hostws.validate.host',
+            'name' => 'Validate Account',
+        ],
+        [
+            'url' => 'hostws.campaign.create',
+            'name' => 'Create Campaign',
+        ],
+        [
+            'url' => '',
+            'name' => 'Profile',
+        ],
+        [
+            'url' => '',
+            'name' => 'My Wallet',
+            //'icon' => 'images/icons/walet.png'
+        ],
+        [
+            'url' => 'logout',
+            'name' => 'Logout',
+        ],
+
+    ];
+
 
     const NAV_HOME = [
         [

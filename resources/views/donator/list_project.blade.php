@@ -44,15 +44,3 @@
     </div>
 @endsection
 
-@push('scripts')
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="{{ asset('js/app.js') }}"></script>
-    <script src="{{ asset('js/host_list_project_blockchain.js') }}"></script>
-    <!-- <script src="{{ asset('js/contract.js') }}"></script> -->
-    <script src="{{ asset('js/web3.min.js') }}"></script>
-    <script src="{{ asset('js/truffle-contract.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-    <script type="text/javascript" src="{{ asset('js/laroute.js') }}"></script>
-    <script src="{{ asset('js/page_campaign.js') }}"></script>
-@endpush
-@stack('scripts')

@@ -66,7 +66,7 @@ class Kernel extends HttpKernel
         'verify_otp' => \App\Http\Middleware\TowFactorAuthenticate::class,
         'admin' => \App\Http\Middleware\AdminMiddleware::class,
         'host-wallet-hard' => \App\Http\Middleware\HostWalletHard::class,
-        'host-wallet-host' => \App\Http\Middleware\HostWalletSoft::class,
+        'host-wallet-soft' => \App\Http\Middleware\HostWalletSoft::class,
         'donator-wallet-hard' => \App\Http\Middleware\DonatorWallHard::class,
         'donator-wallet-soft' => \App\Http\Middleware\DonatorWallSoft::class
     ];

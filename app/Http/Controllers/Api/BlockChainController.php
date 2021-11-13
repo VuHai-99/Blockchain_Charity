@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Model\BlockchainRequest;
 use App\Model\Campaign;
 use App\Model\Transaction;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 class BlockChainController extends Controller
 {
     public function storeBlockchainRequest(Request $request)
@@ -40,6 +42,108 @@ class BlockChainController extends Controller
             return response()->json($e,400);
         }
     
+    }
+    public function donateToCampaign(Request $request){
+        $campaign_address = $request->campaign_address;
+        $donateAPI = 'http://localhost:3000/host/donate/campaign/';
+        $donateAPI.=$campaign_address;
+
+        $response = Http::post($donateAPI, [
+            // 'donator_address' => Auth::user()->user_address,
+            'donator_address' => $request->user_address,
+            'amoutOfEthereum' => $request->donation_amount, 
+        ]);
+        if($response->status() == 200){
+            $transaction_info = $response->json();
+            $requestToValidateHost = new Transaction();
+            $requestToValidateHost->transaction_hash = $transaction_info['transactionHash'];
+            $requestToValidateHost->sender_address = $transaction_info['from'];
+            $requestToValidateHost->receiver_address = $transaction_info['to'];
+            $requestToValidateHost->transaction_type = 0;
+            $requestToValidateHost->amount = $request->donation_amount;
+            $requestToValidateHost->save();
+            return redirect()->back();
+        } else {
+            return redirect()->back()->with($response);
+        }
+    }
+    
+    public function withdrawCampaign(Request $request){
+        // $campaign_address = $request->campaign_address;
+        $withdrawAPI = 'http://localhost:3000/host/withdraw/campaign/request';
+
+        $response = Http::post($withdrawAPI, [
+            // 'donator_address' => Auth::user()->user_address,
+            'validated_host_address' => $request->user_address,
+            'amount_of_money' => $request->withdrawal_amount, 
+            "campaign_adress_target" =>  $request->campaign_address
+        ]);
+        if($response->status() == 200){
+            $transaction_info = $response->json();
+            $requestToWithdrawMoney = new BlockchainRequest();
+            $requestToWithdrawMoney->request_id = $transaction_info['request_id'];
+            $requestToWithdrawMoney->requested_user_address = $transaction_info['requested_user_address'];
+            $requestToWithdrawMoney->amount = $transaction_info['amount'];
+            $requestToWithdrawMoney->campaign_address = $transaction_info['campaign_address'];
+            $requestToWithdrawMoney->request_type = 1;
+            $requestToWithdrawMoney->save();
+            return redirect()->back();
+        } else {
+            return $response;
+        }
+        
+    }
+
+    public function hostValidateRequest(Request $request){
+        // $campaign_address = $request->campaign_address;
+        $withdrawAPI = 'http://localhost:3000/host/validate/request';
+
+        $response = Http::post($withdrawAPI, [
+            // 'donator_address' => Auth::user()->user_address,
+            'requested_to_be_host_address' => $request->user_address,
+        ]);
+        if($response->status() == 200){
+            $requestToWithdrawMoney = new BlockchainRequest();
+            $requestToWithdrawMoney->request_id = $request->user_address;
+            $requestToWithdrawMoney->requested_user_address = $request->user_address;
+            $requestToWithdrawMoney->request_type = 0;
+            $requestToWithdrawMoney->save();
+
+            $user = User::findOrFail($request->user_address);
+            $user->validate_state = 1;
+            $user->save();
+            return redirect()->back();
+        } else {
+            return $response;
+        }
+        
+    }
+    
+    public function hostOpenCampaignRequest(Request $request){
+        $withdrawAPI = 'http://localhost:3000/host/create/campaign/request';
+
+        $response = Http::post($withdrawAPI, [
+            // 'donator_address' => Auth::user()->user_address,
+            'validated_host_address' => $request->user_address,
+            "minimum_contribution" => $request->minimum_contribution
+        ]);
+        if($response->status() == 200){
+            $transaction_info = $response->json();
+            $requestToWithdrawMoney = new BlockchainRequest();
+            $requestToWithdrawMoney->request_id = $transaction_info['request_id'];
+            $requestToWithdrawMoney->requested_user_address = $request->user_address;
+            $requestToWithdrawMoney->request_type = 1;
+            $requestToWithdrawMoney->amount = $request->minimum_contribution;
+            $requestToWithdrawMoney->campaign_name = $request->campaign_name;
+            $requestToWithdrawMoney->date_start = $request->date_start;
+            $requestToWithdrawMoney->date_end = $request->date_end;
+            $requestToWithdrawMoney->target_contribution_amount = $request->target_contribution_amount;
+            $requestToWithdrawMoney->description = $request->description;
+            $requestToWithdrawMoney->save();
+            return redirect()->back();
+        } else {
+            return $response;
+        }
     }
 
     public function decideBlockchainRequest(Request $request)

@@ -113,6 +113,8 @@ App = {
           text: 'Successful action',
           confirmButtonText: 'Close'
         })
+        
+        
         axios.post(('/api/store-blockchain-request'), {
           "request_id": newContractId,
           "amount": minimum_contribution,
@@ -147,3 +149,5 @@ App = {
 $(window).on('load', function () {
   App.load()
 });
+
+// console.log(WALLET_TYPE)

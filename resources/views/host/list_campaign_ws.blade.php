@@ -15,7 +15,7 @@
             @foreach ($campaigns as $campaign)
                 <div class="event-item row">
                     <div class="image">
-                        <a href="{{ route('host.campaign.detail', $campaign->campaign_address) }}"><img
+                        <a href="{{ route('hostws.campaign.detail', $campaign->campaign_address) }}"><img
                                 src="https://tuyengiao.vn/Uploads/2021/9/20/29/tu-viec-thien-nguyen-cua-cac-nghe-si-den-chuyen-minh-bach-trong-sao-ke.jpg"
                                 alt=""></a>
                     </div>
@@ -31,10 +31,10 @@
                             </div>
                         </div>
                         <div class="descripton">
-                            {{$campaign->description}}... <a class="read-more" href="{{ route('host.campaign.detail',  $campaign->campaign_address) }}">xem thêm</a>
+                            {{$campaign->description}}... <a class="read-more" href="{{ route('hostws.campaign.detail',  $campaign->campaign_address) }}">xem thêm</a>
                         </div>
                         <div class="donate">
-                            <a class="btn btn-donate" href="{{ route('host.campaign.detail',  $campaign->campaign_address) }}">DONATE</a>
+                            <a class="btn btn-donate" href="{{ route('hostws.campaign.detail',  $campaign->campaign_address) }}">DONATE</a>
                         </div>
                     </div>
                 </div>
