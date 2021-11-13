@@ -34,4 +34,18 @@ $(function() {
     })
     uploadImage('card1', 'img1');
     uploadImage('card2', 'img2');
+
+    if ($('#cold-wallet').prop('checked') == true) {
+        $('.wallet_address').show();
+    }
+    $('#hot-wallet').change(function() {
+        if ($(this).prop("checked") == true) {
+            $('.wallet_address').hide();
+        }
+    });
+    $('#cold-wallet').change(function() {
+        if ($(this).prop("checked") == true) {
+            $('.wallet_address').show();
+        }
+    });
 })
