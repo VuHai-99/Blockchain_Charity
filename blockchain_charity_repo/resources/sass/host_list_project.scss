@@ -1,0 +1,70 @@
+@import "variables";
+.create-project {
+    width: 92%;
+    justify-content: flex-end;
+    margin: 30px auto;
+    button {
+        border-radius: 8px;
+        background-color: $cyan;
+        font-size: 1rem;
+    }
+}
+
+.list-campaign {
+    margin: 50px auto;
+    .campaign {
+        width: 25%;
+        padding: 10px;
+        margin-bottom: 20px;
+        .image {
+            width: 100%;
+            height: auto;
+            img {
+                width: 100%;
+            }
+        }
+        .information {
+            padding: 30px 0px;
+            background-color: $white;
+            div {
+                text-align: center;
+            }
+            .address {
+                font-size: 1rem;
+                font-weight: 600;
+            }
+            .host-name {
+                color: black;
+                font-weight: 600;
+                font-size: 1.2rem;
+            }
+            .action {
+                margin-top: 20px;
+                .detail {
+                    background-color: $cyan;
+                    color: $white;
+                    font-weight: 600;
+                    width: 120px;
+                }
+                .donate {
+                    background-color: $orange;
+                    color: $white;
+                    font-weight: 600;
+                    width: 120px;
+                }
+            }
+        }
+    }
+}
+
+.slider_area {
+    .slider_bg_1 {
+        background-image: url('https://www.globalgiving.org/img/banners/hero_give_lg.jpg');
+        height: 25em;
+    }
+    .single_slider .slider_text {
+        h3 {
+            font-size: 64px;
+        }
+    }
+}

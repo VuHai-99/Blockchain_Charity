@@ -1,0 +1,62 @@
+@import './variables';
+body,
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.slider_area {
+    display: none;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #17a2b8;
+    height: 100vh;
+}
+
+#login .container #login-row #login-column #login-box {
+    margin: 120px auto;
+    max-width: 400px;
+    padding: 20px 0px;
+    height: auto;
+    border: 1px solid #9C9C9C;
+    background-color: #EAEAEA;
+}
+
+.title {
+    color: #3e4b59;
+    font-weight: 600;
+    font-size: 2rem;
+}
+
+#login .container #login-row #login-column #login-box #login-form {
+    padding: 20px;
+}
+
+#login .container #login-row #login-column #login-box #login-form #register-link {
+    margin-top: -85px;
+}
+
+.group-button {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.btn-login {
+    display: inline-block;
+    width: 100%;
+    padding: 10px 20px;
+    font-weight: 600;
+    border: none;
+    background-color: #acb31a;
+}
+
+.group-text {
+    text-align: center;
+    a {
+        color: $blue;
+    }
+}

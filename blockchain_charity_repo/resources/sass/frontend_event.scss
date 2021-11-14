@@ -1,0 +1,121 @@
+@import "./variables";
+.list-events {
+    width: 85%;
+    margin: 50px auto;
+    background-color: $body-bg;
+    .event-happend {
+        .event-item {
+            display: flex;
+            margin-top: 50px;
+            max-height: 230px;
+            .image {
+                width: 30%;
+                img {
+                    display: block;
+                    width: 100%;
+                    height: auto;
+                    border-radius: 5% 0% 0% 5%;
+                }
+            }
+            .information {
+                width: 70%;
+                padding: 15px 25px 15px 15px;
+                background-color: $white;
+                .campaign-name {
+                    font-size: 1.3rem;
+                    font-weight: 600;
+                }
+                .host-name {
+                    font-size: 1rem;
+                    font-weight: 600;
+                }
+                .coin {
+                    .goal {
+                        position: relative;
+                        width: 50%;
+                        height: 8px;
+                        background-color: $body-bg;
+                    }
+                    .coin-current {
+                        position: absolute;
+                        min-width: 0%;
+                        max-width: 100%;
+                        width: 88.0593%;
+                        background-color: #b2bb1e;
+                        height: 8px;
+                    }
+                }
+            }
+            .read-more {
+                color: $blue;
+                font-weight: 600;
+            }
+            .donate {
+                margin-top: 10px;
+                display: flex;
+                .wrap-inp {
+                    display: flex;
+                    justify-content: center;
+                    border: 1px solid $gray;
+                    width: 100px;
+                    text-align: right;
+                    background-color: $white;
+                    .inp-donate {
+                        display: inline-block;
+                        width: 90px;
+                        border: none;
+                        outline: none;
+                    }
+                }
+                .btn-donate {
+                    border-radius: 0px !important;
+                    border: none !important;
+                    background-color: $orange;
+                    color: white;
+                    font-weight: 600;
+                }
+            }
+        }
+    }
+    .event-item:first-child {
+        margin-top: 0px;
+    }
+    .event-upcoming {
+        width: 30%;
+        border-left: 1px solid rgb(180, 178, 178);
+        li.text {
+            font-size: 1rem;
+            font-weight: 600;
+            color: blue;
+            border-top: 2px solid blue;
+            padding-top: 15px;
+            list-style-type: none;
+        }
+        li.event {
+            position: relative;
+            padding: 5px;
+            border-bottom: 1px solid rgb(180, 178, 178);
+            list-style-type: none;
+            a {
+                color: black;
+                font-weight: 600;
+                &::before {
+                    content: "";
+                    position: absolute;
+                    top: 15px;
+                    left: -5px;
+                    width: 4px;
+                    height: 4px;
+                    border-radius: 50%;
+                    background-color: blue;
+                }
+                &:hover {
+                    color: blue;
+                }
+            }
+        }
+        li.event:last-child {
+            border-bottom: none !important;
+        }
+    }
+}

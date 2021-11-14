@@ -1,0 +1,177 @@
+@import './variables';
+.manage-main {
+    width: 90%;
+    margin: 50px auto;
+    .donate button {
+        display: block;
+        margin: 20px 50px;
+        width: 20%;
+        background-color: $orange;
+        color: $white;
+        font-size: 1rem;
+        font-weight: 600;
+    }
+    p.title {
+        font-style: italic;
+        text-align: center;
+    }
+    .wrap-image {
+        text-align: center;
+    }
+    .text-reference {
+        display: inline-block;
+        margin: 20px 0px;
+        border-bottom: 2px solid rgb(72, 72, 214);
+    }
+    .coin {
+        background-color: $white;
+        padding: 20px;
+        margin-bottom: 10px;
+        position: relative;
+        .coin-donated {
+            font-weight: 600;
+            font-size: 1.5rem;
+            color: #b2bb1e;
+        }
+        .goal {
+            position: relative;
+            width: 100%;
+            height: 8px;
+            background-color: $body-bg;
+        }
+        .coin-current {
+            position: absolute;
+            min-width: 0%;
+            max-width: 100%;
+            width: 88.0593%;
+            background-color: #b2bb1e;
+            height: 8px;
+        }
+        .number-donator {
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+    .btn-donate {
+        margin: 20px 0px;
+        button {
+            display: inline-block;
+            border: none !important;
+            background-color: $orange;
+            width: 100%;
+            padding: 10px 20px;
+            color: $white;
+            font-weight: 600;
+        }
+    }
+    .tab {
+        display: flex;
+        .btn {
+            margin: 50px 20px;
+            padding: 5px 10px;
+            background-color: aquamarine;
+            border-radius: 8px;
+        }
+    }
+    .reference {
+        display: flex;
+        .event-reference {
+            img {
+                width: 100%;
+            }
+        }
+    }
+}
+
+#backend .manage-main {
+    .information {
+        text-align: center;
+        .featured {
+            img {
+                width: 100%;
+            }
+        }
+    }
+    .list-donator {
+        border-left: 1px solid $gray;
+        padding-left: 50px;
+        padding-bottom: 20px;
+        background-color: $white;
+        .title {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            .donate-once {
+                width: 49%;
+                text-align: center;
+                border: 1px solid $gray;
+            }
+            .donate-monthly {
+                width: 49%;
+                text-align: center;
+                background-color: $gray-color;
+            }
+            a {
+                display: inline-block;
+                padding: 10px;
+                color: $black;
+                font-weight: 600;
+                text-decoration: none;
+            }
+        }
+        .list-donator-item {
+            padding: 0px;
+            .item {
+                display: flex;
+                background-color: rgb(233, 188, 106);
+                margin-bottom: 20px;
+                .money {
+                    width: 10%;
+                    padding: 10px;
+                    font-weight: 600;
+                }
+                .donator-name {
+                    width: 70%;
+                    margin-right: 10px;
+                    color: $black;
+                    font-weight: 600;
+                    padding: 20px;
+                }
+                .next {
+                    width: 20%;
+                    padding: 20px;
+                    text-align: center;
+                    background-color: $orange;
+                    a {
+                        display: inline-block;
+                        .fa-chevron-right {
+                            font-size: 26px;
+                        }
+                    }
+                }
+            }
+            .read-more {
+                border: 1px solid $gray;
+                padding: 10px;
+                text-align: center;
+                a {
+                    color: $blue;
+                    font-size: 1rem;
+                    text-transform: uppercase;
+                }
+            }
+        }
+    }
+}
+
+.slider_area {
+    .slider_bg_1 {
+        background-image: url('https://www.globalgiving.org/img/banners/hero_give_lg.jpg');
+        height: 25em;
+    }
+    .single_slider .slider_text {
+        h3 {
+            font-size: 64px;
+        }
+    }
+}
