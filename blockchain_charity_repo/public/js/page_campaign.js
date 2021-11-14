@@ -108,7 +108,7 @@ $(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\resources\js\pages\campaign\index.js */"./resources/js/pages/campaign/index.js");
+module.exports = __webpack_require__(/*! D:\Tum\Study\University\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\js\pages\campaign\index.js */"./resources/js/pages/campaign/index.js");
 
 
 /***/ })

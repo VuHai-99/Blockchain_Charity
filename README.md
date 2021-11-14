@@ -28,6 +28,7 @@ To get a local copy up and running follow these simple example steps.
    ```sh
    cd API_Blockchain
    npm install
+   change API_Blockchain\app\config\laravel_db.config.js variable DB to your new DB for website
    cd ../
    ```
 3. Reproduce Laravel Project : Tutorial https://viblo.asia/p/cach-cai-dat-du-an-laravel-clone-tu-github-63vKjkpkZ2R
