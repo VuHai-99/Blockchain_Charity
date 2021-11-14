@@ -24,34 +24,6 @@
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
-<!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
-  </ol>
-</details>
-
-
-
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
@@ -67,41 +39,63 @@ To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
-* npm
-* composer
-
+* node.js (Website node.js version : 14.17.5)
+* npm (Website npm version : 6.14.4)
+* composer (Website composer version : 2.5.4)
+* xampp (Website xampp version : 3.3.0)
+* ganache (Website Ganache version : 2.5.4)
 
 ### Installation
 
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
-
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+1. Install truffle globally.
    ```sh
-   git clone https://github.com/your_username_/Project-Name.git
+   npm install -g truffle@5.4.16
    ```
-3. Install NPM packages
+2. Install NPM packages in folders : API_Blockchain
    ```sh
+   cd API_Blockchain
    npm install
+   cd ../
    ```
-4. Enter your API in `config.js`
+3. Reproduce Laravel Project : Tutorial https://viblo.asia/p/cach-cai-dat-du-an-laravel-clone-tu-github-63vKjkpkZ2R
    ```js
-   const API_KEY = 'ENTER YOUR API';
+   cd blockchain_charity_repo
+   -- Tutorial https://viblo.asia/p/cach-cai-dat-du-an-laravel-clone-tu-github-63vKjkpkZ2R
+   npm run dev & npm run watch
+   ```
+4. Install Metamask extension in Chrome (Website Metamask version : 10.5.1))
+   ```sh
+   create account in metamask
+   ```
+5. Connect Metamask to local blockchain (ganache) and import all account inside metamask
+
+    ```sh
+   "Setting up MetaMask" section in https://www.trufflesuite.com/docs/truffle/getting-started/truffle-with-metamask
    ```
 
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
+6. Initial Blockchain Contract & store API in laravel project
+   ```sh
+   open ganache -> new workspace : Save this workplace once and use it everytime run website
+   cd Blockchain_Truffle
+   truffle migrate --reset
+   copy (if exist replace) folder Blockchain_Truffle/build/contracts into blockchain_charity_repo/public --> blockchain_charity_repo/public/contracts
+   ```
 
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
+1. Run Node.js
+   ```sh
+   cd API_Blockchain
+   node server.js
+   cd ../
+   ```
+2. Run Laravel
+   ```sh
+   cd blockchain_charity_repo
+   php artisan serve
+   cd ../
+   ```
 
 
 <!-- ROADMAP -->
