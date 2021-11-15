@@ -15,9 +15,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('logout', function () {
+    $notification = array(
+        'message' => 'Logout Successfully',
+        'alert-type' => 'success'
+    );
     Auth::user()->resetOtp();
     Auth::logout();
-    return redirect()->route('home');
+    return redirect()->route('home')->with($notification);
 })->name('charity.logout');
 
 Route::get('admin/login', 'AdminController@login')->name('admin.login');
