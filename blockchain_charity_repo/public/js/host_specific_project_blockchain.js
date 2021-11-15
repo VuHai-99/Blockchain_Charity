@@ -68,18 +68,8 @@ App = {
         const campaign = await $.getJSON('/contracts/Campaign.json')
         App.contracts.Campaign = TruffleContract(campaign)
         App.contracts.Campaign.setProvider(App.web3Provider)
-
-        // let accounts_ = await web3.eth.getAccounts();
-        // console.log(accounts_);
     },
     
-    // isadmin:() =>{
-        // let current_account;
-        // App.getAccounts(function(result) {
-        // current_account = result[0];
-        // });
-        
-    // },
  
     donateCampaign: async (address) => {
       // let minimumContribution = $('[name="minimumContribution"]').val();
@@ -88,10 +78,7 @@ App = {
       console.log(donateValue);
       
       let b = App.contracts.Campaign.at(address)
-      //get minimumContribution
-      // b.minimumContribution.call().then(function(response) {
-      //   return console.log(response.c[0]);
-      // })
+  
   
   
       b.contribute({value:donateValue})
@@ -102,11 +89,7 @@ App = {
           const amount_in_wei = donateValue;
           console.log(result)
           toastr.success("Successfully donate to campaign");
-          // Swal.fire({
-          //   title: 'Successful!',
-          //   text: 'Successfully contribute to the campaign',
-          //   confirmButtonText: 'Close'
-          // })
+          $('[name="donation_amount"]').val('')
           axios.post(('/api/store-transaction'), {
             "transaction_hash": transaction_hash,
             "sender_address": sender_contract_address,
@@ -159,11 +142,13 @@ App = {
           const campaign_address = requestCampaignAddress;
   
         //   console.log(request_id,request_type,amount,campaign_address,current_account)
-          Swal.fire({
-            title: 'Successful!',
-            text: 'Successful action',
-            confirmButtonText: 'Close'
-          })
+          toastr.success("Successfully create withdraw money request");
+          $('[name="withdrawal_amount"]').val('')
+          // Swal.fire({
+          //   title: 'Successful!',
+          //   text: 'Successful action',
+          //   confirmButtonText: 'Close'
+          // })
           axios.post(('/api/store-blockchain-request'), {
             "request_id": request_id,
             "amount": amount,

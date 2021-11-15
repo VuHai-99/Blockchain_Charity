@@ -107,11 +107,12 @@ App = {
     await App.campaignfactory.requestToBeValidHost()
       .then((result) => {
 
-        Swal.fire({
-          title: 'Successful!',
-          text: 'Successful action',
-          confirmButtonText: 'Close'
-        })
+        // Swal.fire({
+        //   title: 'Successful!',
+        //   text: 'Successful action',
+        //   confirmButtonText: 'Close'
+        // })
+        toastr.success("Successfully create validate request");
         axios.post(('/api/store-blockchain-request'), {
           "request_id": current_account,
           "amount": "",
