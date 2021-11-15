@@ -20,6 +20,7 @@
         </div>
     </div>
 </div>
+
 @endsection
 
 @push('scripts')
@@ -31,6 +32,7 @@
 <script src="{{ asset('js/truffle-contract.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <script type="text/javascript" src="{{ asset('js/laroute.js') }}"></script>
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+ -->
 @endpush
 @stack('scripts')

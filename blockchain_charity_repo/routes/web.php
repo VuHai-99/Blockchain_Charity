@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('logout', function () {
     Auth::user()->resetOtp();
     Auth::logout();
-    return redirect(route('home'));
+    return redirect()->route('home');
 })->name('charity.logout');
 
 Route::get('admin/login', 'AdminController@login')->name('admin.login');

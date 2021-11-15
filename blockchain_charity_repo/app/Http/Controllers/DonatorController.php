@@ -28,9 +28,10 @@ class DonatorController extends Controller
         return view('donator.specific_project');
     }
     
-    public function campaignDetail()
+    public function campaignDetail(String $blockchainAddress)
     {
-        return view('campaign.campaign_detail');
+        $campaign = Campaign::findOrFail($blockchainAddress);
+        return view('donator.campaign_detail',compact('campaign'));
     }
 
     public function listDonator()

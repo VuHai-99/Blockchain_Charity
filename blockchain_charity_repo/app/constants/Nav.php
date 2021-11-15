@@ -30,16 +30,10 @@ class Nav
             'url' => 'admin.withdraw-money-request.list',
             'name' => 'Approve Withdrawal',
         ],
-        // [
-        //     'url' => 'admin.withdraw-money-request.list',
-        //     'name' => 'Approve Withdraw ',
-        //     'url' => 'admin.profile.edit',
-        //     'name' => 'Profile',
-        // ],
-        // [
-        //     'url' => 'admin.create.account',
-        //     'name' => 'Add account',
-        // ],
+        [
+            'url' => 'admin.logout',
+            'name' => 'Logout',
+        ]
     ];
 
     const NAV_ADMIN_DONATOR = [

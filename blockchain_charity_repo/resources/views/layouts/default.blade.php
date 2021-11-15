@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="{{ asset('css/footer.css') }}">
     <script src="/theme/libs/ckeditor/ckeditor.js"></script>
     <script src="/theme/libs/ckeditor/config.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"></link>
     @yield('css')
 
 </head>
@@ -36,7 +37,9 @@
             @include('layouts.footer')
         </div>
     </div>
+    
 </body>
+
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
 crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -44,6 +47,30 @@ crossorigin="anonymous"></script>
 <script>
     const WALLET_TYPE = @json($type);
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+@if(Session::has('message'))
+<script>
+    var type = "{{ Session::get('alert-type','info') }}"
+    console.log('123')
+    switch (type) {
+        case 'info':
+            toastr.info(" {{ Session::get('message') }} ");
+            break;
+
+        case 'success':
+            toastr.success(" {{ Session::get('message') }} ");
+            break;
+
+        case 'warning':
+            toastr.warning(" {{ Session::get('message') }} ");
+            break;
+
+        case 'error':
+            toastr.error(" {{ Session::get('message') }} ");
+            break;
+    }
+</script>
+@endif
 @yield('scripts')
 
 </html>

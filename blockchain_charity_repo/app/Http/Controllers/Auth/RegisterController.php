@@ -88,7 +88,11 @@ class RegisterController extends Controller
         // $response = Http::get('localhost:3000/create/newAccount'); 
         // $newAccount = $response->json();
         // dd($newAccount);
-
+        $notification = array(
+            'message' => 'Register account Successfully',
+            'alert-type' => 'success'
+        );
+        
         $data = $request->only('name', 'email', 'address', 'phone');
         $data['user_address'] = $request->wallet_address;
         $data['password'] = bcrypt($request->password);
@@ -104,9 +108,9 @@ class RegisterController extends Controller
             $data['user_address'] = $request->wallet_address;
             User::create($data);
             if ($request->role == 1) {
-                return redirect(route('host.home'));
+                return redirect(route('login'))->with($notification);
             } else {
-                return redirect(route('donator.home'));
+                return redirect(route('login'))->with($notification);
             }
         } elseif ($request->wallet_type == 1) {
             $response = Http::get('localhost:3000/create/newAccount');
@@ -115,9 +119,9 @@ class RegisterController extends Controller
             $data['private_key'] = substr($newAccount['privateKey'], 2);
             User::create($data);
             if ($request->role == 1) {
-                return redirect(route('host.home'));
+                return redirect(route('login'))->with($notification);
             } else {
-                return redirect(route('donator.home'));
+                return redirect(route('login'))->with($notification);
             }
         }
     }

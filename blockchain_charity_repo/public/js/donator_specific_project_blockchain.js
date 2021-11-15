@@ -1,11 +1,10 @@
+
 App = {
     contracts: {},
     load: async () => {
-
         await App.loadWeb3()
         await App.loadAccount()
         await App.loadContract()
-        await App.render()
     },
 
     loadWeb3: async () => {
@@ -74,101 +73,18 @@ App = {
         // let accounts_ = await web3.eth.getAccounts();
         // console.log(accounts_);
     },
-
-    render: async () => {
-
-        await App.renderSpecificCampaign();
-    },
-
-    renderSpecificCampaign: async () => {
-
-        let currentUrlParams = (window.location.href).split('/');
-        let projectAddress = currentUrlParams[currentUrlParams.length - 1];
-        // console.log(projectAddress)
-
-        const campaignTemplate = $('#specificProject');
-        campaignTemplate.html('');
-        let _campaign = App.contracts.Campaign.at(projectAddress);
-        // console.log(_campaign)
-
-        let campaign_host;
-        _campaign.getHost.call().then(function (response) {
-
-            campaign_host = String(response);
-            const host_html = document.getElementById('host_');
-            host_html.insertAdjacentHTML('beforeend', campaign_host);
-
-        })
-
-        let campaign_minimumContribution;
-        _campaign.getMinimumContribution.call().then(function (response) {
-            campaign_minimumContribution = response.toNumber();
-            const owner_html = document.getElementById('minimumContribution_');
-            owner_html.insertAdjacentHTML('beforeend', campaign_minimumContribution + ' (wei)');
-        })
-
-        let campaign_admin;
-        _campaign.getAdmin.call().then(function (response) {
-
-            campaign_admin = String(response);
-            // console.log(campaign_admin);
-            const admin_html = document.getElementById('admin_');
-            admin_html.insertAdjacentHTML('beforeend', campaign_admin);
-        })
-
-        let campaign_currentBalance;
-        _campaign.getBalance.call().then(function (response) {
-            campaign_currentBalance = response.toNumber();
-            // console.log(campaign_owner,'owner_'+(i+1)); 
-            // console.log(response);
-            const balance_html = document.getElementById('balance_');
-            balance_html.insertAdjacentHTML('beforeend', campaign_currentBalance + '(wei)');
-            // return console.log(campaign_currentBalance);
-        })
-
-        let campaignItem =
-            `<div class="col-md-12">
-                <div class="card mt-4">
-                    <div class="card-body">
-                        <h4 class="card-title"><strong><i class="fa fa-calendar text-muted" aria-hidden="true"></i> SOMEDAY</strong></h4>
-                        <h5 class="card-title">CAMPAIGN</h5>
-                        <hr>
-                        <h6 class="card-subtitle mb-2"><span class="text-muted">Campaign Address:</span> ` + projectAddress + `</h6>
-                        <h6 class="card-subtitle mb-2" id="host_"><span class="text-muted">Campaign Host: </span></h6>
-                        <h6 class="card-subtitle mb-2" id="admin_"><span class="text-muted">Campaign Admin: </span></h6>
-                        <h6 class="card-subtitle mb-2" id="minimumContribution_"><span class="text-muted">Campaign Minimum Contribution: </span></h6>
-                        <h6 class="card-subtitle mb-2" id="balance_"><span class="text-muted">Campaign Balance: </span></h6>
-                        <hr>
-                        <h6 class="card-subtitle mb-2">
-                          <label>Donate to Campaign</label>
-                
-                          <form class="mb-5" onSubmit="App.donateCampaign('`+projectAddress+`'); return false">
-                            
-                            
-                            <div class="form-inline">
-                                <input class="form-control mr-1" name="donateValue">
-                                <button class="btn btn-primary" type="submit">enter</button>
-                            </div>
-                                  
-                          </form>
-                        </h6>
-                    </div>
-                </div>
-            </div>`;
-        // Show the task
-
-        campaignTemplate.append(campaignItem)
-
-
-
-        // get minimumContribution
-
-
-    },
-
+    
+    // isadmin:() =>{
+        // let current_account;
+        // App.getAccounts(function(result) {
+        // current_account = result[0];
+        // });
+        
+    // },
+ 
     donateCampaign: async (address) => {
       // let minimumContribution = $('[name="minimumContribution"]').val();
-      let donateValue = $('[name="donateValue"]').val();
+      let donateValue = $('[name="donation_amount"]').val();
   
       console.log(donateValue);
       
@@ -181,17 +97,31 @@ App = {
   
       b.contribute({value:donateValue})
         .then(function(result){
-          const transaction_address = result.receipt.transactionHash;
           const sender_contract_address = result.receipt.from;
           const campaign_contract_address = result.receipt.to;
+          const transaction_hash = result.receipt.transactionHash;
           const amount_in_wei = donateValue;
-          console.log(result)
-          Swal.fire({
-            title: 'Successful!',
-            text: 'Successfully contribute to the campaign',
-            confirmButtonText: 'Close'
+        //   console.log(result)
+        toastr.success("Successfully donate to campaign");
+        $('[name="donation_amount"]').val('');
+        //   Swal.fire({
+        //     title: 'Successful!',
+        //     text: 'Successfully contribute to the campaign',
+        //     confirmButtonText: 'Close'
+        //   })
+          axios.post(('/api/store-transaction'), {
+            "transaction_hash": transaction_hash,
+            "sender_address": sender_contract_address,
+            "receiver_address": campaign_contract_address,
+            "transaction_type" : 0,
+            "amount":amount_in_wei
+          }).then(function(response){
+            if(response.status == 200){
+              console.log('Successfully store donation info in database');
+            } else {
+              console.log('UnSuccessfully store donation info in database');
+            }
           })
-          App.renderSpecificCampaign();
         }).catch(error => {
           Swal.fire({
             title: 'Unsuccessful!',  
@@ -201,11 +131,8 @@ App = {
           })
         });
       
-    },
-
-
+    }
 }
-
 
 $(window).on('load', function () {
     App.load()
