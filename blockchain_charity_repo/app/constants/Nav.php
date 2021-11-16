@@ -15,11 +15,11 @@ class Nav
             'name' => 'List Host',
         ],
         [
-            'url' => 'admin.project.list',
+            'url' => 'admin.campaign.list',
             'name' => 'List Campaign',
         ],
         [
-            'url' => 'admin.open-project-request.list',
+            'url' => 'admin.open-campaign-request.list',
             'name' => 'Approve Campaign',
         ],
         [

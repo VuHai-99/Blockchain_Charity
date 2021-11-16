@@ -159,7 +159,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="{{ asset('js/bn.js') }}"></script>
 <script src="{{ asset('js/app.js') }}"></script>
-<script src="{{ asset('js/host_specific_project_blockchain.js') }}"></script>
+<script src="{{ asset('js/host_specific_campaign_blockchain.js') }}"></script>
 <!-- <script src="{{ asset('js/contract.js') }}"></script> -->
 <script src="{{ asset('js/web3.min.js') }}"></script>
 <script src="{{ asset('js/truffle-contract.js') }}"></script>

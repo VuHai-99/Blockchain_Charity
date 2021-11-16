@@ -45,13 +45,13 @@ class AdminController extends Controller
         return view('admin.index');
     }
 
-    public function listProject()
+    public function listCampaign()
     {
-        return view('admin.list_project');
+        return view('admin.list_campaign');
     }
 
-    public function listOpenProjectRequest(){
-        return view('admin.list_open_project_request');
+    public function listOpenCampaignRequest(){
+        return view('admin.list_open_campaign_request');
     }   
 
     public function listValidateHostRequest(){
