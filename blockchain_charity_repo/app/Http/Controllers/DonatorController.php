@@ -13,10 +13,10 @@ class DonatorController extends Controller
         return view('frontend.home');
     }
 
-    public function listProject()
+    public function listCampaign()
     {
         $campaigns = Campaign::all();
-        return view('donator.list_project',compact('campaigns'));
+        return view('donator.list_campaign',compact('campaigns'));
     }
 
     public function profile()
@@ -34,19 +34,14 @@ class DonatorController extends Controller
         return view('donator.campaign_detail',compact('campaign'));
     }
 
-    public function listDonator()
-    {
-        return view('campaign.list_donator');
-    }
-
     //WS 
-    public function WS_listProject(){
+    public function WS_listCampaign(){
         $campaigns = Campaign::all();
-        return view('donator.list_project_ws',compact('campaigns'));   
+        return view('donator.list_campaign_ws',compact('campaigns'));   
     }
 
     public function WS_campaignDetail(String $blockchainAddress){
         $campaign = Campaign::findOrFail($blockchainAddress);
-        return view('donator.specific_project_ws',compact('campaign'));
+        return view('donator.campaign_detail_ws',compact('campaign'));
     }
 }

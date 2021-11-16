@@ -22,7 +22,7 @@
                     <div class="information">
                         <div class="campaign-name">{{ $campaign->name }}</div>
                         <div class="host">
-                            <span>by</span> <span class="host-name">{{$campaign->host_address}}</span>
+                            <span>by</span> <span class="host-name">{{$campaign->user->name}}</span>
                         </div>
                         <div class="coin">
                             {{$campaign->current_balance}} (wei)/ mục tiêu {{$campaign->target_contribution_amount}}(wei)
