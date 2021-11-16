@@ -14,7 +14,7 @@
             <div class="featured">
                 <div class="wrap-image">
                     <img src="https://danviet.mediacdn.vn/2020/10/21/thuy-tien-1603245101017901488132.jpg" alt="">
-                    <p class="title mt-1"> <i>Ảnh từ thiện luc lụt tại Quảng Trị</i></p>
+                    <p class="title mt-1"> <i>{{ $campaign->name }}</i></p>
                 </div>
                 <div class="description">
                     <p>
@@ -68,7 +68,7 @@
         </div>
         <div class="donator col-md-4">
             <div class="coin">
-                <span class="coin-donated">$40000 coin</span>/ mục tiêu $5000 coin
+                <span class="coin-donated">{{$campaign->current_balance}} (wei)</span>/ {{$campaign->target_contribution_amount}}(wei)
                 <div class="goal">
                     <div class="coin-current"></div>
                 </div>
@@ -82,7 +82,12 @@
                 </div>
             </div>
             <div class="btn-donate">
-                <button class="btn">DONATE NOW</button>
+                <input placeholder="Amount of donation" id="donation_amount" name="donation_amount">
+                <button class="btn" onclick="App.donateCampaign('{{$campaign->campaign_address}}')">DONATE NOW</button>
+            </div>
+            <div class="btn-donate">
+                <input placeholder="Amount of withdrawal" id="withdrawal_amount" name="withdrawal_amount">
+                <button class="btn" onclick="App.createWithdrawMoneyRequest('{{$campaign->campaign_address}}')">WITHDRAW MONEY REQUEST</button>
             </div>
             <div class="list-donator">
                 <div class="title">
@@ -150,3 +155,16 @@
         </div>
     </div>
 @endsection
+@push('scripts')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="{{ asset('js/bn.js') }}"></script>
+<script src="{{ asset('js/app.js') }}"></script>
+<script src="{{ asset('js/host_specific_campaign_blockchain.js') }}"></script>
+<!-- <script src="{{ asset('js/contract.js') }}"></script> -->
+<script src="{{ asset('js/web3.min.js') }}"></script>
+<script src="{{ asset('js/truffle-contract.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<script type="text/javascript" src="{{ asset('js/laroute.js') }}"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@endpush
+@stack('scripts')
