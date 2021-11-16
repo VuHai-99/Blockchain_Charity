@@ -5,7 +5,6 @@ const path = require("path");
 
 
 const User = require("../models/user.model.js");
-// const Donation = require("../models/donation.model.js");
 
 const web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
 const jsonFile = "../../contracts/Campaign.json";

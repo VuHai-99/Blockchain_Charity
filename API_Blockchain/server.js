@@ -15,7 +15,6 @@ app.get("/", (req, res) => {
 });
 
 // require("./app/routes/campaign.routes.js")(app);
-require("./app/routes/donation.routes.js")(app);
 require("./app/routes/donator.routes.js")(app);
 require("./app/routes/host.routes.js")(app);
 require("./app/routes/blockchain.routes.js")(app);
