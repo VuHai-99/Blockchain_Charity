@@ -15,11 +15,11 @@ class Nav
             'name' => 'List Host',
         ],
         [
-            'url' => 'admin.project.list',
+            'url' => 'admin.campaign.list',
             'name' => 'List Campaign',
         ],
         [
-            'url' => 'admin.open-project-request.list',
+            'url' => 'admin.open-campaign-request.list',
             'name' => 'Approve Campaign',
         ],
         [
@@ -30,16 +30,10 @@ class Nav
             'url' => 'admin.withdraw-money-request.list',
             'name' => 'Approve Withdrawal',
         ],
-        // [
-        //     'url' => 'admin.withdraw-money-request.list',
-        //     'name' => 'Approve Withdraw ',
-        //     'url' => 'admin.profile.edit',
-        //     'name' => 'Profile',
-        // ],
-        // [
-        //     'url' => 'admin.create.account',
-        //     'name' => 'Add account',
-        // ],
+        [
+            'url' => 'admin.logout',
+            'name' => 'Logout',
+        ]
     ];
 
     const NAV_ADMIN_DONATOR = [

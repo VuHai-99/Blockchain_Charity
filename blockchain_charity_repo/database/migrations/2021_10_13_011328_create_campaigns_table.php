@@ -20,7 +20,7 @@ class CreateCampaignsTable extends Migration
             $table->text('description')->nullable();
             $table->string('minimum_contribution');
             $table->string('target_contribution_amount')->nullable();
-            $table->string('current_balance');
+            $table->string('current_balance')->default('0');
             $table->datetime('date_start')->nullable();
             $table->datetime('date_end')->nullable();
             $table->timestamps();

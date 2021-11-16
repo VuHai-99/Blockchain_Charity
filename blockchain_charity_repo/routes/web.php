@@ -15,9 +15,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('logout', function () {
+    $notification = array(
+        'message' => 'Logout Successfully',
+        'alert-type' => 'success'
+    );
     Auth::user()->resetOtp();
     Auth::logout();
-    return redirect(route('home'));
+    return redirect()->route('home')->with($notification);
 })->name('charity.logout');
 
 Route::get('admin/login', 'AdminController@login')->name('admin.login');
@@ -29,8 +33,8 @@ Route::prefix('admin')
     ->group(function () {
         Route::get('/', 'AdminController@index')->name('dashboard.index');
         Route::get('list/host', 'AdminController@listHost')->name('host.list');
-        Route::get('list/project', 'AdminController@listProject')->name('project.list');
-        Route::get('list/open-project-request', 'AdminController@listOpenProjectRequest')->name('open-project-request.list');
+        Route::get('list/campaign', 'AdminController@listCampaign')->name('project.list');
+        Route::get('list/open-campaign-request', 'AdminController@listOpenCampaignRequest')->name('open-campaign-request.list');
         Route::get('list/validate-host-request', 'AdminController@listValidateHostRequest')->name('validate-host-request.list');
         Route::get('profile', 'AdminController@profile')->name('profile.edit');
         Route::get('add/account', 'AdminController@createAccount')->name('create.account');
@@ -53,9 +57,9 @@ Route::prefix('charity')
             ->middleware('donator-wallet-hard')
             ->name('donator.')
             ->group(function () {
-                Route::get('/specific-project/{blockchainAddress}', 'DonatorController@specificProject')->name('list.specific.project');
+                // Route::get('/specific-project/{blockchainAddress}', 'DonatorController@specificProject')->name('list.specific.project');
                 Route::get('', 'DonatorController@home')->name('home');
-                Route::get('campaign', 'DonatorController@listProject')->name('campaign');
+                Route::get('campaign', 'DonatorController@listCampaign')->name('campaign');
                 Route::get('campaign-detail/{id}', 'DonatorController@campaignDetail')->name('campaign.detail');
             });
         Route::prefix('donatorws')
@@ -64,7 +68,7 @@ Route::prefix('charity')
             ->group(function () {
                 // Route::get('/specific-project/{blockchainAddress}', 'DonatorController@WS_specificProject')->name('list.specific.project');
                 Route::get('', 'DonatorController@home')->name('home');
-                Route::get('campaign', 'DonatorController@WS_listProject')->name('campaign');
+                Route::get('campaign', 'DonatorController@WS_listCampaign')->name('campaign');
                 Route::get('campaign-detail/{id}', 'DonatorController@WS_campaignDetail')->name('campaign.detail');
             });
         Route::prefix('host')
@@ -72,11 +76,8 @@ Route::prefix('charity')
             ->name('host.')
             ->group(function () {
                 Route::get('', 'HostController@home')->name('home');
-                Route::get('campaign', 'HostController@listProject')->name('campaign');
-                Route::get('/my-project', 'HostController@listMyProject')->name('list.my.project');
-                Route::get('/specific-project/{blockchainAddress}', 'HostController@specificProject')->name('list.specific.project');
-                Route::get('create-campaign', 'HostController@createProject')->name('campaign.create');
-                Route::post('store-campaign', 'HostController@store')->name('campaign.store');
+                Route::get('campaign', 'HostController@listCampaign')->name('campaign');
+                Route::get('create-campaign', 'HostController@createCampaign')->name('campaign.create');
                 Route::get('campaign_detail/{blockchainAddress}', 'HostController@campaignDetail')->name('campaign.detail');
                 Route::get('validate-host', 'HostController@validateHost')->name('validate.host');
             });
@@ -85,16 +86,12 @@ Route::prefix('charity')
             ->name('hostws.')
             ->group(function () {
                 Route::get('', 'HostController@home')->name('home');
-                Route::get('campaign', 'HostController@WS_listProject')->name('campaign');
-                Route::get('/my-project', 'HostController@listMyProject')->name('list.my.project');
-                Route::get('/specific-project/{blockchainAddress}', 'HostController@specificProject')->name('list.specific.project');
-                Route::get('create-campaign', 'HostController@WS_createProject')->name('campaign.create');
-                Route::post('store-campaign', 'HostController@store')->name('campaign.store');
+                Route::get('campaign', 'HostController@WS_listCampaign')->name('campaign');
+                Route::get('create-campaign', 'HostController@WS_createCampaign')->name('campaign.create');
                 Route::get('campaign_detail/{blockchainAddress}', 'HostController@WS_campaignDetail')->name('campaign.detail');
                 Route::get('validate-host', 'HostController@WS_validateHost')->name('validate.host');
             });
         Route::get('campaign/list-donator', 'DonatorController@listDonator')->name('campaign.donator');
-        // Route::post('donate/campaign', 'BlockchainController@donateToCampaign')->name('donate.campaign');
     });
 
 Route::get('/', 'FrontEndController@home')->name('home');

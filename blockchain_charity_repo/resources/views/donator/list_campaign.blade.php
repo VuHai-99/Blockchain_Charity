@@ -15,14 +15,14 @@
             @foreach ($campaigns as $campaign)
                 <div class="event-item row">
                     <div class="image">
-                        <a href="{{ route('donatorws.campaign.detail', $campaign->campaign_address) }}"><img
+                        <a href="{{ route('donator.campaign.detail', $campaign->campaign_address) }}"><img
                                 src="https://tuyengiao.vn/Uploads/2021/9/20/29/tu-viec-thien-nguyen-cua-cac-nghe-si-den-chuyen-minh-bach-trong-sao-ke.jpg"
                                 alt=""></a>
                     </div>
                     <div class="information">
                         <div class="campaign-name">{{ $campaign->name }}</div>
                         <div class="host">
-                            <span>by</span> <span class="host-name">{{$campaign->host_address}}</span>
+                            <span>by</span> <span class="host-name">{{$campaign->user->name}}</span>
                         </div>
                         <div class="coin">
                             {{$campaign->current_balance}} (wei)/ mục tiêu {{$campaign->target_contribution_amount}}(wei)
@@ -31,10 +31,10 @@
                             </div>
                         </div>
                         <div class="descripton">
-                            {{$campaign->description}}... <a class="read-more" href="{{ route('donatorws.campaign.detail',  $campaign->campaign_address) }}">xem thêm</a>
+                            {{$campaign->description}}... <a class="read-more" href="{{ route('donator.campaign.detail',  $campaign->campaign_address) }}">xem thêm</a>
                         </div>
                         <div class="donate">
-                            <a class="btn btn-donate" href="{{ route('donatorws.campaign.detail',  $campaign->campaign_address) }}">DONATE</a>
+                            <a class="btn btn-donate" href="{{ route('donator.campaign.detail',  $campaign->campaign_address) }}">DONATE</a>
                         </div>
                     </div>
                 </div>

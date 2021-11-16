@@ -2,6 +2,7 @@
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/style_template.css') }}">
+    
 @endsection
 @section('page-name', 'Dashboard')
 @section('content')

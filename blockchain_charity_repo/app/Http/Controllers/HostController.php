@@ -13,21 +13,21 @@ class HostController extends Controller
         return view('frontend.home');
     }
     
-    public function listProject()
+    public function listCampaign()
     {
         $campaigns = Campaign::all();
         // dd($campaigns);
         return view('host.list_campaign',compact('campaigns'));
     }
 
-    public function createProject()
+    public function createCampaign()
     {
-        return view('host.create_project');
+        return view('host.create_campaign');
     }
 
-    public function listMyProject(){
-        return view('host.list_my_project');
-    }
+    // public function listMyProject(){
+    //     return view('host.list_my_project');
+    // }
 
     // public function specificProject(String $blockchainAddress){
     //     return view('host.specific_project');
@@ -40,11 +40,11 @@ class HostController extends Controller
     public function campaignDetail($blockchainAddress)
     {
         $campaign = Campaign::findOrFail($blockchainAddress);
-        return view('campaign.campaign_detail',compact('campaign'));
+        return view('host.campaign_detail',compact('campaign'));
     }
 
     //WS
-    public function WS_listProject(){
+    public function WS_listCampaign(){
         $campaigns = Campaign::all();
         // dd($campaigns);
         return view('host.list_campaign_ws',compact('campaigns'));
@@ -60,7 +60,7 @@ class HostController extends Controller
         return view('host.validate_host_ws',compact('host'));
     }
 
-    public function WS_createProject(){
-        return view('host.create_project_ws');
+    public function WS_createCampaign(){
+        return view('host.create_campaign_ws');
     }
 }

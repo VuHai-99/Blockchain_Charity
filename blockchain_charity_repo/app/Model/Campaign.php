@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 
@@ -14,4 +15,8 @@ class Campaign extends Model
         'campaign_address','name', 'description', 'host_address', 'current_balance','minimum_contribution', 'target_contribution_amount',
         'date_started', 'date_end'
     ];
+
+    public function user(){
+        return $this->belongsTo(User::class,'host_address','user_address');
+    }
 }

@@ -15,6 +15,7 @@ class TowFactorController extends Controller
 
     public function sendOtp(LoginRequest $request)
     {
+
         $data = $request->only('email', 'password');
         if (!Auth::attempt($data)) {
             return back()->with('error-login', 'Email hoặc mật khẩu không đúng. Vui lòng kiểm tra lại.')->withInput();
@@ -24,7 +25,7 @@ class TowFactorController extends Controller
         Mail::to($user->email)->send(new SendMailOtp($otp));
         if ($user->role == 1) {
             return redirect(route('host.home'));
-        }
+        }   
         return redirect(route('donator.home'));
     }
 
@@ -35,6 +36,10 @@ class TowFactorController extends Controller
 
     public function verifyOtp(Request $request)
     {
+        $notification = array(
+            'message' => 'Login Successfully',
+            'alert-type' => 'success'
+        );
         $otp = $request->otp;
         $user = Auth::user();
         $expireAt = Carbon::parse($user->otp_expires_at);
@@ -44,9 +49,11 @@ class TowFactorController extends Controller
             return redirect(route('login'))->with('notify', 'Mã OTP của bạn đã hết hạn, vui lòng đăng nhập lại.');
         }
         if ($user->role == 1) {
-            return redirect(route('host.home'));
+            // return redirect()->route('host.home');
+            return redirect()->route('host.home')->with($notification);
         } else {
-            return redirect(route('donator.home'));
+            // return redirect()->route('donator.home');
+            return redirect()->route('donator.home')->with($notification);
         }
     }
 

@@ -99,22 +99,15 @@ App = {
     await App.campaignfactory.requestToOpenCampaign(newContractId,Number(minimum_contribution))
       .then((result) => {
 
-        // const campaign_contract_address = result.logs[0].args.newContract;
-        // const minimumContribution = result.logs[0].args.minimumContribution.toNumber();
-        // const host_address = result.logs[0].args.campaignHost;
-        // const minimum_contribution = donateValueId;
+        toastr.success("Successfully create request to open campaign");
+        $('[name="donation_amount"]').val('');
+        $('[name="campaign_name"]').val('');
+        $('[name="target_contribution_amount"]').val('');
+        $('[name="minimum_contribution"]').val('');
+        $('[name="description"]').val('');
+        $('[name="date_start"]').val('');
+        $('[name="date_end"]').val('');
 
-        // console.log(result);
-        // console.log(result.tx);
-        // console.log(campaign_contract_address,minimumContribution,host_address);
-
-        Swal.fire({
-          title: 'Successful!',
-          text: 'Successful action',
-          confirmButtonText: 'Close'
-        })
-        
-        
         axios.post(('/api/store-blockchain-request'), {
           "request_id": newContractId,
           "amount": minimum_contribution,

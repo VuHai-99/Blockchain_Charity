@@ -52,6 +52,13 @@ contract CampaignFactory is Ownable_CampaignFactory{
         _;
     }
     
+    modifier onlyAdminAndOwnerAndValidatedHost() {
+        if(!((validatedAdminSet.exists(msg.sender)) || (owner == msg.sender) || (validatedHostSet.exists(msg.sender)))){
+            revert("You are not admin or owner");
+        }
+        _;
+    }
+    
     modifier onlyValidatedHost() {
         require(validatedHostSet.exists(msg.sender), "You are not a valid host !");
         _;
@@ -172,7 +179,7 @@ contract CampaignFactory is Ownable_CampaignFactory{
         requestTobeHostSet.insert(msg.sender);
     }
     
-    function getRequestToBeHostList() public onlyAdminAndOwner view returns(address[] memory){
+    function getRequestToBeHostList() public onlyAdminAndOwnerAndValidatedHost view returns(address[] memory){
         return requestTobeHostSet.listKey();
     }
     
@@ -188,28 +195,47 @@ contract CampaignFactory is Ownable_CampaignFactory{
         }
     }
     
-    function getRequestInRequestToBeHostListAtIndex(uint index) public onlyAdminAndOwner view returns(address _requestToBeHost) {
+    function getRequestInRequestToBeHostListAtIndex(uint index) public onlyAdminAndOwnerAndValidatedHost view returns(address _requestToBeHost) {
         return requestTobeHostSet.keyAtIndex(index);
     }
     
+    function cancelToBeValidHostRequest() public {
+        require(requestTobeHostSet.exists(msg.sender), "You have not requested to be host.");
+        requestTobeHostSet.remove(msg.sender);
+        delete requestsTobeHost[msg.sender];
+    }
+    
     //REQUEST TO OPEN CAMPAIGN CRUD 
-    function requestToOpenCamapaign(bytes32 requestOpenCampaignCode, uint32 minimumContribution) public onlyValidatedHost{
+    function requestToOpenCampaign(bytes32 requestOpenCampaignCode, uint32 minimumContribution) public onlyValidatedHost{
         require(!requestToOpenCampaignSet.exists(requestOpenCampaignCode), "RequestOpenCampaignCode ID already exists.");
         RequestToOpenCampaign memory re = RequestToOpenCampaign(msg.sender,minimumContribution);
         requestsToOpenCampaign[requestOpenCampaignCode] = re;
         requestToOpenCampaignSet.insert(requestOpenCampaignCode);
     }
     
-    function getRequestToOpenCampaignList() public onlyAdminAndOwner view returns(bytes32[] memory){
+    function getRequestToOpenCampaignList() public onlyAdminAndOwnerAndValidatedHost view returns(bytes32[] memory){
         return requestToOpenCampaignSet.listKey();
     }
     
-    function getRequestToOpenCampaignListAtIndex(uint index) public onlyAdminAndOwner view returns(bytes32 _requestToOpenCampaign) {
+    function getRequestToOpenCampaignListAtIndex(uint index) public onlyAdminAndOwnerAndValidatedHost view returns(bytes32 _requestToOpenCampaign) {
         return requestToOpenCampaignSet.keyAtIndex(index);
     }
-    function getRequestToOpenCampaignListAtKey(bytes32 key) public onlyAdminAndOwner view returns(address payable _requestToOpenCampaignHost, uint32  _requestToOpenCampaignMinimumContribution) {
+    function getRequestToOpenCampaignListAtKey(bytes32 key) public onlyAdminAndOwnerAndValidatedHost view returns(address payable _requestToOpenCampaignHost, uint32  _requestToOpenCampaignMinimumContribution) {
         RequestToOpenCampaign memory re = requestsToOpenCampaign[key];
         return (re.requestHost, re.minimumContribution);
+    }
+
+    function cancelOpenCampaignRequest(bytes32 requestToOpenCampaignCode) public onlyValidatedHost {
+        require(requestToOpenCampaignSet.exists(requestToOpenCampaignCode), "Invalid requestToOpenCampaign ID");
+        RequestToOpenCampaign memory re = requestsToOpenCampaign[requestToOpenCampaignCode];
+       
+        if(re.requestHost == msg.sender){
+            requestToOpenCampaignSet.remove(requestToOpenCampaignCode);
+            delete requestsToOpenCampaign[requestToOpenCampaignCode];
+        } else {
+            revert("You cannot cancel other hosts requests.");
+        }
+        
     }
 
     //REQUEST TO WITHDRAW MONEY CRUD
@@ -228,12 +254,26 @@ contract CampaignFactory is Ownable_CampaignFactory{
         
     }
     
+    function cancelWithDrawMoneyRequest(bytes32 requestToWithdrawMoney) public onlyValidatedHost {
+        require(requestToWithdrawMoneySet.exists(requestToWithdrawMoney), "Invalid requestToWithdrawMoney ID");
+        RequestToWithdrawMoney memory re = requestsToWithdrawMoney[requestToWithdrawMoney];
+       
+        if(re.requestHost == msg.sender){
+            revert("You cannot cancel other hosts requests.");
+        } else {
+            requestToWithdrawMoneySet.remove(requestToWithdrawMoney);
+            delete requestsToWithdrawMoney[requestToWithdrawMoney];
+        }
+        
+    }
+    
     function rejectWithdrawMoneyRequest(bytes32 requestToWithdrawMoney) public onlyAdmin {
         require(requestToWithdrawMoneySet.exists(requestToWithdrawMoney), "Invalid requestToWithdrawMoney ID");
         requestToWithdrawMoneySet.remove(requestToWithdrawMoney);
         delete requestsToWithdrawMoney[requestToWithdrawMoney];
         
     }
+    
     
     function requestToWithdrawMoney(bytes32 requestWithdrawMoneyCode, uint256 requestAmount, address payable requestCampaign) public onlyValidatedHost{
         require(!requestToWithdrawMoneySet.exists(requestWithdrawMoneyCode), "RequestToWithdrawMoney ID already exists.");
@@ -255,15 +295,15 @@ contract CampaignFactory is Ownable_CampaignFactory{
         
     }
     
-    function getRequestToWithdrawMoneyList() public onlyAdminAndOwner view returns(bytes32[] memory){
+    function getRequestToWithdrawMoneyList() public onlyAdminAndOwnerAndValidatedHost view returns(bytes32[] memory){
         return requestToWithdrawMoneySet.listKey();
     }
     
-    function getRequestToWithdrawMoneyListAtIndex(uint index) public onlyAdminAndOwner view returns(bytes32 _requestToOpenCampaign) {
+    function getRequestToWithdrawMoneyListAtIndex(uint index) public onlyAdminAndOwnerAndValidatedHost view returns(bytes32 _requestToOpenCampaign) {
         return requestToWithdrawMoneySet.keyAtIndex(index);
     }
     
-    function getRequestToWithdrawMoneyListAtKey(bytes32 key) public onlyAdminAndOwner view returns(address payable _requestToWithdrawMoneyHost,address payable _requestToWithdrawMoneyCampaign, uint256  _requestToWithdrawMoneyAmount) {
+    function getRequestToWithdrawMoneyListAtKey(bytes32 key) public onlyAdminAndOwnerAndValidatedHost view returns(address payable _requestToWithdrawMoneyHost,address payable _requestToWithdrawMoneyCampaign, uint256  _requestToWithdrawMoneyAmount) {
         RequestToWithdrawMoney memory re = requestsToWithdrawMoney[key];
         return (re.requestHost, re.requestCampaign, re.amount);
     }

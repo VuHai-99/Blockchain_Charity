@@ -18,17 +18,25 @@ class AdminController extends Controller
 
     public function logout()
     {
+        $notification = array(
+            'message' => 'Logout Successfully',
+            'alert-type' => 'success'
+        );
         Auth::guard('admin')->logout();
-        return redirect(route('home'));
+        return redirect(route('home'))->with($notification);
     }
 
     public function verify(LoginRequest $request)
     {
+        $notification = array(
+            'message' => 'Login Successfully',
+            'alert-type' => 'success'
+        );
         $data = $request->only('email', 'password');
         if (!Auth::guard('admin')->attempt($data)) {
             return back()->with('error-login', 'Email hoặc mật khẩu không đúng. Vui lòng kiểm tra lại.')->withInput();
         } else {
-            return redirect(route('admin.dashboard.index'));
+            return redirect()->route('admin.dashboard.index')->with($notification);
         }
     }
     
@@ -37,13 +45,13 @@ class AdminController extends Controller
         return view('admin.index');
     }
 
-    public function listProject()
+    public function listCampaign()
     {
-        return view('admin.list_project');
+        return view('admin.list_campaign');
     }
 
-    public function listOpenProjectRequest(){
-        return view('admin.list_open_project_request');
+    public function listOpenCampaignRequest(){
+        return view('admin.list_open_campaign_request');
     }   
 
     public function listValidateHostRequest(){
