@@ -35,7 +35,7 @@ class BlockChainController extends Controller
                 $host = User::findOrFail($new_blockchain_request->requested_user_address);
                 $host->validate_state = 1;
                 $host->save();
-            }
+            } 
             return response()->json(['success' => 'success', 200]);
         } catch (\Exception $e) {
 
@@ -98,7 +98,7 @@ class BlockChainController extends Controller
             $requestToWithdrawMoney->request_id = $transaction_info['request_id'];
             $requestToWithdrawMoney->requested_user_address = $transaction_info['requested_user_address'];
             $requestToWithdrawMoney->amount = $transaction_info['amount'];
-            $requestToWithdrawMoney->campaign_address = $transaction_info['campaign_address'];
+            $requestToWithdrawMoney->campaign_address = $request->campaign_address;
             $requestToWithdrawMoney->request_type = 2;
             $requestToWithdrawMoney->save();
             return redirect()->back();
@@ -196,13 +196,16 @@ class BlockChainController extends Controller
                     $newCampaign->save();
                    
                 } elseif ($blockchain_request->request_type == 2){
-                    dd($request->all());
+                    // dd($blockchain_request->campaign_address);
 
-                    $currentCampaign = Campaign::findOrFail($blockchain_request->campaign_address);
-                    
-                    $currentCampaign->current_balance = strval(gmp_sub($currentCampaign->current_balance, $request->donation_amount));
-                    $currentCampaign->save();
-                   
+                    $currentCampaign = Campaign::findOrFail(strval($blockchain_request->campaign_address));
+                    if($currentCampaign){
+            
+                        $currentCampaign->current_balance = strval(gmp_sub($currentCampaign->current_balance, $blockchain_request->amount));
+                        $currentCampaign->save();
+                    } else {
+                        return 'Wrong Campaign';
+                    }
                 } 
                 $blockchain_request->delete();
             } elseif (($decide_type == 'Decline') || ($decide_type == 'Cancel')){
@@ -234,11 +237,12 @@ class BlockChainController extends Controller
         $new_transaction->save();
 
         if($request->transaction_type == 0){
-            $campaign = Campaign::findOrFail($request->receiver_address);
             
-        } elseif($request->transaction_type == 1) {
-
+            $campaign = Campaign::findOrFail($request->receiver_address);
+            $campaign->current_balance = strval(gmp_add($campaign->current_balance, $request->amount));
+            $campaign->save();    
         }
+        
     }
     
 }
