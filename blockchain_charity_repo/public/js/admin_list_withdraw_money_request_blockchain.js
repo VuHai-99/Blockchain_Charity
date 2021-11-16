@@ -111,7 +111,7 @@ App = {
     if(response == true){
       await App.campaignfactory.withDrawMoneyFunction(requestedWithdrawMoneyID)
       .then((result) => {
-        console.log(result);
+        // console.log(result);
         const host_contract_address = result.receipt.from;
         const campaign_contract_address = result.receipt.to;
         const transaction_hash = result.receipt.transactionHash;

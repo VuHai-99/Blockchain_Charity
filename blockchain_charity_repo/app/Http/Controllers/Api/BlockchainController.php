@@ -67,6 +67,11 @@ class BlockChainController extends Controller
             $requestToValidateHost->amount = $request->donation_amount;
             $requestToValidateHost->save();
             // return redirect()->back()->with($notification);
+
+            $currentCampaign = Campaign::findOrFail($campaign_address);
+            $currentCampaign->current_balance = strval(gmp_add($currentCampaign->current_balance, $request->donation_amount));
+            $currentCampaign->save();
+
             return redirect()->back();
         } else {
             // $notification = array(
@@ -94,7 +99,7 @@ class BlockChainController extends Controller
             $requestToWithdrawMoney->requested_user_address = $transaction_info['requested_user_address'];
             $requestToWithdrawMoney->amount = $transaction_info['amount'];
             $requestToWithdrawMoney->campaign_address = $transaction_info['campaign_address'];
-            $requestToWithdrawMoney->request_type = 1;
+            $requestToWithdrawMoney->request_type = 2;
             $requestToWithdrawMoney->save();
             return redirect()->back();
         } else {
@@ -191,7 +196,12 @@ class BlockChainController extends Controller
                     $newCampaign->save();
                    
                 } elseif ($blockchain_request->request_type == 2){
-                    // withdraw money request
+                    dd($request->all());
+
+                    $currentCampaign = Campaign::findOrFail($blockchain_request->campaign_address);
+                    
+                    $currentCampaign->current_balance = strval(gmp_sub($currentCampaign->current_balance, $request->donation_amount));
+                    $currentCampaign->save();
                    
                 } 
                 $blockchain_request->delete();

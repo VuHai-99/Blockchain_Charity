@@ -33,7 +33,7 @@ Route::prefix('admin')
     ->group(function () {
         Route::get('/', 'AdminController@index')->name('dashboard.index');
         Route::get('list/host', 'AdminController@listHost')->name('host.list');
-        Route::get('list/campaign', 'AdminController@listCampaign')->name('project.list');
+        Route::get('list/campaign', 'AdminController@listCampaign')->name('campaign.list');
         Route::get('list/open-campaign-request', 'AdminController@listOpenCampaignRequest')->name('open-campaign-request.list');
         Route::get('list/validate-host-request', 'AdminController@listValidateHostRequest')->name('validate-host-request.list');
         Route::get('profile', 'AdminController@profile')->name('profile.edit');
