@@ -15,8 +15,8 @@
                 <div class="d-flex flex-row mt-5">
                     <input type="text" class="form-control" name="otp" maxlength="6" autofocus="">
                 </div>
-                <p class="text-danger notify"></p>
             </form>
+            <p class="notify text-danger"></p>
             <div class="form-group text-center mt-2">
                 <button class="btn btn-confirm">Xác nhận</button>
             </div>

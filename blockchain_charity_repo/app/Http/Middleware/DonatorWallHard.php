@@ -17,9 +17,9 @@ class DonatorWallHard
      */
     public function handle($request, Closure $next)
     {
-        if (!Auth::check() || Auth::user()->wallet_type != EnumUser::DONATOR_WALLET_HARD) {
-            return redirect(route('home'));
+        if (Auth::user()->role == EnumUser::ROLE_DONATOR && Auth::user()->wallet_type == EnumUser::WALLET_HARD) {
+            return $next($request);
         }
-        return $next($request);
+        return redirect(route('home'));
     }
 }
