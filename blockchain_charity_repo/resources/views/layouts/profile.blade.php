@@ -1,3 +1,4 @@
+@inject('enumUser', 'App\Enums\EnumUser')
 @extends('layouts.default')
 
 @section('page-name', 'Thông tin cá nhân')
@@ -16,79 +17,44 @@
                 <div class="card-body">
                     <form>
                         <div class="row">
-                            <div class="col-md-5">
-                                <div class="form-group">
-                                    <label class="bmd-label-floating">Company (disabled)</label>
-                                    <input type="text" class="form-control" disabled>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="bmd-label-floating">Username</label>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" value="{{Auth::user()->name}}">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="bmd-label-floating">Email address</label>
-                                    <input type="email" class="form-control">
+                                    <input type="email" class="form-control" value="{{Auth::user()->email}}">
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="bmd-label-floating">Fist Name</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="bmd-label-floating">Last Name</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-8">
                                 <div class="form-group">
                                     <label class="bmd-label-floating">Adress</label>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" value="{{Auth::user()->address}}">
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label class="bmd-label-floating">City</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label class="bmd-label-floating">Country</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label class="bmd-label-floating">Postal Code</label>
-                                    <input type="text" class="form-control">
-                                </div>
+                            <div class="col-md-4 password">
+                                <label class="bmd-label-floating">Password</label>
+                                <input type="text"  type="password" value="" class="form-control">
+                                <i class="fa fa-eye-slash" aria-hidden="true"></i>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>About Me</label>
-                                    <div class="form-group">
-                                        <label class="bmd-label-floating"> Lamborghini Mercy, Your chick she so thirsty, I'm
-                                            in that two seat Lambo.</label>
-                                        <textarea class="form-control" rows="5"></textarea>
-                                    </div>
+                        @if (Auth::user()->role == $enumUser::ROLE_HOST)
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <img src="{{asset(Auth::user()->image_card_front)}}" alt="">
+                                </div>
+                                <div class="col-md-4">
+                                    <img src="{{asset(Auth::user()->image_card_back)}}" alt="">
                                 </div>
                             </div>
-                        </div>
+                        @endif
                         <button type="submit" class="btn btn-primary pull-right">Update Profile</button>
                         <div class="clearfix"></div>
                     </form>
