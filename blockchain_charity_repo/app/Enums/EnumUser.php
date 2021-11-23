@@ -4,8 +4,9 @@ namespace App\Enums;
 
 class EnumUser
 {
-    const HOST_WALLET_HARD = 0;
-    const HOST_WALLET_SOFT = 1;
-    const DONATOR_WALLET_HARD = 0;
-    const DONATOR_WALLET_SOFT = 1;
+    const WALLET_HARD = 0;
+    const WALLET_SOFT = 1;
+
+    const ROLE_DONATOR = 0;
+    const ROLE_HOST = 1;
 }

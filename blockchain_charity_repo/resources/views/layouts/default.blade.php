@@ -51,7 +51,6 @@ crossorigin="anonymous"></script>
 @if(Session::has('message'))
 <script>
     var type = "{{ Session::get('alert-type','info') }}"
-    console.log('123')
     switch (type) {
         case 'info':
             toastr.info(" {{ Session::get('message') }} ");
