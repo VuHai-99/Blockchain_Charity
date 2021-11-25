@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Carbon\Carbon;
-use App\Mail\SendMailOtp;
-use Illuminate\Http\Request;
-use App\Http\Requests\LoginRequest;
+use App\Enums\EnumUser;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LoginRequest;
+use App\Mail\SendMailOtp;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
@@ -24,7 +25,7 @@ class TowFactorController extends Controller
         Mail::to($user->email)->send(new SendMailOtp($otp));
         if ($user->role == 1) {
             return redirect(route('host.home'));
-        }   
+        }
         return redirect(route('donator.home'));
     }
 
@@ -47,8 +48,12 @@ class TowFactorController extends Controller
             Auth::logout();
             return redirect(route('login'))->with('notify', 'Mã OTP của bạn đã hết hạn, vui lòng đăng nhập lại.');
         }
-        if ($user->role == 1) {
+        if ($user->role == EnumUser::ROLE_HOST && $user->wallet_type == EnumUser::WALLET_HARD) {
             return redirect()->route('host.home')->with($notification);
+        } else if ($user->role == EnumUser::ROLE_HOST && $user->wallet_type == EnumUser::WALLET_SOFT) {
+            return redirect()->route('hostws.home')->with($notification);
+        } else if ($user->role == EnumUser::ROLE_DONATOR && $user->wallet_type == EnumUser::WALLET_SOFT) {
+            return redirect()->route('donatorws.home')->with($notification);
         } else {
             return redirect()->route('donator.home')->with($notification);
         }

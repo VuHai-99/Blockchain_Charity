@@ -12,3 +12,12 @@
         color: $white_color;
     }
 }
+
+.password {
+    position: relative;
+    .fa-eye-slash {
+        position: absolute;
+        top: 60%;
+        right: 10%;
+    }
+}
