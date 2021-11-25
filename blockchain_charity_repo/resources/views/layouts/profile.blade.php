@@ -40,7 +40,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-4 password">
-                                <label class="bmd-label-floating">Password</label>
+                                <label class="bmd-label-floating"> Password </label>
                                 <input type="text"  type="password" value="" class="form-control">
                                 <i class="fa fa-eye-slash" aria-hidden="true"></i>
                             </div>
