@@ -54,10 +54,6 @@ class BlockChainController extends Controller
             'amoutOfEthereum' => $request->donation_amount, 
         ]);
         if($response->status() == 200){
-            // $notification = array(
-            //     'message' => 'Successfully donate to campaign',
-            //     'alert-type' => 'success'
-            // );
             $transaction_info = $response->json();
             $requestToValidateHost = new Transaction();
             $requestToValidateHost->transaction_hash = $transaction_info['transactionHash'];
@@ -74,10 +70,7 @@ class BlockChainController extends Controller
 
             return redirect()->back();
         } else {
-            // $notification = array(
-            //     'message' => 'Successfully donate to campaign',
-            //     'alert-type' => 'success'
-            // );
+
             return redirect()->back();
         }
     }
