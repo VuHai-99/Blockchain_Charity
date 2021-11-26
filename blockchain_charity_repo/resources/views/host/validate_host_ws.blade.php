@@ -12,7 +12,7 @@
             <div class="col-md-12">
                 <div class="text-left" id="hostValidate">
                     @if($host->validate_state == 0)
-                        <form method="POST" action="{{ route('validate.tobehost.request') }}">
+                        <form method="POST" action="{{ route('hostws.validate.tobehost.request') }}">
                             <input id="user_address" name="user_address" value="{{Auth::user()->user_address}}" hidden>
                             <h3 class="my-4 text-left">Validate Account</h3>
                             <p> Tài khoản host của bạn chưa được validate. </p>

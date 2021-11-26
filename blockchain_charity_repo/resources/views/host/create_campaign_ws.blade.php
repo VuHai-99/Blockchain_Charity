@@ -6,7 +6,7 @@
 @section('page-name', 'Thêm dự án')
 @section('content')
     <div class="row wrap-form">
-        <form method="POST" action="{{ route('validate.openCampaign.request') }}">
+        <form method="POST" action="{{ route('hostws.validate.openCampaign.request') }}">
             <div class="form-group">
                 <label for="campaign_name">Tên dự án</label>
                 <input type="text" name="campaign_name" id="campaign_name" {{ old('name') }} class="form-control"

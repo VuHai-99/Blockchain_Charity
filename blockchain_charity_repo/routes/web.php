@@ -93,6 +93,8 @@ Route::prefix('charity')
                 Route::get('validate-host', 'HostController@WS_validateHost')->name('validate.host');
                 Route::post('donate/campaign', 'HostController@WS_donateToCampaign')->name('donate.campaign');
                 Route::post('/withdraw/campaign', 'HostController@WS_withdrawCampaign')->name('withdraw.campaign');
+                Route::post('/validate/request', 'HostController@WS_hostValidateRequest')->name('validate.tobehost.request');
+                Route::post('/openCampaign/request', 'HostController@WS_hostOpenCampaignRequest')->name('validate.openCampaign.request');
             });
         Route::get('campaign/list-donator', 'DonatorController@listDonator')->name('campaign.donator');
     });

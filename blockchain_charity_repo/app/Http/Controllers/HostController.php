@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use App\Model\Transaction;
 use App\Model\BlockchainRequest;
+use App\User;
 
 class HostController extends Controller
 {
@@ -134,6 +135,75 @@ class HostController extends Controller
         } else {
             $notification = array(
                 'message' => 'Request to Withdraw Money Unsuccessfully',
+                'alert-type' => 'error'
+            );
+            return redirect()->back()->with($notification);
+        }
+    }
+
+    public function WS_hostValidateRequest(Request $request){
+        $withdrawAPI = 'http://localhost:3000/host/validate/request';
+
+        $response = Http::post($withdrawAPI, [
+            // 'donator_address' => Auth::user()->user_address,
+            'requested_to_be_host_address' => Auth::user()->user_address,
+        ]);
+        if($response->status() == 200){
+            $notification = array(
+                'message' => 'Request to Validate Account Successfully',
+                'alert-type' => 'success'
+            );
+            $requestToWithdrawMoney = new BlockchainRequest();
+            $requestToWithdrawMoney->request_id = $request->user_address;
+            $requestToWithdrawMoney->requested_user_address = $request->user_address;
+            $requestToWithdrawMoney->request_type = 0;
+            $requestToWithdrawMoney->save();
+
+            $user = User::findOrFail($request->user_address);
+            $user->validate_state = 1;
+            $user->save();
+            return redirect()->back()->with($notification);
+        } else {
+            $notification = array(
+                'message' => 'Request to Validate Account Unsuccessfully',
+                'alert-type' => 'error'
+            );
+            return redirect()->back()->with($notification);
+        }
+    }
+
+    public function WS_hostOpenCampaignRequest(Request $request)
+    {
+        $withdrawAPI = 'http://localhost:3000/host/create/campaign/request';
+
+        $response = Http::post($withdrawAPI, [
+            // 'donator_address' => Auth::user()->user_address,
+            'validated_host_address' => Auth::user()->user_address,
+            "minimum_contribution" => $request->minimum_contribution
+        ]);
+        if($response->status() == 200){
+            $notification = array(
+                'message' => 'Request to open campaign Successfully',
+                'alert-type' => 'success'
+            );
+
+            $transaction_info = $response->json();
+            $requestToWithdrawMoney = new BlockchainRequest();
+            $requestToWithdrawMoney->request_id = $transaction_info['request_id'];
+            $requestToWithdrawMoney->requested_user_address = $request->user_address;
+            $requestToWithdrawMoney->request_type = 1;
+            $requestToWithdrawMoney->amount = $request->minimum_contribution;
+            $requestToWithdrawMoney->campaign_name = $request->campaign_name;
+            $requestToWithdrawMoney->date_start = $request->date_start;
+            $requestToWithdrawMoney->date_end = $request->date_end;
+            $requestToWithdrawMoney->target_contribution_amount = $request->target_contribution_amount;
+            $requestToWithdrawMoney->description = $request->description;
+            $requestToWithdrawMoney->save();
+
+            return redirect()->back()->with($notification);
+        } else {
+            $notification = array(
+                'message' => 'Request to open campaign Unsuccessfully',
                 'alert-type' => 'error'
             );
             return redirect()->back()->with($notification);
