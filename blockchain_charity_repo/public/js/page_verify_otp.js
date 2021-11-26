@@ -94,7 +94,6 @@
 /***/ (function(module, exports) {
 
 $(function () {
-  $('#form-verify-otp').submit(false);
   $("input[name='otp']").keypress(function (e) {
     if (e.keyCode == 13) {
       $('.btn-confirm').click();
