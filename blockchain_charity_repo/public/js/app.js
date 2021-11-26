@@ -37616,6 +37616,17 @@ window.showPopupOkBackdrop = showPopupOkBackdrop;
 
 /***/ }),
 
+/***/ "./resources/sass/my_wallet.scss":
+/*!***************************************!*\
+  !*** ./resources/sass/my_wallet.scss ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+throw new Error("Module build failed (from ./node_modules/css-loader/index.js):\nModuleBuildError: Module build failed (from ./node_modules/sass-loader/dist/cjs.js):\nError: ENOENT: no such file or directory, open 'F:\\xampp\\htdocs\\blockchain_charity_repo1\\blockchain_charity_repo\\resources\\sass\\my_wallet.scss'\n    at F:\\xampp\\htdocs\\blockchain_charity_repo1\\blockchain_charity_repo\\node_modules\\webpack\\lib\\NormalModule.js:316:20\n    at F:\\xampp\\htdocs\\blockchain_charity_repo1\\blockchain_charity_repo\\node_modules\\loader-runner\\lib\\LoaderRunner.js:367:11\n    at F:\\xampp\\htdocs\\blockchain_charity_repo1\\blockchain_charity_repo\\node_modules\\loader-runner\\lib\\LoaderRunner.js:203:19\n    at F:\\xampp\\htdocs\\blockchain_charity_repo1\\blockchain_charity_repo\\node_modules\\enhanced-resolve\\lib\\CachedInputFileSystem.js:85:15\n    at processTicksAndRejections (internal/process/task_queues.js:79:11)");
+
+/***/ }),
+
 /***/ "./resources/sass/project_detail.scss":
 /*!********************************************!*\
   !*** ./resources/sass/project_detail.scss ***!
@@ -37672,34 +37683,35 @@ window.showPopupOkBackdrop = showPopupOkBackdrop;
 /***/ }),
 
 /***/ 0:
-/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/sass/app.scss ./resources/sass/campaign_donator.scss ./resources/sass/create_campaign.scss ./resources/sass/custom.scss ./resources/sass/email_password.scss ./resources/sass/footer.scss ./resources/sass/frontend_event.scss ./resources/sass/header.scss ./resources/sass/header_admin.scss ./resources/sass/home.scss ./resources/sass/host_list_project.scss ./resources/sass/login.scss ./resources/sass/project_detail.scss ./resources/sass/register.scss ./resources/sass/style_template.scss ./resources/sass/user.scss ./resources/sass/verify_otp.scss ./resources/sass/_counter.scss ./resources/sass/_mixins.scss ./resources/sass/_responsive.scss ./resources/sass/_variables.scss ***!
-  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/sass/app.scss ./resources/sass/campaign_donator.scss ./resources/sass/create_campaign.scss ./resources/sass/custom.scss ./resources/sass/email_password.scss ./resources/sass/footer.scss ./resources/sass/frontend_event.scss ./resources/sass/header.scss ./resources/sass/header_admin.scss ./resources/sass/home.scss ./resources/sass/host_list_project.scss ./resources/sass/login.scss ./resources/sass/my_wallet.scss ./resources/sass/project_detail.scss ./resources/sass/register.scss ./resources/sass/style_template.scss ./resources/sass/user.scss ./resources/sass/verify_otp.scss ./resources/sass/_counter.scss ./resources/sass/_mixins.scss ./resources/sass/_responsive.scss ./resources/sass/_variables.scss ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\app.scss */"./resources/sass/app.scss");
-__webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\campaign_donator.scss */"./resources/sass/campaign_donator.scss");
-__webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\create_campaign.scss */"./resources/sass/create_campaign.scss");
-__webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\custom.scss */"./resources/sass/custom.scss");
-__webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\email_password.scss */"./resources/sass/email_password.scss");
-__webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\footer.scss */"./resources/sass/footer.scss");
-__webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\frontend_event.scss */"./resources/sass/frontend_event.scss");
-__webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\header.scss */"./resources/sass/header.scss");
-__webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\header_admin.scss */"./resources/sass/header_admin.scss");
-__webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\home.scss */"./resources/sass/home.scss");
-__webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\host_list_project.scss */"./resources/sass/host_list_project.scss");
-__webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\login.scss */"./resources/sass/login.scss");
-__webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\project_detail.scss */"./resources/sass/project_detail.scss");
-__webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\register.scss */"./resources/sass/register.scss");
-__webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\style_template.scss */"./resources/sass/style_template.scss");
-__webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\user.scss */"./resources/sass/user.scss");
-__webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\verify_otp.scss */"./resources/sass/verify_otp.scss");
-__webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\_counter.scss */"./resources/sass/_counter.scss");
-__webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\_mixins.scss */"./resources/sass/_mixins.scss");
-__webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\_responsive.scss */"./resources/sass/_responsive.scss");
-module.exports = __webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\_variables.scss */"./resources/sass/_variables.scss");
+__webpack_require__(/*! F:\xampp\htdocs\blockchain_charity_repo1\blockchain_charity_repo\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! F:\xampp\htdocs\blockchain_charity_repo1\blockchain_charity_repo\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! F:\xampp\htdocs\blockchain_charity_repo1\blockchain_charity_repo\resources\sass\campaign_donator.scss */"./resources/sass/campaign_donator.scss");
+__webpack_require__(/*! F:\xampp\htdocs\blockchain_charity_repo1\blockchain_charity_repo\resources\sass\create_campaign.scss */"./resources/sass/create_campaign.scss");
+__webpack_require__(/*! F:\xampp\htdocs\blockchain_charity_repo1\blockchain_charity_repo\resources\sass\custom.scss */"./resources/sass/custom.scss");
+__webpack_require__(/*! F:\xampp\htdocs\blockchain_charity_repo1\blockchain_charity_repo\resources\sass\email_password.scss */"./resources/sass/email_password.scss");
+__webpack_require__(/*! F:\xampp\htdocs\blockchain_charity_repo1\blockchain_charity_repo\resources\sass\footer.scss */"./resources/sass/footer.scss");
+__webpack_require__(/*! F:\xampp\htdocs\blockchain_charity_repo1\blockchain_charity_repo\resources\sass\frontend_event.scss */"./resources/sass/frontend_event.scss");
+__webpack_require__(/*! F:\xampp\htdocs\blockchain_charity_repo1\blockchain_charity_repo\resources\sass\header.scss */"./resources/sass/header.scss");
+__webpack_require__(/*! F:\xampp\htdocs\blockchain_charity_repo1\blockchain_charity_repo\resources\sass\header_admin.scss */"./resources/sass/header_admin.scss");
+__webpack_require__(/*! F:\xampp\htdocs\blockchain_charity_repo1\blockchain_charity_repo\resources\sass\home.scss */"./resources/sass/home.scss");
+__webpack_require__(/*! F:\xampp\htdocs\blockchain_charity_repo1\blockchain_charity_repo\resources\sass\host_list_project.scss */"./resources/sass/host_list_project.scss");
+__webpack_require__(/*! F:\xampp\htdocs\blockchain_charity_repo1\blockchain_charity_repo\resources\sass\login.scss */"./resources/sass/login.scss");
+__webpack_require__(/*! F:\xampp\htdocs\blockchain_charity_repo1\blockchain_charity_repo\resources\sass\my_wallet.scss */"./resources/sass/my_wallet.scss");
+__webpack_require__(/*! F:\xampp\htdocs\blockchain_charity_repo1\blockchain_charity_repo\resources\sass\project_detail.scss */"./resources/sass/project_detail.scss");
+__webpack_require__(/*! F:\xampp\htdocs\blockchain_charity_repo1\blockchain_charity_repo\resources\sass\register.scss */"./resources/sass/register.scss");
+__webpack_require__(/*! F:\xampp\htdocs\blockchain_charity_repo1\blockchain_charity_repo\resources\sass\style_template.scss */"./resources/sass/style_template.scss");
+__webpack_require__(/*! F:\xampp\htdocs\blockchain_charity_repo1\blockchain_charity_repo\resources\sass\user.scss */"./resources/sass/user.scss");
+__webpack_require__(/*! F:\xampp\htdocs\blockchain_charity_repo1\blockchain_charity_repo\resources\sass\verify_otp.scss */"./resources/sass/verify_otp.scss");
+__webpack_require__(/*! F:\xampp\htdocs\blockchain_charity_repo1\blockchain_charity_repo\resources\sass\_counter.scss */"./resources/sass/_counter.scss");
+__webpack_require__(/*! F:\xampp\htdocs\blockchain_charity_repo1\blockchain_charity_repo\resources\sass\_mixins.scss */"./resources/sass/_mixins.scss");
+__webpack_require__(/*! F:\xampp\htdocs\blockchain_charity_repo1\blockchain_charity_repo\resources\sass\_responsive.scss */"./resources/sass/_responsive.scss");
+module.exports = __webpack_require__(/*! F:\xampp\htdocs\blockchain_charity_repo1\blockchain_charity_repo\resources\sass\_variables.scss */"./resources/sass/_variables.scss");
 
 
 /***/ })
