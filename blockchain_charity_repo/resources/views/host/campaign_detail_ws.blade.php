@@ -82,6 +82,7 @@
                 </div>
             </div>
             <form method="POST" action="{{ route('hostws.donate.campaign') }}">
+                @csrf
                 <div class="btn-donate">
                     <input placeholder="Amount of donation" id="donation_amount" name="donation_amount">
                     <input id="campaign_address" name="campaign_address" value="{{$campaign->campaign_address}}" hidden>
@@ -92,7 +93,8 @@
                     <button class="btn">DONATE NOW</button>
                 </div>
             </form>
-            <form method="POST" action="{{ route('withdraw.campaign') }}">
+            <form method="POST" action="{{ route('hostws.withdraw.campaign') }}">
+                @csrf
                 <div class="btn-donate">
                     <input placeholder="Amount of withdrawal" id="withdrawal_amount" name="withdrawal_amount">
                     <input id="campaign_address" name="campaign_address" value="{{$campaign->campaign_address}}" hidden>

@@ -92,6 +92,7 @@ Route::prefix('charity')
                 Route::get('campaign_detail/{blockchainAddress}', 'HostController@WS_campaignDetail')->name('campaign.detail');
                 Route::get('validate-host', 'HostController@WS_validateHost')->name('validate.host');
                 Route::post('donate/campaign', 'HostController@WS_donateToCampaign')->name('donate.campaign');
+                Route::post('/withdraw/campaign', 'HostController@WS_withdrawCampaign')->name('withdraw.campaign');
             });
         Route::get('campaign/list-donator', 'DonatorController@listDonator')->name('campaign.donator');
     });

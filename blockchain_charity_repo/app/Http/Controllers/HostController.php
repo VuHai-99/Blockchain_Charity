@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Model\Campaign;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
+use App\Model\Transaction;
+use App\Model\BlockchainRequest;
 
 class HostController extends Controller
 {
@@ -65,10 +68,7 @@ class HostController extends Controller
     }
 
     public function WS_donateToCampaign(Request $request){
-        $notification = array(
-            'message' => 'Donate Successfully',
-            'alert-type' => 'success'
-        );
+        
         $campaign_address = $request->campaign_address;
         $donateAPI = 'http://localhost:3000/donator/donate/campaign/';
         $donateAPI.=$campaign_address;
@@ -79,6 +79,11 @@ class HostController extends Controller
             'amoutOfEthereum' => $request->donation_amount, 
         ]);
         if($response->status() == 200){
+            $notification = array(
+                'message' => 'Donate Successfully',
+                'alert-type' => 'success'
+            );
+
             $transaction_info = $response->json();
             $requestToValidateHost = new Transaction();
             $requestToValidateHost->transaction_hash = $transaction_info['transactionHash'];
@@ -97,6 +102,38 @@ class HostController extends Controller
         } else {
             $notification = array(
                 'message' => 'Donate Unsuccessfully',
+                'alert-type' => 'error'
+            );
+            return redirect()->back()->with($notification);
+        }
+    }
+
+    public function WS_withdrawCampaign(Request $request){
+        $withdrawAPI = 'http://localhost:3000/host/withdraw/campaign/request';
+
+        $response = Http::post($withdrawAPI, [
+            // 'donator_address' => Auth::user()->user_address,
+            'validated_host_address' => Auth::user()->user_address,
+            'amount_of_money' => $request->withdrawal_amount, 
+            "campaign_adress_target" =>  $request->campaign_address
+        ]);
+        if($response->status() == 200){
+            $notification = array(
+                'message' => 'Request to Withdraw Money Successfully',
+                'alert-type' => 'success'
+            );
+            $transaction_info = $response->json();
+            $requestToWithdrawMoney = new BlockchainRequest();
+            $requestToWithdrawMoney->request_id = $transaction_info['request_id'];
+            $requestToWithdrawMoney->requested_user_address = $transaction_info['requested_user_address'];
+            $requestToWithdrawMoney->amount = $transaction_info['amount'];
+            $requestToWithdrawMoney->campaign_address = $request->campaign_address;
+            $requestToWithdrawMoney->request_type = 2;
+            $requestToWithdrawMoney->save();
+            return redirect()->back()->with($notification);
+        } else {
+            $notification = array(
+                'message' => 'Request to Withdraw Money Unsuccessfully',
                 'alert-type' => 'error'
             );
             return redirect()->back()->with($notification);
