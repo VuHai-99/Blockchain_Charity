@@ -112,8 +112,8 @@ App = {
       await App.campaignfactory.withDrawMoneyFunction(requestedWithdrawMoneyID)
       .then((result) => {
         // console.log(result);
-        const host_contract_address = result.receipt.from;
-        const campaign_contract_address = result.receipt.to;
+        const host_contract_address = result.receipt.to;
+        const campaign_contract_address = result.receipt.from;
         const transaction_hash = result.receipt.transactionHash;
         const amount_in_wei = withdrawValue;
         Swal.fire({
