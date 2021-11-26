@@ -70,6 +70,7 @@ Route::prefix('charity')
                 Route::get('', 'DonatorController@home')->name('home');
                 Route::get('campaign', 'DonatorController@WS_listCampaign')->name('campaign');
                 Route::get('campaign-detail/{id}', 'DonatorController@WS_campaignDetail')->name('campaign.detail');
+                Route::post('donate/campaign', 'DonatorController@WS_donateToCampaign')->name('donate.campaign');
             });
         Route::prefix('host')
             ->middleware('host-wallet-hard')
@@ -90,6 +91,7 @@ Route::prefix('charity')
                 Route::get('create-campaign', 'HostController@WS_createCampaign')->name('campaign.create');
                 Route::get('campaign_detail/{blockchainAddress}', 'HostController@WS_campaignDetail')->name('campaign.detail');
                 Route::get('validate-host', 'HostController@WS_validateHost')->name('validate.host');
+                Route::post('donate/campaign', 'HostController@WS_donateToCampaign')->name('donate.campaign');
             });
         Route::get('campaign/list-donator', 'DonatorController@listDonator')->name('campaign.donator');
     });

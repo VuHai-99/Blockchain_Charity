@@ -79,21 +79,22 @@ exports.donateToCampaign = async (req, res) => {
             `Attempting to make donation from ${donator_address} to Campaign ${campaign_address}`
         );
 
-        // console.log(req.body.amoutOfEthereum)
+        // console.log(privKey)
 
         const createTransaction = web3.eth.accounts.signTransaction(
           {
               from: donator_address,
               to: campaign_address,
-              // value: web3.utils.toWei(amoutOfEthereum.toString(), 'ether'),
-              value: amoutOfEthereum.toString(),
+              value: web3.utils.toWei(amoutOfEthereum.toString(), 'wei'),
+              // value: amoutOfEthereum.toString(),
               gas: 2000000,
               data: encodedABI,
           },
           privKey
         );
+        
         createTransaction.then((signedTx) => {  
-
+            
             // raw transaction string may be available in .raw or 
             // .rawTransaction depending on which signTransaction
             // function was called
@@ -113,6 +114,7 @@ exports.donateToCampaign = async (req, res) => {
             sentTx.on("error", err => {
               // console.log(Object.keys(err['data']['stack']))
               // console.log(err['data']['stack'])
+              console.log(err)
               res.status(500).send({
                 message:
                   err['data']['stack'] || "Some error occurred in transaction process."

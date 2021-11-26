@@ -81,7 +81,8 @@
 
                 </div>
             </div>
-            <form method="POST" action="{{ route('donate.campaign') }}">
+            <form method="POST" action="{{ route('donatorws.donate.campaign') }}">
+                @csrf
                 <div class="btn-donate">
                     <input placeholder="Amount of donation" id="donation_amount" name="donation_amount">
                     <input id="campaign_address" name="campaign_address" value="{{$campaign->campaign_address}}" hidden>
