@@ -8,6 +8,18 @@
 
 @section('id_custom', 'backend')
 
+@section('pageBreadcrumb')
+    <div class="group-button-top">
+        <a href="{{ route('home') }}"
+            class="btn btn-ct-primary  {{ Request::routeIs('hostws.home') ? 'active-primary' : '' }} action" role="button">
+            Home</a>
+        <a href="{{ route('wallet') }}"
+            class="btn btn-ct-primary {{ Request::routeIs('hostws.campaign') ? 'active-primary' : 'disabled' }} action"
+            role="button">List Campaign</a>
+        <a href="{{ route('wallet') }}" class="btn btn-ct-primary active-primary action" role="button">Campaign Detail</a>
+    </div>
+@endsection
+
 @section('content')
     <div class="row">
         <div class="information col-md-8">
@@ -68,7 +80,8 @@
         </div>
         <div class="donator col-md-4">
             <div class="coin">
-                <span class="coin-donated">{{$campaign->current_balance}} (wei)</span>/ {{$campaign->target_contribution_amount}}(wei)
+                <span class="coin-donated">{{ $campaign->current_balance }} (wei)</span>/
+                {{ $campaign->target_contribution_amount }}(wei)
                 <div class="goal">
                     <div class="coin-current"></div>
                 </div>
@@ -85,8 +98,8 @@
                 @csrf
                 <div class="btn-donate">
                     <input placeholder="Amount of donation" id="donation_amount" name="donation_amount">
-                    <input id="campaign_address" name="campaign_address" value="{{$campaign->campaign_address}}" hidden>
-                    <input id="user_address" name="user_address" value="{{Auth::user()->user_address}}" hidden>
+                    <input id="campaign_address" name="campaign_address" value="{{ $campaign->campaign_address }}" hidden>
+                    <input id="user_address" name="user_address" value="{{ Auth::user()->user_address }}" hidden>
                     @error('donation_amount')
                         <p class="text-error">{{ $message }}</p>
                     @enderror
@@ -97,8 +110,8 @@
                 @csrf
                 <div class="btn-donate">
                     <input placeholder="Amount of withdrawal" id="withdrawal_amount" name="withdrawal_amount">
-                    <input id="campaign_address" name="campaign_address" value="{{$campaign->campaign_address}}" hidden>
-                    <input id="user_address" name="user_address" value="{{Auth::user()->user_address}}" hidden>
+                    <input id="campaign_address" name="campaign_address" value="{{ $campaign->campaign_address }}" hidden>
+                    <input id="user_address" name="user_address" value="{{ Auth::user()->user_address }}" hidden>
                     @error('withdrawal_amount')
                         <p class="text-error">{{ $message }}</p>
                     @enderror

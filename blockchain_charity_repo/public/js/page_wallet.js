@@ -81,62 +81,94 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./resources/js/pages/verify_otp/index.js":
-/*!************************************************!*\
-  !*** ./resources/js/pages/verify_otp/index.js ***!
-  \************************************************/
+/***/ "./resources/js/pages/wallet/index.js":
+/*!********************************************!*\
+  !*** ./resources/js/pages/wallet/index.js ***!
+  \********************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
 $(function () {
-  $("input[name='otp']").keypress(function (e) {
-    if (e.keyCode == 13) {
-      $('.btn-confirm').click();
-    }
-
-    ;
+  var check = false;
+  var otpUser;
+  $('.fa-eye').on('click', function () {
+    var input = $("input[name='private_key']");
+    input.attr('type', 'password');
+    $(this).hide();
+    $('.fa-eye-slash').show();
   });
-  var error = 0;
-  $('.btn-confirm').click(function (e) {
-    var otp = $("input[name='otp']").val();
-    axios.post(laroute.route('api.verify.otp'), {
-      'otp': otp
-    }).then(function (response) {
-      if (response.data.status === 1) {
-        error += 1;
-        $('.notify').html('Mã không chính xác. Xin nhập lại.');
-
-        if (error == 3) {
-          showPopupOk('', 'Bạn đã nhập sai mã OTP quá 3 lần, vui lòng quay lại trang đăng nhập', 'OK', function () {
-            window.location.replace(laroute.route('logout'));
-          });
-        }
-
-        if (error > 3) {
-          window.location.replace(laroute.route('redirect.error'));
-        }
+  $('#confirm-password').submit(function (e) {
+    e.preventDefault();
+    var password = $("input[name='password']").val();
+    axios.post(laroute.route('api.verify.password', {
+      'password': password
+    })).then(function (response) {
+      if (response.data.check == true) {
+        $("input[name='password']").val('');
+        axios.get(laroute.route('api.send.otp')).then(function (response) {
+          otpUser = response.data.otp;
+        });
+        $('.fa-eye-slash').click();
+        $('#control-modal-otp').click();
       } else {
-        $('#form-verify-otp').submit();
+        $('.error-password').html('Mật khẩu không chính xác');
       }
     });
+  });
+  $('#confirm-otp').submit(function (e) {
+    e.preventDefault();
+    var otp = $("input[name='otp']").val();
+
+    if (otp != otpUser) {
+      $('.error-otp').html("Mã OTP không chính xác.");
+      setTimeout(function () {
+        $('#control-modal-otp').click();
+        $('.modal-backdrop').hide();
+      }, 1000);
+    } else {
+      $("input[name='otp']").val('');
+      $('#control-modal-otp').click();
+      $('.modal-backdrop').hide();
+      $("input[name='private_key']").attr('type', 'text');
+      $("input[name='public_key']").removeAttr('readonly');
+      $('.fa-eye-slash').hide();
+      $('.fa-eye').show();
+      check = true;
+    }
+  });
+  $('#form-change-key').submit(function (e) {
+    e.preventDefault();
+
+    if (!check) {
+      $('.fa-eye-slash').click();
+    } else {
+      var privateKey = $("input[name='private_key']").val();
+      var publicKey = $("input[name='public_key']").val();
+      axios.post(laroute.route('api.change.key', {
+        'private_key': privateKey,
+        'public_key': publicKey
+      })).then(function (response) {
+        toastr.success(response.data.message);
+      });
+    }
   });
 });
 
 /***/ }),
 
-/***/ 3:
-/*!******************************************************!*\
-  !*** multi ./resources/js/pages/verify_otp/index.js ***!
-  \******************************************************/
+/***/ 4:
+/*!**************************************************!*\
+  !*** multi ./resources/js/pages/wallet/index.js ***!
+  \**************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! F:\xampp\htdocs\blockchain_charity_repo1\blockchain_charity_repo\resources\js\pages\verify_otp\index.js */"./resources/js/pages/verify_otp/index.js");
+module.exports = __webpack_require__(/*! F:\xampp\htdocs\blockchain_charity_repo1\blockchain_charity_repo\resources\js\pages\wallet\index.js */"./resources/js/pages/wallet/index.js");
 
 
 /***/ })

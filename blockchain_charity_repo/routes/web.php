@@ -1,5 +1,6 @@
 <?php
 
+use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -47,10 +48,12 @@ Route::get('verify/otp', 'Auth\TowFactorController@redirectFormConfirmOtp')->mid
 Route::post('verify/otp', 'Auth\TowFactorController@verifyOtp')->name('verify.otp')->middleware('auth');
 Route::get('resend-otp', 'Auth\TowFactorController@reSendMailOtp')->middleware('auth')->name('resend.otp');
 Route::post('api/verify-otp', 'Api\VerifyOtpController@verify')->name('api.verify.otp');
+Route::post('api/confirm-password', 'Api\VerifyOtpController@confirmPassword')->name('api.verify.password');
+Route::get('api/send-otp', 'Api\VerifyOtpController@sendOtp')->name('api.send.otp');
 Route::get('redirect-login', 'Auth\TowFactorController@redirectWhenErrorOtp')->name('redirect.error');
 
 Route::prefix('charity')
-    ->middleware(['verified', 'verify_otp'])
+    ->middleware(['verify_otp'])
     ->group(function () {
         Route::get('profile', 'DonatorController@profile')->name('profile');
         Route::prefix('donator')
@@ -81,7 +84,9 @@ Route::prefix('charity')
                 Route::get('create-campaign', 'HostController@createCampaign')->name('campaign.create');
                 Route::get('campaign_detail/{blockchainAddress}', 'HostController@campaignDetail')->name('campaign.detail');
                 Route::get('validate-host', 'HostController@validateHost')->name('validate.host');
+                Route::get('list-request', 'HostController@listRequest')->name('list.request');
             });
+        Route::get('delete/request/{id}', 'HostController@deleteRequest')->name('host.delete.request')->middleware('auth');
         Route::prefix('hostws')
             ->middleware('host-wallet-soft')
             ->name('hostws.')
@@ -95,6 +100,7 @@ Route::prefix('charity')
                 Route::post('/withdraw/campaign', 'HostController@WS_withdrawCampaign')->name('withdraw.campaign');
                 Route::post('/validate/request', 'HostController@WS_hostValidateRequest')->name('validate.tobehost.request');
                 Route::post('/openCampaign/request', 'HostController@WS_hostOpenCampaignRequest')->name('validate.openCampaign.request');
+                Route::get('list-request', 'HostController@listRequest')->name('list.request');
             });
         Route::get('campaign/list-donator', 'DonatorController@listDonator')->name('campaign.donator');
     });
@@ -104,3 +110,10 @@ Route::get('/campaign', 'FrontendController@campaign')->name('campaign');
 Route::get('/campaign/{id}', 'FrontendController@detail')->name('campaign.detail');
 Auth::routes(['verify' => true]);
 
+<<<<<<< HEAD
+=======
+Route::get('my-wallet', 'DonatorController@myWallet')->name('wallet')->middleware('auth');
+Route::post('api/change-key', 'Api\ResetKeyController@changeKey')->name('api.change.key');
+
+Route::get('test', 'DonatorController@test');
+>>>>>>> 3f0f7b5 (stage 6 pham van thien)
