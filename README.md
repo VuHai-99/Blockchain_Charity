@@ -59,6 +59,7 @@ To get a local copy up and running follow these simple example steps.
    truffle migrate --reset
    copy (if exist replace) folder Blockchain_Truffle/build/contracts into blockchain_charity_repo/public --> blockchain_charity_repo/public/
    replace 2 file Campaign.json and CampaignFactory.json in API_Blockchain\contracts with new Campaign.json and CampaignFactory.json in blockchain_charity_repo/public/
+   Variable campaignFactoryAddress in API_Blockchain/Autofetch_Blockchain.js have to change to current deployed campaign.
    ```
 
 
@@ -74,6 +75,12 @@ To get a local copy up and running follow these simple example steps.
    ```sh
    cd blockchain_charity_repo
    php artisan serve
+   cd ../
+   ```
+3. (Optional) Run Fetch & Sync Blockchain with Node JS
+   ```sh
+   cd API_Blockchain
+   node Autofetch_Blockchain.js
    cd ../
    ```
 
