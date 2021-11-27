@@ -141,11 +141,16 @@
                             <p class="text-danger">{{ $message }}</p>
                         @enderror
                         <div class="wallet_address"  @if (!($errors->has('wallet_address'))) style="display:none" @endif>
-                            <input type="text" name="wallet_address" value="{{ old('wallet_address') }}" class="form-control" placeholder="Wallet Address">
+                            <div class="input-group">
+                                <input type="text" id="wallet_address" name="wallet_address" value="{{ old('wallet_address') }}" class="form-control" placeholder="Wallet Address" readonly>
+                                <span class="btn btn-danger" id="validate_metamask_button" onclick="App.handleClick()">Sign</span>
+                            </div>
                             @error('wallet_address')
                                 <p class="text-danger">{{ $message }}</p>
                             @enderror
                         </div>
+                        <input id="signData" name="signData" type="hidden">
+                        <input id="CSRF" name="CSRF" type="hidden">
                         
                     </div>
                     
@@ -169,5 +174,8 @@
 @endsection
 
 @section('scripts')
+    <script src="{{ asset('js/truffle-contract.js') }}"></script>
+    <script src="{{ asset('js/web3.min.js') }}"></script>
     <script src="{{ asset('js/page_register.js') }}"></script>
+    <script src="{{ asset('js/metamask_kyc.js') }}"></script>
 @endsection

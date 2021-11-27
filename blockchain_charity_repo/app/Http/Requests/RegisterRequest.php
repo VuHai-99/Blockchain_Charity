@@ -35,9 +35,12 @@ class RegisterRequest extends FormRequest
         if ($this->role == 1) {
             $rules['image_card_front'] = 'required';
             $rules['image_card_back'] = 'required';
+            
         }
         if ($this->wallet_type == 0) {
             $rules['wallet_address'] = 'required';
+            $rules['signData'] = 'required';
+            $rules['CSRF'] = 'required';
         }
         return $rules;
     }

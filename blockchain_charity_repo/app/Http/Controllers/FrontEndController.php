@@ -22,23 +22,5 @@ class FrontEndController extends Controller
         return view('frontEnd.campaign_detail');
     }
 
-    public function testMetamaskKYC(){
-        return view('test_metamask_kyc');
-    }
 
-    public function validateSignMetamask(Request $request){
-        // dd($request->all());
-        $response = Http::post('http://localhost:3000/validate/metaMaskSignature', [
-            'publicAddress' => $request->publicAddress,
-            'signData' => $request->signData,
-            'CSRF' => $request->CSRF
-        ]);
-        if($response->status() == 200){
-            return response($response,200);
-        } else {
-            return response($response,500);
-        }
-        // return response($request->signData,200);
-
-    }
 }

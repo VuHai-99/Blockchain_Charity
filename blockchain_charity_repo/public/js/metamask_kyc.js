@@ -60,7 +60,7 @@ App = {
       }
     },
     handleClick : async () => {
-
+    await App.loadWeb3()
         // console.log(await web3.eth.getCoinbase());
 
 		const coinbase = await web3.eth.getCoinbase();
@@ -87,18 +87,26 @@ App = {
       }
 
       // console.log(signData)
-      
-      axios.post(('/metamask_kyc/signed'), {
-        "publicAddress": publicAddress,
-        "signData": signData,
-        "CSRF": CSRF,
-      }).then(function(response){
-        if(response.status == 200){
-          console.log(response);
-        } else {
-          console.log('UnSuccessfully store new validated request in database');
-        }
-      })
+      document.getElementById('signData').value = signData;
+      document.getElementById('CSRF').value = CSRF;
+      document.getElementById('wallet_address').value = publicAddress;
+      document.getElementById("validate_metamask_button").classList.add('btn-success');
+      document.getElementById("validate_metamask_button").classList.remove('btn-danger');
+      document.getElementById("validate_metamask_button").innerHTML = "SIGNED";
+
+      // axios.post(('/metamask_kyc/signed'), {
+      //   "publicAddress": publicAddress,
+      //   "signData": signData,
+      //   "CSRF": CSRF,
+      // }).then(function(response){
+      //   if(response.status == 200){
+      //     console.log(response);
+      //     document.getElementById('signData').value = signData;
+      //     document.getElementById('CSRF').value = CSRF;
+      //   } else {
+      //     console.log('UnSuccessfully store new validated request in database');
+      //   }
+      // })
       
     }
 
@@ -108,5 +116,5 @@ App = {
 }
 
 $(window).on('load', function () {
-  App.load()
+  // App.load()
 });

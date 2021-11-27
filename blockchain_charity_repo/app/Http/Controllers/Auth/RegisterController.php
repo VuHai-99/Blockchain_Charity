@@ -88,10 +88,7 @@ class RegisterController extends Controller
         // $response = Http::get('localhost:3000/create/newAccount'); 
         // $newAccount = $response->json();
         // dd($newAccount);
-        $notification = array(
-            'message' => 'Register account Successfully',
-            'alert-type' => 'success'
-        );
+        
         
         $data = $request->only('name', 'email', 'address', 'phone');
         $data['user_address'] = $request->wallet_address;
@@ -103,15 +100,43 @@ class RegisterController extends Controller
         // $data['wallet_type'] = 0;
         $data['image_card_front'] =  $this->uploadImageService->upload($request->image_card_front);
         $data['image_card_back'] = $this->uploadImageService->upload($request->image_card_back);
+        $notification = array(
+            'message' => 'Register account Successfully',
+            'alert-type' => 'success'
+        );
         if ($request->wallet_type == 0) {
 
             $data['user_address'] = $request->wallet_address;
-            User::create($data);
-            if ($request->role == 1) {
-                return redirect(route('login'))->with($notification);
+
+            $response = Http::post('http://localhost:3000/validate/metaMaskSignature', [
+                'publicAddress' => $request->wallet_address,
+                'signData' => $request->signData,
+                'CSRF' => $request->CSRF
+            ]);
+            if($response->status() == 200){
+                User::create($data);
+                if ($request->role == 1) {
+                    $notification = array(
+                        'message' => 'Register account Successfully',
+                        'alert-type' => 'success'
+                    );
+                    
+                } else {
+                    $notification = array(
+                        'message' => 'Register account Successfully',
+                        'alert-type' => 'success'
+                    );
+                    
+                }
             } else {
-                return redirect(route('login'))->with($notification);
+                $notification = array(
+                    'message' => 'Register account Unsuccessfully',
+                    'alert-type' => 'error'
+                );
             }
+
+
+            
         } elseif ($request->wallet_type == 1) {
             $response = Http::get('localhost:3000/create/newAccount');
             $newAccount = $response->json();
@@ -119,10 +144,19 @@ class RegisterController extends Controller
             $data['private_key'] = substr($newAccount['privateKey'], 2);
             User::create($data);
             if ($request->role == 1) {
-                return redirect(route('login'))->with($notification);
+                $notification = array(
+                    'message' => 'Register account Successfully',
+                    'alert-type' => 'success'
+                );
+                
             } else {
-                return redirect(route('login'))->with($notification);
+                $notification = array(
+                    'message' => 'Register account Successfully',
+                    'alert-type' => 'success'
+                );
+                
             }
         }
+        return redirect(route('login'))->with($notification);
     }
 }

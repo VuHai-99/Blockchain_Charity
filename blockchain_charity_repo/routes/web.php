@@ -104,7 +104,3 @@ Route::get('/campaign', 'FrontendController@campaign')->name('campaign');
 Route::get('/campaign/{id}', 'FrontendController@detail')->name('campaign.detail');
 Auth::routes(['verify' => true]);
 
-
-//Test Metamask KYC 
-Route::get('/metamask_kyc', 'FrontendController@testMetamaskKYC')->name('test.metamask.kyc');
-Route::post('/metamask_kyc/signed', 'FrontendController@validateSignMetamask')->name('test.metamask.kyc.signed');
