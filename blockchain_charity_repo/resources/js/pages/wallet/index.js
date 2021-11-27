@@ -43,27 +43,11 @@ $(function() {
             $('#control-modal-otp').click();
             $('.modal-backdrop').hide();
             $(`input[name='private_key']`).attr('type', 'text');
-            $(`input[name='public_key']`).removeAttr('readonly');
             $('.fa-eye-slash').hide();
             $('.fa-eye').show();
             check = true;
         }
 
     })
-    $('#form-change-key').submit(function(e) {
-        e.preventDefault();
-        if (!check) {
-            $('.fa-eye-slash').click();
-        } else {
-            var privateKey = $(`input[name='private_key']`).val();
-            var publicKey = $(`input[name='public_key']`).val();
-            axios.post(laroute.route('api.change.key', {
-                    'private_key': privateKey,
-                    'public_key': publicKey
-                }))
-                .then(function(response) {
-                    toastr.success(response.data.message);
-                })
-        }
-    })
+
 })

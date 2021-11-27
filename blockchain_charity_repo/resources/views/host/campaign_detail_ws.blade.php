@@ -97,8 +97,11 @@
             <form method="POST" action="{{ route('hostws.donate.campaign') }}">
                 @csrf
                 <div class="btn-donate">
-                    <input placeholder="Amount of donation" id="donation_amount" name="donation_amount">
-                    <input id="campaign_address" name="campaign_address" value="{{ $campaign->campaign_address }}" hidden>
+                    <input class="form-control" placeholder="Amount of donation" id="donation_amount"
+                        name="donation_amount">
+                    <br>
+                    <input id="campaign_address" name="campaign_address" value="{{ $campaign->campaign_address }}"
+                        hidden>
                     <input id="user_address" name="user_address" value="{{ Auth::user()->user_address }}" hidden>
                     @error('donation_amount')
                         <p class="text-error">{{ $message }}</p>
@@ -106,11 +109,15 @@
                     <button class="btn">DONATE NOW</button>
                 </div>
             </form>
+            <hr>
             <form method="POST" action="{{ route('hostws.withdraw.campaign') }}">
                 @csrf
                 <div class="btn-donate">
-                    <input placeholder="Amount of withdrawal" id="withdrawal_amount" name="withdrawal_amount">
-                    <input id="campaign_address" name="campaign_address" value="{{ $campaign->campaign_address }}" hidden>
+                    <input class="form-control" placeholder="Amount of withdrawal" id="withdrawal_amount"
+                        name="withdrawal_amount">
+                    <br>
+                    <input id="campaign_address" name="campaign_address" value="{{ $campaign->campaign_address }}"
+                        hidden>
                     <input id="user_address" name="user_address" value="{{ Auth::user()->user_address }}" hidden>
                     @error('withdrawal_amount')
                         <p class="text-error">{{ $message }}</p>
@@ -121,22 +128,40 @@
             <div class="list-donator">
                 <div class="title">
                     <div class="donate-once">
-                        <a href="">Top Donator</a>
+                        <a>Top Donator</a>
                     </div>
                     <div class="donate-monthly">
-                        <a href="">Donate Monthly</a>
+                        <a>Donate Monthly</a>
                     </div>
                 </div>
-                <ul class="list-donator-item">
-                    @for ($i = 0; $i < 15; $i++)
+
+                <ul class="list-donator-item" id="top-donator">
+                    @foreach ($userTopDonate as $user)
                         <li class="item">
-                            <div class="money"> ${{ 10 * (15 - $i) }} coins</div>
-                            <div class="donator-name">Phạm Văn Thiện</div>
+                            <div class="money"> {{ $user->total_donate }} coins</div>
+                            <div class="donator-name ml-2">
+                                {{ $user->name }} <br>
+                            </div>
                             <div class="next">
                                 <a href=""><i class="fa fa-chevron-right" aria-hidden="true"></i></a>
                             </div>
                         </li>
-                    @endfor
+                    @endforeach
+                    <li class="read-more"> <a href="{{ route('campaign.donator') }}">Xem chi tiết</a></li>
+                </ul>
+                <ul class="list-donator-item" id="monthly-donator">
+                    @foreach ($userUserDonateMonthLy as $user)
+                        <li class="item">
+                            <div class="money"> {{ $user->amount }} coins</div>
+                            <div class="donator-name ml-2">
+                                {{ $user->name }} <br>
+                            </div>
+                            <p class="mt-3">{{ $user->donated_at }}</p>
+                            <div class="next">
+                                <a href=""><i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+                            </div>
+                        </li>
+                    @endforeach
                     <li class="read-more"> <a href="{{ route('campaign.donator') }}">Xem chi tiết</a></li>
                 </ul>
             </div>
@@ -183,4 +208,8 @@
             <p class="title">Hỗ trợ đồng bào ở Nghệ An gặp lũ lụt năm 2020</p>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script src="{{ asset('js/page_project_detail.js') }}"></script>
 @endsection

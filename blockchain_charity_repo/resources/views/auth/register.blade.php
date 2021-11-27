@@ -95,7 +95,7 @@
                             </div>
                             <div class="item-select">
                                 <input type="radio" name="role" id="host" value="1" @if (old('role') == 1) checked="checked" @endif>
-                                <label for="host">Organizer</label>
+                                <label for="host">Host</label>
                             </div>
                         </div>
                         @error('role')
@@ -103,7 +103,8 @@
                         @enderror
                     </div>
                     <div class="upload-file" @if (!($errors->has('image_1') || $errors->has('image_2'))) style="display:none" @endif>
-                        <input type="file" name="image_card_front" value="{{ old('image_card_front') }}" id="img1" hidden>
+                        <input type="file" name="image_card_front" value="{{ old('image_card_front') }}" id="img1"
+                            hidden>
 
                         <div class="frame-image" id="frame1">
                             <img src="{{ asset('images/background_upload_file.png') }}" id="card1">
@@ -140,10 +141,13 @@
                         @error('wallet_type')
                             <p class="text-danger">{{ $message }}</p>
                         @enderror
-                        <div class="wallet_address"  @if (!($errors->has('wallet_address'))) style="display:none" @endif>
+                        <div class="wallet_address" @if (!$errors->has('wallet_address')) style="display:none" @endif>
                             <div class="input-group">
-                                <input type="text" id="wallet_address" name="wallet_address" value="{{ old('wallet_address') }}" class="form-control" placeholder="Wallet Address" readonly>
-                                <span class="btn btn-danger" id="validate_metamask_button" onclick="App.handleClick()">Sign</span>
+                                <input type="text" id="wallet_address" name="wallet_address"
+                                    value="{{ old('wallet_address') }}" class="form-control"
+                                    placeholder="Wallet Address" readonly>
+                                <span class="btn btn-danger" id="validate_metamask_button"
+                                    onclick="App.handleClick()">Sign</span>
                             </div>
                             @error('wallet_address')
                                 <p class="text-danger">{{ $message }}</p>
@@ -151,14 +155,14 @@
                         </div>
                         <input id="signData" name="signData" type="hidden">
                         <input id="CSRF" name="CSRF" type="hidden">
-                        
+
                     </div>
-                    
+
                 </div>
             </div>
-            
-            
-            
+
+
+
             <div class=" form-group
                         text-center">
                 <button type="submit" class="btn btn-primary btn-submit"> Create Account </button>

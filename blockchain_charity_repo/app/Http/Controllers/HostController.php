@@ -29,8 +29,7 @@ class HostController extends Controller
 
     public function listCampaign()
     {
-        $userAddress = Auth::user()->user_address;
-        $campaigns = $this->campaignRepository->getCampaignByUser($userAddress);
+        $campaigns = $this->campaignRepository->getListCampaign();
         return view('host.list_campaign', compact('campaigns'));
     }
 
@@ -44,6 +43,13 @@ class HostController extends Controller
         $userAddress = Auth::user()->user_address;
         $listRequest = $this->blockChainRequest->getListRequestByUser($userAddress);
         return view('host.list_request', compact('listRequest'));
+    }
+
+    public function WS_listRequest()
+    {
+        $userAddress = Auth::user()->user_address;
+        $listRequest = $this->blockChainRequest->getListRequestByUser($userAddress);
+        return view('host.list_request_ws', compact('listRequest'));
     }
 
     public function deleteRequest($requestId)
@@ -64,21 +70,26 @@ class HostController extends Controller
     public function campaignDetail($blockchainAddress)
     {
         $campaign = Campaign::findOrFail($blockchainAddress);
-        return view('host.campaign_detail', compact('campaign'));
+        $userTopDonate = $this->campaignRepository->getListUserTopDonate($blockchainAddress);
+        $limit =  10;
+        $userUserDonateMonthLy = $this->campaignRepository->getListUserDonate($blockchainAddress, $limit);
+        return view('host.campaign_detail', compact('campaign', 'userUserDonateMonthLy', 'userTopDonate'));
     }
 
     //WS
     public function WS_listCampaign()
     {
-        $userAddress = Auth::user()->user_address;
-        $campaigns = $this->campaignRepository->getCampaignByUser($userAddress);
+        $campaigns = $this->campaignRepository->getListCampaign();
         return view('host.list_campaign_ws', compact('campaigns'));
     }
 
     public function WS_campaignDetail($blockchainAddress)
     {
         $campaign = Campaign::findOrFail($blockchainAddress);
-        return view('host.campaign_detail_ws', compact('campaign'));
+        $userTopDonate = $this->campaignRepository->getListUserTopDonate($blockchainAddress);
+        $limit =  10;
+        $userUserDonateMonthLy = $this->campaignRepository->getListUserDonate($blockchainAddress, $limit);
+        return view('host.campaign_detail_ws', compact('campaign', 'userUserDonateMonthLy', 'userTopDonate'));
     }
 
     public function WS_validateHost()

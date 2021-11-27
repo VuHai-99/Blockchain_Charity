@@ -10,8 +10,8 @@
         <a href="{{ route('home') }}"
             class="btn btn-ct-primary  {{ Request::routeIs('hostws.home') ? 'active-primary' : '' }} action" role="button">
             Home</a>
-        <a href="{{ route('host.campaign') }}" class="btn btn-ct-primary  action" role="button">List Campaign</a>
-        <a href="{{ route('host.list.request') }}" class="btn btn-ct-primary active-primary action" role="button">List
+        <a href="{{ route('hostws.campaign') }}" class="btn btn-ct-primary  action" role="button">List Campaign</a>
+        <a href="{{ route('hostws.list.request') }}" class="btn btn-ct-primary active-primary action" role="button">List
             Request</a>
     </div>
 @endsection
