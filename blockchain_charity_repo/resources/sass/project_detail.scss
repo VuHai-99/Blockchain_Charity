@@ -106,10 +106,18 @@
                 text-align: center;
                 border: 1px solid $gray;
             }
+            .action-donator {
+                background-color: $white !important;
+                border: 1px solid $gray;
+            }
             .donate-monthly {
                 width: 49%;
                 text-align: center;
                 background-color: $gray-color;
+            }
+            .donate-once,
+            .donate-monthly :hover {
+                cursor: pointer;
             }
             a {
                 display: inline-block;
@@ -162,6 +170,10 @@
             }
         }
     }
+}
+
+#monthly-donator {
+    display: none;
 }
 
 .slider_area {

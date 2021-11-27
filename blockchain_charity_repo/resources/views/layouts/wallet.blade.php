@@ -27,27 +27,19 @@
             </div>
         </div>
         <div class="col-md-8 key">
-            <form id="form-change-key">
-                <div class="form-group">
-                    <label for="">Public key</label>
-                    <input type="text" value="{{ old('public_key', Auth::user()->user_address) }}" class="form-control"
-                        readonly name="public_key">
-                    @error('public_key')
-                        <p class="text-danger">{{ $message }}</p>
-                    @enderror
-                </div>
-                <div class="form-group private-key">
-                    <label for="">Private key</label>
-                    <input type="password" value="{{ old('private_key', Auth::user()->private_key) }}" readonly
-                        class="form-control" name="private_key">
-                    <i class="fa fa-eye" aria-hidden="true"></i>
-                    <i class="fa fa-eye-slash" aria-hidden="true" data-toggle="modal" data-target="#form-password"></i>
-                </div>
-                @error('private_key')
-                    <p class="text-danger">{{ $message }}</p>
-                @enderror
-                <button class="btn btn-primary" id="btn-change-key">Change key</button>
-            </form>
+
+            <div class="form-group">
+                <label for="">Public key</label>
+                <input type="text" value="{{ old('public_key', Auth::user()->user_address) }}" class="form-control"
+                    readonly name="public_key">
+            </div>
+            <div class="form-group private-key">
+                <label for="">Private key</label>
+                <input type="password" value="{{ old('private_key', Auth::user()->private_key) }}" readonly
+                    class="form-control" name="private_key">
+                <i class="fa fa-eye" aria-hidden="true"></i>
+                <i class="fa fa-eye-slash" aria-hidden="true" data-toggle="modal" data-target="#form-password"></i>
+            </div>
             <div class="modal" id="form-password">
                 <div class="modal-dialog">
                     <div class="modal-content">

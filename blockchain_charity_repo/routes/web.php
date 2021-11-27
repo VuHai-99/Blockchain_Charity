@@ -52,10 +52,10 @@ Route::post('api/confirm-password', 'Api\VerifyOtpController@confirmPassword')->
 Route::get('api/send-otp', 'Api\VerifyOtpController@sendOtp')->name('api.send.otp');
 Route::get('redirect-login', 'Auth\TowFactorController@redirectWhenErrorOtp')->name('redirect.error');
 
+Route::get('profile', 'DonatorController@profile')->name('user.profile')->middleware('auth');
 Route::prefix('charity')
     ->middleware(['verify_otp'])
     ->group(function () {
-        Route::get('profile', 'DonatorController@profile')->name('profile');
         Route::prefix('donator')
             ->middleware('donator-wallet-hard')
             ->name('donator.')
@@ -100,7 +100,7 @@ Route::prefix('charity')
                 Route::post('/withdraw/campaign', 'HostController@WS_withdrawCampaign')->name('withdraw.campaign');
                 Route::post('/validate/request', 'HostController@WS_hostValidateRequest')->name('validate.tobehost.request');
                 Route::post('/openCampaign/request', 'HostController@WS_hostOpenCampaignRequest')->name('validate.openCampaign.request');
-                Route::get('list-request', 'HostController@listRequest')->name('list.request');
+                Route::get('list-request', 'HostController@WS_listRequest')->name('list.request');
             });
         Route::get('campaign/list-donator', 'DonatorController@listDonator')->name('campaign.donator');
     });
@@ -112,5 +112,3 @@ Auth::routes(['verify' => true]);
 
 Route::get('my-wallet', 'DonatorController@myWallet')->name('wallet')->middleware('auth');
 Route::post('api/change-key', 'Api\ResetKeyController@changeKey')->name('api.change.key');
-
-

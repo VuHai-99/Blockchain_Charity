@@ -81,62 +81,45 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./resources/js/pages/verify_otp/index.js":
-/*!************************************************!*\
-  !*** ./resources/js/pages/verify_otp/index.js ***!
-  \************************************************/
+/***/ "./resources/js/pages/project_detail/index.js":
+/*!****************************************************!*\
+  !*** ./resources/js/pages/project_detail/index.js ***!
+  \****************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
 $(function () {
-  $("input[name='otp']").keypress(function (e) {
-    if (e.keyCode == 13) {
-      $('.btn-confirm').click();
-    }
-
-    ;
+  $('.donate-once').click(function () {
+    $('.donate-monthly').removeClass('action-donator');
+    $('.donate-monthly').css('background-color', '#484646');
+    $(this).addClass('action-donator');
+    $('#top-donator').show();
+    $('#monthly-donator').hide();
   });
-  var error = 0;
-  $('.btn-confirm').click(function (e) {
-    var otp = $("input[name='otp']").val();
-    axios.post(laroute.route('api.verify.otp'), {
-      'otp': otp
-    }).then(function (response) {
-      if (response.data.status === 1) {
-        error += 1;
-        $('.notify').html('Mã không chính xác. Xin nhập lại.');
-
-        if (error == 3) {
-          showPopupOk('', 'Bạn đã nhập sai mã OTP quá 3 lần, vui lòng quay lại trang đăng nhập', 'OK', function () {
-            window.location.replace(laroute.route('logout'));
-          });
-        }
-
-        if (error > 3) {
-          window.location.replace(laroute.route('redirect.error'));
-        }
-      } else {
-        $('#form-verify-otp').submit();
-      }
-    });
+  $('.donate-monthly').click(function () {
+    $('.donate-once').removeClass('action-donator');
+    $('.donate-once').css('background-color', '#484646');
+    $(this).addClass('action-donator');
+    $('#top-donator').hide();
+    $('#monthly-donator').show();
   });
 });
 
 /***/ }),
 
-/***/ 4:
-/*!******************************************************!*\
-  !*** multi ./resources/js/pages/verify_otp/index.js ***!
-  \******************************************************/
+/***/ 2:
+/*!**********************************************************!*\
+  !*** multi ./resources/js/pages/project_detail/index.js ***!
+  \**********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\js\pages\verify_otp\index.js */"./resources/js/pages/verify_otp/index.js");
+module.exports = __webpack_require__(/*! F:\xampp\htdocs\blockchain_charity_repo1\blockchain_charity_repo\resources\js\pages\project_detail\index.js */"./resources/js/pages/project_detail/index.js");
 
 
 /***/ })

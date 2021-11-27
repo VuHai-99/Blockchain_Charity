@@ -95,12 +95,16 @@
                 </div>
             </div>
             <div class="btn-donate">
-                <input placeholder="Amount of donation" id="donation_amount" name="donation_amount">
+                <input class="form-control" placeholder="Amount of donation" id="donation_amount" name="donation_amount">
+                <br>
                 <button class="btn" onclick="App.donateCampaign('{{ $campaign->campaign_address }}')">DONATE
                     NOW</button>
             </div>
+            <hr>
             <div class="btn-donate">
-                <input placeholder="Amount of withdrawal" id="withdrawal_amount" name="withdrawal_amount">
+                <input class="form-control" placeholder="Amount of withdrawal" id="withdrawal_amount"
+                    name="withdrawal_amount">
+                <br>
                 <button class="btn"
                     onclick="App.createWithdrawMoneyRequest('{{ $campaign->campaign_address }}')">WITHDRAW MONEY
                     REQUEST</button>
@@ -115,15 +119,18 @@
                     </div>
                 </div>
                 <ul class="list-donator-item">
-                    @for ($i = 0; $i < 15; $i++)
+                    @foreach ($userUserDonateMonthLy as $user)
                         <li class="item">
-                            <div class="money"> ${{ 10 * (15 - $i) }} coins</div>
-                            <div class="donator-name">Phạm Văn Thiện</div>
+                            <div class="money"> {{ $user->amount }} coins</div>
+                            <div class="donator-name ml-2">
+                                {{ $user->name }} <br>
+                            </div>
+                            <p class="mt-3">{{ $user->donated_at }}</p>
                             <div class="next">
                                 <a href=""><i class="fa fa-chevron-right" aria-hidden="true"></i></a>
                             </div>
                         </li>
-                    @endfor
+                    @endforeach
                     <li class="read-more"> <a href="{{ route('campaign.donator') }}">Xem chi tiết</a></li>
                 </ul>
             </div>
