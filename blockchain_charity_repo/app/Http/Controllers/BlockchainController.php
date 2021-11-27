@@ -46,18 +46,18 @@ class BlockchainController extends Controller
 
     // public function createValidateHostRequest(Request $request){
     //     $requested_to_be_host_address = $request->requested_to_be_host_address;
-    //     $response = Http::post('http://localhost:3000/host/validate/request', [
-    //         'requested_to_be_host_address' => $requested_to_be_host_address
-    //     ]);
-    //     if($response->status() == 200){
-    //         $requestToValidateHost = new BlockchainRequest();
-    //         $requestToValidateHost->request_id = $requested_to_be_host_address;
-    //         $requestToValidateHost->request_type = 0;
-    //         $requestToValidateHost->requested_user_address = $requested_to_be_host_address;
-    //         $requestToValidateHost->save();
-    //     } else {
+        // $response = Http::post('http://localhost:3000/host/validate/request', [
+        //     'requested_to_be_host_address' => $requested_to_be_host_address
+        // ]);
+        // if($response->status() == 200){
+        //     $requestToValidateHost = new BlockchainRequest();
+        //     $requestToValidateHost->request_id = $requested_to_be_host_address;
+        //     $requestToValidateHost->request_type = 0;
+        //     $requestToValidateHost->requested_user_address = $requested_to_be_host_address;
+        //     $requestToValidateHost->save();
+        // } else {
 
-    //     }
+        // }
     // }
 
     // public function createToOpenCampaignRequest(Request $request){

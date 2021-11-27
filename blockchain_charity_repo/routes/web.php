@@ -103,4 +103,8 @@ Route::get('/', 'FrontEndController@home')->name('home');
 Route::get('/campaign', 'FrontendController@campaign')->name('campaign');
 Route::get('/campaign/{id}', 'FrontendController@detail')->name('campaign.detail');
 Auth::routes(['verify' => true]);
-// Route::get('/store-blockchain-request', 'BlockchainController@storeBlockchainRequest')->name('store.blockchain.request'); 
+
+
+//Test Metamask KYC 
+Route::get('/metamask_kyc', 'FrontendController@testMetamaskKYC')->name('test.metamask.kyc');
+Route::post('/metamask_kyc/signed', 'FrontendController@validateSignMetamask')->name('test.metamask.kyc.signed');
