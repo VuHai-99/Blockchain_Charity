@@ -3,10 +3,11 @@ const Web3 = require('web3');
 const Contract = require('web3-eth-contract');
 const path = require("path");
 const BN = require('bn.js');
-
+// const RecoverPersonalSignature  = require('eth-sig-util');
 const User = require("../models/user.model.js");
 const Campaign = require("../models/campaign.model.js");
-
+const { bufferToHex } = require('ethereumjs-util');
+const { recoverPersonalSignature } = require('eth-sig-util');
 const web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
 const jsonFile = "../../contracts/CampaignFactory.json";
 const file = fs.readFileSync(path.resolve(__dirname,jsonFile));
@@ -352,3 +353,40 @@ exports.createNewWallet = async (req, res) => {
   }
 
 };
+
+
+exports.validateSignature = async (req, res) => {
+
+  if (!req.body) {
+    res.status(400).send({
+      message: "Content can not be empty!"
+    });
+    return;
+  } else {
+    const publicAddress = req.body.publicAddress;
+    const signData = req.body.signData;
+    const CSRF = req.body.CSRF;
+    const msg = `Validate Wallet Signature: ${CSRF}`;
+
+    // We now are in possession of msg, publicAddress and signature. We
+    // will use a helper from eth-sig-util to extract the address from the signature
+    const msgBufferHex = bufferToHex(Buffer.from(msg, 'utf8'));
+    const address = recoverPersonalSignature({
+      data: msgBufferHex,
+      sig: signData,
+    });
+    // res.send(address);
+    if (address.toLowerCase() === publicAddress.toLowerCase()) {
+      res.send('Success');
+    } else {
+      res.status(500).send({
+        message:
+          "Validate Wallet Signature Fail"
+      });
+    }
+    // console.log(publicAddress,signData,CSRF)
+    // res.send(address)
+  }
+
+};
+
