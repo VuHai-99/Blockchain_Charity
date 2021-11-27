@@ -2,26 +2,36 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\BlockchainRequest;
 use App\Model\Campaign;
+use App\Model\Transaction;
+use App\Repositories\BlockChain\BlockChainRequestRepository;
+use App\Repositories\Campaign\CampaignRepository;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
-use App\Model\Transaction;
-use App\Model\BlockchainRequest;
-use App\User;
 
 class HostController extends Controller
 {
+    public function __construct(
+        BlockChainRequestRepository $blockChainRequest,
+        CampaignRepository $campaignRepository
+    ) {
+        $this->blockChainRequest = $blockChainRequest;
+        $this->campaignRepository = $campaignRepository;
+    }
+
     public function home()
     {
         return view('frontend.home');
     }
-    
+
     public function listCampaign()
     {
-        $campaigns = Campaign::all();
-        // dd($campaigns);
-        return view('host.list_campaign',compact('campaigns'));
+        $userAddress = Auth::user()->user_address;
+        $campaigns = $this->campaignRepository->getCampaignByUser($userAddress);
+        return view('host.list_campaign', compact('campaigns'));
     }
 
     public function createCampaign()
@@ -29,57 +39,72 @@ class HostController extends Controller
         return view('host.create_campaign');
     }
 
-    // public function listMyProject(){
-    //     return view('host.list_my_project');
-    // }
+    public function listRequest()
+    {
+        $userAddress = Auth::user()->user_address;
+        $listRequest = $this->blockChainRequest->getListRequestByUser($userAddress);
+        return view('host.list_request', compact('listRequest'));
+    }
 
-    // public function specificProject(String $blockchainAddress){
-    //     return view('host.specific_project');
-    // }
+    public function deleteRequest($requestId)
+    {
+        $notification = array(
+            'message' => 'Hủy request thành công',
+            'alert-type' => 'success'
+        );
+        $this->blockChainRequest->deleteRequest($requestId);
+        return back()->with($notification);
+    }
 
-    public function validateHost(){
+    public function validateHost()
+    {
         return view('host.validate_host');
     }
 
     public function campaignDetail($blockchainAddress)
     {
         $campaign = Campaign::findOrFail($blockchainAddress);
-        return view('host.campaign_detail',compact('campaign'));
+        return view('host.campaign_detail', compact('campaign'));
     }
 
     //WS
-    public function WS_listCampaign(){
-        $campaigns = Campaign::all();
-        // dd($campaigns);
-        return view('host.list_campaign_ws',compact('campaigns'));
+    public function WS_listCampaign()
+    {
+        $userAddress = Auth::user()->user_address;
+        $campaigns = $this->campaignRepository->getCampaignByUser($userAddress);
+        return view('host.list_campaign_ws', compact('campaigns'));
     }
 
-    public function WS_campaignDetail($blockchainAddress){
+    public function WS_campaignDetail($blockchainAddress)
+    {
         $campaign = Campaign::findOrFail($blockchainAddress);
-        return view('host.campaign_detail_ws',compact('campaign'));
+        return view('host.campaign_detail_ws', compact('campaign'));
     }
 
-    public function WS_validateHost(){
+    public function WS_validateHost()
+    {
         $host = Auth::user();
-        return view('host.validate_host_ws',compact('host'));
+        return view('host.validate_host_ws', compact('host'));
     }
 
-    public function WS_createCampaign(){
+    public function WS_createCampaign()
+    {
         return view('host.create_campaign_ws');
     }
 
-    public function WS_donateToCampaign(Request $request){
-        
+    public function WS_donateToCampaign(Request $request)
+    {
+
         $campaign_address = $request->campaign_address;
         $donateAPI = 'http://localhost:3000/donator/donate/campaign/';
-        $donateAPI.=$campaign_address;
+        $donateAPI .= $campaign_address;
 
         $response = Http::post($donateAPI, [
             // 'donator_address' => Auth::user()->user_address,
             'donator_address' => Auth::user()->user_address,
-            'amoutOfEthereum' => $request->donation_amount, 
+            'amoutOfEthereum' => $request->donation_amount,
         ]);
-        if($response->status() == 200){
+        if ($response->status() == 200) {
             $notification = array(
                 'message' => 'Donate Successfully',
                 'alert-type' => 'success'
@@ -109,16 +134,17 @@ class HostController extends Controller
         }
     }
 
-    public function WS_withdrawCampaign(Request $request){
+    public function WS_withdrawCampaign(Request $request)
+    {
         $withdrawAPI = 'http://localhost:3000/host/withdraw/campaign/request';
 
         $response = Http::post($withdrawAPI, [
             // 'donator_address' => Auth::user()->user_address,
             'validated_host_address' => Auth::user()->user_address,
-            'amount_of_money' => $request->withdrawal_amount, 
+            'amount_of_money' => $request->withdrawal_amount,
             "campaign_adress_target" =>  $request->campaign_address
         ]);
-        if($response->status() == 200){
+        if ($response->status() == 200) {
             $notification = array(
                 'message' => 'Request to Withdraw Money Successfully',
                 'alert-type' => 'success'
@@ -141,14 +167,15 @@ class HostController extends Controller
         }
     }
 
-    public function WS_hostValidateRequest(Request $request){
+    public function WS_hostValidateRequest(Request $request)
+    {
         $withdrawAPI = 'http://localhost:3000/host/validate/request';
 
         $response = Http::post($withdrawAPI, [
             // 'donator_address' => Auth::user()->user_address,
             'requested_to_be_host_address' => Auth::user()->user_address,
         ]);
-        if($response->status() == 200){
+        if ($response->status() == 200) {
             $notification = array(
                 'message' => 'Request to Validate Account Successfully',
                 'alert-type' => 'success'
@@ -181,7 +208,7 @@ class HostController extends Controller
             'validated_host_address' => Auth::user()->user_address,
             "minimum_contribution" => $request->minimum_contribution
         ]);
-        if($response->status() == 200){
+        if ($response->status() == 200) {
             $notification = array(
                 'message' => 'Request to open campaign Successfully',
                 'alert-type' => 'success'

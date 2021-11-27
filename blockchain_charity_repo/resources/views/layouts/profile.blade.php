@@ -3,6 +3,15 @@
 
 @section('page-name', 'Thông tin cá nhân')
 
+@section('pageBreadcrumb')
+    <div class="group-button-top">
+        <a href="{{ route('home') }}"
+            class="btn btn-ct-primary  {{ Request::routeIs('home') ? 'active-primary' : '' }} action" role="button">
+            Home</a>
+        <a href="{{ route('wallet') }}" class="btn btn-ct-primary active-primary action" role="button">Profile</a>
+    </div>
+@endsection
+
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/user.css') }}">
 @endsection
@@ -20,13 +29,13 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="bmd-label-floating">Username</label>
-                                    <input type="text" class="form-control" value="{{Auth::user()->name}}">
+                                    <input type="text" class="form-control" value="{{ Auth::user()->name }}">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="bmd-label-floating">Email address</label>
-                                    <input type="email" class="form-control" value="{{Auth::user()->email}}">
+                                    <input type="email" class="form-control" value="{{ Auth::user()->email }}">
                                 </div>
                             </div>
                         </div>
@@ -34,24 +43,24 @@
                             <div class="col-md-8">
                                 <div class="form-group">
                                     <label class="bmd-label-floating">Adress</label>
-                                    <input type="text" class="form-control" value="{{Auth::user()->address}}">
+                                    <input type="text" class="form-control" value="{{ Auth::user()->address }}">
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-4 password">
                                 <label class="bmd-label-floating"> Password </label>
-                                <input type="text"  type="password" value="" class="form-control">
+                                <input type="text" type="password" value="" class="form-control">
                                 <i class="fa fa-eye-slash" aria-hidden="true"></i>
                             </div>
                         </div>
                         @if (Auth::user()->role == $enumUser::ROLE_HOST)
                             <div class="row">
                                 <div class="col-md-4">
-                                    <img src="{{asset(Auth::user()->image_card_front)}}" alt="">
+                                    <img src="{{ asset(Auth::user()->image_card_front) }}" alt="">
                                 </div>
                                 <div class="col-md-4">
-                                    <img src="{{asset(Auth::user()->image_card_back)}}" alt="">
+                                    <img src="{{ asset(Auth::user()->image_card_back) }}" alt="">
                                 </div>
                             </div>
                         @endif

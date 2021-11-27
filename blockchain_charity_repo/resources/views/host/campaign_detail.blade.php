@@ -8,6 +8,18 @@
 
 @section('id_custom', 'backend')
 
+@section('pageBreadcrumb')
+    <div class="group-button-top">
+        <a href="{{ route('home') }}"
+            class="btn btn-ct-primary  {{ Request::routeIs('host.home') ? 'active-primary' : '' }} action" role="button">
+            Home</a>
+        <a href="{{ route('wallet') }}"
+            class="btn btn-ct-primary {{ Request::routeIs('host.campaign') ? 'active-primary' : 'disabled' }} action"
+            role="button">List Campaign</a>
+        <a href="{{ route('wallet') }}" class="btn btn-ct-primary active-primary action" role="button">Campaign Detail</a>
+    </div>
+@endsection
+
 @section('content')
     <div class="row">
         <div class="information col-md-8">
@@ -68,7 +80,8 @@
         </div>
         <div class="donator col-md-4">
             <div class="coin">
-                <span class="coin-donated">{{$campaign->current_balance}} (wei)</span>/ {{$campaign->target_contribution_amount}}(wei)
+                <span class="coin-donated">{{ $campaign->current_balance }} (wei)</span>/
+                {{ $campaign->target_contribution_amount }}(wei)
                 <div class="goal">
                     <div class="coin-current"></div>
                 </div>
@@ -83,11 +96,14 @@
             </div>
             <div class="btn-donate">
                 <input placeholder="Amount of donation" id="donation_amount" name="donation_amount">
-                <button class="btn" onclick="App.donateCampaign('{{$campaign->campaign_address}}')">DONATE NOW</button>
+                <button class="btn" onclick="App.donateCampaign('{{ $campaign->campaign_address }}')">DONATE
+                    NOW</button>
             </div>
             <div class="btn-donate">
                 <input placeholder="Amount of withdrawal" id="withdrawal_amount" name="withdrawal_amount">
-                <button class="btn" onclick="App.createWithdrawMoneyRequest('{{$campaign->campaign_address}}')">WITHDRAW MONEY REQUEST</button>
+                <button class="btn"
+                    onclick="App.createWithdrawMoneyRequest('{{ $campaign->campaign_address }}')">WITHDRAW MONEY
+                    REQUEST</button>
             </div>
             <div class="list-donator">
                 <div class="title">
@@ -156,15 +172,15 @@
     </div>
 @endsection
 @push('scripts')
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="{{ asset('js/bn.js') }}"></script>
-<script src="{{ asset('js/app.js') }}"></script>
-<script src="{{ asset('js/host_specific_campaign_blockchain.js') }}"></script>
-<!-- <script src="{{ asset('js/contract.js') }}"></script> -->
-<script src="{{ asset('js/web3.min.js') }}"></script>
-<script src="{{ asset('js/truffle-contract.js') }}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-<script type="text/javascript" src="{{ asset('js/laroute.js') }}"></script>
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="{{ asset('js/bn.js') }}"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/host_specific_campaign_blockchain.js') }}"></script>
+    <!-- <script src="{{ asset('js/contract.js') }}"></script> -->
+    <script src="{{ asset('js/web3.min.js') }}"></script>
+    <script src="{{ asset('js/truffle-contract.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script type="text/javascript" src="{{ asset('js/laroute.js') }}"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endpush
 @stack('scripts')

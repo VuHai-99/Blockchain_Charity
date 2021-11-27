@@ -46,7 +46,7 @@ class Nav
             'name' => 'List Campaign',
         ],
         [
-            'url' => '',
+            'url' => 'wallet',
             'name' => 'My Wallet',
             //'icon' => 'images/icons/walet.png'
         ],
@@ -70,9 +70,8 @@ class Nav
             'name' => 'List Campaign',
         ],
         [
-            'url' => '',
+            'url' => 'wallet',
             'name' => 'My Wallet',
-            //'icon' => 'images/icons/walet.png'
         ],
         [
             'url' => 'profile',
@@ -107,7 +106,7 @@ class Nav
             'name' => 'Profile',
         ],
         [
-            'url' => '',
+            'url' => 'wallet',
             'name' => 'My Wallet',
             //'icon' => 'images/icons/walet.png'
         ],
@@ -141,7 +140,7 @@ class Nav
             'name' => 'Profile',
         ],
         [
-            'url' => '',
+            'url' => 'wallet',
             'name' => 'My Wallet',
             //'icon' => 'images/icons/walet.png'
         ],

@@ -4,6 +4,18 @@
     <link rel="stylesheet" href="{{ asset('css/create_campaign.css') }}">
 @endsection
 @section('page-name', 'Thêm dự án')
+
+@section('pageBreadcrumb')
+    <div class="group-button-top">
+        <a href="{{ route('home') }}"
+            class="btn btn-ct-primary  {{ Request::routeIs('hostws.home') ? 'active-primary' : '' }} action" role="button">
+            Home</a>
+        <a href="{{ route('wallet') }}"
+            class="btn btn-ct-primary {{ Request::routeIs('hostws.campaign.create') ? 'active-primary' : 'disabled' }} action"
+            role="button">Create Campaign</a>
+    </div>
+@endsection
+
 @section('content')
     <div class="row wrap-form">
         <form method="POST" action="{{ route('hostws.validate.openCampaign.request') }}">
@@ -35,8 +47,8 @@
             </div>
             <div class="form-group">
                 <label for="date_start">Ngày bắt đầu</label>
-                <input type="date" name="date_start" id="date_start" value="{{ old('date_start') }}" class="form-control"
-                    placeholder="Ngày bắt đầu dự án (d-m-Y) ...">
+                <input type="date" name="date_start" id="date_start" value="{{ old('date_start') }}"
+                    class="form-control" placeholder="Ngày bắt đầu dự án (d-m-Y) ...">
                 @error('date_start')
                     <p class="text-error">{{ $message }}</p>
                 @enderror
@@ -56,11 +68,10 @@
                     <p class="text-error">{{ $message }}</p>
                 @enderror
             </div>
-            <input id="user_address" name="user_address" value="{{Auth::user()->user_address}}" hidden>
+            <input id="user_address" name="user_address" value="{{ Auth::user()->user_address }}" hidden>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">Thêm </button>
             </div>
         </form>
     </div>
 @endsection
-

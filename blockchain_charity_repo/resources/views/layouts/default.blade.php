@@ -13,23 +13,31 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/header.css') }}">
     <link rel="stylesheet" href="{{ asset('css/footer.css') }}">
-    <script src="/theme/libs/ckeditor/ckeditor.js"></script>
-    <script src="/theme/libs/ckeditor/config.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"></link>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     @yield('css')
 
 </head>
 
 <body>
+<<<<<<< HEAD
 @php
     $type = 0;
     if(Auth::check()){
         $type = Auth::user()->user_address ?? 0;
     }
 @endphp
+=======
+    @php
+        $type = 0;
+        if (Auth::check()) {
+            $type = Auth::user()->type ?? 0;
+        }
+    @endphp
+>>>>>>> 3f0f7b5 (stage 6 pham van thien)
     <div class="management" id="@yield('id_custom')">
         <div class="main-content" id="panel">
             @include('layouts.header')
+            @yield('pageBreadcrumb')
             <div class="manage-main">
                 @yield('content')
             </div>
@@ -37,38 +45,40 @@
             @include('layouts.footer')
         </div>
     </div>
-    
+
 </body>
 
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
 crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src={{ asset('js/app.js') }}></script>
+<script type="text/javascript" src="{{ asset('js/laroute.js') }}"></script>
 <script>
     const USER_ADDRESS = @json($type);
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-@if(Session::has('message'))
-<script>
-    var type = "{{ Session::get('alert-type','info') }}"
-    switch (type) {
-        case 'info':
-            toastr.info(" {{ Session::get('message') }} ");
-            break;
+@if (Session::has('message'))
+    <script>
+        var type = "{{ Session::get('alert-type', 'info') }}"
+        switch (type) {
+            case 'info':
+                toastr.info(" {{ Session::get('message') }} ");
+                break;
 
-        case 'success':
-            toastr.success(" {{ Session::get('message') }} ");
-            break;
+            case 'success':
+                toastr.success(" {{ Session::get('message') }} ");
+                break;
 
-        case 'warning':
-            toastr.warning(" {{ Session::get('message') }} ");
-            break;
+            case 'warning':
+                toastr.warning(" {{ Session::get('message') }} ");
+                break;
 
-        case 'error':
-            toastr.error(" {{ Session::get('message') }} ");
-            break;
-    }
-</script>
+            case 'error':
+                toastr.error(" {{ Session::get('message') }} ");
+                break;
+        }
+    </script>
 @endif
 @yield('scripts')
 

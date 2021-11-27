@@ -57,6 +57,20 @@
     }
 }
 
+.btn-cancel {
+    margin-top: 10px;
+    padding: 5px 10px;
+    background-color: $red;
+    color: $white;
+}
+
+.text-description {
+    max-height: 80px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .slider_area {
     .slider_bg_1 {
         background-image: url('https://www.globalgiving.org/img/banners/hero_give_lg.jpg');

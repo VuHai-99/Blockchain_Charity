@@ -8,13 +8,26 @@
 
 @section('id_custom', 'backend')
 
+@section('pageBreadcrumb')
+    <div class="group-button-top">
+        <a href="{{ route('home') }}"
+            class="btn btn-ct-primary  {{ Request::routeIs('donator.home') ? 'active-primary' : '' }} action"
+            role="button">
+            Home</a>
+        <a href="{{ route('wallet') }}"
+            class="btn btn-ct-primary {{ Request::routeIs('donatorws.campaign') ? 'active-primary' : 'disabled' }} action"
+            role="button">List Campaign</a>
+        <a href="{{ route('wallet') }}" class="btn btn-ct-primary active-primary action" role="button">Campaign Detail</a>
+    </div>
+@endsection
+
 @section('content')
     <div class="row">
         <div class="information col-md-8">
             <div class="featured">
                 <div class="wrap-image">
                     <img src="https://danviet.mediacdn.vn/2020/10/21/thuy-tien-1603245101017901488132.jpg" alt="">
-                    <p class="title mt-1"> <i>{{$campaign->name}}</i></p>
+                    <p class="title mt-1"> <i>{{ $campaign->name }}</i></p>
                 </div>
                 <div class="description">
                     <p>
@@ -68,7 +81,8 @@
         </div>
         <div class="donator col-md-4">
             <div class="coin">
-                <span class="coin-donated">{{$campaign->current_balance}} (wei)</span>/ {{$campaign->target_contribution_amount}}(wei)
+                <span class="coin-donated">{{ $campaign->current_balance }} (wei)</span>/
+                {{ $campaign->target_contribution_amount }}(wei)
                 <div class="goal">
                     <div class="coin-current"></div>
                 </div>
@@ -85,8 +99,9 @@
                 @csrf
                 <div class="btn-donate">
                     <input placeholder="Amount of donation" id="donation_amount" name="donation_amount">
-                    <input id="campaign_address" name="campaign_address" value="{{$campaign->campaign_address}}" hidden>
-                    <input id="user_address" name="user_address" value="{{Auth::user()->user_address}}" hidden>
+                    <input id="campaign_address" name="campaign_address" value="{{ $campaign->campaign_address }}"
+                        hidden>
+                    <input id="user_address" name="user_address" value="{{ Auth::user()->user_address }}" hidden>
                     @error('donation_amount')
                         <p class="text-error">{{ $message }}</p>
                     @enderror
