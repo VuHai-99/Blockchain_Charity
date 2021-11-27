@@ -60,6 +60,11 @@ App = {
     App.contracts.Campaign = TruffleContract(campaign)
     App.contracts.Campaign.setProvider(App.web3Provider)
 
+    const current_account =  await web3.eth.getCoinbase();
+
+    if(current_account != USER_ADDRESS.toLowerCase()){
+      window.alert("Please use account "+USER_ADDRESS+" in metamask.")
+    }
     // let accounts_ = await web3.eth.getAccounts();
     // console.log(accounts_);
   },

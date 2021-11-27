@@ -19,21 +19,15 @@
 </head>
 
 <body>
-<<<<<<< HEAD
 @php
     $type = 0;
     if(Auth::check()){
         $type = Auth::user()->user_address ?? 0;
     }
+    if(Auth::guard('admin')->check()){
+        $type = Auth::guard('admin')->user()->admin_address ?? 0;
+    }
 @endphp
-=======
-    @php
-        $type = 0;
-        if (Auth::check()) {
-            $type = Auth::user()->type ?? 0;
-        }
-    @endphp
->>>>>>> 3f0f7b5 (stage 6 pham van thien)
     <div class="management" id="@yield('id_custom')">
         <div class="main-content" id="panel">
             @include('layouts.header')

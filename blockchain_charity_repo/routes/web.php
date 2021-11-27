@@ -110,10 +110,7 @@ Route::get('/campaign', 'FrontendController@campaign')->name('campaign');
 Route::get('/campaign/{id}', 'FrontendController@detail')->name('campaign.detail');
 Auth::routes(['verify' => true]);
 
-<<<<<<< HEAD
-=======
 Route::get('my-wallet', 'DonatorController@myWallet')->name('wallet')->middleware('auth');
 Route::post('api/change-key', 'Api\ResetKeyController@changeKey')->name('api.change.key');
 
-Route::get('test', 'DonatorController@test');
->>>>>>> 3f0f7b5 (stage 6 pham van thien)
+
