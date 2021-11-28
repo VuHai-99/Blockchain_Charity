@@ -80,7 +80,7 @@ exports.donateToCampaign = async (req, res) => {
         );
 
         // console.log(privKey)
-
+        // console.log(amoutOfEthereum.toString())
         const createTransaction = web3.eth.accounts.signTransaction(
           {
               from: donator_address,

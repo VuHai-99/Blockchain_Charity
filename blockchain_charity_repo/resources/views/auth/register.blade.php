@@ -178,8 +178,8 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/truffle-contract.js') }}"></script>
-    <script src="{{ asset('js/web3.min.js') }}"></script>
+    <script src="{{ asset('js/truffle-contract-1.js') }}"></script>
+    <script src="{{ asset('js/web3-1.min.js') }}"></script>
     <script src="{{ asset('js/page_register.js') }}"></script>
     <script src="{{ asset('js/metamask_kyc.js') }}"></script>
 @endsection

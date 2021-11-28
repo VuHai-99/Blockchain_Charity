@@ -45,11 +45,11 @@ App = {
     web3.eth.defaultAccount = ethereum._state.accounts[0]
     App.account = web3.eth.accounts[0]
     // console.log('accounts', web3.eth.accounts);
-    const current_account =  await web3.eth.getCoinbase();
+    //const current_account =  await web3.eth.getCoinbase();
 
-    if(current_account != USER_ADDRESS.toLowerCase()){
-      window.alert("Please use account "+USER_ADDRESS+" in metamask.")
-    }
+//    if(current_account != USER_ADDRESS.toLowerCase()){
+//      window.alert("Please use account "+USER_ADDRESS+" //in metamask.")
+//    }
   },
 
   loadContract: async () => {

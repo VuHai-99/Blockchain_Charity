@@ -9,8 +9,8 @@ let rpcProvider;
 
 setupProvider();
 // onData(920);
-// rpcProvider.on('block', onPreviousLatestData);
-syncBlockRange(919,922);
+rpcProvider.on('block', onPreviousLatestData);
+// syncBlockRange(919,922);
 // console.log(rpcProvider);
 
 async function setupProvider() {

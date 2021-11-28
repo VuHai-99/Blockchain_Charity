@@ -54,11 +54,11 @@ App = {
         web3.eth.defaultAccount = ethereum._state.accounts[0]
         App.account = web3.eth.accounts[0]
 
-        const current_account =  await web3.eth.getCoinbase();
+        // const current_account =  await web3.eth.getCoinbase();
 
-        if(current_account != USER_ADDRESS.toLowerCase()){
-          window.alert("Please use account "+USER_ADDRESS+" in metamask.")
-        }
+        // if(current_account != USER_ADDRESS.toLowerCase()){
+        //   window.alert("Please use account "+USER_ADDRESS+" in metamask.")
+        // }
 
     },
 
@@ -80,11 +80,13 @@ App = {
       // let minimumContribution = $('[name="minimumContribution"]').val();
       let donateValue = $('[name="donation_amount"]').val();
   
-      console.log(donateValue);
+      // console.log(donateValue);
       
-      let b = App.contracts.Campaign.at(address)
-  
-  
+      // let b = App.contracts.Campaign.at(address).then((res) => {
+      //   console.log(res.contribute({value:'1'}))
+      // })
+      // console.log(b)
+      let b = App.contracts.Campaign.at(address);
   
       b.contribute({value:donateValue})
         .then(function(result){
