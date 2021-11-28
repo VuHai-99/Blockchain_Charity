@@ -102,8 +102,8 @@ App = {
                       <h6 class="card-subtitle mb-2"><span class="text-muted">Amount of money:</span> `+ temp[2].toNumber()+`</h6>
                   </div>
                   <div class="card-footer">
-                    <a type="button" class="btn btn-success text-light" onclick="App.responseRequestWithdrawMoney('`+totalRequestWithdrawMoney[i]+`',true,`+ temp[2]+`); return false"> Đồng ý </a>
-                    <a type="button" class="btn btn-danger text-light" onclick="App.responseRequestWithdrawMoney('`+totalRequestWithdrawMoney[i]+`',false,`+ temp[2]+`); return false"> Từ chối </a>
+                    <a type="button" class="btn btn-success text-light" onclick="App.responseRequestWithdrawMoney('`+totalRequestWithdrawMoney[i]+`',true,`+ temp[2]+`,'`+ temp[0]+`'); return false"> Đồng ý </a>
+                    <a type="button" class="btn btn-danger text-light" onclick="App.responseRequestWithdrawMoney('`+totalRequestWithdrawMoney[i]+`',false,`+ temp[2]+`,'`+ temp[0]+`'); return false"> Từ chối </a>
                   </div>
               </div>
             </form>
@@ -112,13 +112,13 @@ App = {
       campaignTemplate.append(campaignItem)
     }
   },
-  responseRequestWithdrawMoney: async (requestedWithdrawMoneyID, response,withdrawValue) => {
+  responseRequestWithdrawMoney: async (requestedWithdrawMoneyID, response,withdrawValue,host_address) => {
     if(response == true){
       await App.campaignfactory.withDrawMoneyFunction(requestedWithdrawMoneyID)
       .then((result) => {
         // console.log(result);
-        const host_contract_address = result.receipt.to;
-        const campaign_contract_address = result.receipt.from;
+        // const host_contract_address = result.receipt.to;
+        const campaign_contract_address = result.receipt.to;
         const transaction_hash = result.receipt.transactionHash;
         const amount_in_wei = withdrawValue;
         Swal.fire({
@@ -139,7 +139,7 @@ App = {
         axios.post(('/api/store-transaction'), {
           "transaction_hash": transaction_hash,
           "sender_address": campaign_contract_address,
-          "receiver_address": host_contract_address,
+          "receiver_address": host_address,
           "transaction_type" : 1,
           "amount":amount_in_wei
         }).then(function(response){

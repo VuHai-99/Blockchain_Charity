@@ -163,3 +163,39 @@ exports.fetchBalanceAccount = async (req, res) => {
 
   
 };
+
+exports.syncBalanceAccount = async (req, res) => {
+  if(!req.params.user_address){
+    res.status(400).send({
+      message: "user_address can not be empty!"
+    });
+    return;
+  } else {
+
+    const user_address = req.params.user_address
+    try {
+      web3.eth.getBalance(user_address)
+      .then((r) => {
+        User.updateBalance(user_address,r, (suc) => {
+          if (suc) {
+            res.send('Success')
+          } else {
+            res.status(500).send({
+              message:
+                err.message || "Error Happend."
+            });
+            return;
+          }
+        })
+      })
+    } catch (error) {
+      res.status(500).send({
+        message:
+        error.message || "Invalid Donator Address."
+      });
+    }
+  
+  }
+
+  
+};

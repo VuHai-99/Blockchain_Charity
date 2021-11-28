@@ -233,7 +233,29 @@ class BlockChainController extends Controller
             
             $campaign = Campaign::findOrFail($request->receiver_address);
             $campaign->current_balance = strval(gmp_add($campaign->current_balance, $request->amount));
-            $campaign->save();    
+            $campaign->save();
+
+            $syncBalanceAPI = 'http://127.0.0.1:3000/sync/balance/'.$new_transaction->sender_address;
+
+            $response = Http::get($syncBalanceAPI);
+            if($response->status() == 200){
+                return redirect()->back();
+            } else {
+                return $response;
+            }
+        } elseif($request->transaction_type == 1){
+            $campaign = Campaign::findOrFail($request->sender_address);
+            $campaign->current_balance = strval(gmp_sub($campaign->current_balance, $request->amount));
+            $campaign->save();
+
+            $syncBalanceAPI = 'http://127.0.0.1:3000/sync/balance/'.$new_transaction->receiver_address;
+
+            $response = Http::get($syncBalanceAPI);
+            if($response->status() == 200){
+                return redirect()->back();
+            } else {
+                return $response;
+            }
         }
         
     }

@@ -43,5 +43,20 @@ User.queryHostFindByAddress = async (user_address, result) => {
   });
 };
 
+User.updateBalance = async (user_address,amount, result) => {
+  sql.query(`UPDATE users SET amount_of_money = "${amount}" WHERE users.user_address = "${user_address}"`, (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return err;
+    }
+    if (res.length) {
+      // console.log("found user: ", JSON.stringify(res[0]));
+      result(null, JSON.stringify(res[0]));
+      return result;
+    }
+    result({ kind: "not_found" }, null);
+  });
+};
 
 module.exports = User;
