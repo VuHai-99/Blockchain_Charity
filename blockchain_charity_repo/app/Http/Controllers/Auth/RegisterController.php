@@ -113,6 +113,11 @@ class RegisterController extends Controller
                 'signData' => $request->signData,
                 'CSRF' => $request->CSRF
             ]);
+
+            $currentBalanceURL = 'http://localhost:3000/fetch/balance/'.strval($request->wallet_address);
+            $currentBalance = Http::get($currentBalanceURL);
+            $data['amount_of_money'] = $currentBalance;
+            
             if($response->status() == 200){
                 User::create($data);
                 if ($request->role == 1) {

@@ -137,3 +137,29 @@ exports.donateToCampaign = async (req, res) => {
 
   
 };
+
+exports.fetchBalanceAccount = async (req, res) => {
+  if(!req.params.user_address){
+    res.status(400).send({
+      message: "user_address can not be empty!"
+    });
+    return;
+  } else {
+
+    const user_address = req.params.user_address
+    try {
+      web3.eth.getBalance(user_address)
+      .then((r) => {
+        res.send(r);
+      })
+    } catch (error) {
+      res.status(500).send({
+        message:
+        error.message || "Invalid Donator Address."
+      });
+    }
+  
+  }
+
+  
+};
