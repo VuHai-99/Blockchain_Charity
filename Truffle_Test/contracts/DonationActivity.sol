@@ -85,8 +85,6 @@ contract DonationActivity{
         
         if(or.orderState == OrderState.RECEIVED && or.authorityConfirmation == true){
             address(or.retailer).transfer(or.totalAmount);
-            orderSet.remove(_orderCode);
-            delete orders[_orderCode];
         }
     }
 
@@ -96,8 +94,6 @@ contract DonationActivity{
         
         if(or.orderState == OrderState.RECEIVED && or.authorityConfirmation == true){
             address(or.retailer).transfer(or.totalAmount);
-            orderSet.remove(_orderCode);
-            delete orders[_orderCode];
         }
     }
 
@@ -166,8 +162,6 @@ contract DonationActivity{
         
         if(or.authorityConfirmation == true){
             address(host).transfer(or.amount);
-            cashOutSet.remove(_cashOutCode);
-            delete cashOuts[_cashOutCode];
         }
     }
 
