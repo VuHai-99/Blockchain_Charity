@@ -88,6 +88,9 @@ App = {
     let description = $('[name="description"]').val();
     let date_start = $('[name="date_start"]').val();
     let date_end = $('[name="date_end"]').val();
+    // let main_pic = $('[name="campaign_main_pic"]').val();
+    // let img_path = main_pic.substring(12);
+
     // let description = $('textarea#description').val();
     // console.log(campaign_name, minimum_contribution, date_start, date_end);
     var currentdate = new Date(); 
@@ -98,10 +101,11 @@ App = {
                     + String(currentdate.getMinutes())
                     + String(currentdate.getSeconds());
     datetime = Number(datetime)
-    let newContractId = "0x"+(new BN(String(datetime))).toTwos(256).toString('hex',64);
-    console.log(newContractId)
-
-    await App.campaignfactory.requestToOpenCampaign(newContractId,Number(minimum_contribution))
+    let newContractRequestId = "0x"+(new BN(String(datetime))).toTwos(256).toString('hex',64);
+    console.log(newContractRequestId)
+    // console.log(main_pic)
+    // console.log(img_path)
+    await App.campaignfactory.requestToOpenCampaign(newContractRequestId,Number(minimum_contribution))
       .then((result) => {
 
         toastr.success("Successfully create request to open campaign");
@@ -114,7 +118,7 @@ App = {
         $('[name="date_end"]').val('');
 
         axios.post(('/api/store-blockchain-request'), {
-          "request_id": newContractId,
+          "request_id": newContractRequestId,
           "amount": minimum_contribution,
           "request_type": 1,
           "requested_user_address":current_account,
@@ -122,7 +126,8 @@ App = {
           "campaign_name":campaign_name,
           "date_start":date_start,
           "date_end":date_end,
-          "description": description
+          "description": description,
+          // "main_pic": img_path
         }).then(function(response){
           if(response.status == 200){
             console.log('Successfully store new validated request in database');
@@ -139,6 +144,8 @@ App = {
         })
         console.log(error)
       });
+
+
   },
 
 }
@@ -146,6 +153,7 @@ App = {
 
 $(window).on('load', function () {
   App.load()
+
 });
 
 // console.log(WALLET_TYPE)

@@ -5,14 +5,12 @@
 @endsection
 
 @section('pageBreadcrumb')
-    <div class="group-button-top">
-        <a href="{{ route('home') }}"
-            class="btn btn-ct-primary  {{ Request::routeIs('host.home') ? 'active-primary' : '' }} action" role="button">
-            Home</a>
-        <a href="{{ route('wallet') }}"
-            class="btn btn-ct-primary {{ Request::routeIs('host.validate.host') ? 'active-primary' : 'disabled' }} action"
-            role="button">Validate Campaign</a>
-    </div>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item "><a style="color:black" href="{{ route('host.home') }}">Home</a></li>
+            <li class="breadcrumb-item "><a style="color:black" href="#">Validate Account</a></li>
+        </ol>
+    </nav>
 @endsection
 
 @section('content')

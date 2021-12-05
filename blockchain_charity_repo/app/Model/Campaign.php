@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use App\User;
+use App\Model\CampaignImg;
 use Illuminate\Database\Eloquent\Model;
 
 
@@ -18,5 +19,9 @@ class Campaign extends Model
 
     public function user(){
         return $this->belongsTo(User::class,'host_address','user_address');
+    }
+
+    public function main_pic(){
+        return $this->belongsTo(CampaignImg::class,'campaign_address','campaign_address')->where('photo_type',0);
     }
 }

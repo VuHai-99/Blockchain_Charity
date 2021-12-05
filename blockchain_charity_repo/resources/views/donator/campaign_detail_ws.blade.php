@@ -9,82 +9,139 @@
 @section('id_custom', 'backend')
 
 @section('pageBreadcrumb')
-    <div class="group-button-top">
-        <a href="{{ route('home') }}"
-            class="btn btn-ct-primary  {{ Request::routeIs('donator.home') ? 'active-primary' : '' }} action"
-            role="button">
-            Home</a>
-        <a href="{{ route('wallet') }}"
-            class="btn btn-ct-primary {{ Request::routeIs('donatorws.campaign') ? 'active-primary' : 'disabled' }} action"
-            role="button">List Campaign</a>
-        <a href="{{ route('wallet') }}" class="btn btn-ct-primary active-primary action" role="button">Campaign Detail</a>
-    </div>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item "><a style="color:black" href="{{ route('donatorws.home') }}">Home</a></li>
+            <li class="breadcrumb-item "><a style="color:black" href="{{ route('donatorws.campaign') }}">List Campaign</a></li>
+            <li class="breadcrumb-item "><a style="color:black" href="#">Campaign Detail</a></li>
+        </ol>
+    </nav>
 @endsection
 
 @section('content')
     <div class="row">
-        <div class="information col-md-8">
-            <div class="featured">
-                <div class="wrap-image">
-                    <img src="https://danviet.mediacdn.vn/2020/10/21/thuy-tien-1603245101017901488132.jpg" alt="">
-                    <p class="title mt-1"> <i>{{ $campaign->name }}</i></p>
-                </div>
-                <div class="description">
-                    <p>
-                        Đợt mưa bão tháng 10/2020, nhiều địa phương ở khu vực miền Trung đã gánh chịu thiệt hại nặng nề về
-                        người và
-                        tài sản.
-                        Chia sẻ khó khăn, hoạn nạn với đồng bào miền Trung, người dân cả nước và kiều bào ở nước ngoài đã
-                        quyên góp,
-                        ủng hộ rất lớn về mặt vật chất; trong đó có việc ca sĩ Thủy Tiên đã đến một số nơi để trao hỗ trợ từ
-                        thiện
-                        do những
-                        tấm lòng hảo tâm đóng góp đến tận tay người dân. Việc làm này của ca sĩ Thủy Tiên ban đầu được nhiều
-                        người
-                        khen ngợi.
-                    </p>
-                    <p>
-                        Dự án được các mạnh thường quân trong và ngoài nước ủng hộ rất nhiệt tình. Đến nay số tiền quyên góp
-                        đã đạt
-                        được gần
-                        100 tỉ đồng. Trong những ngày vừa qua, ca sĩ Thủy Tiên đã đến rất nhiều địa bàn tại trung tâm lũ
-                        miền Trung
-                        để trao
-                        tận tay số tiền hỗ trợ đến bà con.
-                    </p>
-                </div>
-            </div>
-            <div class="detail-item">
-                <div class="wrap-image">
-                    <img src="https://znews-photo.zadn.vn/w660/Uploaded/lce_jwqqc/2020_10_16/12_1.jpg" alt="">
-                    <p class="title"> <i>Hình ảnh Thủy Tiên trao quà hỗ trợ đến tận tay người dân ở huyện An Lão,
-                            Quảng
-                            Trị</i>
-                </div>
-                </p>
-                <div class="description">
-                    <p>
-                        Địa điểm tiếp theo được đoàn từ thiện ghé tới là huyện An Lão ở Quảng Trị, một trong những nơi chịu
-                        ảnh
-                        hưởng nặng nề trong đợt lũ vừa rồi.
-                        Trong chuyến từ thiện này số tiền được trao đến tay người dân tại đây là hơn 12 tỉ đồng cùng với một
-                        số
-                        3 nhà dân được hỗ trợ để làm lại.
-                    </p>
-                    <div class="wrap-image">
-                        <img src="https://ngolongnd.net/wp-content/uploads/2021/09/ngolongnd_sao-ke-tai-khoan-ngan-hang-la-gi.jpg"
-                            alt="">
-                        <p class="title"><i>Ảnh sao kê chi tiết các khoản từ thiện tại huyện An Lão</i></p>
+    <div class="information col-md-8">
+            <h1><b>{{ $campaign->name }}</b></h1>
+            <!--Accordion wrapper-->
+            <div class="accordion md-accordion accordion-1" id="accordionEx23" role="tablist">
+                <div class="card">
+                    <div class="card-header blue lighten-3 z-depth-1" role="tab" id="heading96">
+                        <h5 class="text-uppercase mb-0 py-1">
+                            <a class="white-text font-weight-bold" data-toggle="collapse" href="#collapse96"
+                                aria-expanded="true" aria-controls="collapse96">
+                                Tổng quan dự án từ thiện
+                            </a>
+                        </h5>
+                    </div>
+                    <div id="collapse96" class="collapse show" role="tabpanel" aria-labelledby="heading96">
+                        <div class="card-body">
+                            <div class="row my-4">
+                                <div class="col-md-12">
+                                    <div class="view z-depth-1">
+                                        <img src="{{ (!empty($campaign_main_pic)) ? url($campaign_main_pic->file_path) : url('images/CharityCampaignMainPicDefault.png') }}"
+                                            alt="" class="img-fluid">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <p class="text-sm-left">
+                                        {{ $campaign->description }}
+                                    </p>
+                                </div>
+                                @if(!empty($campaign_side_pic))
+                                @foreach($campaign_side_pic as $side_pic)
+                                <div class="col-md-6">
+                                    <div class="view z-depth-1">
+                                        <img src="{{url($side_pic->file_path)}}" alt="" class="img-fluid">
+                                    </div>
+                                </div>
+                                @endforeach
+                                @else
+                                <div class="col-md-6">
+                                    <div class="view z-depth-1">
+                                        <img src="{{url('images/CharityCampaignSidePicDefault.png')}}" alt=""
+                                            class="img-fluid">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="view z-depth-1">
+                                        <img src="{{url('images/CharityCampaignSidePicDefault.png')}}" alt=""
+                                            class="img-fluid">
+                                    </div>
+                                </div>
+                                @endif
+                            </div>
+                        </div>
+                        @if($campaign->host_address == Auth::user()->user_address)
+                        <div class="card-footer text-center">
+                            <a href="{{ route('host.campaign_detail.edit',$campaign->campaign_address) }}" class="btn btn-warning" role="button">Edit Campaign Information</a>
+                        </div>
+                        @endif
                     </div>
                 </div>
+                <div class="card">
+                    <div class="card-header blue lighten-3 z-depth-1" role="tab" id="heading97">
+                        <h5 class="text-uppercase mb-0 py-1">
+                            <a class="collapsed font-weight-bold white-text" data-toggle="collapse" href="#collapse97"
+                                aria-expanded="false" aria-controls="collapse97">
+                                Quá Trình Từ Thiện
+                            </a>
+                        </h5>
+                    </div>
+                    <div id="collapse97" class="collapse" role="tabpanel" aria-labelledby="heading97">
+                        <div class="card-body">
+                            <div class="row my-4">
+                                <div class="col-md-12">
+                                    <h4 class="font-weight-bold mb-3 black-text"><a href="#">Từ Thiện Đợt 1</a></h4>
+                                    <h4 class="font-weight-bold mb-3 black-text"><a href="#">Từ Thiện Đợt 2</a></h4>
+                                    <h4 class="font-weight-bold mb-3 black-text"><a href="#">Từ Thiện Đợt 3</a></h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header blue lighten-3 z-depth-1" role="tab" id="heading98">
+                        <h5 class="text-uppercase mb-0 py-1">
+                            <a class="collapsed font-weight-bold white-text" data-toggle="collapse" href="#collapse98"
+                                aria-expanded="false" aria-controls="collapse98">
+                                Cá nhân / Tổ Chức Từ Thiện
+                            </a>
+                        </h5>
+                    </div>
+                    <div id="collapse98" class="collapse" role="tabpanel" aria-labelledby="heading98">
+                        <div class="card-body">
+                            <div class="row my-4">
+                                <div class="col-md-8">
+                                    <h4 class="text-sm-left">Name: <b>{{$campaign->user->name}}</b></h4>
+                                    <p class="text-sm-left">Address : {{$campaign->host_address}}</p>
+                                    <p class="text-sm-left">Email : {{$campaign->user->email}}</p>
+                                    <p class="text-sm-left">Phone : {{$campaign->user->phone}}</p>
+                                </div>
+                                <div class="col-md-4 mt-3 pt-2">
+                                    <div class="view z-depth-1">
+                                        <img src="https://mdbootstrap.com/img/Photos/Others/nature.jpeg" alt=""
+                                            class="img-fluid">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
+            <!--Accordion wrapper-->
         </div>
         <div class="donator col-md-4">
             <div class="coin">
                 <span class="coin-donated">{{ $campaign->current_balance }} (wei)</span>/
                 {{ $campaign->target_contribution_amount }}(wei)
                 <div class="goal">
-                    <div class="coin-current"></div>
+                <div class="progress">
+                        <div class="progress-bar bg-warning" role="progressbar"
+                            style="width: {{($campaign->current_balance / $campaign->target_contribution_amount >= 100) ? 100 : ($campaign->current_balance / $campaign->target_contribution_amount)}}%"
+                            aria-valuenow="{{ $campaign->current_balance }}" aria-valuemin="0"
+                            aria-valuemax="{{$campaign->target_contribution_amount}}"></div>
+                    </div>
                 </div>
                 <br>
                 <div class="number-donator">

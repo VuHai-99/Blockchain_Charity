@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Model\Campaign;
+use App\Model\CampaignImg;
 use App\Model\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -35,7 +36,10 @@ class DonatorController extends Controller
     public function campaignDetail(String $blockchainAddress)
     {
         $campaign = Campaign::findOrFail($blockchainAddress);
-        return view('donator.campaign_detail', compact('campaign'));
+        $campaign_main_pic = CampaignImg::where('campaign_address',$blockchainAddress)->where('photo_type',0)->get();
+        $campaign_main_pic=$campaign_main_pic[0];
+        $campaign_side_pic = CampaignImg::where('campaign_address',$blockchainAddress)->where('photo_type',1)->get();
+        return view('donator.campaign_detail', compact('campaign','campaign_main_pic','campaign_side_pic'));
     }
 
     //WS 
@@ -48,7 +52,10 @@ class DonatorController extends Controller
     public function WS_campaignDetail(String $blockchainAddress)
     {
         $campaign = Campaign::findOrFail($blockchainAddress);
-        return view('donator.campaign_detail_ws', compact('campaign'));
+        $campaign_main_pic = CampaignImg::where('campaign_address',$blockchainAddress)->where('photo_type',0)->get();
+        $campaign_main_pic=$campaign_main_pic[0];
+        $campaign_side_pic = CampaignImg::where('campaign_address',$blockchainAddress)->where('photo_type',1)->get();
+        return view('donator.campaign_detail_ws', compact('campaign','campaign_main_pic','campaign_side_pic'));
     }
 
     public function myWallet()
