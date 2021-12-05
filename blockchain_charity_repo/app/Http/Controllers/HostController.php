@@ -33,7 +33,8 @@ class HostController extends Controller
 
     public function listCampaign()
     {
-        $campaigns = $this->campaignRepository->getListCampaign();
+        // $campaigns = $this->campaignRepository->getListCampaign();
+        $campaigns = Campaign::all();
         return view('host.list_campaign', compact('campaigns'));
     }
 
@@ -53,8 +54,10 @@ class HostController extends Controller
     
     public function listRequest()
     {
-        $userAddress = Auth::user()->user_address;
-        $listRequest = $this->blockChainRequest->getListRequestByUser($userAddress);
+        // $userAddress = Auth::user()->user_address;
+        // $listRequest = $this->blockChainRequest->getListRequestByUser($userAddress);    
+        // dd(Auth::user()->user_address);
+        $listRequest = BlockchainRequest::where('requested_user_address',Auth::user()->user_address)->get();
         return view('host.list_request', compact('listRequest'));
     }
 

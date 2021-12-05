@@ -26,34 +26,34 @@ class BlockChainController extends Controller
     {
         // dd($request->all());
         try {
-            $new_blockchain_request = new BlockchainRequest();
+           
             // dd($new_blockchain_request);
-            $new_blockchain_request->request_id	 = $request->request_id;
-            $new_blockchain_request->request_type = $request->request_type;
-            $new_blockchain_request->amount = $request->amount;
-            $new_blockchain_request->requested_user_address = $request->requested_user_address;
+            if($request->cancel == true){
+                $blockchain_request = BlockchainRequest::findOrFail($request->request_id);
+                $blockchain_request->delete();
+            } else {
+                $new_blockchain_request = new BlockchainRequest();
+                $new_blockchain_request->request_id	 = $request->request_id;
+                $new_blockchain_request->request_type = $request->request_type;
+                $new_blockchain_request->amount = $request->amount;
+                $new_blockchain_request->requested_user_address = $request->requested_user_address;
+    
+                $new_blockchain_request->campaign_address = $request->campaign_address;
+                $new_blockchain_request->campaign_name = $request->campaign_name;
+                $new_blockchain_request->date_start = $request->date_start;
+                $new_blockchain_request->date_end = $request->date_end;
+                $new_blockchain_request->target_contribution_amount = $request->target_contribution_amount;
+                $new_blockchain_request->description = $request->description;
+                $new_blockchain_request->save();
 
-            $new_blockchain_request->campaign_address = $request->campaign_address;
-            $new_blockchain_request->campaign_name = $request->campaign_name;
-            $new_blockchain_request->date_start = $request->date_start;
-            $new_blockchain_request->date_end = $request->date_end;
-            $new_blockchain_request->target_contribution_amount = $request->target_contribution_amount;
-            $new_blockchain_request->description = $request->description;
-            $new_blockchain_request->save();
-
-            // $image = $request->file('main_pic');
-            // $campaign_img = new CampaignImg();
-            // $campaign_img->file_path = $this->uploadImageService->upload($request->main_pic);
-            // $campaign_img->campaign_address ='abcdabcd';
-            // $campaign_img->photo_type = 1;
-            // $campaign_img->save();
-
-            if($new_blockchain_request->request_type == 0){
-                // valid host request
-                $host = User::findOrFail($new_blockchain_request->requested_user_address);
-                $host->validate_state = 1;
-                $host->save();
-            } 
+                if($new_blockchain_request->request_type == 0){
+                    // valid host request
+                    $host = User::findOrFail($new_blockchain_request->requested_user_address);
+                    $host->validate_state = 1;
+                    $host->save();
+                } 
+            }
+            
             return response()->json(['success' => 'success', 200]);
         } catch (\Exception $e) {
 

@@ -146,7 +146,7 @@
             </div>
             <br>
             <div class="number-donator">
-                <span class="number">300 donations</span>
+                <!-- <span class="number">300 donations</span> -->
                 <span
                     class="amount">${{($campaign->target_contribution_amount - $campaign->current_balance < 0) ? 0 : ($campaign->target_contribution_amount - $campaign->current_balance < 0) }}
                     to go</span>
