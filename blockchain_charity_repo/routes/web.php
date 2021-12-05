@@ -85,6 +85,10 @@ Route::prefix('charity')
                 Route::get('campaign_detail/{blockchainAddress}', 'HostController@campaignDetail')->name('campaign.detail');
                 Route::get('validate-host', 'HostController@validateHost')->name('validate.host');
                 Route::get('list-request', 'HostController@listRequest')->name('list.request');
+                // Route::post('store/request-create-campaign/img', 'CampaignController@addCampaignRequestImg')->name('campaign.request.img.add');
+                Route::get('edit/campaign_detail/{blockchainAddress}', 'HostController@editCampaignDetail')->name('campaign_detail.edit');
+                Route::post('update/campaign_detail/{blockchainAddress}', 'HostController@updateCampaign')->name('campaign.update');
+                
             });
         Route::get('delete/request/{id}', 'HostController@deleteRequest')->name('host.delete.request')->middleware('auth');
         Route::prefix('hostws')

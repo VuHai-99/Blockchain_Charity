@@ -6,11 +6,22 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\BlockchainRequest;
 use App\Model\Campaign;
+use App\Model\CampaignImg;
 use App\Model\Transaction;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use App\Services\UploadImageService;
+
+
+
+
 class BlockChainController extends Controller
 {
+    public function __construct(UploadImageService $uploadImageService)
+    {
+        $this->uploadImageService = $uploadImageService;
+    }
+
     public function storeBlockchainRequest(Request $request)
     {
         // dd($request->all());
@@ -29,6 +40,13 @@ class BlockChainController extends Controller
             $new_blockchain_request->target_contribution_amount = $request->target_contribution_amount;
             $new_blockchain_request->description = $request->description;
             $new_blockchain_request->save();
+
+            // $image = $request->file('main_pic');
+            // $campaign_img = new CampaignImg();
+            // $campaign_img->file_path = $this->uploadImageService->upload($request->main_pic);
+            // $campaign_img->campaign_address ='abcdabcd';
+            // $campaign_img->photo_type = 1;
+            // $campaign_img->save();
 
             if($new_blockchain_request->request_type == 0){
                 // valid host request

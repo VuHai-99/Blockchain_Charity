@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Model\BlockchainRequest;
 use App\Model\Campaign;
+use App\Model\CampaignImg;
 use App\Model\Transaction;
 use App\Repositories\BlockChain\BlockChainRequestRepository;
 use App\Repositories\Campaign\CampaignRepository;
@@ -11,15 +12,18 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use App\Services\UploadImageService;
 
 class HostController extends Controller
 {
     public function __construct(
         BlockChainRequestRepository $blockChainRequest,
-        CampaignRepository $campaignRepository
+        CampaignRepository $campaignRepository,
+        UploadImageService $uploadImageService
     ) {
         $this->blockChainRequest = $blockChainRequest;
         $this->campaignRepository = $campaignRepository;
+        $this->uploadImageService = $uploadImageService;
     }
 
     public function home()
@@ -38,6 +42,15 @@ class HostController extends Controller
         return view('host.create_campaign');
     }
 
+    public function editCampaignDetail($blockchainAddress)
+    {
+        $campaign = Campaign::findOrFail($blockchainAddress);
+        $campaign_main_pic = CampaignImg::where('campaign_address',$blockchainAddress)->where('photo_type',0)->get();
+        $campaign_main_pic=$campaign_main_pic[0];
+        $campaign_side_pic = CampaignImg::where('campaign_address',$blockchainAddress)->where('photo_type',1)->get();
+        return view('host.edit_campaign_detail', compact('campaign','campaign_main_pic','campaign_side_pic'));
+    }
+    
     public function listRequest()
     {
         $userAddress = Auth::user()->user_address;
@@ -45,12 +58,6 @@ class HostController extends Controller
         return view('host.list_request', compact('listRequest'));
     }
 
-    public function WS_listRequest()
-    {
-        $userAddress = Auth::user()->user_address;
-        $listRequest = $this->blockChainRequest->getListRequestByUser($userAddress);
-        return view('host.list_request_ws', compact('listRequest'));
-    }
 
     public function deleteRequest($requestId)
     {
@@ -73,10 +80,54 @@ class HostController extends Controller
         $userTopDonate = $this->campaignRepository->getListUserTopDonate($blockchainAddress);
         $limit =  10;
         $userUserDonateMonthLy = $this->campaignRepository->getListUserDonate($blockchainAddress, $limit);
-        return view('host.campaign_detail', compact('campaign', 'userUserDonateMonthLy', 'userTopDonate'));
+        $campaign_main_pic = CampaignImg::where('campaign_address',$blockchainAddress)->where('photo_type',0)->get();
+        $campaign_main_pic=$campaign_main_pic[0];
+        $campaign_side_pic = CampaignImg::where('campaign_address',$blockchainAddress)->where('photo_type',1)->get();
+        return view('host.campaign_detail', compact('campaign', 'userUserDonateMonthLy', 'userTopDonate','campaign_main_pic','campaign_side_pic'));
+    }
+
+    public function updateCampaign($blockchainAddress,Request $request){
+        $notification = array(
+            'message' => 'Update campaign thành công',
+            'alert-type' => 'success'
+        );
+        $new_campaign = Campaign::findOrFail($blockchainAddress);
+        $new_campaign->name = $request->campaign_name;
+        $new_campaign->campaign_address = $blockchainAddress;
+        $new_campaign->description = $request->description;
+        $new_campaign->target_contribution_amount = $request->target_contribution_amount;
+        $new_campaign->date_start = $request->date_start;
+        $new_campaign->date_end = $request->date_end;
+        $new_campaign->save();
+
+        // $campaign_main_pic = CampaignImg::where('campaign_address',$blockchainAddress)->where('photo_type',0)->get();
+        // unlink($campaign_main_pic[0]->file_path);
+
+        $campaignImg = new CampaignImg();
+        $campaignImg->file_path = $this->uploadImageService->upload($request->campaign_main_pic);
+        $campaignImg->campaign_address = $blockchainAddress;
+        $campaignImg->photo_type = 0;
+        $campaignImg->save();
+
+        foreach($request->campaign_multi_img as $multi_img){
+            $campaignImg = new CampaignImg();
+            $campaignImg->file_path = $this->uploadImageService->upload($multi_img);
+            $campaignImg->campaign_address = $blockchainAddress;
+            $campaignImg->photo_type = 1;
+            $campaignImg->save();
+        }
+
+        return back()->with($notification);
     }
 
     //WS
+
+    public function WS_listRequest()
+    {
+        $userAddress = Auth::user()->user_address;
+        $listRequest = $this->blockChainRequest->getListRequestByUser($userAddress);
+        return view('host.list_request_ws', compact('listRequest'));
+    }
     public function WS_listCampaign()
     {
         $campaigns = $this->campaignRepository->getListCampaign();
