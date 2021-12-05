@@ -7,4 +7,5 @@ module.exports = app => {
   app.post("/host/create/campaign/request", campaignFactoryBlockchain.requestToOpenCampaign);
   app.post("/host/withdraw/campaign/request", campaignFactoryBlockchain.requestToWithdrawMoney);
   app.post("/host/list/openCampaign/request", campaignFactoryBlockchain.getHostRequestToOpenCampaignList);
+  app.post("/host/cancel/openCampaign/request", campaignFactoryBlockchain.cancelRequestOpenCampaign);
 };

@@ -8,7 +8,7 @@
 @section('pageBreadcrumb')
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item "><a style="color:black" href="{{ route('host.home') }}">Home</a></li>
+        <li class="breadcrumb-item "><a style="color:black" href="{{ route('hostws.home') }}">Home</a></li>
         <li class="breadcrumb-item "><a style="color:black" href="#">Create Campaign</a></li>
     </ol>
 </nav>
@@ -17,7 +17,7 @@
 @section('content')
 <div class="row">
     <div class="col-md-8">
-        <form action="{{  route('host.campaign.update',$campaign->campaign_address) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{  route('hostws.campaign.update',$campaign->campaign_address) }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row">
 
@@ -77,7 +77,7 @@
                     <label for="campaign_main_pic">Ảnh chính</label>
                     <div class="controls">
                         <input type="file" name="campaign_main_pic" id="campaign_main_pic" class="form-control"
-                            onChange="campaignMainPic(this)">
+                            onChange="campaignMainPic(this)" >
                         @error('campaign_main_pic')
                         <span class="text-error">{{$message}}</span>
                         @enderror
@@ -89,7 +89,7 @@
                     <label for="campaign_multi_img">Nhiều ảnh thêm</label>
                     <div class="controls">
                         <input type="file" name="campaign_multi_img[]" class="form-control" multiple=""
-                            id="campaign_multi_img">
+                            id="campaign_multi_img" >
                         @error('campaign_multi_img')
                         <span class="text-danger">{{$message}}</span>
                         @enderror

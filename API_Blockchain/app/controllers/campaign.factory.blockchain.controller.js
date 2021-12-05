@@ -21,6 +21,77 @@ const contract = new Contract(abi, web3.utils.toChecksumAddress(contract_address
 
 
 
+exports.cancelRequestOpenCampaign = async (req, res) => {
+
+  
+  if (!req.body) {
+    res.status(400).send({
+      message: "Content can not be empty!"
+    });
+    return;
+  } else {
+    // Create a Campaign
+    const request_id = req.body.request_id;
+    const encodedABI = contract.methods.cancelOpenCampaignRequest(request_id).encodeABI();
+    const requested_to_be_host_address = req.body.host_address;
+    User.queryHostFindByAddress(requested_to_be_host_address, (err, current_user) => {
+      if (err) {
+        res.status(500).send({
+          message:
+            err.message || "Host address is not valid."
+        });
+        return;
+      } else {
+        currentUserJson = JSON.parse(current_user)
+        privKey = currentUserJson.private_key
+        console.log(
+            `Attempting to create Host Validation Request from ${requested_to_be_host_address}}`
+        );
+
+        // console.log(req.body.amoutOfEthereum)
+
+        const createTransaction = web3.eth.accounts.signTransaction(
+          {
+              from: requested_to_be_host_address,
+              to: contract_address,
+              gas: 2000000,
+              data: encodedABI,
+          },
+          privKey
+        );
+        createTransaction.then((signedTx) => {  
+
+            const sentTx = web3.eth.sendSignedTransaction(signedTx.raw || signedTx.rawTransaction);  
+            
+            sentTx.on("receipt", receipt => {
+              console.log(receipt)
+              res.send(receipt);
+            });
+            
+            sentTx.on("error", err => {
+              res.status(500).send({
+                message:
+                  err['data']['stack'] || "Some error occurred in transaction process."
+              });
+            });
+            
+        }).catch((err) => {
+          res.status(500).send({
+            message:
+              err.message || "Invalid Host Address."
+          });
+          // console.log(err)
+          
+        });
+      }
+    });
+    
+  
+  }
+
+  
+};
+
 
 exports.requestToBeValidHost = async (req, res) => {
 
