@@ -37,7 +37,11 @@ class DonatorController extends Controller
     {
         $campaign = Campaign::findOrFail($blockchainAddress);
         $campaign_main_pic = CampaignImg::where('campaign_address',$blockchainAddress)->where('photo_type',0)->get();
-        $campaign_main_pic=$campaign_main_pic[0];
+        if(count($campaign_main_pic) != 0){
+            $campaign_main_pic=$campaign_main_pic[0];
+        } else {
+            $campaign_main_pic = null;
+        }
         $campaign_side_pic = CampaignImg::where('campaign_address',$blockchainAddress)->where('photo_type',1)->get();
         return view('donator.campaign_detail', compact('campaign','campaign_main_pic','campaign_side_pic'));
     }
@@ -53,7 +57,11 @@ class DonatorController extends Controller
     {
         $campaign = Campaign::findOrFail($blockchainAddress);
         $campaign_main_pic = CampaignImg::where('campaign_address',$blockchainAddress)->where('photo_type',0)->get();
-        $campaign_main_pic=$campaign_main_pic[0];
+        if(count($campaign_main_pic) != 0){
+            $campaign_main_pic=$campaign_main_pic[0];
+        } else {
+            $campaign_main_pic = null;
+        }
         $campaign_side_pic = CampaignImg::where('campaign_address',$blockchainAddress)->where('photo_type',1)->get();
         return view('donator.campaign_detail_ws', compact('campaign','campaign_main_pic','campaign_side_pic'));
     }

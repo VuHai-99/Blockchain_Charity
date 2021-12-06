@@ -38,7 +38,7 @@
                             <div class="row my-4">
                                 <div class="col-md-12">
                                     <div class="view z-depth-1">
-                                        <img src="{{ (!empty($campaign_main_pic)) ? url($campaign_main_pic->file_path) : url('images/CharityCampaignMainPicDefault.png') }}"
+                                        <img src="{{ (isset($campaign_main_pic) == true) ? url($campaign_main_pic->file_path) : url('images/CharityCampaignMainPicDefault.png') }}"
                                             alt="" class="img-fluid">
                                     </div>
                                 </div>
