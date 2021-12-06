@@ -39,7 +39,7 @@
                         <div class="row my-4">
                             <div class="col-md-12">
                                 <div class="view z-depth-1">
-                                    <img src="{{ (!empty($campaign_main_pic)) ? url($campaign_main_pic->file_path) : url('images/CharityCampaignMainPicDefault.png') }}"
+                                    <img src="{{ (isset($campaign_main_pic) ==true ) ? url($campaign_main_pic->file_path) : url('images/CharityCampaignMainPicDefault.png') }}"
                                         alt="" class="img-fluid">
                                 </div>
                             </div>
@@ -156,10 +156,13 @@
             </div>
         </div>
         <div class="btn-donate">
-            <input class="form-control" placeholder="Amount of donation" id="donation_amount" name="donation_amount">
-            <br>
-            <button class="btn" onclick="App.donateCampaign('{{ $campaign->campaign_address }}')">DONATE
-                NOW</button>
+            <form method="POST" action="{{ route('hostws.donate.campaign') }}">
+                @csrf
+                <input class="form-control" placeholder="Amount of donation" id="donation_amount" name="donation_amount">
+                <input class="form-control" placeholder="Amount of donation" id="campaign_address" name="campaign_address" value="{{ $campaign->campaign_address }}" type="hidden">
+                <br>
+                <button class="btn" type="submit">DONATE NOW</button>
+            </form>
         </div>
         <hr>
         <div class="btn-donate">

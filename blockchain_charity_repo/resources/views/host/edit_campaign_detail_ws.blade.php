@@ -82,7 +82,7 @@
                         <span class="text-error">{{$message}}</span>
                         @enderror
                         <!-- <img src="" id="mainPic"> -->
-                        <img id="mainPic" src="{{ (!empty($campaign_main_pic)) ? url($campaign_main_pic->file_path) : url('images/CharityCampaignMainPicDefault.png') }}" style="width: 100px; height:100px;">
+                        <img id="mainPic" src="{{ (count($campaign_main_pic) != 0) ? url($campaign_main_pic->file_path) : url('images/CharityCampaignMainPicDefault.png') }}" style="width: 100px; height:100px;">
                     </div>
                 </div>
                 <div class="form-group col-6">

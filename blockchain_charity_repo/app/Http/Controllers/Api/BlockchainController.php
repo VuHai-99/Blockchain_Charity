@@ -200,6 +200,7 @@ class BlockChainController extends Controller
                     $newCampaign->minimum_contribution = $blockchain_request->amount;
 
                     $newCampaign->name = $blockchain_request->campaign_name;
+                    $newCampaign->description = $blockchain_request->description;
                     $newCampaign->target_contribution_amount = $blockchain_request->target_contribution_amount;
                     $newCampaign->current_balance = '0';
                     $newCampaign->date_start = $blockchain_request->date_start;

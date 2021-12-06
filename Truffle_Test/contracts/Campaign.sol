@@ -99,18 +99,13 @@ contract Campaign{
         return (re.host, re.authority,re.campaignFactory);
     }
 
-    function cancelOpenCampaignRequest(bytes32 requestToCreateDonationActivityCode) onlyHost public {
+    function cancelCreateDonationActivityRequest(bytes32 requestToCreateDonationActivityCode) onlyHostOrAdmin public {
         require(requestToCreateDonationActivitySet.exists(requestToCreateDonationActivityCode), "Invalid requestToCreateDonationActivity ID");
         requestToCreateDonationActivitySet.remove(requestToCreateDonationActivityCode);
         delete requestsToCreateDonationActivity[requestToCreateDonationActivityCode];
     }
 
-    function rejectOpenCampaignRequest(bytes32 requestToCreateDonationActivityCode) onlyAdmin public {
-        require(requestToCreateDonationActivitySet.exists(requestToCreateDonationActivityCode), "Invalid requestToCreateDonationActivity ID");
-        requestToCreateDonationActivitySet.remove(requestToCreateDonationActivityCode);
-        delete requestsToCreateDonationActivity[requestToCreateDonationActivityCode];
-    }
-
+    
     function newDonationActivity(bytes32 requestToCreateDonationActivityCode) public onlyHost{
          // Note that this will fail automatically if the key already exists.
         // require(validatedHostSet.exists(host), "Host is not validated.

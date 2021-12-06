@@ -47,7 +47,12 @@ class HostController extends Controller
     {
         $campaign = Campaign::findOrFail($blockchainAddress);
         $campaign_main_pic = CampaignImg::where('campaign_address',$blockchainAddress)->where('photo_type',0)->get();
-        $campaign_main_pic=$campaign_main_pic[0];
+        if(count($campaign_main_pic) != 0){
+            $campaign_main_pic=$campaign_main_pic[0];
+        } else {
+            $campaign_main_pic = null;
+        }
+        // $campaign_main_pic=$campaign_main_pic[0];
         $campaign_side_pic = CampaignImg::where('campaign_address',$blockchainAddress)->where('photo_type',1)->get();
         return view('host.edit_campaign_detail', compact('campaign','campaign_main_pic','campaign_side_pic'));
     }
@@ -84,8 +89,15 @@ class HostController extends Controller
         $limit =  10;
         $userUserDonateMonthLy = $this->campaignRepository->getListUserDonate($blockchainAddress, $limit);
         $campaign_main_pic = CampaignImg::where('campaign_address',$blockchainAddress)->where('photo_type',0)->get();
-        $campaign_main_pic=$campaign_main_pic[0];
+        
+        if(count($campaign_main_pic) != 0){
+            $campaign_main_pic=$campaign_main_pic[0];
+        } else {
+            $campaign_main_pic = null;
+        }
+        // dd($campaign_main_pic);
         $campaign_side_pic = CampaignImg::where('campaign_address',$blockchainAddress)->where('photo_type',1)->get();
+        
         return view('host.campaign_detail', compact('campaign', 'userUserDonateMonthLy', 'userTopDonate','campaign_main_pic','campaign_side_pic'));
     }
 
@@ -105,21 +117,31 @@ class HostController extends Controller
 
         // $campaign_main_pic = CampaignImg::where('campaign_address',$blockchainAddress)->where('photo_type',0)->get();
         // unlink($campaign_main_pic[0]->file_path);
-
-        $campaignImg = new CampaignImg();
-        $campaignImg->file_path = $this->uploadImageService->upload($request->campaign_main_pic);
-        $campaignImg->campaign_address = $blockchainAddress;
-        $campaignImg->photo_type = 0;
-        $campaignImg->save();
-
-        foreach($request->campaign_multi_img as $multi_img){
-            $campaignImg = new CampaignImg();
-            $campaignImg->file_path = $this->uploadImageService->upload($multi_img);
-            $campaignImg->campaign_address = $blockchainAddress;
-            $campaignImg->photo_type = 1;
-            $campaignImg->save();
+        if ($request->hasFile('image')) {
+            $file = $request->image;
+            $data['image'] = $this->uploadService->upload($file);
         }
 
+        if($request->campaign_main_pic){
+            $campaignImg = new CampaignImg();
+            $campaignImg->file_path = $this->uploadImageService->upload($request->campaign_main_pic);
+            $campaignImg->campaign_address = $blockchainAddress;
+            $campaignImg->photo_type = 0;
+            $campaignImg->save();
+
+            
+        }
+       
+        if($request->campaign_multi_img){
+            foreach($request->campaign_multi_img as $multi_img){
+                $campaignImg = new CampaignImg();
+                $campaignImg->file_path = $this->uploadImageService->upload($multi_img);
+                $campaignImg->campaign_address = $blockchainAddress;
+                $campaignImg->photo_type = 1;
+                $campaignImg->save();
+            }
+        }
+        
         return back()->with($notification);
     }
 
@@ -146,7 +168,11 @@ class HostController extends Controller
         $limit =  10;
         $userUserDonateMonthLy = $this->campaignRepository->getListUserDonate($blockchainAddress, $limit);
         $campaign_main_pic = CampaignImg::where('campaign_address',$blockchainAddress)->where('photo_type',0)->get();
-        $campaign_main_pic=$campaign_main_pic[0];
+        if(count($campaign_main_pic) != 0){
+            $campaign_main_pic=$campaign_main_pic[0];
+        } else {
+            $campaign_main_pic = null;
+        }
         $campaign_side_pic = CampaignImg::where('campaign_address',$blockchainAddress)->where('photo_type',1)->get();
         return view('host.campaign_detail_ws', compact('campaign', 'userUserDonateMonthLy', 'userTopDonate','campaign_main_pic','campaign_side_pic'));
     }
@@ -311,7 +337,9 @@ class HostController extends Controller
     {
         $campaign = Campaign::findOrFail($blockchainAddress);
         $campaign_main_pic = CampaignImg::where('campaign_address',$blockchainAddress)->where('photo_type',0)->get();
-        $campaign_main_pic=$campaign_main_pic[0];
+        if(count($campaign_main_pic)){
+            $campaign_main_pic=$campaign_main_pic[0];
+        }
         $campaign_side_pic = CampaignImg::where('campaign_address',$blockchainAddress)->where('photo_type',1)->get();
         return view('host.edit_campaign_detail_ws', compact('campaign','campaign_main_pic','campaign_side_pic'));
     }
