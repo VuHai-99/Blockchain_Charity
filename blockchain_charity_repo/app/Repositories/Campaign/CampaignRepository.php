@@ -14,10 +14,13 @@ class CampaignRepository extends BaseRepository implements RepositoryInterface
         parent::__construct($campaign);
     }
 
-    public function getListCampaign()
+    public function getListCampaign($keyWord)
     {
-        $campaigns = $this->model->select('campaigns.*', 'users.name')
+        $campaigns = $this->model->select('campaigns.*', 'users.name as host_name')
             ->join('users', 'users.user_address', '=', 'campaigns.host_address')
+            ->when($keyWord, function ($query) use ($keyWord) {
+                return $query->where('campaigns.name', 'like', '%' . $keyWord . '%');
+            })
             ->get();
         return $campaigns;
     }

@@ -38,9 +38,11 @@ if (!Auth::check() && !Auth::guard('admin')->check()) {
                             </a>
                         </div>
                         <div class="search">
-                            <input type="text" name="search" id="" class="form-control"
-                                placeholder="Search campaign...">
-                            <i class="fa fa-search" aria-hidden="true"></i>
+                            <form method="get" action="{{ route('campaign') }}">
+                                <input type="text" name="key_word" id="" class="form-control"
+                                    placeholder="Search campaign...">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </form>
                         </div>
                     </div>
                     <div class="col-xl-7 col-lg-7 main-menu">

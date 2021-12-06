@@ -105,6 +105,20 @@ Route::prefix('charity')
         Route::get('campaign/list-donator', 'DonatorController@listDonator')->name('campaign.donator');
     });
 
+Route::prefix('authority')
+    ->name('authority.')
+    ->group(function () {
+        Route::get('login', 'AuthorityController@login')->name('login');
+        Route::post('login', 'AuthorityController@validateAuthority')->name('validate');
+    });
+
+Route::prefix('retailer')
+    ->name('retailer.')
+    ->group(function () {
+        Route::get('login', 'RetailerController@login')->name('login');
+        Route::post('login', 'RetailerController@validateRetailer')->name('validate');
+    });
+
 Route::get('/', 'FrontEndController@home')->name('home');
 Route::get('/campaign', 'FrontendController@campaign')->name('campaign');
 Route::get('/campaign/{id}', 'FrontendController@detail')->name('campaign.detail');

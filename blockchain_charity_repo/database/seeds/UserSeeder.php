@@ -12,12 +12,12 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('admins')->insert([
-            'admin_address' => '3131231fsfs',
-            'name' => 'admin',
-            'email' => 'admin@gmail.com',
+        DB::table('authority_information')->insert([
+            'authority_address' => '3131231fsfs',
+            'email' => 'authority@gmail.com',
             'password' => bcrypt(11111111),
-            'private_key' => 'abc123456'
+            'authority_location_name' => 'Hải Dương',
+            'authority_location_post_code' => 34
         ]);
     }
 }

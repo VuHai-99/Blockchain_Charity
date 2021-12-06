@@ -46,6 +46,16 @@ return [
             'provider' => 'admins',
         ],
 
+        'authority' => [
+            'driver' => 'session',
+            'provider' => 'authority',
+        ],
+
+        'retailer' => [
+            'driver' => 'session',
+            'provider' => 'retailer',
+        ],
+
         'api' => [
             'driver' => 'token',
             'provider' => 'users',
@@ -83,6 +93,16 @@ return [
         'admins' => [
             'driver' => 'eloquent',
             'model' => App\Model\Admin::class,
+        ],
+
+        'authority' => [
+            'driver' => 'eloquent',
+            'model' => App\Model\AuthorityInformation::class,
+        ],
+
+        'retailer' => [
+            'driver' => 'eloquent',
+            'model' => App\Model\RetailerInformation::class,
         ]
     ],
 
@@ -111,6 +131,13 @@ return [
 
         'admins' => [
             'provider' => 'admins',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+
+        'authority' => [
+            'provider' => 'authority',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,
