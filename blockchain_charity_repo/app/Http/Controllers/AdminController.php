@@ -68,4 +68,6 @@ class AdminController extends Controller
         $users = User::all();
         return view('admin.list_host',compact('users'));
     }
+
+    
 }

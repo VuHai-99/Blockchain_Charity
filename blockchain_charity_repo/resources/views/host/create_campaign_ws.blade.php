@@ -6,19 +6,18 @@
 @section('page-name', 'Thêm dự án')
 
 @section('pageBreadcrumb')
-    <div class="group-button-top">
-        <a href="{{ route('home') }}"
-            class="btn btn-ct-primary  {{ Request::routeIs('hostws.home') ? 'active-primary' : '' }} action" role="button">
-            Home</a>
-        <a href="{{ route('wallet') }}"
-            class="btn btn-ct-primary {{ Request::routeIs('hostws.campaign.create') ? 'active-primary' : 'disabled' }} action"
-            role="button">Create Campaign</a>
-    </div>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item "><a style="color:black" href="{{ route('hostws.home') }}">Home</a></li>
+            <li class="breadcrumb-item "><a style="color:black" href="#">Create Campaign</a></li>
+        </ol>
+    </nav>
 @endsection
 
 @section('content')
     <div class="row wrap-form">
         <form method="POST" action="{{ route('hostws.validate.openCampaign.request') }}">
+            @csrf
             <div class="form-group">
                 <label for="campaign_name">Tên dự án</label>
                 <input type="text" name="campaign_name" id="campaign_name" {{ old('name') }} class="form-control"

@@ -7,29 +7,23 @@
 @section('page-name', 'Danh sách sự kiện')
 
 @section('pageBreadcrumb')
-    <div class="group-button-top">
-        <a href="{{ route('home') }}"
-            class="btn btn-ct-primary  {{ Request::routeIs('donator.home') ? 'active-primary' : '' }} action"
-            role="button">
-            Home</a>
-        <a href="{{ route('wallet') }}"
-            class="btn btn-ct-primary {{ Request::routeIs('donator.campaign') ? 'active-primary' : 'disabled' }} action"
-            role="button">List Campaign</a>
-    </div>
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item "><a style="color:black" href="{{ route('donator.home') }}">Home</a></li>
+            <li class="breadcrumb-item "><a style="color:black" href="#">List Campaign</a></li>
+        </ol>
+    </nav>
 @endsection
 
 @section('content')
-    <div class="row create-project">
-        <button class="btn">Tạo sự kiện</button>
-        <button class="btn">Giao dịch</button>
-    </div>
     <div class="list-events">
         <div class="event-happend">
             @foreach ($campaigns as $campaign)
                 <div class="event-item row">
                     <div class="image">
                         <a href="{{ route('donator.campaign.detail', $campaign->campaign_address) }}"><img
-                                src="https://tuyengiao.vn/Uploads/2021/9/20/29/tu-viec-thien-nguyen-cua-cac-nghe-si-den-chuyen-minh-bach-trong-sao-ke.jpg"
+                            src="{{ (!empty($campaign->main_pic)) ? url($campaign->main_pic->file_path) : url('images/CharityCampaignMainPicDefault.png') }}"
                                 alt=""></a>
                     </div>
                     <div class="information">
@@ -41,8 +35,14 @@
                             {{ $campaign->current_balance }} (wei)/ mục tiêu
                             {{ $campaign->target_contribution_amount }}(wei)
                             <div class="goal">
-                                <div class="coin-current"></div>
+                                <div class="progress">
+                                    <div class="progress-bar bg-warning" role="progressbar"
+                                        style="width: {{($campaign->current_balance / $campaign->target_contribution_amount >= 100) ? 100 : ($campaign->current_balance / $campaign->target_contribution_amount)}}%"
+                                        aria-valuenow="{{ $campaign->current_balance }}" aria-valuemin="0"
+                                        aria-valuemax="{{$campaign->target_contribution_amount}}"></div>
+                                </div>
                             </div>
+                            <br>
                         </div>
                         <div class="descripton">
                             {{ $campaign->description }}... <a class="read-more"

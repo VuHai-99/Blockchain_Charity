@@ -37689,29 +37689,29 @@ window.showPopupOkBackdrop = showPopupOkBackdrop;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\app.scss */"./resources/sass/app.scss");
-__webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\campaign_donator.scss */"./resources/sass/campaign_donator.scss");
-__webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\create_campaign.scss */"./resources/sass/create_campaign.scss");
-__webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\custom.scss */"./resources/sass/custom.scss");
-__webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\email_password.scss */"./resources/sass/email_password.scss");
-__webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\footer.scss */"./resources/sass/footer.scss");
-__webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\frontend_event.scss */"./resources/sass/frontend_event.scss");
-__webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\header.scss */"./resources/sass/header.scss");
-__webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\header_admin.scss */"./resources/sass/header_admin.scss");
-__webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\home.scss */"./resources/sass/home.scss");
-__webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\host_list_project.scss */"./resources/sass/host_list_project.scss");
-__webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\login.scss */"./resources/sass/login.scss");
-__webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\my_wallet.scss */"./resources/sass/my_wallet.scss");
-__webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\project_detail.scss */"./resources/sass/project_detail.scss");
-__webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\register.scss */"./resources/sass/register.scss");
-__webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\style_template.scss */"./resources/sass/style_template.scss");
-__webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\user.scss */"./resources/sass/user.scss");
-__webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\verify_otp.scss */"./resources/sass/verify_otp.scss");
-__webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\_counter.scss */"./resources/sass/_counter.scss");
-__webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\_mixins.scss */"./resources/sass/_mixins.scss");
-__webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\_responsive.scss */"./resources/sass/_responsive.scss");
-module.exports = __webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\_variables.scss */"./resources/sass/_variables.scss");
+__webpack_require__(/*! D:\Tum\Study\University\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! D:\Tum\Study\University\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Tum\Study\University\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\campaign_donator.scss */"./resources/sass/campaign_donator.scss");
+__webpack_require__(/*! D:\Tum\Study\University\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\create_campaign.scss */"./resources/sass/create_campaign.scss");
+__webpack_require__(/*! D:\Tum\Study\University\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\custom.scss */"./resources/sass/custom.scss");
+__webpack_require__(/*! D:\Tum\Study\University\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\email_password.scss */"./resources/sass/email_password.scss");
+__webpack_require__(/*! D:\Tum\Study\University\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\footer.scss */"./resources/sass/footer.scss");
+__webpack_require__(/*! D:\Tum\Study\University\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\frontend_event.scss */"./resources/sass/frontend_event.scss");
+__webpack_require__(/*! D:\Tum\Study\University\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\header.scss */"./resources/sass/header.scss");
+__webpack_require__(/*! D:\Tum\Study\University\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\header_admin.scss */"./resources/sass/header_admin.scss");
+__webpack_require__(/*! D:\Tum\Study\University\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\home.scss */"./resources/sass/home.scss");
+__webpack_require__(/*! D:\Tum\Study\University\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\host_list_project.scss */"./resources/sass/host_list_project.scss");
+__webpack_require__(/*! D:\Tum\Study\University\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\login.scss */"./resources/sass/login.scss");
+__webpack_require__(/*! D:\Tum\Study\University\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\my_wallet.scss */"./resources/sass/my_wallet.scss");
+__webpack_require__(/*! D:\Tum\Study\University\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\project_detail.scss */"./resources/sass/project_detail.scss");
+__webpack_require__(/*! D:\Tum\Study\University\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\register.scss */"./resources/sass/register.scss");
+__webpack_require__(/*! D:\Tum\Study\University\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\style_template.scss */"./resources/sass/style_template.scss");
+__webpack_require__(/*! D:\Tum\Study\University\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\user.scss */"./resources/sass/user.scss");
+__webpack_require__(/*! D:\Tum\Study\University\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\verify_otp.scss */"./resources/sass/verify_otp.scss");
+__webpack_require__(/*! D:\Tum\Study\University\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\_counter.scss */"./resources/sass/_counter.scss");
+__webpack_require__(/*! D:\Tum\Study\University\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\_mixins.scss */"./resources/sass/_mixins.scss");
+__webpack_require__(/*! D:\Tum\Study\University\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\_responsive.scss */"./resources/sass/_responsive.scss");
+module.exports = __webpack_require__(/*! D:\Tum\Study\University\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\sass\_variables.scss */"./resources/sass/_variables.scss");
 
 
 /***/ })

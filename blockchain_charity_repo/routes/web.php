@@ -85,6 +85,10 @@ Route::prefix('charity')
                 Route::get('campaign_detail/{blockchainAddress}', 'HostController@campaignDetail')->name('campaign.detail');
                 Route::get('validate-host', 'HostController@validateHost')->name('validate.host');
                 Route::get('list-request', 'HostController@listRequest')->name('list.request');
+                // Route::post('store/request-create-campaign/img', 'CampaignController@addCampaignRequestImg')->name('campaign.request.img.add');
+                Route::get('edit/campaign_detail/{blockchainAddress}', 'HostController@editCampaignDetail')->name('campaign_detail.edit');
+                Route::post('update/campaign_detail/{blockchainAddress}', 'HostController@updateCampaign')->name('campaign.update');
+                
             });
         Route::get('delete/request/{id}', 'HostController@deleteRequest')->name('host.delete.request')->middleware('auth');
         Route::prefix('hostws')
@@ -101,6 +105,10 @@ Route::prefix('charity')
                 Route::post('/validate/request', 'HostController@WS_hostValidateRequest')->name('validate.tobehost.request');
                 Route::post('/openCampaign/request', 'HostController@WS_hostOpenCampaignRequest')->name('validate.openCampaign.request');
                 Route::get('list-request', 'HostController@WS_listRequest')->name('list.request');
+                Route::get('edit/campaign_detail/{blockchainAddress}', 'HostController@WS_editCampaignDetail')->name('campaign_detail.edit');
+                Route::post('update/campaign_detail/{blockchainAddress}', 'HostController@WS_updateCampaign')->name('campaign.update');
+                Route::post('cancel/request/openCampaign/{requestId}', 'HostController@WS_cancelRequestOpenCampaign')->name('cancel.request.openCampaign');
+                
             });
         Route::get('campaign/list-donator', 'DonatorController@listDonator')->name('campaign.donator');
     });
