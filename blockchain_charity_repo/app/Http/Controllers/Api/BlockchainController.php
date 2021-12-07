@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Model\BlockchainRequest;
 use App\Model\Campaign;
 use App\Model\CampaignImg;
+use App\Model\DonationActivity;
 use App\Model\Transaction;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -37,7 +38,7 @@ class BlockChainController extends Controller
                 $new_blockchain_request->request_type = $request->request_type;
                 $new_blockchain_request->amount = $request->amount;
                 $new_blockchain_request->requested_user_address = $request->requested_user_address;
-    
+                $new_blockchain_request->authority_address = $request->authority_address;
                 $new_blockchain_request->campaign_address = $request->campaign_address;
                 $new_blockchain_request->campaign_name = $request->campaign_name;
                 $new_blockchain_request->date_start = $request->date_start;
@@ -173,7 +174,7 @@ class BlockChainController extends Controller
 
     public function decideBlockchainRequest(Request $request)
     {
-        // 0 is valid host, 1 is open campaign, 2 is withdraw money
+        // 0 is valid host, 1 is open campaign, 2 is withdraw money,3 is open donation activity
         $request_id = strval($request->request_id);
         $decide_type= $request->decide_type;
         $newCampaignAddress = "";
@@ -218,7 +219,16 @@ class BlockChainController extends Controller
                     } else {
                         return 'Wrong Campaign';
                     }
-                } 
+                } elseif ($blockchain_request->request_type == 3){
+                    $newDonationActivity = new DonationActivity();
+                    $newDonationActivity->donation_activity_address = $request->newDonationActivity;
+                    $newDonationActivity->authority_address = $blockchain_request->authority_address;
+                    $newDonationActivity->campaign_address = $request->campaignAddress;
+                    $newDonationActivity->host_address = $blockchain_request->requested_user_address;
+                    $newDonationActivity->donation_activity_description = $blockchain_request->description;
+                    $newDonationActivity->donation_activity_name = $blockchain_request->campaign_name;
+                    $newDonationActivity->save();
+                }
                 $blockchain_request->delete();
             } elseif (($decide_type == 'Decline') || ($decide_type == 'Cancel')){
                 if($blockchain_request->request_type == 0){
@@ -232,7 +242,9 @@ class BlockChainController extends Controller
                 } elseif ($blockchain_request->request_type == 2){
                     // withdraw money request
                    
-                } 
+                } elseif($blockchain_request->request_type == 3){
+                    // create donation activity
+                }
                 $blockchain_request->delete();
             }
         }

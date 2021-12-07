@@ -40,6 +40,7 @@ Route::prefix('admin')
         Route::get('profile', 'AdminController@profile')->name('profile.edit');
         Route::get('add/account', 'AdminController@createAccount')->name('create.account');
         Route::get('list/withdraw-money-request', 'AdminController@listWithdrawMoneyRequest')->name('withdraw-money-request.list');
+        Route::get('list/create-donationActivity-request', 'AdminController@listcreateDonationActivityRequest')->name('create-donationActivity-request.list');
     });
 //user
 Route::post('login/tow-factor', 'Auth\TowFactorController@sendOtp')->name('login.towfactor');
@@ -88,7 +89,7 @@ Route::prefix('charity')
                 // Route::post('store/request-create-campaign/img', 'CampaignController@addCampaignRequestImg')->name('campaign.request.img.add');
                 Route::get('edit/campaign_detail/{blockchainAddress}', 'HostController@editCampaignDetail')->name('campaign_detail.edit');
                 Route::post('update/campaign_detail/{blockchainAddress}', 'HostController@updateCampaign')->name('campaign.update');
-                
+                Route::get('create/request/donation_activity/{blockchainAddress}', 'HostController@createDonationActivityRequest')->name('donationActivity.create.request');
             });
         Route::get('delete/request/{id}', 'HostController@deleteRequest')->name('host.delete.request')->middleware('auth');
         Route::prefix('hostws')
@@ -108,6 +109,8 @@ Route::prefix('charity')
                 Route::get('edit/campaign_detail/{blockchainAddress}', 'HostController@WS_editCampaignDetail')->name('campaign_detail.edit');
                 Route::post('update/campaign_detail/{blockchainAddress}', 'HostController@WS_updateCampaign')->name('campaign.update');
                 Route::post('cancel/request/openCampaign/{requestId}', 'HostController@WS_cancelRequestOpenCampaign')->name('cancel.request.openCampaign');
+                Route::get('create/request/donation_activity/{blockchainAddress}', 'HostController@WS_createDonationActivityRequest')->name('donationActivity.create.request');
+                Route::post('/openDonationActivity/request/{campaignAddress}', 'HostController@WS_hostOpenDonationActivityRequest')->name('validate.openDonationActivity.request');
                 
             });
         Route::get('campaign/list-donator', 'DonatorController@listDonator')->name('campaign.donator');

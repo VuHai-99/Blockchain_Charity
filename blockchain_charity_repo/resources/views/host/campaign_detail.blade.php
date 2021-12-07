@@ -49,13 +49,13 @@
                                 </p>
                             </div>
                             @if(!empty($campaign_side_pic))
-                            @foreach($campaign_side_pic as $side_pic)
-                            <div class="col-md-6">
-                                <div class="view z-depth-1">
-                                    <img src="{{url($side_pic->file_path)}}" alt="" class="img-fluid">
+                                @foreach($campaign_side_pic as $side_pic)
+                                <div class="col-md-6">
+                                    <div class="view z-depth-1">
+                                        <img src="{{url($side_pic->file_path)}}" alt="" class="img-fluid">
+                                    </div>
                                 </div>
-                            </div>
-                            @endforeach
+                                @endforeach
                             @else
                             <div class="col-md-6">
                                 <div class="view z-depth-1">
@@ -92,12 +92,21 @@
                     <div class="card-body">
                         <div class="row my-4">
                             <div class="col-md-12">
-                                <h4 class="font-weight-bold mb-3 black-text"><a href="#">Từ Thiện Đợt 1</a></h4>
-                                <h4 class="font-weight-bold mb-3 black-text"><a href="#">Từ Thiện Đợt 2</a></h4>
-                                <h4 class="font-weight-bold mb-3 black-text"><a href="#">Từ Thiện Đợt 3</a></h4>
+                                @if(isset($donationActivities) == true)
+                                    @foreach($donationActivities as $donationActivity)
+                                    <h4 class="font-weight-bold mb-3 black-text"><a href="#">{{$donationActivity->donation_activity_name}}</a></h4>
+                                    @endforeach
+                                @else
+                                    <h4 class="font-weight-bold mb-3 black-text">Chưa có đợt từ thiện nào.</h4>
+                                @endif
                             </div>
                         </div>
                     </div>
+                    @if($campaign->host_address == Auth::user()->user_address)
+                    <div class="card-footer text-center">
+                        <a href="{{ route('host.donationActivity.create.request',$campaign->campaign_address) }}" class="btn btn-warning" role="button">Request to create Donation Activity.</a>
+                    </div>
+                    @endif
                 </div>
             </div>
             <div class="card">

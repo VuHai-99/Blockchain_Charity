@@ -26,7 +26,8 @@ contract Campaign{
     address public campaignFactory;
     mapping(address => DonationActivity) donationActivities;
     // address[] public contributers;
-    
+    event LogNewDonationActivity(address new_campaign_address);
+
     using HitchensUnorderedAddressSetLib for HitchensUnorderedAddressSetLib.Set;
     using HitchensUnorderedKeySetLib for HitchensUnorderedKeySetLib.Set;
     HitchensUnorderedAddressSetLib.Set donationActivitySet;
@@ -79,6 +80,7 @@ contract Campaign{
     function getMinimumContribution() public view returns(uint) { return minimumContribution; }
     
     function getBalance() public view returns(uint256) {return address(this).balance; }
+    function getCampaignFactory() public view returns(address) {return campaignFactory; }
     function () external payable{
         
     }
@@ -106,7 +108,7 @@ contract Campaign{
     }
 
     
-    function newDonationActivity(bytes32 requestToCreateDonationActivityCode) public onlyHost{
+    function newDonationActivity(bytes32 requestToCreateDonationActivityCode) public onlyAdmin{
          // Note that this will fail automatically if the key already exists.
         // require(validatedHostSet.exists(host), "Host is not validated.
         require(requestToCreateDonationActivitySet.exists(requestToCreateDonationActivityCode), "requestToCreateDonationActivityCode is not valid");
@@ -117,10 +119,11 @@ contract Campaign{
     
         donationActivities[address(w)] = w ;
         donationActivitySet.insert(address(w));
+
         
         requestToCreateDonationActivitySet.remove(requestToCreateDonationActivityCode);
         delete requestsToCreateDonationActivity[requestToCreateDonationActivityCode];
-        // emit LogNewDonationActivity(address(w),tx.origin,re.requestHost,re.minimumContribution);
+        emit LogNewDonationActivity(address(w));
     }
 
     function getDonationActivity(address donationActivity_key) public view returns(address _host, address _authority) {
@@ -157,7 +160,7 @@ contract Campaign{
         requestToCreateOrderFromDonationActivitySet.insert(requestToCreateOrderFromDonationActivityCode);
     }
 
-    function newOrderFromDonationActivity(bytes32 requestToCreateOrderFromDonationActivityCode) public onlyHost{
+    function newOrderFromDonationActivity(bytes32 requestToCreateOrderFromDonationActivityCode) public onlyAdmin{
 
         require(requestToCreateOrderFromDonationActivitySet.exists(requestToCreateOrderFromDonationActivityCode), "requestToCreateOrderFromDonationActivityCode is not valid");
         
@@ -207,7 +210,7 @@ contract Campaign{
         requestToCreateCashOutFromDonationActivitySet.insert(requestToCreateCashOutFromDonationActivityCode);
     }
 
-    function newCashOutFromDonationActivity(bytes32 requestToCreateCashOutFromDonationActivityCode, address payable _donationActivity) public onlyHost{
+    function newCashOutFromDonationActivity(bytes32 requestToCreateCashOutFromDonationActivityCode, address payable _donationActivity) public onlyAdmin{
 
         require(requestToCreateCashOutFromDonationActivitySet.exists(requestToCreateCashOutFromDonationActivityCode), "requestToCreateCashOutFromDonationActivityCode is not valid");
         
