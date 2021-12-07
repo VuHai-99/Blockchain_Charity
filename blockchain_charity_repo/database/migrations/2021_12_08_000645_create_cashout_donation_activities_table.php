@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOrderDonationActivitiesTable extends Migration
+class CreateCashoutDonationActivitiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,11 @@ class CreateOrderDonationActivitiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('order_donation_activities', function (Blueprint $table) {
+        Schema::create('cashout_donation_activities', function (Blueprint $table) {
             $table->id();
-            $table->string('receipt_url');
-            $table->string('retailer_address');
-            $table->tinyInteger('order_state');
             $table->tinyInteger('authority_confirmation');
-            $table->string('total_amount');
-            $table->string('order_code');
+            $table->string('cashout_amount');
+            $table->string('cashout_code');
             $table->timestamps();
         });
     }
@@ -32,6 +29,6 @@ class CreateOrderDonationActivitiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('order_donation_activities');
+        Schema::dropIfExists('cashout_donation_activities');
     }
 }

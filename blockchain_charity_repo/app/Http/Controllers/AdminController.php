@@ -72,4 +72,9 @@ class AdminController extends Controller
     public function listcreateDonationActivityRequest(){
         return view('admin.list_create_donationActivity_request');
     }
+
+    public function listcreateDonationActivityCashoutRequest(){
+        return view('admin.list_create_donationActivityCashout_request');
+    }
+    
 }

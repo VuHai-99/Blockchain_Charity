@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Model\BlockchainRequest;
 use App\Model\Campaign;
 use App\Model\CampaignImg;
+use App\Model\CashoutDonationActivity;
 use App\Model\DonationActivity;
 use App\Model\Transaction;
 use Illuminate\Support\Facades\Auth;
@@ -231,6 +232,12 @@ class BlockChainController extends Controller
                     $newDonationActivity->date_start = $blockchain_request->date_start;
                     $newDonationActivity->date_end = $blockchain_request->date_end;
                     $newDonationActivity->save();
+                } elseif ($blockchain_request->request_type == 4){
+                    $newCashoutDonationActivity = new CashoutDonationActivity();
+                    $newCashoutDonationActivity->cashout_amount = $blockchain_request->amount;
+                    $newCashoutDonationActivity->cashout_code = $blockchain_request->request_id;
+                    $newCashoutDonationActivity->authority_confirmation = 0;
+                    $newCashoutDonationActivity->save();
                 }
                 $blockchain_request->delete();
             } elseif (($decide_type == 'Decline') || ($decide_type == 'Cancel')){
@@ -247,6 +254,8 @@ class BlockChainController extends Controller
                    
                 } elseif($blockchain_request->request_type == 3){
                     // create donation activity
+                } elseif($blockchain_request->request_type == 3){
+                    // create donation activity cashout
                 }
                 $blockchain_request->delete();
             }

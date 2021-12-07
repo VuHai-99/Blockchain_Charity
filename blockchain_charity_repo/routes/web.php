@@ -41,6 +41,8 @@ Route::prefix('admin')
         Route::get('add/account', 'AdminController@createAccount')->name('create.account');
         Route::get('list/withdraw-money-request', 'AdminController@listWithdrawMoneyRequest')->name('withdraw-money-request.list');
         Route::get('list/create-donationActivity-request', 'AdminController@listcreateDonationActivityRequest')->name('create-donationActivity-request.list');
+        Route::get('list/create-donationActivityCashout-request', 'AdminController@listcreateDonationActivityCashoutRequest')->name('create-donationActivityCashout-request.list');
+        
     });
 //user
 Route::post('login/tow-factor', 'Auth\TowFactorController@sendOtp')->name('login.towfactor');
