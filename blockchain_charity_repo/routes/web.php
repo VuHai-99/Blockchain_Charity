@@ -90,6 +90,8 @@ Route::prefix('charity')
                 Route::get('edit/campaign_detail/{blockchainAddress}', 'HostController@editCampaignDetail')->name('campaign_detail.edit');
                 Route::post('update/campaign_detail/{blockchainAddress}', 'HostController@updateCampaign')->name('campaign.update');
                 Route::get('create/request/donation_activity/{blockchainAddress}', 'HostController@createDonationActivityRequest')->name('donationActivity.create.request');
+                Route::get('create/request/donation_activity_cashout/{donationActivityAddress}', 'HostController@createDonationActivityCashoutRequest')->name('donationActivity.cashout.create.request');
+                Route::get('donation_activity/{blockchainAddress}/{donationActivityAddress}', 'HostController@donationActivityDetail')->name('donationActivity.detail');
             });
         Route::get('delete/request/{id}', 'HostController@deleteRequest')->name('host.delete.request')->middleware('auth');
         Route::prefix('hostws')
@@ -111,7 +113,9 @@ Route::prefix('charity')
                 Route::post('cancel/request/openCampaign/{requestId}', 'HostController@WS_cancelRequestOpenCampaign')->name('cancel.request.openCampaign');
                 Route::get('create/request/donation_activity/{blockchainAddress}', 'HostController@WS_createDonationActivityRequest')->name('donationActivity.create.request');
                 Route::post('/openDonationActivity/request/{campaignAddress}', 'HostController@WS_hostOpenDonationActivityRequest')->name('validate.openDonationActivity.request');
-                
+                Route::get('donation_activity/{blockchainAddress}/{donationActivityAddress}', 'HostController@WS_donationActivityDetail')->name('donationActivity.detail');
+                Route::get('create/request/donation_activity_cashout/{donationActivityAddress}', 'HostController@WS_createDonationActivityCashoutRequest')->name('donationActivity.cashout.create.request');
+                Route::post('/openDonationActivityCashout/request/{donationActivityAddress}', 'HostController@WS_hostCreateDonationActivityCashoutRequest')->name('validate.createDonationActivityCashout.request');
             });
         Route::get('campaign/list-donator', 'DonatorController@listDonator')->name('campaign.donator');
     });

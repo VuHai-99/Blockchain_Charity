@@ -78,25 +78,15 @@ App = {
 
   },
 
-  requestToCreateDonationActivity: async (data) => {
+  requestToCreateDonationActivityCashout: async () => {
     let current_account;
     App.getAccounts(function (result) {
         current_account = result[0];
     });
-    let donation_activity_name = $('[name="donation_activity_name"]').val();
-    let authority_address = $('[name="authority_address"]').find(":selected").val();
-    let donation_activity_description = $('[name="donation_activity_description"]').val();
-    let host_address = $('[name="host_address"]').val();
+    let donation_activity_address = $('[name="donation_activity_address"]').val();
+    let cashout_value = $('[name="cashout_value"]').val();
     let campaign_address = $('[name="campaign_address"]').val();
-    let date_start = $('[name="date_start"]').val();
-    let date_end = $('[name="date_end"]').val();
-    
 
-    // let main_pic = $('[name="campaign_main_pic"]').val();
-    // let img_path = main_pic.substring(12);
-
-    // let description = $('textarea#description').val();
-    // console.log(donation_activity_name, authority_address, donation_activity_description,host_address);
     var currentdate = new Date(); 
     var datetime = String(currentdate.getDate() )
                     + String(currentdate.getMonth()+1)
@@ -109,29 +99,25 @@ App = {
 
 
     let b = App.contracts.Campaign.at(campaign_address);
-    await b.requestToCreateDonationActivity(newContractRequestId,host_address,authority_address,App.campaignfactory.address)
+    await b.requestToCreateCashOutFromDonationActivity(newContractRequestId,cashout_value,donation_activity_address)
       .then((result) => {
 
-        toastr.success("Successfully create request to open campaign");
-        $('[name="donation_activity_name"]').val('');
-        $('[name="authority_address"]').val('');
-        $('[name="donation_activity_description"]').val('');
+        toastr.success("Successfully create request to cash out in donation activity");
+        $('[name="donation_activity_address"]').val('');
+        $('[name="cashout_value"]').val('');
         
         axios.post(('/api/store-blockchain-request'), {
           "request_id": newContractRequestId,
-          "request_type": 3,
+          "request_type": 4,
           "requested_user_address":current_account,
-          "authority_address":authority_address,
-          "campaign_name":donation_activity_name,
-          "description": donation_activity_description,
-          "date_start":date_start,
-          "date_end":date_end,
+          "donation_activity_address":donation_activity_address,
+          "amount":cashout_value
           // "main_pic": img_path
         }).then(function(response){
           if(response.status == 200){
-            console.log('Successfully store new donation activity request in database');
+            console.log('Successfully create request to cash out request in database');
           } else {
-            console.log('UnSuccessfully store new donation activity request in database');
+            console.log('UnSuccessfully create request to cash out request in database');
           }
         })
       }).catch(error => {   

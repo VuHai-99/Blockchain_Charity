@@ -157,7 +157,20 @@ class HostController extends Controller
         // dd($authorities);
         return view('host.create_donation_activity_request', compact('campaign','authorities'));
     }
+    public function donationActivityDetail($blockchainAddress,$donationActivityAddress){
+        $campaign = Campaign::findOrFail($blockchainAddress);
+        $donationActivity = DonationActivity::findOrFail($donationActivityAddress);
+        // $authorities = AuthorityInformation::all();
+        // dd($authorities);
+        return view('host.donation_activity_detail', compact('campaign','donationActivity'));
+    }
 
+    public function createDonationActivityCashoutRequest($donationActivityAddress){
+        $donationActivity = DonationActivity::findOrFail($donationActivityAddress);
+        return view('host.create_donation_activity_cashout_request', compact('donationActivity'));
+    }
+
+    
     //WS
 
     public function WS_listRequest()
@@ -459,6 +472,62 @@ class HostController extends Controller
             $requestToCreateDonationActivity->campaign_name = $request->donation_activity_name;
             $requestToCreateDonationActivity->authority_address = $request->authority_address;
             $requestToCreateDonationActivity->description = $request->donation_activity_description;
+            $requestToCreateDonationActivity->save();
+
+            return redirect()->back()->with($notification);
+        } else {
+            $notification = array(
+                'message' => 'Request to create Donation Activity Unsuccessfully',
+                'alert-type' => 'error'
+            );
+            return redirect()->back()->with($notification);
+        }
+    }
+
+    public function WS_donationActivityDetail($blockchainAddress,$donationActivityAddress){
+        $campaign = Campaign::findOrFail($blockchainAddress);
+        $donationActivity = DonationActivity::findOrFail($donationActivityAddress);
+        // $authorities = AuthorityInformation::all();
+        // dd($authorities);
+        return view('host.donation_activity_detail_ws', compact('campaign','donationActivity'));
+    }
+
+    public function WS_createDonationActivityCashoutRequest($donationActivityAddress){
+        $donationActivity = DonationActivity::findOrFail($donationActivityAddress);
+        return view('host.create_donation_activity_cashout_request_ws', compact('donationActivity'));
+    }
+
+    public function WS_hostCreateDonationActivityCashoutRequest($donationActivityAddress,Request $request){
+        // $a = [
+        //     // 'donator_address' => Auth::user()->user_address,
+        //     'validated_host_address' => Auth::user()->user_address,
+        //     'campaign_address' => $request->campaign_address,
+        //     'donation_activity_address' => $donationActivityAddress,
+        //     'cashout_value' => $request->cashout_value
+        // ];
+        // dd($a);
+        $withdrawAPI = 'http://localhost:3000/host/create/donationActivityCashout/request';
+        
+        $response = Http::post($withdrawAPI, [
+            // 'donator_address' => Auth::user()->user_address,
+            'validated_host_address' => Auth::user()->user_address,
+            'campaign_address' => $request->campaign_address,
+            'donation_activity_address' => $donationActivityAddress,
+            'cashout_value' => $request->cashout_value
+        ]);
+        if ($response->status() == 200) {
+            $notification = array(
+                'message' => 'Request to create Donation Activity CashOut Successfully',
+                'alert-type' => 'success'
+            );
+
+            $transaction_info = $response->json();
+            $requestToCreateDonationActivity = new BlockchainRequest();
+            $requestToCreateDonationActivity->request_id = $transaction_info['request_id'];
+            $requestToCreateDonationActivity->requested_user_address = Auth::user()->user_address;
+            $requestToCreateDonationActivity->request_type = 4;
+            $requestToCreateDonationActivity->donation_activity_address = $donationActivityAddress;
+            $requestToCreateDonationActivity->amount = $request->cashout_value;
             $requestToCreateDonationActivity->save();
 
             return redirect()->back()->with($notification);

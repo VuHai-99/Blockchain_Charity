@@ -40,6 +40,7 @@ class BlockChainController extends Controller
                 $new_blockchain_request->requested_user_address = $request->requested_user_address;
                 $new_blockchain_request->authority_address = $request->authority_address;
                 $new_blockchain_request->campaign_address = $request->campaign_address;
+                $new_blockchain_request->donation_activity_address = $request->donation_activity_address;
                 $new_blockchain_request->campaign_name = $request->campaign_name;
                 $new_blockchain_request->date_start = $request->date_start;
                 $new_blockchain_request->date_end = $request->date_end;
@@ -227,6 +228,8 @@ class BlockChainController extends Controller
                     $newDonationActivity->host_address = $blockchain_request->requested_user_address;
                     $newDonationActivity->donation_activity_description = $blockchain_request->description;
                     $newDonationActivity->donation_activity_name = $blockchain_request->campaign_name;
+                    $newDonationActivity->date_start = $blockchain_request->date_start;
+                    $newDonationActivity->date_end = $blockchain_request->date_end;
                     $newDonationActivity->save();
                 }
                 $blockchain_request->delete();

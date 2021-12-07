@@ -94,7 +94,7 @@
                             <div class="col-md-12">
                                 @if(isset($donationActivities) == true)
                                     @foreach($donationActivities as $donationActivity)
-                                    <h4 class="font-weight-bold mb-3 black-text"><a href="#">{{$donationActivity->donation_activity_name}}</a></h4>
+                                    <h4 class="font-weight-bold mb-3 black-text"><a href="{{ route('hostws.donationActivity.detail',['blockchainAddress' => $campaign->campaign_address,'donationActivityAddress'=>$donationActivity->donation_activity_address]) }}" >{{$donationActivity->donation_activity_name}}</a></h4>
                                     @endforeach
                                 @else
                                     <h4 class="font-weight-bold mb-3 black-text">Chưa có đợt từ thiện nào.</h4>

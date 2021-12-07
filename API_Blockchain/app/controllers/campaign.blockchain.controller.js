@@ -290,3 +290,95 @@ exports.requestToCreateDonationActivity = async (req, res) => {
 
   
 };
+
+
+exports.requestToCreateDonationActivityCashout = async (req, res) => {
+
+
+  if (!req.body) {
+    res.status(400).send({
+      message: "Content can not be empty!"
+    });
+    return;
+  } else {
+    // Create a Campaign
+    
+    const validated_host_address = req.body.validated_host_address;
+    const cashout_value = req.body.cashout_value;
+    const donation_activity_address = req.body.donation_activity_address;
+    const currentdate = new Date(); 
+    let datetime = String(currentdate.getDate() )
+                    + String(currentdate.getMonth()+1)
+                    + String(currentdate.getFullYear())
+                    + String(currentdate.getHours() )
+                    + String(currentdate.getMinutes())
+                    + String(currentdate.getSeconds());
+    datetime = Number(datetime)
+    let newContractId = "0x"+(new BN(String(datetime))).toTwos(256).toString('hex',64);
+    const contract = new Contract(abi, web3.utils.toChecksumAddress(req.body.campaign_address));
+
+    const encodedABI = contract.methods.requestToCreateCashOutFromDonationActivity(newContractId,cashout_value,donation_activity_address).encodeABI();
+
+
+
+    User.queryHostFindByAddress(validated_host_address, (err, current_user) => {
+      if (err) {
+        res.status(500).send({
+          message:
+            err.message || "Host address is not valid."
+        });
+        return;
+      } else {
+        currentUserJson = JSON.parse(current_user)
+        privKey = currentUserJson.private_key
+        console.log(
+            `Attempting to create Donation Activity Request from ${validated_host_address}}`
+        );
+
+        // console.log(req.body.amoutOfEthereum)
+
+        const createTransaction = web3.eth.accounts.signTransaction(
+          {
+              from: validated_host_address,
+              to: req.body.campaign_address,
+              gas: 2000000,
+              data: encodedABI,
+          },
+          privKey
+        );
+        createTransaction.then((signedTx) => {  
+
+            const sentTx = web3.eth.sendSignedTransaction(signedTx.raw || signedTx.rawTransaction);  
+            
+            sentTx.on("receipt", receipt => {
+              console.log(receipt)
+              res.send({
+                "request_id":newContractId
+              });
+            });
+            
+            sentTx.on("error", err => {
+              console.log(err['data']['stack'])
+              res.status(500).send({
+                message:
+                  err['data']['stack'] || "Some error occurred in transaction process."
+              });
+            });
+            
+        }).catch((err) => {
+          console.log(err)
+          res.status(500).send({
+            message:
+              err.message || "Invalid Host Address."
+          });
+          // console.log(err)
+          
+        });
+      }
+    });
+    
+  
+  }
+
+  
+};

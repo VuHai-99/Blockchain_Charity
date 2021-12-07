@@ -42,6 +42,22 @@
                         <p class="text-error">{{ $message }}</p>
                     @enderror
                 </div>
+                <div class="form-group col-6" >
+                    <label for="date_start">Ngày bắt đầu</label>
+                    <input type="date" name="date_start" id="date_start" value="{{ old('date_start') }}"
+                        class="form-control" placeholder="Ngày bắt đầu dự án (d-m-Y) ...">
+                    @error('date_start')
+                        <p class="text-error">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div class="form-group col-6" >
+                    <label for="date_end">Ngày kết thúc</label>
+                    <input type="date" name="date_end" id="date_end" {{ old('date_end') }} class="form-control"
+                        placeholder="Ngày kết thúc dự án (d-m-Y) ...">
+                    @error('date_end')
+                        <p class="text-error">{{ $message }}</p>
+                    @enderror
+                </div>
                 <div class="form-group col-12" >
                     <label for="donation_activity_description">Mô tả đợt từ thiện</label>
                     <textarea required name="donation_activity_description" id="donation_activity_description" class="form-control"></textarea>
