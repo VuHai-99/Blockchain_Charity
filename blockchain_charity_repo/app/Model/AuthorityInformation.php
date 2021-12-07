@@ -13,4 +13,6 @@ class AuthorityInformation extends Authenticatable
     protected $fillable = [
         'authority_address', 'email', 'password', 'authority_location_name', 'authority_location_post_code'
     ];
+
+    
 }

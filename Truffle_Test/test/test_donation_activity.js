@@ -68,7 +68,7 @@ contract('CampaignFactory', accounts => {
     campaignAddress = campaignAddress[0]
     const campaign = await Campaign.at(campaignAddress);
     await campaign.requestToCreateDonationActivity("0x0000000000000000000000000000000000000000000000000000000000000001",host,authority,campaignFactory.address,{from: host});
-    await campaign.newDonationActivity("0x0000000000000000000000000000000000000000000000000000000000000001",{from: host});
+    await campaign.newDonationActivity("0x0000000000000000000000000000000000000000000000000000000000000001",{from: admin});
     let donationActivityAddress = await campaign.getDonationActivityList({from: host});
     donationActivityAddress = donationActivityAddress[0]
     console.log('DONATION ACTIVITY CREATED : '+donationActivityAddress);
@@ -102,7 +102,7 @@ contract('CampaignFactory', accounts => {
     donationActivityAddress = donationActivityAddress[0]
     const donation_activity = await DonationActivity.at(donationActivityAddress);
     
-    await campaign.newOrderFromDonationActivity("0x0000000000000000000000000000000000000000000000000000000000000001",{from: host})
+    await campaign.newOrderFromDonationActivity("0x0000000000000000000000000000000000000000000000000000000000000001",{from: admin})
     const orderCode = await donation_activity.getOrderList({from: host});
 
     const donationActivityBalance = await web3.eth.getBalance(donationActivityAddress);
@@ -174,7 +174,7 @@ contract('CampaignFactory', accounts => {
     donationActivityAddress = donationActivityAddress[0]
     const donation_activity = await DonationActivity.at(donationActivityAddress);
     
-    await campaign.newCashOutFromDonationActivity("0x0000000000000000000000000000000000000000000000000000000000000001",donationActivityAddress,{from: host})
+    await campaign.newCashOutFromDonationActivity("0x0000000000000000000000000000000000000000000000000000000000000001",donationActivityAddress,{from: admin})
     const cashOutCode = await donation_activity.getCashOutList({from: host});
 
     const donationActivityBalance = await web3.eth.getBalance(donationActivityAddress);

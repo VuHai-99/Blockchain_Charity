@@ -31,6 +31,14 @@ class Nav
             'name' => 'Approve Withdrawal',
         ],
         [
+            'url' => 'admin.create-donationActivity-request.list',
+            'name' => 'Approve DonationActivity',
+        ],
+        [
+            'url' => 'admin.create-donationActivityCashout-request.list',
+            'name' => 'Approve DonationActivity Cashout',
+        ],
+        [
             'url' => 'admin.logout',
             'name' => 'Logout',
         ]

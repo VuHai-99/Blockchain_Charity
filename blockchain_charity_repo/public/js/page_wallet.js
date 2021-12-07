@@ -151,7 +151,7 @@ $(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Tum\Study\University\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\js\pages\wallet\index.js */"./resources/js/pages/wallet/index.js");
+module.exports = __webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\js\pages\wallet\index.js */"./resources/js/pages/wallet/index.js");
 
 
 /***/ })

@@ -69,5 +69,12 @@ class AdminController extends Controller
         return view('admin.list_host',compact('users'));
     }
 
+    public function listcreateDonationActivityRequest(){
+        return view('admin.list_create_donationActivity_request');
+    }
+
+    public function listcreateDonationActivityCashoutRequest(){
+        return view('admin.list_create_donationActivityCashout_request');
+    }
     
 }
