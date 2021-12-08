@@ -46,14 +46,14 @@ return [
             'provider' => 'admins',
         ],
 
-        'authority' => [
-            'driver' => 'session',
-            'provider' => 'authority',
+        'retailer' => [
+            'driver' => 'token',
+            'provider' => 'retailers',
         ],
 
-        'retailer' => [
+        'authority' => [
             'driver' => 'session',
-            'provider' => 'retailer',
+            'provider' => 'authorities',
         ],
 
         'api' => [
@@ -86,24 +86,23 @@ return [
             'model' => App\User::class,
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+
         'admins' => [
             'driver' => 'eloquent',
             'model' => App\Model\Admin::class,
         ],
 
-        'authority' => [
+        'retailers' => [
             'driver' => 'eloquent',
-            'model' => App\Model\AuthorityInformation::class,
+            'model' => App\Model\Retailer::class,
         ],
 
-        'retailer' => [
+        'authorities' => [
             'driver' => 'eloquent',
-            'model' => App\Model\RetailerInformation::class,
-        ]
+            'model' => App\Model\Authority::class,
+        ],
+
+
     ],
 
     /*
@@ -136,12 +135,21 @@ return [
             'throttle' => 60,
         ],
 
-        'authority' => [
-            'provider' => 'authority',
+        'retailers' => [
+            'provider' => 'retailers',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,
         ],
+
+        'authorities' => [
+            'provider' => 'authorities',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+
+
     ],
 
     /*

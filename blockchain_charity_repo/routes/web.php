@@ -42,7 +42,6 @@ Route::prefix('admin')
         Route::get('list/withdraw-money-request', 'AdminController@listWithdrawMoneyRequest')->name('withdraw-money-request.list');
         Route::get('list/create-donationActivity-request', 'AdminController@listcreateDonationActivityRequest')->name('create-donationActivity-request.list');
         Route::get('list/create-donationActivityCashout-request', 'AdminController@listcreateDonationActivityCashoutRequest')->name('create-donationActivityCashout-request.list');
-        
     });
 //user
 Route::post('login/tow-factor', 'Auth\TowFactorController@sendOtp')->name('login.towfactor');
@@ -129,13 +128,24 @@ Route::prefix('authority')
     ->group(function () {
         Route::get('login', 'AuthorityController@login')->name('login');
         Route::post('login', 'AuthorityController@validateAuthority')->name('validate');
+        Route::get('', 'AuthorityController@index')->name('index');
     });
+
 
 Route::prefix('retailer')
     ->name('retailer.')
     ->group(function () {
         Route::get('login', 'RetailerController@login')->name('login');
         Route::post('login', 'RetailerController@validateRetailer')->name('validate');
+        Route::get('logout', 'RetailerController@logout')->name('logout');
+        Route::get('index', 'RetailerController@index')->name('dashboard');
+        Route::prefix('product')->group(function () {
+            Route::get('', 'RetailerController@listProduct')->name('product.list');
+            Route::get('create', 'RetailerController@createProduct')->name('product.create');
+            Route::post('create', 'RetailerController@storeProduct')->name('product.store');
+        });
+        Route::get('order', 'RetailerController@listOrder')->name('order');
+        Route::get('profile', 'RetailController@profile')->name('profile');
     });
 
 Route::get('/', 'FrontEndController@home')->name('home');
