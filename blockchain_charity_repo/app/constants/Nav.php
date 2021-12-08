@@ -6,40 +6,63 @@ class Nav
 {
     const NAV_SUPPER_ADMIN = [
         [
-            
+            'parent_id' => 0,
+            'id' => 1,
             'url' => 'admin.dashboard.index',
             'name' => 'Dashboard',
         ],
 
         [   
+            'parent_id' => 0,
+            'id' => 2,
             'url' => 'admin.host.list',
             'name' => 'List Host',
         ],
         [
+            'parent_id' => 0,
+            'id' => 3,
             'url' => 'admin.campaign.list',
             'name' => 'List Campaign',
         ],
         [
+            'parent_id' => 0,
+            'id' => 4,
+            'url' => '',
+            'name' => 'Requests',
+        ],
+        [
+            'parent_id' => 4,
+            'id' => 5,
             'url' => 'admin.open-campaign-request.list',
             'name' => 'Approve Campaign',
         ],
         [
+            'parent_id' => 4,
+            'id' => 6,
             'url' => 'admin.validate-host-request.list',
             'name' => 'Approve Host',
         ],
         [
+            'parent_id' => 4,
+            'id' => 7,
             'url' => 'admin.withdraw-money-request.list',
             'name' => 'Approve Withdrawal',
         ],
         [
+            'parent_id' => 4,
+            'id' => 8,
             'url' => 'admin.create-donationActivity-request.list',
             'name' => 'Approve DonationActivity',
         ],
         [
+            'parent_id' => 4,
+            'id' => 9,
             'url' => 'admin.create-donationActivityCashout-request.list',
             'name' => 'Approve DonationActivity Cashout',
         ],
         [
+            'parent_id' => 0,
+            'id' => 10,
             'url' => 'admin.logout',
             'name' => 'Logout',
         ]
@@ -110,6 +133,10 @@ class Nav
             'name' => 'Create Campaign',
         ],
         [
+            'url' => 'host.list.request',
+            'name' => 'List Requests',
+        ],
+        [
             'url' => 'user.profile',
             'name' => 'Profile',
         ],
@@ -142,6 +169,10 @@ class Nav
         [
             'url' => 'hostws.campaign.create',
             'name' => 'Create Campaign',
+        ],
+        [
+            'url' => 'hostws.list.request',
+            'name' => 'List Requests',
         ],
         [
             'url' => 'user.profile',
