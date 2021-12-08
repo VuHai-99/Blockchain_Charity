@@ -129,6 +129,7 @@ Route::prefix('authority')
     ->group(function () {
         Route::get('login', 'AuthorityController@login')->name('login');
         Route::post('login', 'AuthorityController@validateAuthority')->name('validate');
+        Route::get('/', 'AuthorityController@index')->name('dashboard.index');
     });
 
 Route::prefix('retailer')

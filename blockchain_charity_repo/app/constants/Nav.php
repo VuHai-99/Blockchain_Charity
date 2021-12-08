@@ -68,6 +68,22 @@ class Nav
         ]
     ];
 
+    const NAV_SUPPER_AUTHORITY = [
+        [
+            'parent_id' => 0,
+            'id' => 1,
+            'url' => '',
+            'name' => 'Dashboard',
+        ],
+
+        [   
+            'parent_id' => 0,
+            'id' => 2,
+            'url' => '',
+            'name' => 'Requests',
+        ]
+    ];
+
     const NAV_ADMIN_DONATOR = [
         [
             'url' => 'donator.home',

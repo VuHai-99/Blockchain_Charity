@@ -149,7 +149,7 @@
             <div class="goal">
                 <div class="progress">
                     <div class="progress-bar bg-warning" role="progressbar"
-                        style="width: {{($campaign->current_balance / $campaign->target_contribution_amount >= 100) ? 100 : ($campaign->current_balance / $campaign->target_contribution_amount)}}%"
+                        style="width: {{(($campaign->current_balance / $campaign->target_contribution_amount) >= 1) ? 100 : (($campaign->current_balance)*100 / $campaign->target_contribution_amount)}}%"
                         aria-valuenow="{{ $campaign->current_balance }}" aria-valuemin="0"
                         aria-valuemax="{{$campaign->target_contribution_amount}}"></div>
                 </div>

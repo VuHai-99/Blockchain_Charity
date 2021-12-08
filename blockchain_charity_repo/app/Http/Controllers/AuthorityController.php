@@ -29,7 +29,11 @@ class AuthorityController extends Controller
         if (!Auth::guard('authority')->attempt($validate)) {
             return back()->with('error-login', 'Email hoặc mật khẩu không đúng. Vui lòng kiểm tra lại.')->withInput();
         } else {
-            return redirect()->route('admin.dashboard.index')->with($notification);
+            return redirect()->route('authority.dashboard.index')->with($notification);
         }
+    }
+
+    public function index(){
+        return view('authority.index');
     }
 }
