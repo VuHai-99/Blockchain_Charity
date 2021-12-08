@@ -7,7 +7,7 @@
 
 @section('pageBreadcrumb')
     <div class="group-button-top">
-        <a href="{{ route('host.list.request') }}" class="btn btn-ct-primary active-primary action float-right" role="button">List Request</a>
+        <a href="{{ route('hostws.list.request') }}" class="btn btn-ct-primary active-primary action float-right" role="button">List Request</a>
     </div>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">

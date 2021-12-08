@@ -182,10 +182,11 @@ class HostController extends Controller
 
     public function WS_listRequest()
     {
-        // $userAddress = Auth::user()->user_address;
-        // $listRequest = $this->blockChainRequest->getListRequestByUser($userAddress);
-        $listRequest = BlockchainRequest::where('requested_user_address',Auth::user()->user_address)->get();
-        return view('host.list_request_ws', compact('listRequest'));
+        $listRequestOpenCampaign = BlockchainRequest::where('requested_user_address',Auth::user()->user_address)->where('request_type',1)->get();
+        $requestValidateHost = BlockchainRequest::where('requested_user_address',Auth::user()->user_address)->where('request_type',0)->get();
+        $listRequestOpenDonationActivity = BlockchainRequest::where('requested_user_address',Auth::user()->user_address)->where('request_type',3)->get();
+        $listRequestCreateDonationActivityCashout = BlockchainRequest::where('requested_user_address',Auth::user()->user_address)->where('request_type',4)->get();
+        return view('host.list_request_ws', compact('listRequestOpenCampaign','requestValidateHost','listRequestOpenDonationActivity','listRequestCreateDonationActivityCashout'));
     }
     public function WS_listCampaign()
     {
@@ -479,6 +480,8 @@ class HostController extends Controller
             $requestToCreateDonationActivity->campaign_name = $request->donation_activity_name;
             $requestToCreateDonationActivity->campaign_address = $campaignAddress;
             $requestToCreateDonationActivity->authority_address = $request->authority_address;
+            $requestToCreateDonationActivity->date_start = $request->date_start;
+            $requestToCreateDonationActivity->date_end = $request->date_end;
             $requestToCreateDonationActivity->description = $request->donation_activity_description;
             $requestToCreateDonationActivity->save();
 
@@ -550,5 +553,62 @@ class HostController extends Controller
             return redirect()->back()->with($notification);
         }
     }
+
+    public function WS_cancelRequestOpenDonationActivity($request_id,Request $request){
+        $withdrawAPI = 'http://127.0.0.1:3000/host/cancel/openDonationActivity/request';
+
+        $response = Http::post($withdrawAPI, [
+            // 'donator_address' => Auth::user()->user_address,
+            'validated_host_address' => Auth::user()->user_address,
+            'request_id' => $request_id,
+            'campaign_address' => $request->campaign_address
+        ]);
+        if ($response->status() == 200) {
+            $notification = array(
+                'message' => 'Request to cancel donation activity Successfully',
+                'alert-type' => 'success'
+            );
+
+            $requestcancel = BlockchainRequest::where('request_id',$request_id);
+            $requestcancel->delete();
+
+            return redirect()->back()->with($notification);
+        } else {
+            $notification = array(
+                'message' => 'Request to donation activity Unsuccessfully',
+                'alert-type' => 'error'
+            );
+            return redirect()->back()->with($notification);
+        }
+    }
+
+    public function WS_cancelRequestCreateDonationActivityCashout($request_id,Request $request){
+        $withdrawAPI = 'http://127.0.0.1:3000/host/cancel/createDonationActivityCashout/request';
+
+        $response = Http::post($withdrawAPI, [
+            // 'donator_address' => Auth::user()->user_address,
+            'validated_host_address' => Auth::user()->user_address,
+            'request_id' => $request_id,
+            'campaign_address' => $request->campaign_address
+        ]);
+        if ($response->status() == 200) {
+            $notification = array(
+                'message' => 'Request to cancel donation activity Cashout Successfully',
+                'alert-type' => 'success'
+            );
+
+            $requestcancel = BlockchainRequest::where('request_id',$request_id);
+            $requestcancel->delete();
+
+            return redirect()->back()->with($notification);
+        } else {
+            $notification = array(
+                'message' => 'Request to donation activity Cashout Unsuccessfully',
+                'alert-type' => 'error'
+            );
+            return redirect()->back()->with($notification);
+        }
+    }
+    
 
 }
