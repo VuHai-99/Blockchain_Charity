@@ -382,3 +382,165 @@ exports.requestToCreateDonationActivityCashout = async (req, res) => {
 
   
 };
+
+exports.cancelRequestOpenDonationActivity = async (req, res) => {
+
+
+  if (!req.body) {
+    res.status(400).send({
+      message: "Content can not be empty!"
+    });
+    return;
+  } else {
+    // Create a Campaign
+    
+    const request_id = req.body.request_id;
+    const validated_host_address = req.body.validated_host_address;
+    const contract = new Contract(abi, web3.utils.toChecksumAddress(req.body.campaign_address));
+
+    const encodedABI = contract.methods.cancelCreateDonationActivityRequest(request_id).encodeABI();
+
+
+
+    User.queryHostFindByAddress(validated_host_address, (err, current_user) => {
+      if (err) {
+        res.status(500).send({
+          message:
+            err.message || "Host address is not valid."
+        });
+        return;
+      } else {
+        currentUserJson = JSON.parse(current_user)
+        privKey = currentUserJson.private_key
+        console.log(
+            `Attempting to Cancel Donation Activity Request from ${validated_host_address}}`
+        );
+
+        // console.log(req.body.amoutOfEthereum)
+
+        const createTransaction = web3.eth.accounts.signTransaction(
+          {
+              from: validated_host_address,
+              to: req.body.campaign_address,
+              gas: 2000000,
+              data: encodedABI,
+          },
+          privKey
+        );
+        createTransaction.then((signedTx) => {  
+
+            const sentTx = web3.eth.sendSignedTransaction(signedTx.raw || signedTx.rawTransaction);  
+            
+            sentTx.on("receipt", receipt => {
+              console.log(receipt)
+              res.send({
+                "request_id":request_id
+              });
+            });
+            
+            sentTx.on("error", err => {
+              console.log(err)
+              res.status(500).send({
+                message:
+                  err['data']['stack'] || "Some error occurred in transaction process."
+              });
+            });
+            
+        }).catch((err) => {
+          console.log(err)
+          res.status(500).send({
+            message:
+              err.message || "Invalid Host Address."
+          });
+          // console.log(err)
+          
+        });
+      }
+    });
+    
+  
+  }
+
+  
+};
+
+exports.cancelRequestCreateDonationActivityCashout = async (req, res) => {
+
+
+  if (!req.body) {
+    res.status(400).send({
+      message: "Content can not be empty!"
+    });
+    return;
+  } else {
+    // Create a Campaign
+    
+    const request_id = req.body.request_id;
+    const validated_host_address = req.body.validated_host_address;
+    const contract = new Contract(abi, web3.utils.toChecksumAddress(req.body.campaign_address));
+
+    const encodedABI = contract.methods.cancelCashOutFromDonationActivity(request_id).encodeABI();
+
+
+
+    User.queryHostFindByAddress(validated_host_address, (err, current_user) => {
+      if (err) {
+        res.status(500).send({
+          message:
+            err.message || "Host address is not valid."
+        });
+        return;
+      } else {
+        currentUserJson = JSON.parse(current_user)
+        privKey = currentUserJson.private_key
+        console.log(
+            `Attempting to Cancel Donation Activity Cashout Request from ${validated_host_address}}`
+        );
+
+        // console.log(req.body.amoutOfEthereum)
+
+        const createTransaction = web3.eth.accounts.signTransaction(
+          {
+              from: validated_host_address,
+              to: req.body.campaign_address,
+              gas: 2000000,
+              data: encodedABI,
+          },
+          privKey
+        );
+        createTransaction.then((signedTx) => {  
+
+            const sentTx = web3.eth.sendSignedTransaction(signedTx.raw || signedTx.rawTransaction);  
+            
+            sentTx.on("receipt", receipt => {
+              console.log(receipt)
+              res.send({
+                "request_id":request_id
+              });
+            });
+            
+            sentTx.on("error", err => {
+              console.log(err)
+              res.status(500).send({
+                message:
+                  err['data']['stack'] || "Some error occurred in transaction process."
+              });
+            });
+            
+        }).catch((err) => {
+          console.log(err)
+          res.status(500).send({
+            message:
+              err.message || "Invalid Host Address."
+          });
+          // console.log(err)
+          
+        });
+      }
+    });
+    
+  
+  }
+
+  
+};

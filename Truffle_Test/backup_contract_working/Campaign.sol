@@ -19,10 +19,6 @@ contract Campaign{
         string receiptURI;
         uint256 totalAmount;
     }
-    struct RequestToCreateCashOutFromDonationActivity {
-        address payable donationActivity;
-        uint256 totalAmount;
-    }
     
     address payable public host;
     address public admin;
@@ -41,7 +37,7 @@ contract Campaign{
 
     mapping(bytes32 => RequestToCreateDonationActivity) requestsToCreateDonationActivity;
     mapping(bytes32 => RequestToCreateOrderFromDonationActivity) requestsToCreateOrderFromDonationActivity;
-    mapping(bytes32 => RequestToCreateCashOutFromDonationActivity) requestsToCreateCashOutFromDonationActivity;
+    mapping(bytes32 => uint256) requestsToCreateCashOutFromDonationActivity;
     constructor (uint _minimum, address payable _host, address _initialAdmin) public originFromCampaignFactory{
         host = _host;
         minimumContribution = _minimum;
@@ -210,23 +206,22 @@ contract Campaign{
     
     function requestToCreateCashOutFromDonationActivity(bytes32 requestToCreateCashOutFromDonationActivityCode,uint256 _amount, address payable _donationActivity) onlyHost requestToCreateCashOutFromDonationActivityCodeExist(_donationActivity,requestToCreateCashOutFromDonationActivityCode) checkHostDonationActivity(_donationActivity) public{
         require(!requestToCreateCashOutFromDonationActivitySet.exists(requestToCreateCashOutFromDonationActivityCode), "requestToCreateCashOutFromDonationActivityCode ID already exists.");
-        RequestToCreateCashOutFromDonationActivity memory re = RequestToCreateCashOutFromDonationActivity(_donationActivity,_amount);
-        requestsToCreateCashOutFromDonationActivity[requestToCreateCashOutFromDonationActivityCode] = re;
+        requestsToCreateCashOutFromDonationActivity[requestToCreateCashOutFromDonationActivityCode] = _amount;
         requestToCreateCashOutFromDonationActivitySet.insert(requestToCreateCashOutFromDonationActivityCode);
     }
 
-    function newCashOutFromDonationActivity(bytes32 requestToCreateCashOutFromDonationActivityCode) public onlyAdmin{
+    function newCashOutFromDonationActivity(bytes32 requestToCreateCashOutFromDonationActivityCode, address payable _donationActivity) public onlyAdmin{
 
         require(requestToCreateCashOutFromDonationActivitySet.exists(requestToCreateCashOutFromDonationActivityCode), "requestToCreateCashOutFromDonationActivityCode is not valid");
         
-        RequestToCreateCashOutFromDonationActivity memory re = requestsToCreateCashOutFromDonationActivity[requestToCreateCashOutFromDonationActivityCode] ;
+        uint256 amount = requestsToCreateCashOutFromDonationActivity[requestToCreateCashOutFromDonationActivityCode];
         
-        DonationActivity w = DonationActivity(re.donationActivity);
-        if(re.totalAmount > address(this).balance){
+        DonationActivity w = DonationActivity(_donationActivity);
+        if(amount > address(this).balance){
             revert("Don't Have Enough Money In Campaign");
         } else {
-            w.addCashOut(requestToCreateCashOutFromDonationActivityCode, re.totalAmount);
-            address(re.donationActivity).transfer(re.totalAmount);
+            w.addCashOut(requestToCreateCashOutFromDonationActivityCode, amount);
+            address(_donationActivity).transfer(amount);
             
             requestToCreateCashOutFromDonationActivitySet.remove(requestToCreateCashOutFromDonationActivityCode);
             delete requestsToCreateCashOutFromDonationActivity[requestToCreateCashOutFromDonationActivityCode];
@@ -241,10 +236,10 @@ contract Campaign{
         delete requestsToCreateCashOutFromDonationActivity[requestToCreateCashOutFromDonationActivityCode];
     }
 
-    function getRequestToCreateCashOutFromDonationActivity(bytes32 requestToCreateCashOutFromDonationActivityCode) public view returns(address payable donationActivity,uint256 amount) {
+    function getRequestToCreateCashOutFromDonationActivity(bytes32 requestToCreateCashOutFromDonationActivityCode) public view returns(uint256 amount) {
         require(requestToCreateCashOutFromDonationActivitySet.exists(requestToCreateCashOutFromDonationActivityCode), "RequestToCreateCashOutFromDonationActivityCode is not valid");
-        RequestToCreateCashOutFromDonationActivity memory re = requestsToCreateCashOutFromDonationActivity[requestToCreateCashOutFromDonationActivityCode];
-        return (re.donationActivity,re.totalAmount);
+        uint _amount = requestsToCreateCashOutFromDonationActivity[requestToCreateCashOutFromDonationActivityCode];
+        return (_amount);
     }
     
     function getRequestToCreateCashOutFromDonationActivityList() public view returns(bytes32[] memory){

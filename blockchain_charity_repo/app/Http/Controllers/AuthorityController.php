@@ -10,7 +10,7 @@ class AuthorityController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('authority')->except('login', 'validateAuthority');
+        // $this->middleware('authority')->except('login', 'validateAuthority');
     }
 
     public function login()

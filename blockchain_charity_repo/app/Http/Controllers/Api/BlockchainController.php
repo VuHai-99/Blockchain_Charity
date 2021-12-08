@@ -237,6 +237,8 @@ class BlockChainController extends Controller
                     $newCashoutDonationActivity->cashout_amount = $blockchain_request->amount;
                     $newCashoutDonationActivity->cashout_code = $blockchain_request->request_id;
                     $newCashoutDonationActivity->authority_confirmation = 0;
+                    $newCashoutDonationActivity->donation_activity_address = $request->donation_activity_address;
+                    
                     $newCashoutDonationActivity->save();
                 }
                 $blockchain_request->delete();

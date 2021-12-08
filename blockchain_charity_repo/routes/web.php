@@ -118,6 +118,8 @@ Route::prefix('charity')
                 Route::get('donation_activity/{blockchainAddress}/{donationActivityAddress}', 'HostController@WS_donationActivityDetail')->name('donationActivity.detail');
                 Route::get('create/request/donation_activity_cashout/{donationActivityAddress}', 'HostController@WS_createDonationActivityCashoutRequest')->name('donationActivity.cashout.create.request');
                 Route::post('/openDonationActivityCashout/request/{donationActivityAddress}', 'HostController@WS_hostCreateDonationActivityCashoutRequest')->name('validate.createDonationActivityCashout.request');
+                Route::post('cancel/request/openDonationActivity/{requestId}', 'HostController@WS_cancelRequestOpenDonationActivity')->name('cancel.request.openDonationActivity');
+                Route::post('cancel/request/createDonationActivityCashout/{requestId}', 'HostController@WS_cancelRequestCreateDonationActivityCashout')->name('cancel.request.createDonationActivityCashout');
             });
         Route::get('campaign/list-donator', 'DonatorController@listDonator')->name('campaign.donator');
     });

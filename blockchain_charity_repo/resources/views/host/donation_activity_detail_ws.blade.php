@@ -96,8 +96,20 @@
                     <div class="card-body">
                         <div class="row my-4">
                             <div class="col-md-12">
-                                @if((isset($donationActivityOrders) == true) || isset($donationActivityCashOuts) == true)
-                                    
+                                @if((isset($donationActivityOrders) == true) || isset($donationActivityCashouts) == true)
+                                    @if(isset($donationActivityCashouts) == true)
+                                        @foreach($donationActivityCashouts as $cashout)
+                                        <p class="text-sm-left">
+                                            <strong class="text-sm-left">Tiền mặt: </strong>
+                                            {{ $cashout->cashout_amount }}(wei)
+                                        </p>
+                                        @endforeach
+                                    @endif
+                                    @if(isset($donationActivityOrders) == true)
+                                        @foreach($donationActivityOrders as $order)
+                                        
+                                        @endforeach
+                                    @endif
                                 @else
                                     <h4 class="font-weight-bold mb-3 black-text">Chưa có tài sản từ thiện nào.</h4>
                                 @endif

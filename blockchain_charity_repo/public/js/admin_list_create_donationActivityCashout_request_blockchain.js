@@ -82,39 +82,38 @@ App = {
     campaignTemplate.html('');
     for (let  i = 0; i < totalCampaign.length; i++) {
       let b =  await App.contracts.Campaign.at(totalCampaign[i]);
-      let totalDonationActivity = await b.getDonationActivityList();
-      for (let j = 0; j<totalDonationActivity.length; j++ ){
-        let totalRequestToCreateDonationActivityCashout = await b.getRequestToCreateCashOutFromDonationActivityList();
+      let totalRequestToCreateDonationActivityCashout = await b.getRequestToCreateCashOutFromDonationActivityList();
+     
         
-        for(let k=0; k<totalRequestToCreateDonationActivityCashout.length;k++){
-          let request = await b.getRequestToCreateCashOutFromDonationActivity(totalRequestToCreateDonationActivityCashout[k]);
-          // console.log(request.toNumber())
-
-          let campaignItem =
-            `<div class="col-md-12">
-              <form>
-                <div class="card mt-4">
-                    <div class="card-header">
-                      <h5 class="card-title">REQUEST TẠO ĐỢT TỪ THIỆN</h5>
-                    </div>
-                    <div class="card-body">
-                        <h4 class="card-title"><strong><i class="fa fa-calendar text-muted" aria-hidden="true"></i></strong></h4>
-                        <hr>
-                        <h6 class="card-subtitle mb-2"><span class="text-muted">Request Bytes32 ID:</span> `+ totalRequestToCreateDonationActivityCashout[k] +`</h6>
-                        <h6 class="card-subtitle mb-2" ><span class="text-muted">Campaign: `+ totalCampaign[i] +`</span></h6>
-                        <h6 class="card-subtitle mb-2" ><span class="text-muted">Donation Activity: `+ totalDonationActivity[j] +`</span></h6>
-                        <h6 class="card-subtitle mb-2" ><span class="text-muted">Cashout Amount: `+ (request.toNumber()).toString()+`</span></h6>
-                    </div>
-                    <div class="card-footer">
-                      <a type="button" class="btn btn-success text-light" onclick="App.responseRequestCreateDonationActivityCashout('`+totalRequestToCreateDonationActivityCashout[j]+`','`+totalCampaign[i]+`','`+totalDonationActivity[j]+`',true); return false"> Đồng ý </a>
-                      <a type="button" class="btn btn-danger text-light" onclick="App.responseRequestCreateDonationActivityCashout('`+totalRequestToCreateDonationActivityCashout[j]+`','`+totalCampaign[i]+`','`+totalDonationActivity[j]+`',false); return false"> Từ chối </a>
-                    </div>
-                </div>
-              </form>
-            </div>`;    
-            campaignTemplate.append(campaignItem) ;
-        }
+      for(let k=0; k<totalRequestToCreateDonationActivityCashout.length;k++){
+        let request = await b.getRequestToCreateCashOutFromDonationActivity(totalRequestToCreateDonationActivityCashout[k]);
+        // console.log(request.toNumber())
+        // console.log(request);
+        let campaignItem =
+          `<div class="col-md-12">
+            <form>
+              <div class="card mt-4">
+                  <div class="card-header">
+                    <h5 class="card-title">REQUEST TẠO ĐỢT TỪ THIỆN</h5>
+                  </div>
+                  <div class="card-body">
+                      <h4 class="card-title"><strong><i class="fa fa-calendar text-muted" aria-hidden="true"></i></strong></h4>
+                      <hr>
+                      <h6 class="card-subtitle mb-2"><span class="text-muted">Request Bytes32 ID:</span> `+ totalRequestToCreateDonationActivityCashout[k] +`</h6>
+                      <h6 class="card-subtitle mb-2" ><span class="text-muted">Campaign: `+ totalCampaign[i] +`</span></h6>
+                      <h6 class="card-subtitle mb-2" ><span class="text-muted">Donation Activity: `+ request[0] +`</span></h6>
+                      <h6 class="card-subtitle mb-2" ><span class="text-muted">Cashout Amount: `+ (request[1].toNumber()).toString()+`</span></h6>
+                  </div>
+                  <div class="card-footer">
+                    <a type="button" class="btn btn-success text-light" onclick="App.responseRequestCreateDonationActivityCashout('`+totalRequestToCreateDonationActivityCashout[k]+`','`+totalCampaign[i]+`','`+request[0]+`',true); return false"> Đồng ý </a>
+                    <a type="button" class="btn btn-danger text-light" onclick="App.responseRequestCreateDonationActivityCashout('`+totalRequestToCreateDonationActivityCashout[k]+`','`+totalCampaign[i]+`','`+request[0]+`',false); return false"> Từ chối </a>
+                  </div>
+              </div>
+            </form>
+          </div>`;    
+          campaignTemplate.append(campaignItem) ;
       }
+      
       // console.log(temp[1].toNumber());
 
       
@@ -123,7 +122,7 @@ App = {
   responseRequestCreateDonationActivityCashout: async (requestIdBytes32,campaignAddress,donationActivity, response) => {
     if(response == true){
       let b =  await App.contracts.Campaign.at(campaignAddress);
-      await b.newCashOutFromDonationActivity(requestIdBytes32,donationActivity)
+      await b.newCashOutFromDonationActivity(requestIdBytes32)
       .then((result) => {
         // console.log(result.logs[0]);
         // const newDonationActivityAddress = result.logs[0].args.new_campaign_address;
@@ -160,17 +159,17 @@ App = {
       
     } else {
       let b =  await App.contracts.Campaign.at(campaignAddress);
-      await b.cancelCreateDonationActivityRequest(requestIdBytes32)
+      await b.cancelCashOutFromDonationActivity(requestIdBytes32)
       .then((result) => {
         Swal.fire({
           title: 'Successful!',
-          text: 'Successfully Reject create donation activity',
+          text: 'Successfully Reject create donation activity Cashout',
           confirmButtonText: 'Close'
         })
         axios.post(('/api/decide-blockchain-request'), {
           "request_id": requestIdBytes32,
           "decide_type": "Decline",
-          "request_type" : 3
+          "request_type" : 4
         }).then(function(response){
           if(response.status == 200){
             console.log('Successfully Reject create donation activity in database');

@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class OrderDonationActivity extends Model
 {
     protected $fillable = [
-        'total_amount', 'receipt_url', 'retailer_address', 'order_state', 'authority_confirmation','order_code'
+        'total_amount', 'receipt_url', 'retailer_address', 'order_state', 'authority_confirmation','order_code','donation_activity_address'
     ];
 }

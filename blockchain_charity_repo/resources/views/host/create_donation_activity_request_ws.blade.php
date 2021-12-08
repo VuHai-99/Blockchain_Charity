@@ -42,6 +42,22 @@
                         <p class="text-error">{{ $message }}</p>
                     @enderror
                 </div>
+                <div class="form-group col-6" >
+                    <label for="date_start">Ngày bắt đầu</label>
+                    <input type="date" name="date_start" id="date_start" value="{{ old('date_start') }}"
+                        class="form-control" placeholder="Ngày bắt đầu dự án (d-m-Y) ...">
+                    @error('date_start')
+                        <p class="text-error">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div class="form-group col-6" >
+                    <label for="date_end">Ngày kết thúc</label>
+                    <input type="date" name="date_end" id="date_end" {{ old('date_end') }} class="form-control"
+                        placeholder="Ngày kết thúc dự án (d-m-Y) ...">
+                    @error('date_end')
+                        <p class="text-error">{{ $message }}</p>
+                    @enderror
+                </div>
                 <div class="form-group col-12" >
                     <label for="donation_activity_description">Mô tả đợt từ thiện</label>
                     <textarea required name="donation_activity_description" id="donation_activity_description" class="form-control"></textarea>
@@ -53,7 +69,7 @@
                 <input type="hidden" id="campaign_address" name="campaign_address"  value="{{$campaign->campaign_address}}">
                 <input type="hidden" id="campaign_factory" name="campaign_factory"  value="{{ env('CAMPAIGN_FACTORY_ADDRESS') }}">
                 <div class="form-group col-6" >
-                    <button type="submit" class="btn btn-primary" type="submit">Tạo Request Mở Campaign</button>
+                    <button type="submit" class="btn btn-primary" type="submit">Tạo Request Mở Donation Activity</button>
                 </div>
                 </div>
             </form>

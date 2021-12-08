@@ -106,7 +106,71 @@ App = {
         console.log(error)
       });
       
-    }
+    },
+
+    cancelOpenDonationCampaignRequest: async (request_id,campaign_address) => {
+
+        // let b = App.contracts.Campaign.at(address);
+        let b = App.contracts.Campaign.at(campaign_address);
+        await b.cancelCreateDonationActivityRequest(request_id)
+        .then((result) => {
+  
+          toastr.success("Successfully cancel request create donation activity");
+          axios.post(('/api/store-blockchain-request'), {
+            "request_id": request_id,
+            "amount": "",
+            "request_type": 3,
+            "cancel" : true
+          }).then(function(response){
+            if(response.status == 200){
+              console.log('Successfully cancel request create donation activity in database');
+            } else {
+              console.log('UnSuccessfully cancel request create donation activity in database');
+            }
+          })
+        }).catch(error => {   
+          Swal.fire({
+            title: 'Unsuccessful!',
+            text: error.message,
+            icon: 'error',
+            confirmButtonText: 'Close'
+          })
+          console.log(error)
+        });
+        
+    },
+
+    cancelCreateDonationCampaignCashoutRequest: async (request_id,campaign_address) => {
+
+        // let b = App.contracts.Campaign.at(address);
+        let b = App.contracts.Campaign.at(campaign_address);
+        await b.cancelCashOutFromDonationActivity(request_id)
+        .then((result) => {
+  
+          toastr.success("Successfully cancel request create donation activity cashout");
+          axios.post(('/api/store-blockchain-request'), {
+            "request_id": request_id,
+            "amount": "",
+            "request_type": 4,
+            "cancel" : true
+          }).then(function(response){
+            if(response.status == 200){
+              console.log('Successfully cancel request create donation activity cashout in database');
+            } else {
+              console.log('UnSuccessfully cancel request create donation activity cashout in database');
+            }
+          })
+        }).catch(error => {   
+          Swal.fire({
+            title: 'Unsuccessful!',
+            text: error.message,
+            icon: 'error',
+            confirmButtonText: 'Close'
+          })
+          console.log(error)
+        });
+        
+    },
 
 }
 
