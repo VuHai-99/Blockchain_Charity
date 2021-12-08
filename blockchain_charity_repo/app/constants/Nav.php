@@ -6,11 +6,12 @@ class Nav
 {
     const NAV_SUPPER_ADMIN = [
         [
+            
             'url' => 'admin.dashboard.index',
             'name' => 'Dashboard',
         ],
 
-        [
+        [   
             'url' => 'admin.host.list',
             'name' => 'List Host',
         ],

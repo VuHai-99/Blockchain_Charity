@@ -53,7 +53,7 @@
                 <input type="hidden" id="campaign_address" name="campaign_address"  value="{{$campaign->campaign_address}}">
                 <input type="hidden" id="campaign_factory" name="campaign_factory"  value="{{ env('CAMPAIGN_FACTORY_ADDRESS') }}">
                 <div class="form-group col-6" >
-                    <button type="submit" class="btn btn-primary" type="submit">Tạo Request Mở Campaign</button>
+                    <button type="submit" class="btn btn-primary" type="submit">Tạo Request Mở Donation Activity</button>
                 </div>
                 </div>
             </form>

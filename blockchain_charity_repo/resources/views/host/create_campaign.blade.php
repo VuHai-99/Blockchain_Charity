@@ -6,6 +6,9 @@
 @section('page-name', 'Thêm dự án')
 
 @section('pageBreadcrumb')
+    <div class="group-button-top">
+        <a href="{{ route('host.list.request') }}" class="btn btn-ct-primary active-primary action float-right" role="button">List Request</a>
+    </div>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item "><a style="color:black" href="{{ route('host.home') }}">Home</a></li>

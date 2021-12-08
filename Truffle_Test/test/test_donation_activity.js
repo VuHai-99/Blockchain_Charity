@@ -174,7 +174,7 @@ contract('CampaignFactory', accounts => {
     donationActivityAddress = donationActivityAddress[0]
     const donation_activity = await DonationActivity.at(donationActivityAddress);
     
-    await campaign.newCashOutFromDonationActivity("0x0000000000000000000000000000000000000000000000000000000000000001",donationActivityAddress,{from: admin})
+    await campaign.newCashOutFromDonationActivity("0x0000000000000000000000000000000000000000000000000000000000000001",{from: admin})
     const cashOutCode = await donation_activity.getCashOutList({from: host});
 
     const donationActivityBalance = await web3.eth.getBalance(donationActivityAddress);

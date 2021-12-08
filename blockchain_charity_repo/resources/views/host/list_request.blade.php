@@ -21,31 +21,83 @@
     <div class="list-events">
         <div class="event-happend">
             <h3>Request to open Campaign</h3>
-            @foreach ($listRequest as $request)
+            @foreach ($listRequestOpenCampaign as $requestOpenCampaign)
                 
                 <div class="event-item row">
                     <div class="image">
                         <img src="https://images.squarespace-cdn.com/content/v1/5572e6e3e4b013344d656d71/1511784011833-2J9DC8R6DL7A7KNSTY63/request-box.jpg?format=1500w"
-                            alt="">
+                            alt="" style="width:400px;height:300px;">
                     </div>
                     <div class="information">
-                        <div class="campaign-name">Tên dự án: {{ $request->campaign_name }}</div>
-                        <div class="campaign-address">Địa chỉ: {{ $request->campaign_address }}</div>
+                        <div class="campaign-name">Tên dự án: {{ $requestOpenCampaign->campaign_name }}</div>
+                        <div class="campaign-address">Địa chỉ: {{ $requestOpenCampaign->campaign_address }}</div>
                         <div class="coin">
-                            Số tiền: {{ $request->amount }} (wei)
+                            Số tiền: {{ $requestOpenCampaign->amount }} (wei)
                             <br>
-                            Mục tiêu: {{ $request->target_contribution_amount }}(wei)
+                            Mục tiêu: {{ $requestOpenCampaign->target_contribution_amount }}(wei)
                         </div>
                         <div class="descripton">
-                            <p class="text-description">Mô tả: {{ $request->description }}</p>
-                            Date start: {{ $request->date_start }}
+                            <p class="text-description">Mô tả: {{ $requestOpenCampaign->description }}</p>
+                            Date start: {{ $requestOpenCampaign->date_start }}
                             <br>
-                            Date end: {{ $request->date_end }}
+                            Date end: {{ $requestOpenCampaign->date_end }}
                         </div>
                         <div class="cancel">
-                            <button class="btn btn-cancel" onclick="App.cancelOpenCampaignRequest('{{ $request->request_id }}')">CANCEL</button>
+                            <button class="btn btn-cancel" onclick="App.cancelOpenCampaignRequest('{{ $requestOpenCampaign->request_id }}')">CANCEL</button>
                         </div>
                     </div>
+                   
+                    
+                </div>
+                <br> <br>
+                <br>
+                <br>
+            @endforeach
+            <h3>Request to open Donation Activity</h3>
+            @foreach ($listRequestOpenDonationActivity as $requestOpenDonationActivity)
+                
+                <div class="event-item row">
+                    <div class="image">
+                        <img src="https://images.squarespace-cdn.com/content/v1/5572e6e3e4b013344d656d71/1511784011833-2J9DC8R6DL7A7KNSTY63/request-box.jpg?format=1500w"
+                            alt="" style="width:400px;height:300px;">
+                    </div>
+                    <div class="information">
+                        <div class="campaign-name">Trực thuộc dự án : {{ $requestOpenDonationActivity->campaign->name }}</div>
+                        <div class="campaign-address">Địa chỉ dự án: {{ $requestOpenDonationActivity->campaign->campaign_address }}</div>
+                        <div class="campaign-address">Địa điểm dự kiến: {{ $requestOpenDonationActivity->authority->authority_location_name }}</div>
+                        <div class="campaign-address">Thời gian diễn ra dự kiến From: {{ $requestOpenDonationActivity->date_start }} To: {{ $requestOpenDonationActivity->date_end }}</div>
+                        <div class="campaign-address">Mô tả: {{ $requestOpenDonationActivity->description }}</div>
+                        <div class="cancel">
+                            <button class="btn btn-cancel" onclick="App.cancelOpenDonationCampaignRequest('{{ $requestOpenDonationActivity->request_id}}','{{$requestOpenDonationActivity->campaign->campaign_address}}')">CANCEL</button>
+                        </div>
+                    </div>
+                   
+                    
+                </div>
+                <br> <br>
+                <br>
+                <br>
+            @endforeach
+            <h3>Request to create Cashout in Donation Activity</h3>
+            @foreach ($listRequestCreateDonationActivityCashout as $requestCreateDonationActivityCashout)
+                
+                <div class="event-item row">
+                    <div class="image">
+                        <img src="https://images.squarespace-cdn.com/content/v1/5572e6e3e4b013344d656d71/1511784011833-2J9DC8R6DL7A7KNSTY63/request-box.jpg?format=1500w"
+                            alt="" style="width:400px;height:300px;">
+                    </div>
+                    <div class="information">
+                        <div class="campaign-name">Trực thuộc dự án : {{ $requestCreateDonationActivityCashout->donation_activity->campaign->name }}</div>
+                        <div class="campaign-address">Địa chỉ dự án: {{ $requestCreateDonationActivityCashout->donation_activity->campaign->campaign_address }}</div>
+                        <div class="campaign-address">Trong đợt từ thiện : {{ $requestCreateDonationActivityCashout->donation_activity->donation_activity_name }}</div>
+                        <div class="campaign-address">Địa chỉ đợt từ thiện : {{ $requestCreateDonationActivityCashout->donation_activity->donation_activity_address }}</div>
+                        <div class="campaign-address">Số tiền mặt muốn sử dụng : {{ $requestCreateDonationActivityCashout->amount }}(wei)</div>
+                        <div class="cancel">
+                            <button class="btn btn-cancel" onclick="App.cancelCreateDonationCampaignCashoutRequest('{{ $requestCreateDonationActivityCashout->request_id}}','{{$requestCreateDonationActivityCashout->donation_activity->campaign->campaign_address}}')">CANCEL</button>
+                        </div>
+                    </div>
+                   
+                    
                 </div>
                 <br> <br>
                 <br>

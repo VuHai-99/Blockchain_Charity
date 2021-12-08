@@ -68,7 +68,7 @@
                 <input type="hidden" id="host_address" name="host_address"  value="{{Auth::user()->user_address}}">
                 <input type="hidden" id="campaign_address" name="campaign_address"  value="{{$campaign->campaign_address}}">
                 <div class="form-group col-6" >
-                    <button type="submit" class="btn btn-primary" onclick="App.requestToCreateDonationActivity(); return false">Tạo Request Mở Campaign</button>
+                    <button type="submit" class="btn btn-primary" onclick="App.requestToCreateDonationActivity(); return false">Tạo Request Mở Donation Activity</button>
                 </div>
                 </div>
             </form>

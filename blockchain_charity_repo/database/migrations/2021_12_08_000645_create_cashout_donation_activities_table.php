@@ -17,6 +17,7 @@ class CreateCashoutDonationActivitiesTable extends Migration
             $table->id();
             $table->tinyInteger('authority_confirmation');
             $table->string('cashout_amount');
+            $table->string('donation_activity_address');
             $table->string('cashout_code');
             $table->timestamps();
         });

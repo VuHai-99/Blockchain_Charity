@@ -21,6 +21,7 @@ class CreateOrderDonationActivitiesTable extends Migration
             $table->tinyInteger('authority_confirmation');
             $table->string('total_amount');
             $table->string('order_code');
+            $table->string('donation_activity_address');
             $table->timestamps();
         });
     }

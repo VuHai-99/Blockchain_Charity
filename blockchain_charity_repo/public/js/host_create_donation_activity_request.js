@@ -123,6 +123,7 @@ App = {
           "requested_user_address":current_account,
           "authority_address":authority_address,
           "campaign_name":donation_activity_name,
+          "campaign_address":campaign_address,
           "description": donation_activity_description,
           "date_start":date_start,
           "date_end":date_end,

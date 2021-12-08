@@ -6,6 +6,7 @@ use App\Model\AuthorityInformation;
 use App\Model\BlockchainRequest;
 use App\Model\Campaign;
 use App\Model\CampaignImg;
+use App\Model\CashoutDonationActivity;
 use App\Model\DonationActivity;
 use App\Model\Transaction;
 use App\Repositories\BlockChain\BlockChainRequestRepository;
@@ -64,8 +65,11 @@ class HostController extends Controller
         // $userAddress = Auth::user()->user_address;
         // $listRequest = $this->blockChainRequest->getListRequestByUser($userAddress);    
         // dd(Auth::user()->user_address);
-        $listRequest = BlockchainRequest::where('requested_user_address',Auth::user()->user_address)->get();
-        return view('host.list_request', compact('listRequest'));
+        $listRequestOpenCampaign = BlockchainRequest::where('requested_user_address',Auth::user()->user_address)->where('request_type',1)->get();
+        $requestValidateHost = BlockchainRequest::where('requested_user_address',Auth::user()->user_address)->where('request_type',0)->get();
+        $listRequestOpenDonationActivity = BlockchainRequest::where('requested_user_address',Auth::user()->user_address)->where('request_type',3)->get();
+        $listRequestCreateDonationActivityCashout = BlockchainRequest::where('requested_user_address',Auth::user()->user_address)->where('request_type',4)->get();
+        return view('host.list_request', compact('listRequestOpenCampaign','requestValidateHost','listRequestOpenDonationActivity','listRequestCreateDonationActivityCashout'));
     }
 
 
@@ -160,9 +164,12 @@ class HostController extends Controller
     public function donationActivityDetail($blockchainAddress,$donationActivityAddress){
         $campaign = Campaign::findOrFail($blockchainAddress);
         $donationActivity = DonationActivity::findOrFail($donationActivityAddress);
-        // $authorities = AuthorityInformation::all();
-        // dd($authorities);
-        return view('host.donation_activity_detail', compact('campaign','donationActivity'));
+        $donationActivityCashouts = CashoutDonationActivity::where('donation_activity_address',$donationActivityAddress)->get();
+        // dd($donationActivityCashouts);
+        if(count($donationActivityCashouts) == 0){
+            $donationActivityCashouts = null;
+        }
+        return view('host.donation_activity_detail', compact('campaign','donationActivity','donationActivityCashouts'));
     }
 
     public function createDonationActivityCashoutRequest($donationActivityAddress){
@@ -470,6 +477,7 @@ class HostController extends Controller
             $requestToCreateDonationActivity->requested_user_address = Auth::user()->user_address;
             $requestToCreateDonationActivity->request_type = 3;
             $requestToCreateDonationActivity->campaign_name = $request->donation_activity_name;
+            $requestToCreateDonationActivity->campaign_address = $campaignAddress;
             $requestToCreateDonationActivity->authority_address = $request->authority_address;
             $requestToCreateDonationActivity->description = $request->donation_activity_description;
             $requestToCreateDonationActivity->save();
@@ -487,9 +495,12 @@ class HostController extends Controller
     public function WS_donationActivityDetail($blockchainAddress,$donationActivityAddress){
         $campaign = Campaign::findOrFail($blockchainAddress);
         $donationActivity = DonationActivity::findOrFail($donationActivityAddress);
-        // $authorities = AuthorityInformation::all();
-        // dd($authorities);
-        return view('host.donation_activity_detail_ws', compact('campaign','donationActivity'));
+        $donationActivityCashouts = CashoutDonationActivity::where('donation_activity_address',$donationActivityAddress)->get();
+        // dd($donationActivityCashouts);
+        if(count($donationActivityCashouts) == 0){
+            $donationActivityCashouts = null;
+        }
+        return view('host.donation_activity_detail_ws', compact('campaign','donationActivity','donationActivityCashouts'));
     }
 
     public function WS_createDonationActivityCashoutRequest($donationActivityAddress){
