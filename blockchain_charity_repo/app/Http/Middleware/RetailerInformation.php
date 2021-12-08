@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
-class RetailerMiddleware
+class RetailerInformation
 {
     /**
      * Handle an incoming request.
@@ -14,10 +14,11 @@ class RetailerMiddleware
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next, $guard = "retailer")
+    public function handle($request, Closure $next, $guard = 'retailer')
     {
+
         if (!Auth::guard($guard)->check()) {
-            return redirect()->route('retailer.login');
+            return redirect(route('retailer.login'));
         }
         return $next($request);
     }

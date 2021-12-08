@@ -221,4 +221,35 @@ class Nav
             'name' => 'Register',
         ]
     ];
+
+    const NAV_RETAILER = [
+        [
+            'url' => 'retailer.index',
+            'name' => 'Home',
+        ],
+        [
+            'url' => '',
+            'name' => 'About',
+        ],
+        [
+            'url' => 'retailer.product.list',
+            'name' => 'retailer.product',
+        ],
+        [
+            'url' => 'retailer.order',
+            'name' => 'Order',
+        ],
+        [
+            'url' => '',
+            'name' => 'Contact',
+        ],
+        [
+            'url' => 'retailer.logout',
+            'name' => 'Login',
+        ],
+        [
+            'url' => 'retailer.profile',
+            'name' => 'Profile',
+        ]
+    ];
 }

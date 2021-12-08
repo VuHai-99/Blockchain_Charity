@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAuthorityInformationTable extends Migration
+class CreateRetailersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,15 @@ class CreateAuthorityInformationTable extends Migration
      */
     public function up()
     {
-        Schema::create('authority_information', function (Blueprint $table) {
-            $table->string('authority_address')->primary();
+        Schema::create('retailers', function (Blueprint $table) {
+            $table->string('retailer_address')->primary();
+            $table->string('name');
             $table->string('email');
             $table->string('password');
-            $table->string('authority_location_name');
-            $table->string('authority_location_post_code');
+            $table->text('description');
+            $table->string('phone');
+            $table->timestamp('email_verified_at')->nullable();
+            $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -31,6 +34,6 @@ class CreateAuthorityInformationTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('authority_information');
+        Schema::dropIfExists('retailers');
     }
 }

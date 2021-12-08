@@ -70,7 +70,7 @@ class Kernel extends HttpKernel
         'donator-wallet-hard' => \App\Http\Middleware\DonatorWallHard::class,
         'donator-wallet-soft' => \App\Http\Middleware\DonatorWallSoft::class,
         'authority' => \App\Http\Middleware\AuthorityMiddleware::class,
-        'retailer' => \App\Http\Middleware\RetailerMiddleware::class
+        'retailer' => \App\Http\Middleware\RetailerInformation::class
     ];
 
     /**
