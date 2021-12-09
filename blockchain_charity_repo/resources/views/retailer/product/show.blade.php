@@ -41,18 +41,17 @@
                                             <td>
                                                 <img width="200px" src="{{ asset($pro->image) }}" class="thumbnail">
                                             </td>
-                                            <td>thiện</td>
+                                            <td>{{ $pro->category_name }}</td>
                                             <td>
                                                 <a href="{{ route('retailer.product.edit', $pro->id) }}"
                                                     class="btn btn-warning"><i class="fa fa-pencil"
                                                         aria-hidden="true"></i> Sửa</a>
                                                 <a href="{{ route('retailer.product.delete', $pro->id) }}"
-                                                    class="btn btn-danger link-delete"><i class="fa fa-trash"
-                                                        aria-hidden="true"></i> Xóa</a>
+                                                    class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i>
+                                                    Xóa</a>
                                             </td>
                                         </tr>
                                     @endforeach
-
                                     {{ $products->links() }}
                                 </tbody>
                             </table>
@@ -65,4 +64,11 @@
     </div>
     <!--/.row-->
 
+@endsection
+@section('scripts')
+    @if (Session::has('message'))
+        <script>
+            toastr.success(" {{ Session::get('message') }} ");
+        </script>
+    @endif
 @endsection

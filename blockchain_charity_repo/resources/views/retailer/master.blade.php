@@ -60,19 +60,17 @@
     <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
         <ul class="nav menu">
             <li role="presentation" class="divider"></li>
-            <li class="active"><a href="{{ route('retailer.dashboard') }}"><svg
-                        class="glyph stroked dashboard-dial">
+            <li class="{{ Request::route()->getName() == 'retailer.dashboard' ? 'active' : '' }}"><a
+                    href="{{ route('retailer.dashboard') }}"><svg class="glyph stroked dashboard-dial">
                         <use xlink:href="#stroked-dashboard-dial"></use>
                     </svg> Trang chủ</a></li>
-            <li><a href="{{ route('retailer.product.list') }}"><svg class="glyph stroked calendar">
+            <li class="{{ strpos(Request::route()->getName(), 'retailer.product') !== false ? 'active' : '' }}"><a
+                    href="{{ route('retailer.product.list') }}"><svg class="glyph stroked calendar">
                         <use xlink:href="#stroked-calendar"></use>
-                    </svg> Sản phẩm</a></li>
+                    </svg> Sản phẩm </a></li>
             <li><a href=""><svg class="glyph stroked line-graph">
                         <use xlink:href="#stroked-line-graph"></use>
                     </svg> Danh mục</a></li>
-            <li><a href=""><svg class="glyph stroked line-graph">
-                        <use xlink:href="#stroked-line-graph"></use>
-                    </svg>Nhãn hàng </a></li>
             <li><a href=""><i class="fa fa-list-alt" aria-hidden="true">
                         <use xlink:href="#stroked-line-graph"></use>
                     </i> &emsp;Đơn hàng </a></li>
@@ -99,6 +97,7 @@
     <script src="{{ asset('backend/js/ajax.js') }}"></script>
     <script src="{{ asset('backend/js/myscript.js') }}"></script>
     <script src="{{ asset('backend/js/lumino.glyphs.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script>
         $('#calendar').datepicker({});
 

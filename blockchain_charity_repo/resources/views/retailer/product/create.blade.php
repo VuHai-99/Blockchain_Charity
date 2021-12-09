@@ -67,7 +67,6 @@
 @endsection
 
 @section('scripts')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     @if (Session::has('create_sucessful'))
         <script>
             toastr.success(" {{ Session::get('create_sucessful') }} ");

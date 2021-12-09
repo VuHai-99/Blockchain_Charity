@@ -74,8 +74,33 @@ class RetailerController extends Controller
     {
         $data = $request->only('product_name', 'category_id', 'quantity', 'price', 'display');
         $data['retailer_address'] = Auth::guard('retailer')->user()->retailer_address;
-        $data['image'] = $this->uploadImageService->upload($request->image);
+        if ($request->hasFile('image')) {
+            $data['image'] = $this->uploadImageService->upload($request->image);
+        }
         $this->productRepository->create($data);
-        return back()->with('create_sucessful', 'Thêm sản phẩm thành công');
+        return back()->with('message', 'Thêm sản phẩm thành công');
+    }
+
+    public function editProduct($id)
+    {
+        $product = $this->productRepository->getProduct($id);
+        $categories = $this->categoryRepository->getAll();
+        return view('retailer.product.edit', compact('categories', 'product'));
+    }
+
+    public function updateProduct($id, ProductRequest $request)
+    {
+        $data = $request->only('product_name', 'category_id', 'quantity', 'price', 'display');
+        if ($request->hasFile('image')) {
+            $data['image'] = $this->uploadImageService->upload($request->image);
+        }
+        $this->productRepository->update($id, $data);
+        return redirect()->route('retailer.product.list')->with('message', 'Sửa sản phẩm thành công');
+    }
+
+    public function deleteProduct($id)
+    {
+        $this->productRepository->delete($id);
+        return back()->with('message', 'Xóa sản phẩm thành công');
     }
 }

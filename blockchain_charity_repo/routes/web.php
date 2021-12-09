@@ -144,6 +144,7 @@ Route::prefix('retailer')
             Route::get('create', 'RetailerController@createProduct')->name('product.create');
             Route::post('create', 'RetailerController@storeProduct')->name('product.store');
             Route::get('edit/{id}', 'RetailerController@editProduct')->name('product.edit');
+            Route::post('edit/{id}', 'RetailerController@updateProduct')->name('product.update');
             Route::get('delete/{id}', 'RetailerController@deleteProduct')->name('product.delete');
         });
         Route::get('order', 'RetailerController@listOrder')->name('order');
