@@ -14,9 +14,8 @@
                             <br>
                             <div class="row">
                                 <div class="col-md-6 col-lg-6 offset-md-6">
-                                    <form action="" id="search-order">
-                                        <input type="text" name="product_name" placeholder="Tìm kiếm sản phẩm...">
-                                        <input type="text" name="product_id" placeholder="Nhập mã sản phẩm...">
+                                    <form action="{{ route('retailer.product.list') }}" id="search-order">
+                                        <input type="text" name="key_word" placeholder="Tìm kiếm sản phẩm...">
                                         <button type="submit" class="btn btn-primary" style="line-height:1" name="search"
                                             title="Search"><i class="fa fa-search" aria-hidden="true"></i></button>
                                     </form>
@@ -37,19 +36,17 @@
                                     @foreach ($products as $pro)
                                         <tr>
                                             <td>{{ $pro->id }}</td>
-                                            <td>{{ ucwords($pro->name) }}</td>
+                                            <td>{{ ucwords($pro->product_name) }}</td>
                                             <td>{{ number_format($pro->price) }} VNĐ</td>
                                             <td>
-                                                <img width="200px" src="{{ asset('products/' . $pro->image) }}"
-                                                    class="thumbnail">
-                                                <a href="{{ route('product.photos', $pro->id) }}"
-                                                    class="btn btn-primary">Xem ảnh mô tả</a>
+                                                <img width="200px" src="{{ asset($pro->image) }}" class="thumbnail">
                                             </td>
-                                            <td>{{ $pro->brand->name }}</td>
+                                            <td>thiện</td>
                                             <td>
-                                                <a href="{{ route('product.edit', $pro->id) }}" class="btn btn-warning"><i
-                                                        class="fa fa-pencil" aria-hidden="true"></i> Sửa</a>
-                                                <a href="{{ route('product.delete', $pro->id) }}"
+                                                <a href="{{ route('retailer.product.edit', $pro->id) }}"
+                                                    class="btn btn-warning"><i class="fa fa-pencil"
+                                                        aria-hidden="true"></i> Sửa</a>
+                                                <a href="{{ route('retailer.product.delete', $pro->id) }}"
                                                     class="btn btn-danger link-delete"><i class="fa fa-trash"
                                                         aria-hidden="true"></i> Xóa</a>
                                             </td>

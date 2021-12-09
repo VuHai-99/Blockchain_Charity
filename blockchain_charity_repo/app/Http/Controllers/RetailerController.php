@@ -3,16 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
+use App\Http\Requests\ProductRequest;
 use App\Repositories\Product\ProductRepository;
+use App\Repositories\ProductCategory\ProductCategoryRepository;
+use App\Services\UploadImageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class RetailerController extends Controller
 {
-    public function __construct(ProductRepository $productRepository)
+    public function __construct(ProductRepository $productRepository, ProductCategoryRepository $categoryRepository, UploadImageService $uploadImageService)
     {
         $this->middleware('retailer')->except('login', 'validateRetailer', 'logout');
         $this->productRepository = $productRepository;
+        $this->categoryRepository = $categoryRepository;
+        $this->uploadImageService = $uploadImageService;
     }
 
     public function login()
@@ -51,15 +56,26 @@ class RetailerController extends Controller
         return view('retailer.dashboard');
     }
 
-    public function listProduct()
+    public function listProduct(Request $request)
     {
-        $products = $this->productRepository->paginate(10);
-        $comments = [];
+        $keyWord = $request->key_word;
+        $retailer = Auth::guard('retailer')->user()->retailer_address;
+        $products = $this->productRepository->getProdcutByRetailer($retailer, $keyWord);
         return view('retailer.product.show', compact('products'));
     }
 
     public function createProduct()
     {
-        return view('retailer.produt.create');
+        $categories = $this->categoryRepository->getAll();
+        return view('retailer.product.create', compact('categories'));
+    }
+
+    public function storeProduct(ProductRequest $request)
+    {
+        $data = $request->only('product_name', 'category_id', 'quantity', 'price', 'display');
+        $data['retailer_address'] = Auth::guard('retailer')->user()->retailer_address;
+        $data['image'] = $this->uploadImageService->upload($request->image);
+        $this->productRepository->create($data);
+        return back()->with('create_sucessful', 'Thêm sản phẩm thành công');
     }
 }

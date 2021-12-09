@@ -9,7 +9,8 @@
     <link href="{{ asset('backend/css/datepicker3.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link href="{{ asset('backend/css/styles.css') }}" rel="stylesheet">
-    <script src="{{ asset('backend/js/lumino.glyphs.js') }}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    @yield('css')
 </head>
 
 <body>
@@ -97,6 +98,7 @@
     <script src="{{ asset('backend/js/bootstrap-datepicker.js') }}"></script>
     <script src="{{ asset('backend/js/ajax.js') }}"></script>
     <script src="{{ asset('backend/js/myscript.js') }}"></script>
+    <script src="{{ asset('backend/js/lumino.glyphs.js') }}"></script>
     <script>
         $('#calendar').datepicker({});
 
@@ -114,6 +116,7 @@
             if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
         })
     </script>
+    @yield('scripts')
 </body>
 
 </html>
