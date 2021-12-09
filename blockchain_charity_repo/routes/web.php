@@ -158,3 +158,11 @@ Auth::routes(['verify' => true]);
 
 Route::get('my-wallet', 'DonatorController@myWallet')->name('wallet')->middleware('auth');
 Route::post('api/change-key', 'Api\ResetKeyController@changeKey')->name('api.change.key');
+
+Route::prefix('shopping')
+    ->middleware('host')
+    ->group(function () {
+        Route::get('', 'ShoppingController@shoppingCart')->name('shopping');
+        Route::get('/{category}', 'ShoppingController@getProductByCategory')->name('search.category');
+        Route::post('/order', 'ShoppingController@order')->name('order');
+    });

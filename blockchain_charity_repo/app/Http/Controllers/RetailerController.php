@@ -77,6 +77,7 @@ class RetailerController extends Controller
         if ($request->hasFile('image')) {
             $data['image'] = $this->uploadImageService->upload($request->image);
         }
+        $data['slug'] = unUniCode($request->product_name);
         $this->productRepository->create($data);
         return back()->with('message', 'Thêm sản phẩm thành công');
     }
@@ -94,6 +95,7 @@ class RetailerController extends Controller
         if ($request->hasFile('image')) {
             $data['image'] = $this->uploadImageService->upload($request->image);
         }
+        $data['slug'] = unUniCode($request->product_name);
         $this->productRepository->update($id, $data);
         return redirect()->route('retailer.product.list')->with('message', 'Sửa sản phẩm thành công');
     }

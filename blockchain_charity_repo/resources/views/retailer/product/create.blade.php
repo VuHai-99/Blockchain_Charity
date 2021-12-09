@@ -67,9 +67,9 @@
 @endsection
 
 @section('scripts')
-    @if (Session::has('create_sucessful'))
+    @if (Session::has('message'))
         <script>
-            toastr.success(" {{ Session::get('create_sucessful') }} ");
+            toastr.success(" {{ Session::get('message') }} ");
         </script>
     @endif
 @endsection
