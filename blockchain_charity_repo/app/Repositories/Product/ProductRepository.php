@@ -16,7 +16,7 @@ class ProductRepository extends BaseRepository
     {
         return $this->model->select('products.*', 'product_categories.category_name')
             ->join('product_categories', 'product_categories.id', '=', 'products.category_id')
-            ->where('retailer_address', $retailerAddress)
+            ->where('products.retailer_address', $retailerAddress)
             ->when($keyWord, function ($request) use ($keyWord) {
                 return $request->where('product_name', 'like', '%' . $keyWord . '%');
             })
@@ -29,5 +29,29 @@ class ProductRepository extends BaseRepository
             ->join('product_categories', 'product_categories.id', '=', 'products.category_id')
             ->where('products.id', $id)
             ->first();
+    }
+
+    public function getAll($categoryName = null, $keyWord = null)
+    {
+        return $this->model
+            ->select(
+                'products.product_name',
+                'products.id as product_id',
+                'products.image',
+                'products.price',
+                'products.quantity',
+                'product_categories.category_name',
+                'retailers.name as retailer_name',
+                'products.retailer_address'
+            )
+            ->join('product_categories', 'product_categories.id', '=', 'products.category_id')
+            ->join('retailers', 'retailers.retailer_address', '=', 'products.retailer_address')
+            ->when($categoryName, function ($query) use ($categoryName) {
+                return $query->where('product_categories.slug', $categoryName);
+            })
+            ->when($keyWord, function ($query) use ($keyWord) {
+                return $query->where('products.name', 'like ', '%' . $keyWord . '%');
+            })
+            ->get();
     }
 }

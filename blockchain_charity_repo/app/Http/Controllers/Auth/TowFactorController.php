@@ -22,10 +22,10 @@ class TowFactorController extends Controller
         }
         $user = Auth::user();
         $otp = $user->generateOtp();
-        Mail::to($user->email)->send(new SendMailOtp($otp));
-        if ($user->role == 1) {
-            return redirect(route('host.home'));
-        }
+        // Mail::to($user->email)->send(new SendMailOtp($otp));
+        // if ($user->role == 1) {
+        //     return redirect(route('host.home'));
+        // }
         return redirect(route('donator.home'));
     }
 
