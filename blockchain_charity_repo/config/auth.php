@@ -47,7 +47,7 @@ return [
         ],
 
         'retailer' => [
-            'driver' => 'token',
+            'driver' => 'session',
             'provider' => 'retailers',
         ],
 

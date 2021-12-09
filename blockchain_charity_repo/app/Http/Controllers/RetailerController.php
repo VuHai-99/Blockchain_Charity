@@ -53,7 +53,13 @@ class RetailerController extends Controller
 
     public function listProduct()
     {
-        $products = $this->productRepository->getAll();
+        $products = $this->productRepository->paginate(10);
         $comments = [];
+        return view('retailer.product.show', compact('products'));
+    }
+
+    public function createProduct()
+    {
+        return view('retailer.produt.create');
     }
 }
