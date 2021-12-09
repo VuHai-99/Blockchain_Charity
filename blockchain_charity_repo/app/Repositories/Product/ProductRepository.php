@@ -22,4 +22,12 @@ class ProductRepository extends BaseRepository
             })
             ->paginate(10);
     }
+
+    public function getProduct($id)
+    {
+        return $this->model->select('products.*', 'product_categories.category_name')
+            ->join('product_categories', 'product_categories.id', '=', 'products.category_id')
+            ->where('products.id', $id)
+            ->first();
+    }
 }

@@ -13,13 +13,7 @@ class ProductRequest extends FormRequest
      */
     public function authorize()
     {
-        return [
-            'product_name' => 'required',
-            'image' => 'required|mimes:jpg,png,jpeg',
-            'quantity' => 'required',
-            'price' => 'required',
-            'category_id' => 'required'
-        ];
+        return true;
     }
 
     /**
@@ -29,8 +23,18 @@ class ProductRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
+        $rules = [
+            'product_name' => 'required|unique:products,product_name,NULL,id,deleted_at,NULL',
+            'image' => 'required|mimes:jpg,png,jpeg',
+            'quantity' => 'required',
+            'price' => 'required',
+            'category_id' => 'required'
         ];
+
+        if ($this->id) {
+            $rules['product_name'] = 'required|unique:products,product_name,' . $this->id . ',id,deleted_at,NULL';
+            $rules['image'] = '';
+        }
+        return $rules;
     }
 }
