@@ -165,8 +165,8 @@ class HostController extends Controller
         $campaign = Campaign::findOrFail($blockchainAddress);
         $donationActivity = DonationActivity::findOrFail($donationActivityAddress);
         $donationActivityCashouts = CashoutDonationActivity::where('donation_activity_address',$donationActivityAddress)->get();
-        // dd($donationActivity->campaign->campaign_address);
-        dd($donationActivity->authority->authority_address);
+        // dd($donationActivity->authority->authority_address);
+        // dd($donationActivity);
         if(count($donationActivityCashouts) == 0){
             $donationActivityCashouts = null;
         }

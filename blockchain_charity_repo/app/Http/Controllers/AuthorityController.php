@@ -35,6 +35,6 @@ class AuthorityController extends Controller
 
     public function index()
     {
-        return "authority.dashboard";
+        return view("authority.index");
     }
 }
