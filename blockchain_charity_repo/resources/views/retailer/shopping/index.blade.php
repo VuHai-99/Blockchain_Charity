@@ -170,8 +170,8 @@
                                                                     {{ $product->product_name }}</p>
                                                                 <div class="price-product">
                                                                     <p>
-                                                                        <span
-                                                                            class="text-infor">{{ number_format($product->price) }}
+                                                                        <span product-price="{{ $product->price }}"
+                                                                            class="text-infor total_money">{{ number_format($product->price) }}
                                                                             wei
                                                                         </span>
                                                                     </p>
@@ -240,6 +240,7 @@
     <!-- endfooter -->
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="{{ asset('retailer/js/shopping.js') }}"></script>
 @if (Session::has('message'))
     <script>
         toastr.success(" {{ Session::get('message') }} ");

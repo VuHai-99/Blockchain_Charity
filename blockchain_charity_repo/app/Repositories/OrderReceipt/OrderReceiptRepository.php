@@ -44,4 +44,10 @@ class OrderReceiptRepository extends BaseRepository
             ->whereNull('date_of_payment')
             ->delete();
     }
+
+    public function confirmOrder($hostAddress, $date)
+    {
+        return $this->model->where('host_address', $hostAddress)
+            ->update(['date_of_payment' => $date]);
+    }
 }

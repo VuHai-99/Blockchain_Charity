@@ -66,4 +66,11 @@ class ShoppingController extends Controller
         $this->orderReceipt->deleteAllCart($hostAddress);
         return redirect()->route('shopping')->with('message', 'Xóa giỏ hàng thành công');
     }
+
+    public function confirmOrder()
+    {
+        $hostAddress = Auth::user()->user_address;
+        $this->orderReceipt->confirmOrder($hostAddress, now()->format('Y-m-d H:i:s'));
+        return redirect()->route('shopping')->with('message', 'Mua hàng thành công');
+    }
 }
