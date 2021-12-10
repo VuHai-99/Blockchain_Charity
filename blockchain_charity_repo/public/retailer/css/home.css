@@ -21,6 +21,10 @@ ul li {
     background: #FF9600;
 }
 
+.btn-confirm {
+    background-color: #FF9600 !important;
+}
+
 #logo,
 #search,
 #cart {

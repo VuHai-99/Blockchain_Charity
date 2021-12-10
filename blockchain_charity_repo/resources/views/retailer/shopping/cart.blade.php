@@ -191,6 +191,7 @@
                                 <a href="{{ route('shopping') }}" class="btn btn-primary">Mua tiếp</a>
                                 <a href="{{ route('order.delete.cart') }}" class="btn btn-danger">Xóa giỏ
                                     hàng</a>
+                                <a class="btn btn-confirm" href="{{ route('order.confirm') }}">Xác nhận mua hàng</a>
                             </div>
                         </div>
                     </div>

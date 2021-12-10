@@ -168,5 +168,6 @@ Route::prefix('shopping')
         Route::get('/order/detail', 'ShoppingController@showCart')->name('order.show');
         Route::get('order/{id}/delete', 'ShoppingController@deleteOrder')->name('order.delete');
         Route::get('order/delete/cart', 'ShoppingController@deleteCart')->name('order.delete.cart');
+        Route::get('oder/confirm', 'ShoppingController@confirmOrder')->name('order.confirm');
     });
 Route::get('order/{id}/update', 'Api\OrderController@updateQuantityOrder')->name('order.update');
