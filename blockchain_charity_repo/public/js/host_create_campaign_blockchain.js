@@ -131,6 +131,7 @@ App = {
         }).then(function(response){
           if(response.status == 200){
             console.log('Successfully store new validated request in database');
+            window.location.href = "list-request";
           } else {
             console.log('UnSuccessfully store new validated request in database');
           }

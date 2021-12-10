@@ -106,6 +106,7 @@ App = {
           }).then(function(response){
             if(response.status == 200){
               console.log('Successfully store donation info in database');
+              location.reload();
             } else {
               console.log('UnSuccessfully store donation info in database');
             }
@@ -117,66 +118,6 @@ App = {
             icon: 'error',
             confirmButtonText: 'Close'
           })
-        });
-      
-    },
-    createWithdrawMoneyRequest: async (requestCampaignAddress) =>{
-        // let minimumContribution = $('[name="minimumContribution"]').val();
-
-      let current_account;
-      App.getAccounts(function(result) {
-      current_account = result[0];
-      });
-      let donateValue = $('[name="withdrawal_amount"]').val();
-
-      var currentdate = new Date(); 
-      var datetime = String(currentdate.getDate() )
-                      + String(currentdate.getMonth()+1)
-                      + String(currentdate.getFullYear())
-                      + String(currentdate.getHours() )
-                      + String(currentdate.getMinutes())
-                      + String(currentdate.getSeconds());
-      datetime = Number(datetime)
-      let newWithdrawId = "0x"+(new BN(String(datetime))).toTwos(256).toString('hex',64);
-    //   console.log(newWithdrawId)
-  
-      await App.campaignfactory.requestToWithdrawMoney(newWithdrawId,Number(donateValue), requestCampaignAddress)
-        .then((result) => {
-  
-          const request_id = newWithdrawId;
-          const request_type = 2;
-          const amount = donateValue;
-          const campaign_address = requestCampaignAddress;
-  
-        //   console.log(request_id,request_type,amount,campaign_address,current_account)
-          toastr.success("Successfully create withdraw money request");
-          $('[name="withdrawal_amount"]').val('')
-          // Swal.fire({
-          //   title: 'Successful!',
-          //   text: 'Successful action',
-          //   confirmButtonText: 'Close'
-          // })
-          axios.post(('/api/store-blockchain-request'), {
-            "request_id": request_id,
-            "amount": amount,
-            "request_type": request_type,
-            "campaign_address": campaign_address,
-            "requested_user_address": current_account
-          }).then(function(response){
-            if(response.status == 200){
-              console.log('Successfully store new withdraw money request in database');
-            } else {
-              console.log('UnSuccessfully store new withdraw money request in database');
-            }
-          })
-        }).catch(error => {   
-          Swal.fire({
-            title: 'Unsuccessful!',
-            text: error.message,
-            icon: 'error',
-            confirmButtonText: 'Close'
-          })
-          console.log(error)
         });
       
     }

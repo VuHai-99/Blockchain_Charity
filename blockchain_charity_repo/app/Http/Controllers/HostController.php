@@ -361,7 +361,7 @@ class HostController extends Controller
             $requestToWithdrawMoney->description = $request->description;
             $requestToWithdrawMoney->save();
 
-            return redirect()->back()->with($notification);
+            return redirect()->route('hostws.list.request')->with($notification);
         } else {
             $notification = array(
                 'message' => 'Request to open campaign Unsuccessfully',
@@ -485,7 +485,7 @@ class HostController extends Controller
             $requestToCreateDonationActivity->description = $request->donation_activity_description;
             $requestToCreateDonationActivity->save();
 
-            return redirect()->back()->with($notification);
+            return redirect()->route('hostws.list.request')->with($notification);
         } else {
             $notification = array(
                 'message' => 'Request to create Donation Activity Unsuccessfully',
@@ -544,7 +544,7 @@ class HostController extends Controller
             $requestToCreateDonationActivity->amount = $request->cashout_value;
             $requestToCreateDonationActivity->save();
 
-            return redirect()->back()->with($notification);
+            return redirect()->route('hostws.list.request')->with($notification);
         } else {
             $notification = array(
                 'message' => 'Request to create Donation Activity Unsuccessfully',

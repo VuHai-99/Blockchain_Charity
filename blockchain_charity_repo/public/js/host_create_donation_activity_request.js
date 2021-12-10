@@ -131,6 +131,8 @@ App = {
         }).then(function(response){
           if(response.status == 200){
             console.log('Successfully store new donation activity request in database');
+            let pathArray = window.location.pathname.split( 'create' );
+            window.location.href = pathArray[0].concat("", "list-request");
           } else {
             console.log('UnSuccessfully store new donation activity request in database');
           }

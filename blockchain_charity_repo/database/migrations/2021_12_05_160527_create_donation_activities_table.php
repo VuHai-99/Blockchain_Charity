@@ -18,7 +18,7 @@ class CreateDonationActivitiesTable extends Migration
             $table->string('campaign_address');
             $table->string('host_address');
             $table->string('authority_address');
-            $table->string('donation_activity_description');
+            $table->text('donation_activity_description');
             $table->string('donation_activity_name');
             $table->datetime('date_start')->nullable();
             $table->datetime('date_end')->nullable();

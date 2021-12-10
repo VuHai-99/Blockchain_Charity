@@ -116,6 +116,8 @@ App = {
         }).then(function(response){
           if(response.status == 200){
             console.log('Successfully create request to cash out request in database');
+            let pathArray = window.location.pathname.split( 'create' );
+            window.location.href = pathArray[0].concat("", "list-request");
           } else {
             console.log('UnSuccessfully create request to cash out request in database');
           }

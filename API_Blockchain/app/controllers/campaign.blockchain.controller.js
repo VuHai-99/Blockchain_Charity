@@ -6,7 +6,10 @@ const BN = require('bn.js');
 
 const User = require("../models/user.model.js");
 
-const web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
+//Ganache
+// const web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
+//creatorChain
+const web3 = new Web3(new Web3.providers.HttpProvider('https://rpc.magnet.creatorchain.network'));
 const jsonFile = "../../contracts/Campaign.json";
 const file = fs.readFileSync(path.resolve(__dirname,jsonFile));
 const parsed= JSON.parse(file);

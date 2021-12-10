@@ -172,14 +172,6 @@
                 NOW</button>
         </div>
         <hr>
-        <div class="btn-donate">
-            <input class="form-control" placeholder="Amount of withdrawal" id="withdrawal_amount"
-                name="withdrawal_amount">
-            <br>
-            <button class="btn" onclick="App.createWithdrawMoneyRequest('{{ $campaign->campaign_address }}')">WITHDRAW
-                MONEY
-                REQUEST</button>
-        </div>
         <div class="list-donator">
             <div class="title">
                 <div class="donate-once">
