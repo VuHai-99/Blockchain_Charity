@@ -11,10 +11,11 @@
     <link rel="stylesheet" href="{{ asset('retailer/css/home.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/theme/ag/argon.min.css?v=1.2.0" type="text/css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+        crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{{ asset('js/laroute.js') }}"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <script type="text/javascript">
         $(function() {
@@ -118,8 +119,6 @@
     </header>
     <!-- /header -->
     <!-- endheader -->
-
-    <!-- main -->
     <section id="body">
         <div class="container-fluid">
             <div class="row">
@@ -128,81 +127,6 @@
                 <!-- endsidebar -->
                 <div id="main" class="col-md-12">
                     <div id="wrap-inner">
-                        <div class="products" id="laptop">
-                            @if (!count($products))
-                                <p class="text-infor">Không có sản phẩm</p>
-                            @endif
-                            <div class="product-list row">
-                                @foreach ($products as $product)
-                                    <div class="product-item col-md-3 col-sm-6 col-xs-12">
-                                        <a href=""><img src="{{ asset($product->image) }}" class="img-thumbnail"
-                                                title="Xem chi tiết"></a>
-                                        <br>
-                                        {{ $product->product_name }}
-                                        <br>
-                                        <b>{{ number_format($product->price) }}</b> wei
-                                        <br>
-                                        {{ $product->retailer_name }}
-                                        <br><br>
-                                        <div>
-                                            <button class="btn btn-cart" style="background: #ff6600; color:white"
-                                                data-toggle="modal"
-                                                data-target="#form-shopping-modal-{{ $product->product_id }}">
-                                                Mua hàng
-                                            </button>
-                                            <div class="modal"
-                                                id="form-shopping-modal-{{ $product->product_id }}">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <!-- Modal Header -->
-                                                        <div class="modal-header">
-                                                            <button type="button" class="close"
-                                                                data-dismiss="modal">&times;</button>
-                                                        </div>
-                                                        <!-- Modal body -->
-                                                        <div class="modal-body">
-                                                            <div class="producut-infor">
-                                                                <div class="image">
-                                                                    <img width="120px"
-                                                                        src="{{ asset($product->image) }}" alt="">
-                                                                </div>
-                                                                <p class="product-name">
-                                                                    {{ $product->product_name }}</p>
-                                                                <div class="price-product">
-                                                                    <p>
-                                                                        <span
-                                                                            class="text-infor">{{ number_format($product->price) }}
-                                                                            wei
-                                                                        </span>
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                            <br>
-                                                            <form action="{{ route('order') }}" method="POST">
-                                                                @csrf
-                                                                <input type="hidden" name="product_id"
-                                                                    value="{{ $product->product_id }}">
-                                                                <input type="hidden" name="price"
-                                                                    value="{{ $product->price }}">
-                                                                <input type="hidden" name="retailer_address"
-                                                                    value="{{ $product->retailer_address }}">
-                                                                <div class="form-group">
-                                                                    Chọn số lượng: <input min="1" type="number"
-                                                                        name="quantity">
-                                                                </div>
-                                                                <button class="btn btn-add-cart">Thêm vào giỏ
-                                                                    hàng</button>
-                                                            </form>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <!-- end main -->
@@ -210,9 +134,74 @@
         </div>
         </div>
     </section>
-    <!-- endmain -->
+    <div id="show-cart">
+        <a href="{{ route('shopping') }}">
+            << Quay lại trang mua hàng </a>
+                @if (count($orders))
+                    <div id="list-cart">
+                        <h3>Giỏ hàng</h3>
+                        <table class="table table-bordered .table-responsive text-center">
+                            <thead class="active">
+                                <th width="11.111%">Ảnh mô tả</th>
+                                <th width="22.222%">Tên sản phẩm</th>
+                                <th width="11.111%">Số lượng</th>
+                                <th width="16.6665%">Đơn giá</th>
+                                <th width="16.6665%">Thành tiền</th>
+                                <th width="11.112%">Xóa sản phẩm</th>
+                            </thead>
+                            <tbody>
+                                @php
+                                    $total = 0;
+                                @endphp
+                                @foreach ($orders as $item)
+                                    <tr>
+                                        <td><img class="img-responsive" src="{{ asset($item->image) }}"></td>
+                                        <td>{{ $item->product_name }}</td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input class="form-control" min="1" type="number" name="qty"
+                                                    value="{{ $item->quantity }}" order-id="{{ $item->order_id }}"
+                                                    product-price="{{ $item->price }}">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            {{ number_format($item->price) }} wei
+                                        </td>
+                                        <td>
+                                            {{ number_format($item->total_receipt) }} wei
+                                        </td>
+                                        <td><a href="{{ route('order.delete', $item->order_id) }}"
+                                                class="btn btn-danger link-delete-cart"
+                                                order-id="{{ $item->order_id }}">Xóa</a></td>
+                                    </tr>
+                                    @php
+                                        $total += $item->quantity * $item->price;
+                                    @endphp
+                                @endforeach
+                            </tbody>
+                        </table>
+                        <div class="row" id="total-price">
+                            <div class="col-md-6 col-sm-12 col-xs-12">
+                                <h4>Tổng thanh toán: <span class="price"> {{ number_format($total) }}
+                                        wei</span>
+                                </h4>
 
-    <!-- footer -->
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xs-12">
+                                <a href="{{ route('shopping') }}" class="btn btn-primary">Mua tiếp</a>
+                                <a href="{{ route('order.delete.cart') }}" class="btn btn-danger">Xóa giỏ
+                                    hàng</a>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <br>
+                @else
+                    <h3 class="text-center">
+                        Giỏ hàng chưa có sản phẩm
+                    </h3>
+                @endif
+    </div>
     <footer id="footer">
         <div id="footer-t">
             <div class="container">
@@ -222,7 +211,8 @@
                     </div>
                     <div id="about" class="col-md-4 col-sm-12 col-xs-12">
                         <h3>About us</h3>
-                        <p class="text-justify">Web bán hàng phục vụ cho mục đích từ thiện. Với phương châm cho đi yêu
+                        <p class="text-justify">Web bán hàng phục vụ cho mục đích từ thiện. Với phương châm cho đi
+                            yêu
                             thương là nhận lại hạnh phúc</p>
                     </div>
                     <div id="hotline" class="col-md-4 col-sm-12 col-xs-12">
@@ -240,6 +230,8 @@
     <!-- endfooter -->
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="{{ asset('retailer/js/cart.js') }}"></script>
 @if (Session::has('message'))
     <script>
         toastr.success(" {{ Session::get('message') }} ");
