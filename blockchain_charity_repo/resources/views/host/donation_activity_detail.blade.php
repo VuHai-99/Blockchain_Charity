@@ -61,7 +61,7 @@
                                 </p>
                                 <p class="text-sm-left">
                                     <strong class="text-sm-left">Địa Điểm: </strong>
-                                    {{ $donationActivity->authority->authority_location_name }}
+                                    {{ $donationActivity->authority->authority_local_name }}
                                 </p>
                             </div>
                             <br>

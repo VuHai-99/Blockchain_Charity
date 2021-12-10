@@ -35,7 +35,7 @@
                     <select name="authority_address" id="authority_address" required class="form-control">
                         <option value="" selected disabled>Chọn tỉnh thành</option>
                         @foreach($authorities as $authority)
-                            <option value="{{$authority->authority_address}}" >{{$authority->authority_location_name}}</option>
+                            <option value="{{$authority->authority_address}}" >{{$authority->authority_local_name}}</option>
                         @endforeach
                     </select>
                     @error('target_contribution_amount')

@@ -64,7 +64,7 @@
                     <div class="information">
                         <div class="campaign-name">Trực thuộc dự án : {{ $requestOpenDonationActivity->campaign->name }}</div>
                         <div class="campaign-address">Địa chỉ dự án: {{ $requestOpenDonationActivity->campaign->campaign_address }}</div>
-                        <div class="campaign-address">Địa điểm dự kiến: {{ $requestOpenDonationActivity->authority->authority_location_name }}</div>
+                        <div class="campaign-address">Địa điểm dự kiến: {{ $requestOpenDonationActivity->authority->authority_local_name }}</div>
                         <div class="campaign-address">Thời gian diễn ra dự kiến From: {{ $requestOpenDonationActivity->date_start }} To: {{ $requestOpenDonationActivity->date_end }}</div>
                         <div class="campaign-address">Mô tả: {{ $requestOpenDonationActivity->description }}</div>
                         <div class="cancel">
