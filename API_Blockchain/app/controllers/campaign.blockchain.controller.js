@@ -6,14 +6,16 @@ const BN = require('bn.js');
 
 const User = require("../models/user.model.js");
 
-const web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
+
 const jsonFile = "../../contracts/Campaign.json";
 const file = fs.readFileSync(path.resolve(__dirname,jsonFile));
 const parsed= JSON.parse(file);
 const abi = parsed.abi;
 
-// const contract = new Contract(abi, web3.utils.toChecksumAddress("0xAD93472777a78F8D654Cb3e85dcc36defd259Cb5"));
-// const encodedABI = contract.methods.contribute().encodeABI();
+//Ganache
+// const web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
+//creatorChain
+const web3 = new Web3(new Web3.providers.HttpProvider('https://rpc.magnet.creatorchain.network'));
 
 exports.donateToCampaign = async (req, res) => {
   if (!req.body) {

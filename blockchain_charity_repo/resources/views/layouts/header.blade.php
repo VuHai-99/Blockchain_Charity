@@ -5,7 +5,6 @@ $navs = [];
 if (Auth::guard('admin')->check()) {
     $navs = $NAV::NAV_SUPPER_ADMIN;
 }
-
 if (Auth::check()) {
     if (Auth::user()->role == 1) {
         if (Auth::user()->wallet_type == 0) {

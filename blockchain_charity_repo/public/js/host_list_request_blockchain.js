@@ -92,6 +92,7 @@ App = {
         }).then(function(response){
           if(response.status == 200){
             console.log('Successfully cancel new validated request in database');
+            location.reload();
           } else {
             console.log('UnSuccessfully cancel new validated request in database');
           }
@@ -124,6 +125,7 @@ App = {
           }).then(function(response){
             if(response.status == 200){
               console.log('Successfully cancel request create donation activity in database');
+              location.reload();
             } else {
               console.log('UnSuccessfully cancel request create donation activity in database');
             }
@@ -156,6 +158,7 @@ App = {
           }).then(function(response){
             if(response.status == 200){
               console.log('Successfully cancel request create donation activity cashout in database');
+              location.reload();
             } else {
               console.log('UnSuccessfully cancel request create donation activity cashout in database');
             }

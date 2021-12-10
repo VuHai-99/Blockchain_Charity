@@ -60,7 +60,7 @@ To get a local copy up and running follow these simple example steps.
    copy (if exist replace) folder Blockchain_Truffle/build/contracts into blockchain_charity_repo/public --> blockchain_charity_repo/public/
    replace 2 file Campaign.json and CampaignFactory.json in API_Blockchain\contracts with new Campaign.json and CampaignFactory.json in blockchain_charity_repo/public/
    Variable campaignFactoryAddress in API_Blockchain/Autofetch_Blockchain.js have to change to current deployed campaign.
-   In .env CAMPAIGN_FACTORY_ADDRESS="<<current campaign factory address>>"
+   In .env add CAMPAIGN_FACTORY_ADDRESS="<<current campaign factory address>>"
    ```
 
 

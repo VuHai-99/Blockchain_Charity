@@ -148,7 +148,7 @@
             <div class="goal">
                 <div class="progress">
                     <div class="progress-bar bg-warning" role="progressbar"
-                        style="width: {{($campaign->current_balance / $campaign->target_contribution_amount >= 100) ? 100 : ($campaign->current_balance / $campaign->target_contribution_amount)}}%"
+                        style="width: {{(($campaign->current_balance / $campaign->target_contribution_amount) >= 1) ? 100 : (($campaign->current_balance)*100 / $campaign->target_contribution_amount)}}%"
                         aria-valuenow="{{ $campaign->current_balance }}" aria-valuemin="0"
                         aria-valuemax="{{$campaign->target_contribution_amount}}"></div>
                 </div>
@@ -174,14 +174,6 @@
             </form>
         </div>
         <hr>
-        <div class="btn-donate">
-            <input class="form-control" placeholder="Amount of withdrawal" id="withdrawal_amount"
-                name="withdrawal_amount">
-            <br>
-            <button class="btn" onclick="App.createWithdrawMoneyRequest('{{ $campaign->campaign_address }}')">WITHDRAW
-                MONEY
-                REQUEST</button>
-        </div>
         <div class="list-donator">
             <div class="title">
                 <div class="donate-once">

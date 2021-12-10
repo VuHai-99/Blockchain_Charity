@@ -122,6 +122,7 @@ App = {
           }).then(function(response){
             if(response.status == 200){
               console.log('Successfully store donation info in database');
+              location.reload();
             } else {
               console.log('UnSuccessfully store donation info in database');
             }
