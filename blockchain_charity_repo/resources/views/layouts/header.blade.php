@@ -23,10 +23,14 @@ if (Auth::check()) {
         }
     }
 }
+
+if (Auth::guard('authority')->check()) {
+    $navs = $NAV::NAV_SUPPER_AUTHORITY;
+}
+
 if (!Auth::check() && !Auth::guard('admin')->check()) {
     $navs = $NAV::NAV_HOME;
 }
-
 @endphp
 <!-- header-start -->
 <header>
@@ -50,23 +54,63 @@ if (!Auth::check() && !Auth::guard('admin')->check()) {
                     </div>
                     <div class="col-xl-7 col-lg-7 main-menu">
                         <nav>
-                            <ul id="navigation">
-                                @foreach ($navs as $nav)
-                                    @php
-                                        $url = $nav['url'] ? route($nav['url']) : '#';
-                                    @endphp
+                            @if (!Auth::guard('admin')->check())
+                                <ul id="navigation">
+                                    @foreach ($navs as $nav)
+                                        @php
+                                            $url = $nav['url'] ? route($nav['url']) : '#';
+                                        @endphp
+                                        <li class="item">
+                                            <a href="{{ $url }}"
+                                                class="nav-link {{ $nav['url'] && Request::route()->getName() == $nav['url'] ? 'active' : '' }} ">
+                                                {{ $nav['name'] }}
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            @elseif(Auth::guard('admin')->check())
+                                <ul id="navigation">
                                     <li class="item">
-                                        <a href="{{ $url }}"
-                                            class="nav-link {{ $nav['url'] && Request::route()->getName() == $nav['url'] ? 'active' : '' }}  ">
-                                            @if (isset($nav['icon']))
-                                                <span class="icon-menu"><img
-                                                        src="{{ asset($nav['icon']) }}"></span>
-                                            @endif
-                                            {{ $nav['name'] }}
-                                        </a>
+                                        <a href="{{ route('admin.dashboard.index') }}"
+                                            class="nav-link">Dashboard</a>
                                     </li>
-                                @endforeach
-                            </ul>
+                                    <li class="item">
+                                        <a href="{{ route('admin.host.list') }}" class="nav-link">List Host</a>
+                                    </li>
+                                    <li class="item">
+                                        <a href="{{ route('admin.campaign.list') }}" class="nav-link">List
+                                            Campaign</a>
+                                    </li>
+                                    <li class="item btn-group">
+                                        <a href="" class="nav-link dropdown-toggle" data-toggle="dropdown">Request</a>
+                                        <ul class="dropdown-menu">
+                                            <li class="item">
+                                                <a href="{{ route('admin.open-campaign-request.list') }}"
+                                                    class="nav-link">Approve Campaign</a>
+                                            </li>
+                                            <li class="item">
+                                                <a href="{{ route('admin.validate-host-request.list') }}"
+                                                    class="nav-link">Approve Host</a>
+                                            </li>
+                                            <li class="item">
+                                                <a href="{{ route('admin.withdraw-money-request.list') }}"
+                                                    class="nav-link">Approve Withdrawal</a>
+                                            </li>
+                                            <li class="item">
+                                                <a href="{{ route('admin.create-donationActivity-request.list') }}"
+                                                    class="nav-link">Approve DonationActivity</a>
+                                            </li>
+                                            <li class="item">
+                                                <a href="{{ route('admin.create-donationActivityCashout-request.list') }}"
+                                                    class="nav-link">Approve DonationActivity Cashout</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="item">
+                                        <a href="{{ route('admin.logout') }}" class="nav-link">Logout</a>
+                                    </li>
+                                </ul>
+                            @endif
                         </nav>
                     </div>
                     <div class="col-12">

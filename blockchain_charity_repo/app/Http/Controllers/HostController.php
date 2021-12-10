@@ -38,7 +38,6 @@ class HostController extends Controller
     {
         // $campaigns = $this->campaignRepository->getListCampaign();
         $campaigns = Campaign::all();
-        // dd($campaigns);
         return view('host.list_campaign', compact('campaigns'));
     }
 
@@ -163,15 +162,15 @@ class HostController extends Controller
         if (count($donationActivityCashouts) == 0) {
             $donationActivityCashouts = null;
         }
-        $donation_activity_main_pic = CampaignImg::where('donation_activity_address',$donationActivityAddress)->where('photo_type', 2)->get();
+        $donation_activity_main_pic = CampaignImg::where('donation_activity_address', $donationActivityAddress)->where('photo_type', 2)->get();
         // dd($donation_activity_main_pic);
         if (count($donation_activity_main_pic) != 0) {
             $donation_activity_main_pic = $donation_activity_main_pic[0];
         } else {
             $donation_activity_main_pic = null;
         }
-        $donation_activity_side_pic = CampaignImg::where('donation_activity_address',$donationActivityAddress)->where('photo_type', 3)->get();
-        return view('host.donation_activity_detail', compact('campaign', 'donationActivity', 'donationActivityCashouts', 'donation_activity_side_pic','donation_activity_main_pic'));
+        $donation_activity_side_pic = CampaignImg::where('donation_activity_address', $donationActivityAddress)->where('photo_type', 3)->get();
+        return view('host.donation_activity_detail', compact('campaign', 'donationActivity', 'donationActivityCashouts', 'donation_activity_side_pic', 'donation_activity_main_pic'));
     }
 
     public function createDonationActivityCashoutRequest($donationActivityAddress)
@@ -180,21 +179,21 @@ class HostController extends Controller
         return view('host.create_donation_activity_cashout_request', compact('donationActivity'));
     }
 
-    
+
     public function editDonationActivityDetail($donationActivityAddress)
     {
         $donationActivity = DonationActivity::findOrFail($donationActivityAddress);
         $campaign = $donationActivity->campaign;
-        $donation_activity_main_pic = CampaignImg::where('donation_activity_address',$donationActivityAddress)->where('photo_type', 2)->get();
+        $donation_activity_main_pic = CampaignImg::where('donation_activity_address', $donationActivityAddress)->where('photo_type', 2)->get();
         // dd($donation_activity_main_pic);
         if (count($donation_activity_main_pic) != 0) {
             $donation_activity_main_pic = $donation_activity_main_pic[0];
         } else {
             $donation_activity_main_pic = null;
         }
-        $donation_activity_side_pic = CampaignImg::where('donation_activity_address',$donationActivityAddress)->where('photo_type', 3)->get();
+        $donation_activity_side_pic = CampaignImg::where('donation_activity_address', $donationActivityAddress)->where('photo_type', 3)->get();
 
-        return view('host.edit_donation_activity_detail', compact('campaign', 'donation_activity_main_pic', 'donation_activity_side_pic','donationActivity'));
+        return view('host.edit_donation_activity_detail', compact('campaign', 'donation_activity_main_pic', 'donation_activity_side_pic', 'donationActivity'));
     }
 
     public function updateDonationActivity($donationActivityAddress, Request $request)
@@ -567,15 +566,15 @@ class HostController extends Controller
         if (count($donationActivityCashouts) == 0) {
             $donationActivityCashouts = null;
         }
-        $donation_activity_main_pic = CampaignImg::where('donation_activity_address',$donationActivityAddress)->where('photo_type', 2)->get();
+        $donation_activity_main_pic = CampaignImg::where('donation_activity_address', $donationActivityAddress)->where('photo_type', 2)->get();
         // dd($donation_activity_main_pic);
         if (count($donation_activity_main_pic) != 0) {
             $donation_activity_main_pic = $donation_activity_main_pic[0];
         } else {
             $donation_activity_main_pic = null;
         }
-        $donation_activity_side_pic = CampaignImg::where('donation_activity_address',$donationActivityAddress)->where('photo_type', 3)->get();
-        return view('host.donation_activity_detail_ws', compact('campaign', 'donationActivity', 'donationActivityCashouts','donation_activity_main_pic','donation_activity_side_pic'));
+        $donation_activity_side_pic = CampaignImg::where('donation_activity_address', $donationActivityAddress)->where('photo_type', 3)->get();
+        return view('host.donation_activity_detail_ws', compact('campaign', 'donationActivity', 'donationActivityCashouts', 'donation_activity_main_pic', 'donation_activity_side_pic'));
     }
 
     public function WS_createDonationActivityCashoutRequest($donationActivityAddress)
@@ -690,16 +689,16 @@ class HostController extends Controller
     {
         $donationActivity = DonationActivity::findOrFail($donationActivityAddress);
         $campaign = $donationActivity->campaign;
-        $donation_activity_main_pic = CampaignImg::where('donation_activity_address',$donationActivityAddress)->where('photo_type', 2)->get();
+        $donation_activity_main_pic = CampaignImg::where('donation_activity_address', $donationActivityAddress)->where('photo_type', 2)->get();
         // dd($donation_activity_main_pic);
         if (count($donation_activity_main_pic) != 0) {
             $donation_activity_main_pic = $donation_activity_main_pic[0];
         } else {
             $donation_activity_main_pic = null;
         }
-        $donation_activity_side_pic = CampaignImg::where('donation_activity_address',$donationActivityAddress)->where('photo_type', 3)->get();
+        $donation_activity_side_pic = CampaignImg::where('donation_activity_address', $donationActivityAddress)->where('photo_type', 3)->get();
 
-        return view('host.edit_donation_activity_detail_ws', compact('campaign', 'donation_activity_main_pic', 'donation_activity_side_pic','donationActivity'));
+        return view('host.edit_donation_activity_detail_ws', compact('campaign', 'donation_activity_main_pic', 'donation_activity_side_pic', 'donationActivity'));
     }
 
     public function WS_updateDonationActivity($donationActivityAddress, Request $request)

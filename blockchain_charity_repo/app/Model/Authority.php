@@ -10,6 +10,7 @@ class Authority extends Authenticatable
 {
     use Notifiable;
 
+    protected $table = 'authorities';
     protected $primaryKey = 'authority_address';
     public $incrementing = false;
 
