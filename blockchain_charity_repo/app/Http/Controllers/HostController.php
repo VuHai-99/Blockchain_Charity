@@ -38,7 +38,7 @@ class HostController extends Controller
     {
         // $campaigns = $this->campaignRepository->getListCampaign();
         $campaigns = Campaign::all();
-        dd($campaigns);
+        // dd($campaigns);
         return view('host.list_campaign', compact('campaigns'));
     }
 
@@ -163,7 +163,15 @@ class HostController extends Controller
         if (count($donationActivityCashouts) == 0) {
             $donationActivityCashouts = null;
         }
-        return view('host.donation_activity_detail', compact('campaign', 'donationActivity', 'donationActivityCashouts'));
+        $donation_activity_main_pic = CampaignImg::where('donation_activity_address',$donationActivityAddress)->where('photo_type', 2)->get();
+        // dd($donation_activity_main_pic);
+        if (count($donation_activity_main_pic) != 0) {
+            $donation_activity_main_pic = $donation_activity_main_pic[0];
+        } else {
+            $donation_activity_main_pic = null;
+        }
+        $donation_activity_side_pic = CampaignImg::where('donation_activity_address',$donationActivityAddress)->where('photo_type', 3)->get();
+        return view('host.donation_activity_detail', compact('campaign', 'donationActivity', 'donationActivityCashouts', 'donation_activity_side_pic','donation_activity_main_pic'));
     }
 
     public function createDonationActivityCashoutRequest($donationActivityAddress)
@@ -172,7 +180,63 @@ class HostController extends Controller
         return view('host.create_donation_activity_cashout_request', compact('donationActivity'));
     }
 
+    
+    public function editDonationActivityDetail($donationActivityAddress)
+    {
+        $donationActivity = DonationActivity::findOrFail($donationActivityAddress);
+        $campaign = $donationActivity->campaign;
+        $donation_activity_main_pic = CampaignImg::where('donation_activity_address',$donationActivityAddress)->where('photo_type', 2)->get();
+        // dd($donation_activity_main_pic);
+        if (count($donation_activity_main_pic) != 0) {
+            $donation_activity_main_pic = $donation_activity_main_pic[0];
+        } else {
+            $donation_activity_main_pic = null;
+        }
+        $donation_activity_side_pic = CampaignImg::where('donation_activity_address',$donationActivityAddress)->where('photo_type', 3)->get();
 
+        return view('host.edit_donation_activity_detail', compact('campaign', 'donation_activity_main_pic', 'donation_activity_side_pic','donationActivity'));
+    }
+
+    public function updateDonationActivity($donationActivityAddress, Request $request)
+    {
+        $notification = array(
+            'message' => 'Successfully update donation activity',
+            'alert-type' => 'success'
+        );
+
+        $donation_activity = DonationActivity::findOrFail($donationActivityAddress);
+        $donation_activity->donation_activity_name = $request->donation_activity_name;
+        $donation_activity->donation_activity_description = $request->description;
+        $donation_activity->date_start = $request->date_start;
+        $donation_activity->date_end = $request->date_end;
+        $donation_activity->save();
+
+        // if ($request->hasFile('image')) {
+        //     // dd('a');
+        //     $file = $request->image;
+        //     $data['image'] = $this->uploadService->upload($file);
+        // }
+
+        if ($request->donation_activity_main_pic) {
+            $campaignImg = new CampaignImg();
+            $campaignImg->file_path = $this->uploadImageService->upload($request->donation_activity_main_pic);
+            $campaignImg->donation_activity_address = $donationActivityAddress;
+            $campaignImg->photo_type = 2;
+            $campaignImg->save();
+        }
+
+        if ($request->donation_activity_multi_img) {
+            foreach ($request->donation_activity_multi_img as $multi_img) {
+                $campaignImg = new CampaignImg();
+                $campaignImg->file_path = $this->uploadImageService->upload($multi_img);
+                $campaignImg->donation_activity_address = $donationActivityAddress;
+                $campaignImg->photo_type = 3;
+                $campaignImg->save();
+            }
+        }
+
+        return back()->with($notification);
+    }
     //WS
 
     public function WS_listRequest()

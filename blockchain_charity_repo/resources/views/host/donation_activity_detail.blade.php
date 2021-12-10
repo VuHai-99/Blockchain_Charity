@@ -46,7 +46,7 @@
                         <div class="row my-4">
                             <div class="col-md-12">
                                 <div class="view z-depth-1">
-                                    <img src="{{ (isset($campaign_main_pic)==true) ? url($campaign_main_pic->file_path) : '' }}"
+                                    <img src="{{ (isset($donation_activity_main_pic)==true) ? url($donation_activity_main_pic->file_path) : '' }}"
                                         alt="" class="img-fluid">
                                 </div>
                             </div>
@@ -65,8 +65,8 @@
                                 </p>
                             </div>
                             <br>
-                            @if(!empty($campaign_side_pic))
-                                @foreach($campaign_side_pic as $side_pic)
+                            @if(!empty($donation_activity_side_pic))
+                                @foreach($donation_activity_side_pic as $side_pic)
                                 <div class="col-md-6">
                                     <div class="view z-depth-1">
                                         <img src="{{url($side_pic->file_path)}}" alt="" class="img-fluid">
@@ -78,7 +78,7 @@
                     </div>
                     @if($donationActivity->host_address == Auth::user()->user_address)
                     <div class="card-footer text-center">
-                        <a href="" class="btn btn-warning" role="button">Edit Donation Activity Information</a>
+                        <a href="{{ route('host.donation_activity_detail.edit',$donationActivity->donation_activity_address) }}" class="btn btn-warning" role="button">Edit Donation Activity Information</a>
                     </div>
                     @endif
                 </div>

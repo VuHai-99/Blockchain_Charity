@@ -15,7 +15,7 @@ class CreateCampaignImgsTable extends Migration
     {
         Schema::create('campaign_imgs', function (Blueprint $table) {
             $table->id();
-            $table->string('campaign_address');
+            $table->string('campaign_address')->nullable();
             $table->string('file_path');
             $table->integer('photo_type');
             $table->string('donation_activity_address')->nullable();

@@ -93,6 +93,9 @@ Route::prefix('charity')
                 Route::get('create/request/donation_activity/{blockchainAddress}', 'HostController@createDonationActivityRequest')->name('donationActivity.create.request');
                 Route::get('create/request/donation_activity_cashout/{donationActivityAddress}', 'HostController@createDonationActivityCashoutRequest')->name('donationActivity.cashout.create.request');
                 Route::get('donation_activity/{blockchainAddress}/{donationActivityAddress}', 'HostController@donationActivityDetail')->name('donationActivity.detail');
+                Route::get('edit/donation_activity_detail/{donationActivityAddress}', 'HostController@editDonationActivityDetail')->name('donation_activity_detail.edit');
+                Route::post('update/donation_activity_detail/{donationActivityAddress}', 'HostController@updateDonationActivity')->name('donationActivity.update');
+                
             });
         Route::get('delete/request/{id}', 'HostController@deleteRequest')->name('host.delete.request')->middleware('auth');
         Route::prefix('hostws')
