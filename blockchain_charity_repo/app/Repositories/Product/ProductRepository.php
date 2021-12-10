@@ -50,7 +50,7 @@ class ProductRepository extends BaseRepository
                 return $query->where('product_categories.slug', $categoryName);
             })
             ->when($keyWord, function ($query) use ($keyWord) {
-                return $query->where('products.name', 'like ', '%' . $keyWord . '%');
+                return $query->where('products.product_name', 'like', '%' . $keyWord . '%');
             })
             ->get();
     }

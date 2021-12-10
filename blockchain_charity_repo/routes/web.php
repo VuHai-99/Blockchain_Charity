@@ -165,4 +165,8 @@ Route::prefix('shopping')
         Route::get('', 'ShoppingController@shoppingCart')->name('shopping');
         Route::get('/{category}', 'ShoppingController@getProductByCategory')->name('search.category');
         Route::post('/order', 'ShoppingController@order')->name('order');
+        Route::get('/order/detail', 'ShoppingController@showCart')->name('order.show');
+        Route::get('order/{id}/delete', 'ShoppingController@deleteOrder')->name('order.delete');
+        Route::get('order/delete/cart', 'ShoppingController@deleteCart')->name('order.delete.cart');
     });
+Route::get('order/{id}/update', 'Api\OrderController@updateQuantityOrder')->name('order.update');
