@@ -134,9 +134,11 @@
                 background-color: rgb(233, 188, 106);
                 margin-bottom: 20px;
                 .money {
-                    width: 10%;
+                    width: 40%;
                     padding: 10px;
                     font-weight: 600;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
                 }
                 .donator-name {
                     width: 70%;

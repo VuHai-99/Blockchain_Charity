@@ -10,9 +10,14 @@ class AuthorityInformation extends Authenticatable
 {
     use SoftDeletes;
 
+    protected $primaryKey = 'authority_address';
+    public $incrementing = false;
+
     protected $fillable = [
-        'authority_address', 'email', 'password', 'authority_location_name', 'authority_location_post_code'
+        'authority_address', 'name', 'email', 'password', 'authority_local_name', 'authority_local_code'
     ];
 
-    
+    protected $hidden = [
+        'password', 'remember_token', 'authority_address',
+    ];
 }

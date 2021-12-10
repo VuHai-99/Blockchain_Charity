@@ -8,7 +8,8 @@
 
 @section('pageBreadcrumb')
     <div class="group-button-top">
-        <a href="{{ route('host.list.request') }}" class="btn btn-ct-primary active-primary action float-right" role="button">List Request</a>
+        <a href="{{ route('host.list.request') }}" class="btn btn-ct-primary active-primary action float-right"
+            role="button">List Request</a>
     </div>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -22,10 +23,10 @@
     <div class="list-events">
         <div class="event-happend">
             @foreach ($campaigns as $campaign)
-                <div class="event-item row">
+                <div class="event-item row mt-5">
                     <div class="image">
                         <a href="{{ route('host.campaign.detail', $campaign->campaign_address) }}"><img
-                                src="{{ (!empty($campaign->main_pic)) ? url($campaign->main_pic->file_path) : url('images/CharityCampaignMainPicDefault.png') }}"
+                                src="{{ !empty($campaign->main_pic) ? url($campaign->main_pic->file_path) : url('images/CharityCampaignMainPicDefault.png') }}"
                                 alt=""></a>
                     </div>
                     <div class="information">
@@ -39,17 +40,17 @@
                             <div class="goal">
                                 <div class="progress">
                                     <div class="progress-bar bg-warning" role="progressbar"
-                                        style="width: {{(($campaign->current_balance / $campaign->target_contribution_amount) >= 1) ? 100 : (($campaign->current_balance)*100 / $campaign->target_contribution_amount)}}%"
+                                        style="width: {{ $campaign->current_balance / $campaign->target_contribution_amount >= 1 ? 100 : ($campaign->current_balance * 100) / $campaign->target_contribution_amount }}%"
                                         aria-valuenow="{{ $campaign->current_balance }}" aria-valuemin="0"
-                                        aria-valuemax="{{$campaign->target_contribution_amount}}"></div>
+                                        aria-valuemax="{{ $campaign->target_contribution_amount }}"></div>
                                 </div>
                             </div>
                         </div>
                         <br>
-                        <div class="descripton">
-                            {{ $campaign->description }}... <a class="read-more"
-                                href="{{ route('host.campaign.detail', $campaign->campaign_address) }}">xem thêm</a>
-                        </div>
+                        <div class="descripton" style="max-height: 50px; overflow: hidden;">
+                            {{ $campaign->description }}
+                        </div>... <a class="read-more"
+                            href="{{ route('host.campaign.detail', $campaign->campaign_address) }}">xem thêm</a>
                         <div class="donate">
                             <a class="btn btn-donate"
                                 href="{{ route('host.campaign.detail', $campaign->campaign_address) }}">DONATE</a>

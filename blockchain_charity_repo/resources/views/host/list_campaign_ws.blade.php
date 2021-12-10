@@ -8,7 +8,8 @@
 
 @section('pageBreadcrumb')
     <div class="group-button-top">
-        <a href="{{ route('hostws.list.request') }}" class="btn btn-ct-primary active-primary action float-right" role="button">List Request</a>
+        <a href="{{ route('hostws.list.request') }}" class="btn btn-ct-primary active-primary action float-right"
+            role="button">List Request</a>
     </div>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -25,7 +26,7 @@
                 <div class="event-item row">
                     <div class="image">
                         <a href="{{ route('hostws.campaign.detail', $campaign->campaign_address) }}"><img
-                                src="{{ (!empty($campaign->main_pic)) ? url($campaign->main_pic->file_path) : url('images/CharityCampaignMainPicDefault.png') }}"
+                                src="{{ !empty($campaign->main_pic) ? url($campaign->main_pic->file_path) : url('images/CharityCampaignMainPicDefault.png') }}"
                                 alt=""></a>
                     </div>
                     <div class="information">
@@ -39,13 +40,13 @@
                             <div class="goal">
                                 <div class="progress">
                                     <div class="progress-bar bg-warning" role="progressbar"
-                                        style="width: {{(($campaign->current_balance / $campaign->target_contribution_amount) >= 1) ? 100 : (($campaign->current_balance)*100 / $campaign->target_contribution_amount)}}%"
+                                        style="width: {{ $campaign->current_balance / $campaign->target_contribution_amount >= 1 ? 100 : ($campaign->current_balance * 100) / $campaign->target_contribution_amount }}%"
                                         aria-valuenow="{{ $campaign->current_balance }}" aria-valuemin="0"
-                                        aria-valuemax="{{$campaign->target_contribution_amount}}"></div>
+                                        aria-valuemax="{{ $campaign->target_contribution_amount }}"></div>
                                 </div>
                             </div>
                         </div>
-                        <div class="descripton">
+                        <div class="descripton" style="max-height: 90px; overflow: hidden;">
                             {{ $campaign->description }}... <a class="read-more"
                                 href="{{ route('hostws.campaign.detail', $campaign->campaign_address) }}">xem thêm</a>
                         </div>
