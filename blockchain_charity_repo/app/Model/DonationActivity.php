@@ -13,7 +13,7 @@ class DonationActivity extends Model
     ];
 
     public function authority(){
-        return $this->belongsTo(AuthorityInformation::class,'authority_address','authority_address');
+        return $this->belongsTo(Authority::class,'authority_address','authority_address');
     }
 
     public function campaign(){

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\AuthorityInformation;
+use App\Model\Authority;
 use App\Model\BlockchainRequest;
 use App\Model\Campaign;
 use App\Model\CampaignImg;
@@ -157,7 +157,7 @@ class HostController extends Controller
 
     public function createDonationActivityRequest($blockchainAddress){
         $campaign = Campaign::findOrFail($blockchainAddress);
-        $authorities = AuthorityInformation::all();
+        $authorities = Authority::all();
         // dd($authorities);
         return view('host.create_donation_activity_request', compact('campaign','authorities'));
     }
@@ -450,7 +450,7 @@ class HostController extends Controller
 
     public function WS_createDonationActivityRequest($blockchainAddress){
         $campaign = Campaign::findOrFail($blockchainAddress);
-        $authorities = AuthorityInformation::all();
+        $authorities = Authority::all();
         $campaign_address_ = $blockchainAddress;
         // dd($authorities);
         return view('host.create_donation_activity_request_ws', compact('campaign','authorities','campaign_address_'));
