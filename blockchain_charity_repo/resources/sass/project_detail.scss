@@ -104,6 +104,8 @@
             .donate-once {
                 width: 49%;
                 text-align: center;
+                padding: 10px 0px;
+                cursor: pointer;
                 border: 1px solid $gray;
             }
             .action-donator {
@@ -113,6 +115,8 @@
             .donate-monthly {
                 width: 49%;
                 text-align: center;
+                padding: 10px 0px;
+                cursor: pointer;
                 background-color: $gray-color;
             }
             .donate-once,

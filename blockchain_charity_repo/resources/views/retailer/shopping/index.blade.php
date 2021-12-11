@@ -187,7 +187,8 @@
                                                                 <input type="hidden" name="retailer_address"
                                                                     value="{{ $product->retailer_address }}">
                                                                 <div class="form-group">
-                                                                    Chọn số lượng: <input min="1" type="number"
+                                                                    Chọn số lượng: <input min="0" type="number"
+                                                                        max="{{ $product->quantity }}"
                                                                         name="quantity">
                                                                 </div>
                                                                 <button class="btn btn-add-cart">Thêm vào giỏ

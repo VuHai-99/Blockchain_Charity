@@ -10,7 +10,7 @@ class AuthorityController extends Controller
 {
     public function __construct()
     {
-        // $this->middleware('authority')->except('login', 'validateAuthority');
+        $this->middleware('authority')->except('login', 'validateAuthority');
     }
 
     public function login()
@@ -38,7 +38,8 @@ class AuthorityController extends Controller
         return view("authority.index");
     }
 
-    public function listDonationActivityCashoutRequest(){
+    public function listDonationActivityCashoutRequest()
+    {
         return view('authority.list_donation_activity_cashout_request');
     }
 }

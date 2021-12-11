@@ -81,84 +81,33 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 5);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./resources/js/pages/register/index.js":
-/*!**********************************************!*\
-  !*** ./resources/js/pages/register/index.js ***!
-  \**********************************************/
+/***/ "./resources/js/pages/header/index.js":
+/*!********************************************!*\
+  !*** ./resources/js/pages/header/index.js ***!
+  \********************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-function uploadImage(image, fileInputId) {
-  $("#".concat(fileInputId)).change(function (e) {
-    //Nếu như tồn thuộc tính file, đồng nghĩa người dùng đã chọn file mới
-    if (this.files && this.files[0]) {
-      var reader = new FileReader(); //Sự kiện file đã được load vào website
-
-      reader.onload = function (e) {
-        //Thay đổi đường dẫn ảnh
-        $("#".concat(image)).attr('src', e.target.result);
-      };
-
-      reader.readAsDataURL(this.files[0]);
-    }
-  });
-}
-
 $(function () {
-  if ($('#host').prop('checked') == true) {
-    $('.upload-file').show();
-  }
-
-  $('#donator').change(function () {
-    if ($(this).prop("checked") == true) {
-      $('.upload-file').hide();
-    }
-  });
-  $('#host').change(function () {
-    if ($(this).prop("checked") == true) {
-      $('.upload-file').show();
-    }
-  });
-  $('#card1').on('click', function () {
-    $('#img1').click();
-  });
-  $('#card2').on('click', function () {
-    $('#img2').click();
-  });
-  uploadImage('card1', 'img1');
-  uploadImage('card2', 'img2');
-
-  if ($('#cold-wallet').prop('checked') == true) {
-    $('.wallet_address').show();
-  }
-
-  $('#hot-wallet').change(function () {
-    if ($(this).prop("checked") == true) {
-      $('.wallet_address').hide();
-    }
-  });
-  $('#cold-wallet').change(function () {
-    if ($(this).prop("checked") == true) {
-      $('.wallet_address').show();
-    }
+  $('.item').click(function () {// $('.dropdown-menu').toggle();
   });
 });
 
 /***/ }),
 
-/***/ 5:
-/*!****************************************************!*\
-  !*** multi ./resources/js/pages/register/index.js ***!
-  \****************************************************/
+/***/ 2:
+/*!**************************************************!*\
+  !*** multi ./resources/js/pages/header/index.js ***!
+  \**************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! F:\xampp\htdocs\blockchain_charity_repo1\blockchain_charity_repo\resources\js\pages\register\index.js */"./resources/js/pages/register/index.js");
+module.exports = __webpack_require__(/*! F:\xampp\htdocs\blockchain_charity_repo1\blockchain_charity_repo\resources\js\pages\header\index.js */"./resources/js/pages/header/index.js");
 
 
 /***/ })

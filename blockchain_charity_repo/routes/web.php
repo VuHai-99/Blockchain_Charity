@@ -175,3 +175,4 @@ Route::prefix('shopping')
         Route::get('oder/confirm', 'ShoppingController@confirmOrder')->name('order.confirm');
     });
 Route::get('order/{id}/update', 'Api\OrderController@updateQuantityOrder')->name('order.update');
+Route::get('history/purchase/{user}', 'ShoppingController@historyPurchase')->name('order.history');

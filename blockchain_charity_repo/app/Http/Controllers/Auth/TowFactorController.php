@@ -23,6 +23,9 @@ class TowFactorController extends Controller
         $user = Auth::user();
         $otp = $user->generateOtp();
         // Mail::to($user->email)->send(new SendMailOtp($otp));
+
+        Auth::guard('authority')->logout();
+        Auth::guard('admin')->logout();
         if ($user->role == 1) {
             return redirect(route('host.home'));
         }
