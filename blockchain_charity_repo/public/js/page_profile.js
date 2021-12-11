@@ -81,77 +81,51 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 6);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./resources/js/pages/wallet/index.js":
-/*!********************************************!*\
-  !*** ./resources/js/pages/wallet/index.js ***!
-  \********************************************/
+/***/ "./resources/js/pages/profile/index.js":
+/*!*********************************************!*\
+  !*** ./resources/js/pages/profile/index.js ***!
+  \*********************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
 $(function () {
-  var check = false;
-  var otpUser;
-  $('.fa-eye').on('click', function () {
-    var input = $("input[name='private_key']");
-    input.attr('type', 'password');
-    $(this).hide();
-    $('.fa-eye-slash').show();
-  });
-  $('#confirm-password').submit(function (e) {
-    e.preventDefault();
-    var password = $("input[name='password']").val();
+  $('#btn-change-password').click(function (e) {
+    var newPass = $('#new-password').val();
+    var oldPassword = $('#old-password').val();
+    var confirmPass = $('#confirm-password').val();
+    console.log(newPass, confirmPass);
     axios.post(laroute.route('api.verify.password', {
-      'password': password
+      'password': oldPassword
     })).then(function (response) {
       if (response.data.check == true) {
-        $("input[name='password']").val('');
-        axios.get(laroute.route('api.send.otp')).then(function (response) {
-          otpUser = response.data.otp;
-        });
-        $('.fa-eye-slash').click();
-        $('#control-modal-otp').click();
+        if (newPass == confirmPass) {
+          $('#form-change-password').submit();
+          $('.close-modal').click();
+        } else {
+          $('.error-confirm-password').html('Mật khẩu xác nhận không khớp');
+        }
       } else {
-        $('.error-password').html('Mật khẩu không chính xác');
+        $('.error-old-password').html('Mật khẩu không chính xác');
       }
     });
-  });
-  $('#confirm-otp').submit(function (e) {
-    e.preventDefault();
-    var otp = $("input[name='otp']").val();
-
-    if (otp != otpUser) {
-      $('.error-otp').html("Mã OTP không chính xác.");
-      setTimeout(function () {
-        $('#control-modal-otp').click();
-        $('.modal-backdrop').hide();
-      }, 1000);
-    } else {
-      $("input[name='otp']").val('');
-      $('#control-modal-otp').click();
-      $('.modal-backdrop').hide();
-      $("input[name='private_key']").attr('type', 'text');
-      $('.fa-eye-slash').hide();
-      $('.fa-eye').show();
-      check = true;
-    }
   });
 });
 
 /***/ }),
 
-/***/ 6:
-/*!**************************************************!*\
-  !*** multi ./resources/js/pages/wallet/index.js ***!
-  \**************************************************/
+/***/ 2:
+/*!***************************************************!*\
+  !*** multi ./resources/js/pages/profile/index.js ***!
+  \***************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\js\pages\wallet\index.js */"./resources/js/pages/wallet/index.js");
+module.exports = __webpack_require__(/*! F:\xampp\htdocs\blockchain_charity_repo1\blockchain_charity_repo\resources\js\pages\profile\index.js */"./resources/js/pages/profile/index.js");
 
 
 /***/ })

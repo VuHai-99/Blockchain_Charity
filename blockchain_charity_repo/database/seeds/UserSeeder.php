@@ -12,12 +12,17 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('authority_information')->insert([
-            'authority_address' => '3131231fsfs',
-            'email' => 'authority@gmail.com',
+        DB::table('users')->insert([
+            'user_address' => '3131231fsfssâc',
+            'email' => 'thienpham12d@gmail.com',
+            'name' => "Phạm Văn Thiện",
             'password' => bcrypt(11111111),
-            'authority_local_name' => 'Hải Dương',
-            'authority_location_post_code' => 34
+            'private_key' => '424242rfdfdgeheg2234241421',
+            'home_address' => '422rwefdfsdf',
+            'phone' => '3112414214',
+            'wallet_type' => 0,
+            'role' => 0,
+            'amount_of_money' => 100000000,
         ]);
     }
 }

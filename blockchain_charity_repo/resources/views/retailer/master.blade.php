@@ -35,7 +35,7 @@
                                 </a>
                                 <hr>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="">
+                                <a class="dropdown-item" href="{{ route('password.confirm') }}">
                                     <i class="fa fa-cogs text-danger" aria-hidden="true"></i>
                                     &nbsp;
                                     Đổi mật khẩu
