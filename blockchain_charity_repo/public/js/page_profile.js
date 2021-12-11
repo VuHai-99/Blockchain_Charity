@@ -81,47 +81,36 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 5);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./resources/js/pages/verify_otp/index.js":
-/*!************************************************!*\
-  !*** ./resources/js/pages/verify_otp/index.js ***!
-  \************************************************/
+/***/ "./resources/js/pages/profile/index.js":
+/*!*********************************************!*\
+  !*** ./resources/js/pages/profile/index.js ***!
+  \*********************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
 $(function () {
-  $("input[name='otp']").keypress(function (e) {
-    if (e.keyCode == 13) {
-      $('.btn-confirm').click();
-    }
-
-    ;
-  });
-  var error = 0;
-  $('.btn-confirm').click(function (e) {
-    var otp = $("input[name='otp']").val();
-    axios.post(laroute.route('api.verify.otp'), {
-      'otp': otp
-    }).then(function (response) {
-      if (response.data.status === 1) {
-        error += 1;
-        $('.notify').html('Mã không chính xác. Xin nhập lại.');
-
-        if (error == 3) {
-          showPopupOk('', 'Bạn đã nhập sai mã OTP quá 3 lần, vui lòng quay lại trang đăng nhập', 'OK', function () {
-            window.location.replace(laroute.route('logout'));
-          });
-        }
-
-        if (error > 3) {
-          window.location.replace(laroute.route('redirect.error'));
+  $('#btn-change-password').click(function (e) {
+    var newPass = $('#new-password').val();
+    var oldPassword = $('#old-password').val();
+    var confirmPass = $('#confirm-password').val();
+    console.log(newPass, confirmPass);
+    axios.post(laroute.route('api.verify.password', {
+      'password': oldPassword
+    })).then(function (response) {
+      if (response.data.check == true) {
+        if (newPass == confirmPass) {
+          $('#form-change-password').submit();
+          $('.close-modal').click();
+        } else {
+          $('.error-confirm-password').html('Mật khẩu xác nhận không khớp');
         }
       } else {
-        $('#form-verify-otp').submit();
+        $('.error-old-password').html('Mật khẩu không chính xác');
       }
     });
   });
@@ -129,14 +118,14 @@ $(function () {
 
 /***/ }),
 
-/***/ 5:
-/*!******************************************************!*\
-  !*** multi ./resources/js/pages/verify_otp/index.js ***!
-  \******************************************************/
+/***/ 2:
+/*!***************************************************!*\
+  !*** multi ./resources/js/pages/profile/index.js ***!
+  \***************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! F:\xampp\htdocs\blockchain_charity_repo1\blockchain_charity_repo\resources\js\pages\verify_otp\index.js */"./resources/js/pages/verify_otp/index.js");
+module.exports = __webpack_require__(/*! F:\xampp\htdocs\blockchain_charity_repo1\blockchain_charity_repo\resources\js\pages\profile\index.js */"./resources/js/pages/profile/index.js");
 
 
 /***/ })

@@ -34,14 +34,11 @@ class RetailerController extends Controller
 
         $validate = $request->only('email', 'password');
         if (!Auth::guard('retailer')->attempt($validate)) {
-            return "sai";
-
             return back()->with('error-login', 'Email hoặc mật khẩu không đúng. Vui lòng kiểm tra lại.')->withInput();
         } else {
             if (Auth::guard('retailer')->check()) {
                 return redirect()->route('retailer.dashboard')->with($notification);
             }
-            return "chưa đc";
         }
     }
 
