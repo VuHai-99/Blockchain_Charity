@@ -81,20 +81,29 @@ contract DonationActivity{
 
     function hostConfirmReceivedOrder(bytes32 _orderCode) onlyHost public {
         Order storage or = orders[_orderCode];
-        or.orderState = OrderState.RECEIVED;
-        
-        if(or.orderState == OrderState.RECEIVED && or.authorityConfirmation == true){
-            address(or.retailer).transfer(or.totalAmount);
+        if(or.orderState != OrderState.RECEIVED){
+            or.orderState = OrderState.RECEIVED;
+            
+            if(or.orderState == OrderState.RECEIVED && or.authorityConfirmation == true){
+                address(or.retailer).transfer(or.totalAmount);
+            }
+        }else {
+            revert("This order already complete");
         }
     }
 
     function authorityConfirmReceivedOrder(bytes32 _orderCode) onlyAuthority public {
         Order storage or = orders[_orderCode];
-        or.authorityConfirmation = true;
+        if(or.authorityConfirmation == false){
+            or.authorityConfirmation = true;
         
-        if(or.orderState == OrderState.RECEIVED && or.authorityConfirmation == true){
-            address(or.retailer).transfer(or.totalAmount);
+            if(or.orderState == OrderState.RECEIVED && or.authorityConfirmation == true){
+                address(or.retailer).transfer(or.totalAmount);
+            }
+        }else {
+            revert("This order already complete");
         }
+        
     }
 
     //ORDER CRUD
@@ -158,10 +167,14 @@ contract DonationActivity{
 
     function authorityConfirmReceivedCashOut(bytes32 _cashOutCode) onlyAuthority public {
         CashOut storage or = cashOuts[_cashOutCode];
-        or.authorityConfirmation = true;
+        if(or.authorityConfirmation == false){
+            or.authorityConfirmation = true;
         
-        if(or.authorityConfirmation == true){
-            address(host).transfer(or.amount);
+            if(or.authorityConfirmation == true){
+                address(host).transfer(or.amount);
+            }
+        }else {
+            revert("This cashout already complete");
         }
     }
 

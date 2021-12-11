@@ -37,4 +37,8 @@ class AuthorityController extends Controller
     {
         return view("authority.index");
     }
+
+    public function listDonationActivityCashoutRequest(){
+        return view('authority.list_donation_activity_cashout_request');
+    }
 }

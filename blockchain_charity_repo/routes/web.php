@@ -134,6 +134,7 @@ Route::prefix('authority')
         Route::get('login', 'AuthorityController@login')->name('login');
         Route::post('login', 'AuthorityController@validateAuthority')->name('validate');
         Route::get('', 'AuthorityController@index')->name('index');
+        Route::get('list/cashout-request', 'AuthorityController@listDonationActivityCashoutRequest')->name('cashout_request.list');
     });
 
 
