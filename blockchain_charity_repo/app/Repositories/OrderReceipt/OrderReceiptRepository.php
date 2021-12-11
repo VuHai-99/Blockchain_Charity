@@ -13,7 +13,7 @@ class OrderReceiptRepository extends BaseRepository
         parent::__construct($orderReceipt);
     }
 
-    public function getOrderByRetailer($retailer)
+    public function getOrderByRetailer($donationActivityAddress)
     {
         return $this->model->select(
             'products.image',
@@ -22,9 +22,11 @@ class OrderReceiptRepository extends BaseRepository
             'products.price',
             'order_receipts.order_id',
             'order_receipts.total_receipt',
-            'order_receipts.created_at'
+            'order_receipts.created_at',
+            'products.quantity as quantity_remain',
         )
             ->join('products', 'products.id', '=', 'order_receipts.product_id', '')
+            ->where('order_receipts.donation_activity_address', $donationActivityAddress)
             ->whereNull('date_of_payment')
             ->get();
     }
@@ -39,18 +41,18 @@ class OrderReceiptRepository extends BaseRepository
         return $this->model->where('order_id', $id)->update($data);
     }
 
-    public function deleteAllCart($userAddress)
+    public function deleteAllCart($donationActivityAddress)
     {
-        return $this->model->where('host_address', $userAddress)
+        return $this->model->where('donation_activity_address', $donationActivityAddress)
             ->whereNull('date_of_payment')
             ->delete();
     }
 
-    public function confirmOrder($hostAddress, $date)
+    public function confirmOrder($donationActivityAddress, $data)
     {
-        return $this->model->where('host_address', $hostAddress)
+        return $this->model->where('donation_activity_address', $donationActivityAddress)
             ->whereNull('date_of_payment')
-            ->update(['date_of_payment' => $date]);
+            ->update($data);
     }
 
     public function getTotalOrder($hostAddress)
@@ -63,14 +65,31 @@ class OrderReceiptRepository extends BaseRepository
         return $receipt->total;
     }
 
-    public function getHistoryPuchaseHost($hostAddress)
+    public function getHistoryPuchase($orderId)
     {
-        return $this->model->select('order_receipts.*', 'retailers.name as retailer_name', 'products.product_name')
+        return $this->model->select('order_receipts.*', 'retailers.name as retailer_name', 'products.product_name', 'donation_activities.donation_activity_name')
             ->join('retailers', 'retailers.retailer_address', '=', 'order_receipts.retailer_address')
             ->join('products', 'products.id', '=', 'order_receipts.product_id')
-            ->where('host_address', $hostAddress)
+            ->join('donation_activities', 'donation_activities.donation_activity_address', '=', 'order_receipts.donation_activity_address')
+            ->where('order_receipts.order_id', $orderId)
             ->whereNotNull('date_of_payment')
             ->orderByDesc('date_of_payment')
+            ->get();
+    }
+
+    public function getOrderDonationActivition($donationAddress)
+    {
+        return $this->model->select('order_id')
+            ->where('donation_activity_address', $donationAddress)
+            ->distinct('order_id')
+            ->get();
+    }
+
+    public function getProductOrder($donationAddress)
+    {
+        return $this->model->select('product_id', 'quantity')
+            ->where('donation_activity_address', $donationAddress)
+            ->whereNull('date_of_payment')
             ->get();
     }
 }

@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html>
-{{-- <head> --}}
+@extends('layouts.default')
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>@yield('title')</title>
+@section('css')
     <link rel="stylesheet" href="{{ asset('retailer/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('retailer/css/home.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -35,97 +29,33 @@
             }
         });
     </script>
-</head>
-{{-- </head> --}}
+@endsection
 
-<body>
-    <!-- header -->
-    <header id="header">
-        <div class="container">
-            <div class="row">
-                <div id="logo" class="col-md-3 col-sm-12 col-xs-12">
-                    <h4>
-                        <a href="{{ route('home') }}">
-                            <img width="200px" src="{{ asset('frontend/img/home/logo.png') }}" alt="">
-                        </a>
-                        <nav><a id="pull" class="btn btn-danger" href="#">
-                                <i class="fa fa-bars"></i>
-                            </a></nav>
-                    </h4>
-                </div>
-                <div id="search" class="col-md-5 col-sm-12 col-xs-12">
-                    <form action="{{ route('shopping') }}" method="GET">
-                        <input type="text" name="product_name" placeholder="Nhập tên sản phẩm">
-                        <input type="submit" value="Tìm kiếm">
-                    </form>
-                </div>
-                <div id="cart" class="col-md-1 col-sm-12 col-xs-12">
-                    <a href="{{ route('order.show') }}">
-                        <i class="fa fa-cart-plus" aria-hidden="true"> {{ count($orders) }}</i> &nbsp;
-                    </a>
-                </div>
-                <div class="col-md-3 col-sm-12 col-xs-12" id="user">
-                    @if (Auth::check())
-                        <div class="dropdown">
-                            <span id="user-name" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-user-o text-light" aria-hidden="true"></i>
-                                {{ Auth::user()->name }}
-
-                            </span>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="">
-                                    <i class="fa fa-file-text-o text-primary" aria-hidden="true"></i>
-                                    &nbsp;
-                                    Thông tin cá nhân
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                @if (Auth::user()->provider == '')
-                                    <a class="dropdown-item" href="">
-                                        <i class="fa fa-cogs text-danger" aria-hidden="true"></i>
-                                        &nbsp;
-                                        Đổi mật khẩu
-                                    </a>
-                                    <div class="dropdown-divider"></div>
-                                @endif
-                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                document.getElementById('logout-form').submit();">
-                                    <img width="25px" src="{{ asset('frontend/img/home/icon-logout.jpg') }}" alt="">
-                                    &nbsp; Đăng xuất
-                                </a>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                    style="display: none;">
-                                    @csrf
-                                </form>
-                            </div>
-                        </div>
-                    @else
-                        <a href="{{ route('login') }}" class="login btn btn-primary">Đăng nhập</a>
-                    @endif
-                </div>
-            </div>
+@section('content')
+    <nav class="row navbar menu-category">
+        <ul class="navbar-nav col-md-5 col-sm-12 col-xs-12">
+            @foreach ($categories as $cate)
+                <li class="nav-item">
+                    <a class="nav-link"
+                        href="{{ route('search.category', [$cate->slug, $donationActivityAddress]) }}">{{ $cate->category_name }}</a>
+                </li>
+            @endforeach
+        </ul>
+        <div id="search" class="col-md-5 col-sm-12 col-xs-12">
+            <form action="{{ route('shopping', $donationActivityAddress) }}" method="GET">
+                <input type="text" name="product_name" placeholder="Nhập tên sản phẩm">
+                <input type="submit" value="Tìm kiếm">
+            </form>
         </div>
-        <nav class="navbar navbar-expand-sm bg-dark">
-            <!-- Links -->
-            <ul class="navbar-nav">
-                @foreach ($categories as $cate)
-                    <li class="nav-item">
-                        <a class="nav-link"
-                            href="{{ route('search.category', $cate->slug) }}">{{ $cate->category_name }}</a>
-                    </li>
-                @endforeach
-            </ul>
-        </nav>
-    </header>
-    <!-- /header -->
-    <!-- endheader -->
-
-    <!-- main -->
+        <div id="cart" class="col-md-2 col-sm-4 col-xs-4">
+            <a href="{{ route('order.show', $donationActivityAddress) }}">
+                <i class="fa fa-cart-plus" aria-hidden="true"> {{ count($orders) }}</i> &nbsp;
+            </a>
+        </div>
+    </nav>
     <section id="body">
         <div class="container-fluid">
             <div class="row">
-                <!-- sidebar -->
-
-                <!-- endsidebar -->
                 <div id="main" class="col-md-12">
                     <div id="wrap-inner">
                         <div class="products" id="laptop">
@@ -163,8 +93,8 @@
                                                         <div class="modal-body">
                                                             <div class="producut-infor">
                                                                 <div class="image">
-                                                                    <img width="120px"
-                                                                        src="{{ asset($product->image) }}" alt="">
+                                                                    <img width="120px" src="{{ asset($product->image) }}"
+                                                                        alt="">
                                                                 </div>
                                                                 <p class="product-name">
                                                                     {{ $product->product_name }}</p>
@@ -180,6 +110,8 @@
                                                             <br>
                                                             <form action="{{ route('order') }}" method="POST">
                                                                 @csrf
+                                                                <input type="hidden" name="donation_activity_address"
+                                                                    value="{{ $donationActivityAddress }}">
                                                                 <input type="hidden" name="product_id"
                                                                     value="{{ $product->product_id }}">
                                                                 <input type="hidden" name="price"
@@ -188,8 +120,7 @@
                                                                     value="{{ $product->retailer_address }}">
                                                                 <div class="form-group">
                                                                     Chọn số lượng: <input min="0" type="number"
-                                                                        max="{{ $product->quantity }}"
-                                                                        name="quantity">
+                                                                        max="{{ $product->quantity }}" name="quantity">
                                                                 </div>
                                                                 <button class="btn btn-add-cart">Thêm vào giỏ
                                                                     hàng</button>
@@ -213,39 +144,13 @@
     </section>
     <!-- endmain -->
 
-    <!-- footer -->
-    <footer id="footer">
-        <div id="footer-t">
-            <div class="container">
-                <div class="row">
-                    <div id="logo-f" class="col-md-4 col-sm-12 col-xs-12 text-center">
-                        <a href="#"><img width="300px" src="{{ asset('images/black_logo.png') }}"></a>
-                    </div>
-                    <div id="about" class="col-md-4 col-sm-12 col-xs-12">
-                        <h3>About us</h3>
-                        <p class="text-justify">Web bán hàng phục vụ cho mục đích từ thiện. Với phương châm cho đi yêu
-                            thương là nhận lại hạnh phúc</p>
-                    </div>
-                    <div id="hotline" class="col-md-4 col-sm-12 col-xs-12">
-                        <p><b>Tổng đài hỗ trợ</b> (Miễn phí gọi)</p>
-                        <p>Gọi mua: <a href="tel:+1800.1068"><b>1800.1068</b></a> (7:30 - 22:00)</p>
-                        <p>Kỹ thuật: <a href="tel:+1800.1763"><b>1800.1763</b></a> (7:30 - 22:00)</p>
-                        <p>Khiếu nại: <a href="tel:+1800.1062"><b>1800.1062</b></a> (8:30 - 21:30)</p>
-                        <p>Bảo hành: <a href="tel:+1800.1064"><b>1800.1064</b></a> (8:30 - 21:30)</p>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </footer>
-    <!-- endfooter -->
-</body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-<script src="{{ asset('retailer/js/shopping.js') }}"></script>
-@if (Session::has('message'))
-    <script>
-        toastr.success(" {{ Session::get('message') }} ");
-    </script>
-@endif
-
-</html>
+@endsection
+@section('scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="{{ asset('retailer/js/shopping.js') }}"></script>
+    @if (Session::has('messages'))
+        <script>
+            toastr.success(" {{ Session::get('messages') }} ");
+        </script>
+    @endif
+@endsection

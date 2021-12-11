@@ -197,7 +197,8 @@
                             </div>
                         </li>
                     @endforeach
-                    <li class="read-more"> <a href="{{ route('campaign.donator') }}">Xem chi tiết</a></li>
+                    <li class="read-more"> <a href="{{ route('campaign.monthly.donator', $blockchainAddress) }}">Xem
+                            chi tiết</a></li>
                 </ul>
                 <ul class="list-donator-item" id="top-donator">
                     @foreach ($userTopDonate as $user)
@@ -211,7 +212,8 @@
                             </div>
                         </li>
                     @endforeach
-                    <li class="read-more"> <a href="{{ route('campaign.donator') }}">Xem chi tiết</a></li>
+                    <li class="read-more"> <a href="{{ route('campaign.top.donator', $blockchainAddress) }}">Xem chi
+                            tiết</a></li>
                 </ul>
             </div>
         </div>

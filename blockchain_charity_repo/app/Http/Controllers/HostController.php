@@ -11,22 +11,25 @@ use App\Model\DonationActivity;
 use App\Model\Transaction;
 use App\Repositories\BlockChain\BlockChainRequestRepository;
 use App\Repositories\Campaign\CampaignRepository;
+use App\Repositories\OrderReceipt\OrderReceiptRepository;
+use App\Services\UploadImageService;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
-use App\Services\UploadImageService;
 
 class HostController extends Controller
 {
     public function __construct(
         BlockChainRequestRepository $blockChainRequest,
         CampaignRepository $campaignRepository,
-        UploadImageService $uploadImageService
+        UploadImageService $uploadImageService,
+        OrderReceiptRepository $orderReceipt
     ) {
         $this->blockChainRequest = $blockChainRequest;
         $this->campaignRepository = $campaignRepository;
         $this->uploadImageService = $uploadImageService;
+        $this->orderReceipt = $orderReceipt;
     }
 
     public function home()
@@ -87,7 +90,7 @@ class HostController extends Controller
     public function campaignDetail($blockchainAddress)
     {
         $campaign = Campaign::findOrFail($blockchainAddress);
-        $userTopDonate = $this->campaignRepository->getListUserTopDonate($blockchainAddress);
+        $userTopDonate = $this->campaignRepository->getListUserTopDonate($blockchainAddress, 10);
         $limit =  10;
         $userUserDonateMonthLy = $this->campaignRepository->getListUserDonate($blockchainAddress, $limit);
         $campaign_main_pic = CampaignImg::where('campaign_address', $blockchainAddress)->where('photo_type', 0)->get();
@@ -103,8 +106,7 @@ class HostController extends Controller
         if (count($donationActivities) == 0) {
             $donationActivities = null;
         }
-        //dd($userUserDonateMonthLy, $userTopDonate);
-        return view('host.campaign_detail', compact('campaign', 'userUserDonateMonthLy', 'userTopDonate', 'campaign_main_pic', 'campaign_side_pic', 'donationActivities'));
+        return view('host.campaign_detail', compact('campaign', 'userUserDonateMonthLy', 'userTopDonate', 'campaign_main_pic', 'campaign_side_pic', 'donationActivities', 'blockchainAddress'));
     }
 
     public function updateCampaign($blockchainAddress, Request $request)
@@ -171,7 +173,8 @@ class HostController extends Controller
             $donation_activity_main_pic = null;
         }
         $donation_activity_side_pic = CampaignImg::where('donation_activity_address', $donationActivityAddress)->where('photo_type', 3)->get();
-        return view('host.donation_activity_detail', compact('campaign', 'donationActivity', 'donationActivityCashouts', 'donation_activity_side_pic', 'donation_activity_main_pic'));
+        $orders = $this->orderReceipt->getOrderDonationActivition($donationActivityAddress);
+        return view('host.donation_activity_detail', compact('donationActivityAddress', 'campaign', 'donationActivity', 'donationActivityCashouts', 'donation_activity_side_pic', 'donation_activity_main_pic', 'orders'));
     }
 
     public function createDonationActivityCashoutRequest($donationActivityAddress)
@@ -210,12 +213,6 @@ class HostController extends Controller
         $donation_activity->date_start = $request->date_start;
         $donation_activity->date_end = $request->date_end;
         $donation_activity->save();
-
-        // if ($request->hasFile('image')) {
-        //     // dd('a');
-        //     $file = $request->image;
-        //     $data['image'] = $this->uploadService->upload($file);
-        // }
 
         if ($request->donation_activity_main_pic) {
             $campaignImg = new CampaignImg();
@@ -257,7 +254,7 @@ class HostController extends Controller
     public function WS_campaignDetail($blockchainAddress)
     {
         $campaign = Campaign::findOrFail($blockchainAddress);
-        $userTopDonate = $this->campaignRepository->getListUserTopDonate($blockchainAddress);
+        $userTopDonate = $this->campaignRepository->getListUserTopDonate($blockchainAddress, 10);
         $limit =  10;
         $userUserDonateMonthLy = $this->campaignRepository->getListUserDonate($blockchainAddress, $limit);
         $campaign_main_pic = CampaignImg::where('campaign_address', $blockchainAddress)->where('photo_type', 0)->get();
@@ -271,7 +268,7 @@ class HostController extends Controller
             $donationActivities = null;
         }
         $campaign_side_pic = CampaignImg::where('campaign_address', $blockchainAddress)->where('photo_type', 1)->get();
-        return view('host.campaign_detail_ws', compact('campaign', 'userUserDonateMonthLy', 'userTopDonate', 'campaign_main_pic', 'campaign_side_pic', 'donationActivities'));
+        return view('host.campaign_detail_ws', compact('campaign', 'userUserDonateMonthLy', 'userTopDonate', 'campaign_main_pic', 'campaign_side_pic', 'donationActivities', 'blockchainAddress'));
     }
 
     public function WS_validateHost()
@@ -563,19 +560,18 @@ class HostController extends Controller
         $campaign = Campaign::findOrFail($blockchainAddress);
         $donationActivity = DonationActivity::findOrFail($donationActivityAddress);
         $donationActivityCashouts = CashoutDonationActivity::where('donation_activity_address', $donationActivityAddress)->get();
-        // dd($donationActivityCashouts);
         if (count($donationActivityCashouts) == 0) {
             $donationActivityCashouts = null;
         }
         $donation_activity_main_pic = CampaignImg::where('donation_activity_address', $donationActivityAddress)->where('photo_type', 2)->get();
-        // dd($donation_activity_main_pic);
         if (count($donation_activity_main_pic) != 0) {
             $donation_activity_main_pic = $donation_activity_main_pic[0];
         } else {
             $donation_activity_main_pic = null;
         }
         $donation_activity_side_pic = CampaignImg::where('donation_activity_address', $donationActivityAddress)->where('photo_type', 3)->get();
-        return view('host.donation_activity_detail_ws', compact('campaign', 'donationActivity', 'donationActivityCashouts', 'donation_activity_main_pic', 'donation_activity_side_pic'));
+        $orders = $this->orderReceipt->getOrderDonationActivition($donationActivityAddress);
+        return view('host.donation_activity_detail_ws', compact('donationActivityAddress', 'campaign', 'donationActivity', 'donationActivityCashouts', 'donation_activity_main_pic', 'donation_activity_side_pic', 'orders'));
     }
 
     public function WS_createDonationActivityCashoutRequest($donationActivityAddress)
@@ -586,18 +582,9 @@ class HostController extends Controller
 
     public function WS_hostCreateDonationActivityCashoutRequest($donationActivityAddress, Request $request)
     {
-        // $a = [
-        //     // 'donator_address' => Auth::user()->user_address,
-        //     'validated_host_address' => Auth::user()->user_address,
-        //     'campaign_address' => $request->campaign_address,
-        //     'donation_activity_address' => $donationActivityAddress,
-        //     'cashout_value' => $request->cashout_value
-        // ];
-        // dd($a);
         $withdrawAPI = 'http://localhost:3000/host/create/donationActivityCashout/request';
 
         $response = Http::post($withdrawAPI, [
-            // 'donator_address' => Auth::user()->user_address,
             'validated_host_address' => Auth::user()->user_address,
             'campaign_address' => $request->campaign_address,
             'donation_activity_address' => $donationActivityAddress,
@@ -633,7 +620,6 @@ class HostController extends Controller
         $withdrawAPI = 'http://127.0.0.1:3000/host/cancel/openDonationActivity/request';
 
         $response = Http::post($withdrawAPI, [
-            // 'donator_address' => Auth::user()->user_address,
             'validated_host_address' => Auth::user()->user_address,
             'request_id' => $request_id,
             'campaign_address' => $request->campaign_address
@@ -691,7 +677,6 @@ class HostController extends Controller
         $donationActivity = DonationActivity::findOrFail($donationActivityAddress);
         $campaign = $donationActivity->campaign;
         $donation_activity_main_pic = CampaignImg::where('donation_activity_address', $donationActivityAddress)->where('photo_type', 2)->get();
-        // dd($donation_activity_main_pic);
         if (count($donation_activity_main_pic) != 0) {
             $donation_activity_main_pic = $donation_activity_main_pic[0];
         } else {
@@ -716,12 +701,6 @@ class HostController extends Controller
         $donation_activity->date_end = $request->date_end;
         $donation_activity->save();
 
-        // if ($request->hasFile('image')) {
-        //     // dd('a');
-        //     $file = $request->image;
-        //     $data['image'] = $this->uploadService->upload($file);
-        // }
-
         if ($request->donation_activity_main_pic) {
             $campaignImg = new CampaignImg();
             $campaignImg->file_path = $this->uploadImageService->upload($request->donation_activity_main_pic);
@@ -741,5 +720,17 @@ class HostController extends Controller
         }
 
         return back()->with($notification);
+    }
+
+    public function getDonatorMonthly($blockchainAddress)
+    {
+        $donators = $this->campaignRepository->getListUserDonate($blockchainAddress, 0);
+        return view('host.donator_monthly', compact('donators'));
+    }
+
+    public function getDonatorTop($blockchainAddress)
+    {
+        $donators =  $userTopDonate = $this->campaignRepository->getListUserTopDonate($blockchainAddress, 10);
+        return view('host.donator_top', compact('donators'));
     }
 }
