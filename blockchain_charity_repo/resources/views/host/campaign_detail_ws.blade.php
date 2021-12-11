@@ -190,10 +190,24 @@
                         <a href="">Donate Monthly</a>
                     </div>
                 </div>
-                <ul class="list-donator-item">
+                <ul class="list-donator-item" id="monthly-donator">
                     @foreach ($userUserDonateMonthLy as $user)
                         <li class="item">
                             <div class="money"> {{ $user->amount }} coins</div>
+                            <div class="donator-name ml-2">
+                                {{ $user->name }} <br>
+                            </div>
+                            <div class="next">
+                                <a href=""><i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+                            </div>
+                        </li>
+                    @endforeach
+                    <li class="read-more"> <a href="{{ route('campaign.donator') }}">Xem chi tiết</a></li>
+                </ul>
+                <ul class="list-donator-item" id="top-donator">
+                    @foreach ($userTopDonate as $user)
+                        <li class="item">
+                            <div class="money"> {{ $user->total_donate }} coins</div>
                             <div class="donator-name ml-2">
                                 {{ $user->name }} <br>
                             </div>

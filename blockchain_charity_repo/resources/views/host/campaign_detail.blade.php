@@ -179,16 +179,30 @@
             <div class="list-donator">
                 <div class="title">
                     <div class="donate-once">
-                        <a href="">Top Donator</a>
+                        Top Donator
                     </div>
                     <div class="donate-monthly">
-                        <a href="">Donate Monthly</a>
+                        Donate Monthly
                     </div>
                 </div>
-                <ul class="list-donator-item">
+                <ul class="list-donator-item" id="monthly-donator">
                     @foreach ($userUserDonateMonthLy as $user)
                         <li class="item">
                             <div class="money"> {{ $user->amount }} coins</div>
+                            <div class="donator-name ml-2">
+                                {{ $user->name }} <br>
+                            </div>
+                            <div class="next">
+                                <a href=""><i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+                            </div>
+                        </li>
+                    @endforeach
+                    <li class="read-more"> <a href="{{ route('campaign.donator') }}">Xem chi tiết</a></li>
+                </ul>
+                <ul class="list-donator-item" id="top-donator">
+                    @foreach ($userTopDonate as $user)
+                        <li class="item">
+                            <div class="money"> {{ $user->total_donate }} coins</div>
                             <div class="donator-name ml-2">
                                 {{ $user->name }} <br>
                             </div>
@@ -215,5 +229,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script type="text/javascript" src="{{ asset('js/laroute.js') }}"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ asset('js/page_project_detail.js') }}"></script>
 @endpush
 @stack('scripts')

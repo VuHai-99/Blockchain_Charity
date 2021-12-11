@@ -103,6 +103,7 @@ class HostController extends Controller
         if (count($donationActivities) == 0) {
             $donationActivities = null;
         }
+        //dd($userUserDonateMonthLy, $userTopDonate);
         return view('host.campaign_detail', compact('campaign', 'userUserDonateMonthLy', 'userTopDonate', 'campaign_main_pic', 'campaign_side_pic', 'donationActivities'));
     }
 
