@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 use App\User;
 use App\Http\Controllers\Controller;
+use App\Model\Authority;
 use Illuminate\Http\Request;
 use App\Model\BlockchainRequest;
 use App\Model\Campaign;
@@ -304,5 +305,26 @@ class BlockChainController extends Controller
         }
         
     }
+
+    public function decideCashoutRequest(Request $request){
+        $cashOutRequest = CashoutDonationActivity::where('cashout_code',$request->cashoutID)->first();
+        // var_dump($cashOutRequest);
+        // dd($cashOutRequest);
+        if($cashOutRequest->authority_confirmation == 0){
+            if($request->decide == true){
+                $cashOutRequest->authority_confirmation = 1;
+                $cashOutRequest->save();
+
+                $donationActivity = DonationActivity::findOrFail($cashOutRequest->donation_activity_address);
+                $campaign = Campaign::findOrFail($donationActivity->campaign_address);
+                $campaign->current_balance = $campaign->current_balance - $cashOutRequest->cashout_amount;
+                $campaign->save();
+                // $campaign = Campaign::findOrFail($cashOutRequest)
+
+            }
+        }
+        
+    }
+
     
 }
