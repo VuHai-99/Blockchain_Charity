@@ -1,5 +1,7 @@
 $(function() {
+    console.log('ok');
     $("input[name='qty']").on('change', function(e) {
+        console.log('ok');
         var idItem = $(this).attr('order-id');
         var qty = $(this).val();
         var price = $(this).attr('product-price');
@@ -13,7 +15,6 @@ $(function() {
             .then(function(response) {
                 location.reload();
             })
-
 
     });
 })

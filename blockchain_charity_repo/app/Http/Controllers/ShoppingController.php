@@ -24,23 +24,23 @@ class ShoppingController extends Controller
         $this->userRepository = $userRepository;
     }
 
-    public function shoppingCart(Request $request)
+    public function shoppingCart(Request $request, $donationActivityAddress)
     {
         $user = Auth::user();
         $keyWord = $request->product_name;
         $products = $this->productRepository->getAll('', $keyWord);
         $categories = $this->categoryRepository->getAll();
-        $orders = $this->orderReceipt->getOrderByRetailer($user->user_address);
-        return view('retailer.shopping.index', compact('products', 'categories', 'orders'));
+        $orders = $this->orderReceipt->getOrderByRetailer($donationActivityAddress);
+        return view('retailer.shopping.index', compact('products', 'categories', 'orders', 'donationActivityAddress'));
     }
 
-    public function getProductByCategory($categoryName)
+    public function getProductByCategory($donationActivityAddress, $categoryName)
     {
         $user = Auth::user();
         $products = $this->productRepository->getAll($categoryName);
         $categories = $this->categoryRepository->getAll();
-        $orders = $this->orderReceipt->getOrderByRetailer($user->user_address);
-        return view('retailer.shopping.index', compact('products', 'categories', 'orders'));
+        $orders = $this->orderReceipt->getOrderByRetailer($donationActivityAddress);
+        return view('retailer.shopping.index', compact('products', 'categories', 'orders', 'donationActivityAddress'));
     }
 
     public function order(Request $request)
@@ -52,52 +52,58 @@ class ShoppingController extends Controller
         $product = $this->productRepository->getProduct($request->product_id);
         $quantityRemain = $product->quantity - $request->quantity;
         if ($quantityRemain < 0) {
-            return back()->with('message', "Số lượng hàng ko đủ");
+            return back()->with('messages', "Số lượng hàng ko đủ");
         }
         $this->orderReceipt->create($dataOrder);
-        $this->productRepository->update($request->product_id, ['quantity' => $quantityRemain]);
-        return back()->with('message', "Đã thêm hàng vào giỏ");
+        return back()->with('messages', "Đã thêm hàng vào giỏ");
     }
 
-    public function showCart()
+    public function showCart($donationActivityAddress)
     {
         $user = Auth::user();
-        $orders = $this->orderReceipt->getOrderByRetailer($user->user_address);
+        $orders = $this->orderReceipt->getOrderByRetailer($donationActivityAddress);
         $categories = $this->categoryRepository->getAll();
-        return view('retailer.shopping.cart', compact('orders', 'categories'));
+        return view('retailer.shopping.cart', compact('orders', 'categories', 'donationActivityAddress'));
     }
 
     public function deleteOrder($orderId)
     {
         $this->orderReceipt->delete($orderId);
-        return back()->with('message', 'Xóa sản phẩm thành công');
+        return back()->with('messages', 'Xóa sản phẩm thành công');
     }
 
-    public function deleteCart()
+    public function deleteCart($donationActivityAddress)
     {
         $hostAddress = Auth::user()->user_address;
-        $this->orderReceipt->deleteAllCart($hostAddress);
-        return redirect()->route('shopping')->with('message', 'Xóa giỏ hàng thành công');
+        $this->orderReceipt->deleteAllCart($donationActivityAddress);
+        return redirect()->route('shopping')->with('messages', 'Xóa giỏ hàng thành công');
     }
 
-    public function confirmOrder()
+    public function confirmOrder($donationActivityAddress)
     {
         $hostAddress = Auth::user()->user_address;
         $amount = Auth::user()->amount_of_money;
         $totalReceipt = $this->orderReceipt->getTotalOrder($hostAddress);
+        $dataUpdateOrder = [
+            'order_id' => strtotime(now()),
+            'date_of_payment' => now()->format('Y-m-d H:i:s'),
+        ];
         if ($amount < $totalReceipt) {
-            return back()->with('message', 'Số tiền của bạn không đủ');
+            return back()->with('messages', 'Số tiền của bạn không đủ');
         }
-        DB::transaction(function () use ($hostAddress, $amount, $totalReceipt) {
-            $this->orderReceipt->confirmOrder($hostAddress, now()->format('Y-m-d H:i:s'));
-            $this->userRepository->updateUser($hostAddress, ['amount_of_money' => $amount - $totalReceipt]);
+        $amountRemain = $amount - $totalReceipt;
+        $orders = $this->orderReceipt->getProductOrder($donationActivityAddress);
+        DB::transaction(function () use ($hostAddress, $donationActivityAddress, $dataUpdateOrder, $orders, $amountRemain) {
+            $this->orderReceipt->confirmOrder($donationActivityAddress, $dataUpdateOrder);
+            $this->userRepository->updateUser($hostAddress, ['amount_of_money' => $amountRemain]);
+            $this->productRepository->updateQuantityProduct($orders);
         });
-        return redirect()->route('shopping')->with('message', 'Mua hàng thành công');
+        return redirect()->route('shopping', $donationActivityAddress)->with('messages', 'Mua hàng thành công');
     }
 
-    public function historyPurchase($hostAddress)
+    public function historyPurchase($orderId)
     {
-        $orders = $this->orderReceipt->getHistoryPuchaseHost($hostAddress);
+        $orders = $this->orderReceipt->getHistoryPuchase($orderId);
         return view('history_purchase', compact('orders'));
     }
 }

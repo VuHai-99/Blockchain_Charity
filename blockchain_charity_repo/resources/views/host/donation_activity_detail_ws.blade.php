@@ -134,6 +134,15 @@
                                 Tổng các tài sản khuyên góp sử dụng cho đợt từ thiện
                             </a>
                         </h5>
+                        <h3>Hoạt động mua hàng</h3>
+                        @if ($orders)
+                            @foreach ($orders as $index => $order)
+                                <a href="{{ route('order.history', $order->order_id) }}" class="nav-link">Đơn hàng
+                                    {{ ++$index }}</a>
+                            @endforeach
+                        @else
+                            Chưa có đơn hàng
+                        @endif
                     </div>
                     <div id="collapse97" class="collapse" role="tabpanel" aria-labelledby="heading97">
                         <div class="card-body">
@@ -161,7 +170,8 @@
                         </div>
                         @if ($donationActivity->host_address == Auth::user()->user_address)
                             <div class="card-footer text-center">
-                                <a href="{{ route('shopping') }}" class="btn btn-warning" role="button">Request to create
+                                <a href="{{ route('shopping', $donationActivityAddress) }}" class="btn btn-warning"
+                                    role="button">Request to create
                                     Donation Activity Order</a>
                                 <a href="{{ route('hostws.donationActivity.cashout.create.request', $donationActivity->donation_activity_address) }}"
                                     class="btn btn-warning" role="button">Request to create Donation Activity CashOut</a>

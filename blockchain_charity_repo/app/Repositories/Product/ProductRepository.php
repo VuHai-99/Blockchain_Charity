@@ -4,6 +4,7 @@ namespace App\Repositories\Product;
 
 use App\Model\Product;
 use App\Repositories\BaseRepository;
+use Illuminate\Support\Facades\DB;
 
 class ProductRepository extends BaseRepository
 {
@@ -53,5 +54,15 @@ class ProductRepository extends BaseRepository
                 return $query->where('products.product_name', 'like', '%' . $keyWord . '%');
             })
             ->get();
+    }
+
+    public function updateQuantityProduct($orders)
+    {
+        $query = "update products set ";
+        foreach ($orders as $order) {
+            $query .= " quantity = CASE WHEN products.id = $order->product_id THEN quantity - $order->quantity END ,";
+        }
+        $query = rtrim($query, ', ');
+        return DB::statement($query);
     }
 }

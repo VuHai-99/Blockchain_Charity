@@ -10,11 +10,17 @@ class AuthorityController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('authority')->except('login', 'validateAuthority');
+        $this->middleware('authority')->except('login', 'validateAuthority', 'logout');
     }
 
     public function login()
     {
+        return view('authority.login');
+    }
+
+    public function logout()
+    {
+        Auth::guard('authority')->logout();
         return view('authority.login');
     }
 

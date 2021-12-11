@@ -23,7 +23,6 @@ class FrontEndController extends Controller
     {
         $keyWord = $request->key_word;
         $campaign = $this->campaignRepository->getListCampaign($keyWord);
-        dd($campaign);
         return view('frontEnd.campaign', compact($campaign));
     }
 

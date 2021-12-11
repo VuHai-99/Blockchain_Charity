@@ -64,6 +64,25 @@ ul li {
     font-size: 12px;
 }
 
+.menu-category {
+    background-color: orange;
+    padding: 0px !important;
+    justify-content: space-between;
+}
+
+.navbar-nav {
+    display: flex;
+    flex-direction: row !important;
+}
+
+.navbar-nav .nav-item {
+    margin-right: 10px;
+}
+
+.slider_area {
+    display: none !important;
+}
+
 @media (min-width: 768px) {
     .navbar-form .input-group .form-control,
     .navbar-form .input-group .input-group-btn {

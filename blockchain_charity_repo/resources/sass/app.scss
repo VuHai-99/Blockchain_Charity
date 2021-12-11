@@ -77,6 +77,12 @@ a:donator.list.project {
     border-bottom: 2px solid black;
 }
 
+.breadcrumb-item {
+    .active {
+        color: blue;
+    }
+}
+
 .main-content {
     padding: 0px 50px 50px 50px;
 }

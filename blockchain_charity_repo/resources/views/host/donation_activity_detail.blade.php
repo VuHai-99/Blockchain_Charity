@@ -104,11 +104,6 @@
                                 @endif
                             </div>
                         </div>
-                        @if ($donationActivity->host_address == Auth::user()->user_address)
-                            <div class="card-footer text-center">
-                                <a href="" class="btn btn-warning" role="button">Edit Donation Activity Information</a>
-                            </div>
-                        @endif
                     </div>
                     @if ($donationActivity->host_address == Auth::user()->user_address)
                         <div class="card-footer text-center">
@@ -134,8 +129,8 @@
                                         @if (isset($donationActivityCashouts) == true)
                                             @foreach ($donationActivityCashouts as $cashout)
                                                 <p class="text-sm-left">
-                                                    <strong class="text-sm-left">Tiền mặt: </strong>
-                                                    {{ $cashout->cashout_amount }}(wei)
+                                                    <strong class="text-sm-left">Tiền mặt:
+                                                        {{ number_format($cashout->cashout_amount) }}(wei)</strong>
                                                 </p>
                                             @endforeach
                                         @endif
@@ -143,6 +138,15 @@
                                             @foreach ($donationActivityOrders as $order)
 
                                             @endforeach
+                                        @endif
+                                        <h3 class="full-left">Hoạt động mua hàng</h3>
+                                        @if ($orders)
+                                            @foreach ($orders as $index => $order)
+                                                <a href="{{ route('order.history', $order->order_id) }}"
+                                                    class="nav-link">Đơn hàng {{ ++$index }}</a>
+                                            @endforeach
+                                        @else
+                                            Chưa có đơn hàng
                                         @endif
                                     @else
                                         <h4 class="font-weight-bold mb-3 black-text">Chưa có tài sản từ thiện nào.</h4>
@@ -152,7 +156,8 @@
                         </div>
                         @if ($donationActivity->host_address == Auth::user()->user_address)
                             <div class="card-footer text-center">
-                                <a href="{{ route('shopping') }}" class="btn btn-warning" role="button">Request to create
+                                <a href="{{ route('shopping', $donationActivityAddress) }}" class="btn btn-warning"
+                                    role="button">Request to create
                                     Donation Activity Order</a>
                                 <a href="{{ route('host.donationActivity.cashout.create.request', $donationActivity->donation_activity_address) }}"
                                     class="btn btn-warning" role="button">Request to create Donation Activity CashOut</a>
