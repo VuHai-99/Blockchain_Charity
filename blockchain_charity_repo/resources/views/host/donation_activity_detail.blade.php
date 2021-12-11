@@ -100,6 +100,8 @@
                                                 </div>
                                             @endforeach
                                         @endif
+                                    @endforeach
+                                @endif
                             </div>
                         </div>
                         @if ($donationActivity->host_address == Auth::user()->user_address)

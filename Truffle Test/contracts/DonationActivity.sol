@@ -81,29 +81,20 @@ contract DonationActivity{
 
     function hostConfirmReceivedOrder(bytes32 _orderCode) onlyHost public {
         Order storage or = orders[_orderCode];
-        if(or.orderState != OrderState.RECEIVED){
-            or.orderState = OrderState.RECEIVED;
-            
-            if(or.orderState == OrderState.RECEIVED && or.authorityConfirmation == true){
-                address(or.retailer).transfer(or.totalAmount);
-            }
-        }else {
-            revert("This order already complete");
+        or.orderState = OrderState.RECEIVED;
+        
+        if(or.orderState == OrderState.RECEIVED && or.authorityConfirmation == true){
+            address(or.retailer).transfer(or.totalAmount);
         }
     }
 
     function authorityConfirmReceivedOrder(bytes32 _orderCode) onlyAuthority public {
         Order storage or = orders[_orderCode];
-        if(or.authorityConfirmation == false){
-            or.authorityConfirmation = true;
+        or.authorityConfirmation = true;
         
-            if(or.orderState == OrderState.RECEIVED && or.authorityConfirmation == true){
-                address(or.retailer).transfer(or.totalAmount);
-            }
-        }else {
-            revert("This order already complete");
+        if(or.orderState == OrderState.RECEIVED && or.authorityConfirmation == true){
+            address(or.retailer).transfer(or.totalAmount);
         }
-        
     }
 
     //ORDER CRUD
@@ -167,14 +158,10 @@ contract DonationActivity{
 
     function authorityConfirmReceivedCashOut(bytes32 _cashOutCode) onlyAuthority public {
         CashOut storage or = cashOuts[_cashOutCode];
-        if(or.authorityConfirmation == false){
-            or.authorityConfirmation = true;
+        or.authorityConfirmation = true;
         
-            if(or.authorityConfirmation == true){
-                address(host).transfer(or.amount);
-            }
-        }else {
-            revert("This cashout already complete");
+        if(or.authorityConfirmation == true){
+            address(host).transfer(or.amount);
         }
     }
 
