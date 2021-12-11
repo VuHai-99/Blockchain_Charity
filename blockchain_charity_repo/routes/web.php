@@ -37,7 +37,6 @@ Route::prefix('admin')
         Route::get('list/campaign', 'AdminController@listCampaign')->name('campaign.list');
         Route::get('list/open-campaign-request', 'AdminController@listOpenCampaignRequest')->name('open-campaign-request.list');
         Route::get('list/validate-host-request', 'AdminController@listValidateHostRequest')->name('validate-host-request.list');
-        Route::get('profile', 'AdminController@profile')->name('profile.edit');
         Route::get('add/account', 'AdminController@createAccount')->name('create.account');
         Route::get('list/withdraw-money-request', 'AdminController@listWithdrawMoneyRequest')->name('withdraw-money-request.list');
         Route::get('list/create-donationActivity-request', 'AdminController@listcreateDonationActivityRequest')->name('create-donationActivity-request.list');
@@ -54,7 +53,6 @@ Route::post('api/confirm-password', 'Api\VerifyOtpController@confirmPassword')->
 Route::get('api/send-otp', 'Api\VerifyOtpController@sendOtp')->name('api.send.otp');
 Route::get('redirect-login', 'Auth\TowFactorController@redirectWhenErrorOtp')->name('redirect.error');
 
-Route::get('profile', 'DonatorController@profile')->name('user.profile')->middleware('auth');
 Route::prefix('charity')
     ->middleware(['verify_otp'])
     ->group(function () {
@@ -62,7 +60,6 @@ Route::prefix('charity')
             ->middleware('donator-wallet-hard')
             ->name('donator.')
             ->group(function () {
-                // Route::get('/specific-project/{blockchainAddress}', 'DonatorController@specificProject')->name('list.specific.project');
                 Route::get('', 'DonatorController@home')->name('home');
                 Route::get('campaign', 'DonatorController@listCampaign')->name('campaign');
                 Route::get('campaign-detail/{id}', 'DonatorController@campaignDetail')->name('campaign.detail');
@@ -71,7 +68,6 @@ Route::prefix('charity')
             ->middleware('donator-wallet-soft')
             ->name('donatorws.')
             ->group(function () {
-                // Route::get('/specific-project/{blockchainAddress}', 'DonatorController@WS_specificProject')->name('list.specific.project');
                 Route::get('', 'DonatorController@home')->name('home');
                 Route::get('campaign', 'DonatorController@WS_listCampaign')->name('campaign');
                 Route::get('campaign-detail/{id}', 'DonatorController@WS_campaignDetail')->name('campaign.detail');
@@ -95,7 +91,6 @@ Route::prefix('charity')
                 Route::get('donation_activity/{blockchainAddress}/{donationActivityAddress}', 'HostController@donationActivityDetail')->name('donationActivity.detail');
                 Route::get('edit/donation_activity_detail/{donationActivityAddress}', 'HostController@editDonationActivityDetail')->name('donation_activity_detail.edit');
                 Route::post('update/donation_activity_detail/{donationActivityAddress}', 'HostController@updateDonationActivity')->name('donationActivity.update');
-                
             });
         Route::get('delete/request/{id}', 'HostController@deleteRequest')->name('host.delete.request')->middleware('auth');
         Route::prefix('hostws')
@@ -126,6 +121,9 @@ Route::prefix('charity')
                 Route::post('update/donation_activity_detail/{donationActivityAddress}', 'HostController@WS_updateDonationActivity')->name('donationActivity.update');
             });
         Route::get('campaign/list-donator', 'DonatorController@listDonator')->name('campaign.donator');
+        Route::get('profile', 'UserController@profile')->name('user.profile');
+        Route::post('profile', 'UserController@updateProfile')->name('user.update');
+        Route::post('change/password', 'UserController@changePassword')->name('user.change.password');
     });
 
 Route::prefix('authority')

@@ -24,34 +24,50 @@
                     <p class="card-category nomargin">Complete your profile</p>
                 </div>
                 <div class="card-body">
-                    <form>
+                    <form action="{{ route('user.update') }}" method="post">
+                        @csrf
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="bmd-label-floating">Username</label>
-                                    <input type="text" class="form-control" value="{{ Auth::user()->name }}">
+                                    <input type="text" name="name" class="form-control"
+                                        value="{{ Auth::user()->name }}">
                                 </div>
+                                @error('name')
+                                    <p class="text-danger">{{ $message }}</p>
+                                @enderror
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="bmd-label-floating">Email address</label>
-                                    <input type="email" class="form-control" value="{{ Auth::user()->email }}">
+                                    <input type="email" name="email" class="form-control"
+                                        value="{{ Auth::user()->email }}">
                                 </div>
+                                @error('email')
+                                    <p class="text-danger">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-8">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="bmd-label-floating">Adress</label>
-                                    <input type="text" class="form-control" value="{{ Auth::user()->address }}">
+                                    <input type="text" name="home_address" class="form-control"
+                                        value="{{ Auth::user()->home_address }}">
                                 </div>
+                                @error('home_address')
+                                    <p class="text-danger">{{ $message }}</p>
+                                @enderror
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4 password">
-                                <label class="bmd-label-floating"> Password </label>
-                                <input type="text" type="password" value="" class="form-control">
-                                <i class="fa fa-eye-slash" aria-hidden="true"></i>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="bmd-label-floating">Phone</label>
+                                    <input type="text" name="phone" class="form-control"
+                                        value="{{ Auth::user()->phone }}">
+                                </div>
+                                @error('phone')
+                                    <p class="text-danger">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                         @if (Auth::user()->role == $enumUser::ROLE_HOST)
@@ -64,9 +80,62 @@
                                 </div>
                             </div>
                         @endif
-                        <button type="submit" class="btn btn-primary pull-right">Update Profile</button>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <button type="submit" class="btn btn-primary">Update Profile</button>
+                            </div>
+                        </div>
                         <div class="clearfix"></div>
                     </form>
+                    <button class="btn btn-primary pull-right" data-toggle="modal"
+                        data-target="#modal-change-password">Change Password</button>
+
+                    <div class="modal" id="modal-change-password">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Change Password</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                    <form action="{{ route('user.change.password') }}" method="post"
+                                        id="form-change-password">
+                                        @csrf
+                                        <div class="form-group">
+                                            <label for="old-password">Old Password</label>
+                                            <input type="password" id="old-password" name="password" class="form-control"
+                                                placeholder="Enter old password..." required>
+                                            <p class="text-danger error-old-password"></p>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="confirm-password">New Password</label>
+                                            <input type="password" min="8" id="new-password" name="confirm_password"
+                                                class="form-control" placeholder="Enter new password..." required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="old-password">Password Confirm</label>
+                                            <input type="password" id="confirm-password" name="password"
+                                                class="form-control" placeholder="Enter password confirm..." required>
+                                            <p class="text-danger error-confirm-password"></p>
+                                        </div>
+                                    </form>
+                                    <a href="{{ route('password.request') }}" class="nav-link">Forgot password
+                                        ?</a>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary"
+                                            id="btn-change-password">Submit</button>
+                                    </div>
+                                </div>
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger close-modal"
+                                        data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -90,4 +159,7 @@
             </div>
         </div>
     </div>
+@endsection
+@section('scripts')
+    <script src="{{ asset('js/page_profile.js') }}"></script>
 @endsection
