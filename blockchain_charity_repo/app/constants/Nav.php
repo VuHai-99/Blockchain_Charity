@@ -31,16 +31,16 @@ class Nav
                     'name' => 'Approve Host',
                 ],
                 [
-                    'url' => 'admin.withdraw-money-request.list',
-                    'name' => 'Approve Withdrawal',
-                ],
-                [
                     'url' => 'admin.create-donationActivity-request.list',
                     'name' => 'Approve DonationActivity',
                 ],
                 [
                     'url' => 'admin.create-donationActivityCashout-request.list',
                     'name' => 'Approve DonationActivity Cashout',
+                ],
+                [
+                    'url' => 'admin.create-donationActivityOrder-request.list',
+                    'name' => 'Approve DonationActivity Order',
                 ],
             ]
         ],
