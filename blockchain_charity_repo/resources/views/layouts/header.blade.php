@@ -2,9 +2,7 @@
 
 @php
 $navs = [];
-if (Auth::guard('admin')->check()) {
-    $navs = $NAV::NAV_SUPPER_ADMIN;
-} elseif (Auth::check()) {
+if (Auth::check()) {
     if (Auth::user()->role == 1) {
         if (Auth::user()->wallet_type == 0) {
             $navs = $NAV::NAV_ADMIN_HOST;
@@ -64,42 +62,41 @@ if (Auth::guard('admin')->check()) {
                                 <ul id="navigation">
                                     <li class="item">
                                         <a href="{{ route('admin.dashboard.index') }}"
-                                            class="nav-link">Dashboard</a>
+                                            class="nav-link">Trang chủ</a>
                                     </li>
                                     <li class="item">
-                                        <a href="{{ route('admin.host.list') }}" class="nav-link">List Host</a>
+                                        <a href="{{ route('admin.host.list') }}" class="nav-link">Nhà từ thiện</a>
                                     </li>
                                     <li class="item">
-                                        <a href="{{ route('admin.campaign.list') }}" class="nav-link">List
-                                            Campaign</a>
+                                        <a href="{{ route('admin.campaign.list') }}" class="nav-link">Dự án</a>
                                     </li>
                                     <li class="item btn-group">
-                                        <a href="" class="nav-link dropdown-toggle" data-toggle="dropdown">Request</a>
+                                        <a href="" class="nav-link dropdown-toggle" data-toggle="dropdown">Yêu cầu</a>
                                         <ul class="dropdown-menu">
                                             <li class="item">
                                                 <a href="{{ route('admin.open-campaign-request.list') }}"
-                                                    class="nav-link">Approve Campaign</a>
+                                                    class="nav-link">Xác nhận dự án</a>
                                             </li>
                                             <li class="item">
                                                 <a href="{{ route('admin.validate-host-request.list') }}"
-                                                    class="nav-link">Approve Host</a>
+                                                    class="nav-link">Xác nhận nhà từ thiện</a>
                                             </li>
                                             <li class="item">
                                                 <a href="{{ route('admin.withdraw-money-request.list') }}"
-                                                    class="nav-link">Approve Withdrawal</a>
+                                                    class="nav-link">Xác nhận rút tiền</a>
                                             </li>
                                             <li class="item">
                                                 <a href="{{ route('admin.create-donationActivity-request.list') }}"
-                                                    class="nav-link">Approve DonationActivity</a>
+                                                    class="nav-link">Xác nhận hoạt động</a>
                                             </li>
                                             <li class="item">
                                                 <a href="{{ route('admin.create-donationActivityCashout-request.list') }}"
-                                                    class="nav-link">Approve DonationActivity Cashout</a>
+                                                    class="nav-link">Xác nhận rút tiền</a>
                                             </li>
                                         </ul>
                                     </li>
                                     <li class="item">
-                                        <a href="{{ route('admin.logout') }}" class="nav-link">Logout</a>
+                                        <a href="{{ route('admin.logout') }}" class="nav-link">Đăng xuất</a>
                                     </li>
                                 </ul>
                             @endif

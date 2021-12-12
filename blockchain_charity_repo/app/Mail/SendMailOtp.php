@@ -31,7 +31,7 @@ class SendMailOtp extends Mailable
     public function build()
     {
         return $this->subject('Otp login')
-            ->from(ENV('MAIL_USERNAME'), ENV('MAIL_FROM_NAME'))
+            ->from(config('mail.from.address'), config('mail.from.name'))
             ->view('auth.mail_otp', ['otp' => $this->otp]);
     }
 }

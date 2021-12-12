@@ -12,10 +12,10 @@
 
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item "><a style="color:black" href="{{ route('hostws.home') }}">Home</a></li>
-            <li class="breadcrumb-item "><a style="color:black" href="{{ route('hostws.campaign') }}">List Campaign</a>
+            <li class="breadcrumb-item "><a style="color:black" href="{{ route('hostws.home') }}">Trang chủ</a></li>
+            <li class="breadcrumb-item "><a style="color:black" href="{{ route('hostws.campaign') }}">Dự án</a>
             </li>
-            <li class="breadcrumb-item "><a style="color:black" href="#">Campaign Detail</a></li>
+            <li class="breadcrumb-item "><a style="color:black" href="#">Chi tiết dự án</a></li>
         </ol>
     </nav>
 @endsection
@@ -76,7 +76,7 @@
                         @if ($campaign->host_address == Auth::user()->user_address)
                             <div class="card-footer text-center">
                                 <a href="{{ route('hostws.campaign_detail.edit', $campaign->campaign_address) }}"
-                                    class="btn btn-warning" role="button">Edit Campaign Information</a>
+                                    class="btn btn-warning" role="button">Chỉnh sửa thông tin dự án</a>
                             </div>
                         @endif
                     </div>
@@ -109,7 +109,7 @@
                         @if ($campaign->host_address == Auth::user()->user_address)
                             <div class="card-footer text-center">
                                 <a href="{{ route('hostws.donationActivity.create.request', $campaign->campaign_address) }}"
-                                    class="btn btn-warning" role="button">Request to create Donation Activity.</a>
+                                    class="btn btn-warning" role="button">Yêu cầu tạo hoạt động từ thiện.</a>
                             </div>
                         @endif
                     </div>
@@ -177,17 +177,17 @@
                     <input class="form-control" placeholder="Amount of donation" id="campaign_address"
                         name="campaign_address" value="{{ $campaign->campaign_address }}" type="hidden">
                     <br>
-                    <button class="btn" type="submit">DONATE NOW</button>
+                    <button class="btn" type="submit">Quyên góp ngay</button>
                 </form>
             </div>
             <hr>
             <div class="list-donator">
                 <div class="title">
                     <div class="donate-once">
-                        <a href="">Top Donator</a>
+                        <a href="">Quyên góp nhiều nhất</a>
                     </div>
                     <div class="donate-monthly">
-                        <a href="">Donate Monthly</a>
+                        <a href="">Quyên góp gần dây</a>
                     </div>
                 </div>
                 <ul class="list-donator-item" id="monthly-donator">

@@ -15,7 +15,6 @@ class FrontEndController extends Controller
 
     public function home()
     {
-
         return view('frontEnd.home');
     }
 
