@@ -24,6 +24,7 @@ class OrderReceiptRepository extends BaseRepository
             'order_receipts.total_receipt',
             'order_receipts.created_at',
             'products.quantity as quantity_remain',
+            'order_receipts.retailer_address'
         )
             ->join('products', 'products.id', '=', 'order_receipts.product_id', '')
             ->where('order_receipts.donation_activity_address', $donationActivityAddress)

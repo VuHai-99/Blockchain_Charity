@@ -91,6 +91,15 @@ Route::prefix('charity')
                 Route::get('donation_activity/{blockchainAddress}/{donationActivityAddress}', 'HostController@donationActivityDetail')->name('donationActivity.detail');
                 Route::get('edit/donation_activity_detail/{donationActivityAddress}', 'HostController@editDonationActivityDetail')->name('donation_activity_detail.edit');
                 Route::post('update/donation_activity_detail/{donationActivityAddress}', 'HostController@updateDonationActivity')->name('donationActivity.update');
+                Route::get('{donationActivityAddress}/shopping/shopping_cart', 'HostController@shoppingCart')->name('shopping.cart');
+                Route::get('{donationActivityAddress}/shopping/shopping_cart/{category}', 'HostController@shoppingCartByCategory')->name('shopping.cart.byCategory');
+                Route::get('{donation_address}/shopping/order/detail', 'HostController@showCartOrderDetail')->name('shopping.order.show');
+                Route::get('shopping/order/{id}/delete', 'HostController@shoppingCartDeleteOrder')->name('shopping.order.delete');
+                Route::get('shopping/order/{donationActivityAddress}/delete/cart', 'HostController@shoppingCartDeleteCart')->name('shopping.order.delete.cart');
+                Route::get('shopping/order/{donationActivityAddress}/confirm', 'HostController@shoppingCartConfirmOrder')->name('shopping.order.confirm');
+                Route::get('comfirm/blockchain_order/{orderId}', 'HostController@confirmOrderBlockchain')->name('shopping.order.blockchain');
+                // Route::get('shopping/order/{donationActivityAddress}/blockchain/confirm', 'HostController@shoppingCartBlockchainConfirm')->name('shopping.order.blockchain.confirm');
+                
             });
         Route::get('delete/request/{id}', 'HostController@deleteRequest')->name('host.delete.request')->middleware('auth');
         Route::prefix('hostws')
@@ -119,6 +128,7 @@ Route::prefix('charity')
                 Route::post('cancel/request/createDonationActivityCashout/{requestId}', 'HostController@WS_cancelRequestCreateDonationActivityCashout')->name('cancel.request.createDonationActivityCashout');
                 Route::get('edit/donation_activity_detail/{donationActivityAddress}', 'HostController@WS_editDonationActivityDetail')->name('donation_activity_detail.edit');
                 Route::post('update/donation_activity_detail/{donationActivityAddress}', 'HostController@WS_updateDonationActivity')->name('donationActivity.update');
+            
             });
         Route::get('campaign/list-donator', 'DonatorController@listDonator')->name('campaign.donator');
         Route::get('profile', 'UserController@profile')->name('user.profile');

@@ -156,7 +156,7 @@
                         </div>
                         @if ($donationActivity->host_address == Auth::user()->user_address)
                             <div class="card-footer text-center">
-                                <a href="{{ route('shopping', $donationActivityAddress) }}" class="btn btn-warning"
+                                <a href="{{ route('host.shopping.cart', $donationActivityAddress) }}" class="btn btn-warning"
                                     role="button">Request to create
                                     Donation Activity Order</a>
                                 <a href="{{ route('host.donationActivity.cashout.create.request', $donationActivity->donation_activity_address) }}"

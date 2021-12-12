@@ -10,6 +10,8 @@ use App\Model\Campaign;
 use App\Model\CampaignImg;
 use App\Model\CashoutDonationActivity;
 use App\Model\DonationActivity;
+use App\Model\OrderDonationActivity;
+use App\Model\OrderReceipt;
 use App\Model\Transaction;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -43,6 +45,8 @@ class BlockChainController extends Controller
                 $new_blockchain_request->authority_address = $request->authority_address;
                 $new_blockchain_request->campaign_address = $request->campaign_address;
                 $new_blockchain_request->donation_activity_address = $request->donation_activity_address;
+                $new_blockchain_request->retailer_address = $request->retailer_address;
+                $new_blockchain_request->url = $request->url;
                 $new_blockchain_request->campaign_name = $request->campaign_name;
                 $new_blockchain_request->date_start = $request->date_start;
                 $new_blockchain_request->date_end = $request->date_end;
@@ -55,6 +59,13 @@ class BlockChainController extends Controller
                     $host = User::findOrFail($new_blockchain_request->requested_user_address);
                     $host->validate_state = 1;
                     $host->save();
+                } elseif($request->request_type == 5){
+                    // upload request order to blockchain
+                    $url_analyze = explode('/', $request->url);
+                    // dd(end($url_analyze));
+                    $_order_donation_activity = OrderDonationActivity::where('order_code',end($url_analyze))->first();
+                    $_order_donation_activity->order_state = 4;
+                    $_order_donation_activity->save();
                 } 
             }
             

@@ -26,6 +26,8 @@ class CreateBlockchainRequestsTable extends Migration
             $table->text('description')->nullable();
             $table->text('authority_address')->nullable();
             $table->string('donation_activity_address')->nullable();
+            $table->string('url')->nullable();
+            $table->string('retailer_address')->nullable();
             $table->timestamps();
         });
     }
