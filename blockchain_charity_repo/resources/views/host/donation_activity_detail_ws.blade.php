@@ -67,8 +67,7 @@
                                     </p>
                                 </div>
                                 <br>
-                                @if (!empty($donation_activity_side_pic))
-                                    @foreach ($donation_activity_side_pic as $side_pic)
+                                
                                         <div class="col-md-6">
                                             <div class="view z-depth-1">
                                                 <img src="{{ isset($campaign_main_pic) == true ? url($campaign_main_pic->file_path) : '' }}"
@@ -103,11 +102,6 @@
                                         @endif
                             </div>
                         </div>
-                        @if ($donationActivity->host_address == Auth::user()->user_address)
-                            <div class="card-footer text-center">
-                                <a href="" class="btn btn-warning" role="button">Edit Donation Activity Information</a>
-                            </div>
-                        @endif
                     </div>
                     @if ($donationActivity->host_address == Auth::user()->user_address)
                         <div class="card-footer text-center">
@@ -170,7 +164,7 @@
                         </div>
                         @if ($donationActivity->host_address == Auth::user()->user_address)
                             <div class="card-footer text-center">
-                                <a href="{{ route('shopping', $donationActivityAddress) }}" class="btn btn-warning"
+                                <a href="{{ route('hostws.shopping.cart', $donationActivityAddress) }}" class="btn btn-warning"
                                     role="button">Request to create
                                     Donation Activity Order</a>
                                 <a href="{{ route('hostws.donationActivity.cashout.create.request', $donationActivity->donation_activity_address) }}"

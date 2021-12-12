@@ -129,7 +129,12 @@ Route::prefix('charity')
                 Route::post('cancel/request/createDonationActivityCashout/{requestId}', 'HostController@WS_cancelRequestCreateDonationActivityCashout')->name('cancel.request.createDonationActivityCashout');
                 Route::get('edit/donation_activity_detail/{donationActivityAddress}', 'HostController@WS_editDonationActivityDetail')->name('donation_activity_detail.edit');
                 Route::post('update/donation_activity_detail/{donationActivityAddress}', 'HostController@WS_updateDonationActivity')->name('donationActivity.update');
-            
+                Route::get('{donationActivityAddress}/shopping/shopping_cart', 'HostController@WS_shoppingCart')->name('shopping.cart');
+                Route::get('{donationActivityAddress}/shopping/shopping_cart/{category}', 'HostController@WS_shoppingCartByCategory')->name('shopping.cart.byCategory');
+                Route::get('{donation_address}/shopping/order/detail', 'HostController@WS_showCartOrderDetail')->name('shopping.order.show');
+                Route::get('shopping/order/{id}/delete', 'HostController@WS_shoppingCartDeleteOrder')->name('shopping.order.delete');
+                Route::get('shopping/order/{donationActivityAddress}/delete/cart', 'HostController@WS_shoppingCartDeleteCart')->name('shopping.order.delete.cart');
+                Route::get('shopping/order/{donationActivityAddress}/confirm', 'HostController@WS_shoppingCartConfirmOrder')->name('shopping.order.confirm');
             });
         Route::get('campaign/list-donator', 'DonatorController@listDonator')->name('campaign.donator');
         Route::get('profile', 'UserController@profile')->name('user.profile');

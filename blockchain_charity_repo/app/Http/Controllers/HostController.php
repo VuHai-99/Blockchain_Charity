@@ -830,6 +830,93 @@ class HostController extends Controller
         return back()->with($notification);
     }
 
+    public function WS_shoppingCart($donationActivityAddress,Request $request){
+        $user = Auth::user();
+        $keyWord = $request->product_name;
+        $products = $this->productRepository->getAll('', $keyWord);
+        $categories = $this->categoryRepository->getAll();
+        $orders = $this->orderReceipt->getOrderByRetailer($donationActivityAddress);
+        return view('host.shopping_index_ws', compact('products', 'categories', 'orders', 'donationActivityAddress'));
+    }
+
+
+    public function WS_shoppingCartByCategory($donationActivityAddress, $categoryName)
+    {
+        $user = Auth::user();
+        $products = $this->productRepository->getAll($categoryName);
+        $categories = $this->categoryRepository->getAll();
+        $orders = $this->orderReceipt->getOrderByRetailer($donationActivityAddress);
+        return view('host.shopping_index_ws', compact('products', 'categories', 'orders', 'donationActivityAddress'));
+    }
+
+
+    public function WS_showCartOrderDetail($donationActivityAddress)
+    {
+        $user = Auth::user();
+        $orders = $this->orderReceipt->getOrderByRetailer($donationActivityAddress);
+        $categories = $this->categoryRepository->getAll();
+        // $order_donation_activities = OrderDonationActivity::where()
+        return view('host.shopping_order_detail_ws', compact('orders', 'categories', 'donationActivityAddress'));
+    }
+
+    public function WS_shoppingCartDeleteOrder($orderId)
+    {
+        $this->orderReceipt->delete($orderId);
+        return back()->with('messages', 'Xóa sản phẩm thành công');
+    }
+
+    public function WS_shoppingCartDeleteCart($donationActivityAddress)
+    {
+        $hostAddress = Auth::user()->user_address;
+        $this->orderReceipt->deleteAllCart($donationActivityAddress);
+        return redirect()->back()->with('messages', 'Xóa giỏ hàng thành công');
+    }
+
+    public function WS_shoppingCartConfirmOrder($donationActivityAddress)
+    {   
+        $hostAddress = Auth::user()->user_address;
+        $donationActivity = DonationActivity::findOrFail($donationActivityAddress);
+        $campaign = Campaign::findOrFail($donationActivity->campaign_address);
+        $amount = $campaign->current_balance;
+        $totalReceipt = $this->orderReceipt->getTotalOrder($hostAddress);
+        
+        $orderID = strtotime(now());
+        $dataUpdateOrder = [
+            'order_id' => $orderID,
+            'date_of_payment' => now()->format('Y-m-d H:i:s'),
+        ];
+        if ($amount < $totalReceipt) {
+            return back()->with('messages_fail', 'Số tiền của bạn không đủ');
+        }
+        $amountRemain = $amount - $totalReceipt;
+        $orders = $this->orderReceipt->getProductOrder($donationActivityAddress);
+        if(count($orders)!=0){
+            $product_id= $orders[0]->product_id;
+            $retailerAddress = (Product::findOrFail($product_id))->retailer_address;
+            // dd($retailerAddress);
+            $url = 'http://127.0.0.1:8000/history/purchase/'.strval($orderID);
+            DB::transaction(function () use ($hostAddress, $donationActivityAddress, $dataUpdateOrder, $orders, $amountRemain) {
+                $this->orderReceipt->confirmOrder($donationActivityAddress, $dataUpdateOrder);
+                $this->productRepository->updateQuantityProduct($orders);
+            });
+
+            $orderDonationActivity = new OrderDonationActivity();
+            $orderDonationActivity->receipt_url = $url;
+            $orderDonationActivity->retailer_address = $retailerAddress;
+            $orderDonationActivity->order_state = 3;
+            $orderDonationActivity->order_code = $orderID;
+            $orderDonationActivity->authority_confirmation = false;
+            $orderDonationActivity->total_amount = $totalReceipt;
+            $orderDonationActivity->donation_activity_address = $donationActivityAddress;
+            $orderDonationActivity->save();
+
+            $campaign->current_balance = $amount - $totalReceipt;
+            $campaign->save();
+            
+            return redirect()->back()->with('message','Mua hang thanh cong');
+        }
+    }
+
     public function getDonatorMonthly($blockchainAddress)
     {
         $donators = $this->campaignRepository->getListUserDonate($blockchainAddress, 0);
@@ -841,4 +928,7 @@ class HostController extends Controller
         $donators =  $userTopDonate = $this->campaignRepository->getListUserTopDonate($blockchainAddress, 10);
         return view('host.donator_top', compact('donators'));
     }
+
+    
+    
 }

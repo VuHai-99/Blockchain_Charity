@@ -48,7 +48,7 @@
             </form>
         </div>
         <div id="cart" class="col-md-1 col-sm-2 col-xs-2">
-            <a href="{{ route('host.shopping.order.show', $donationActivityAddress) }}">
+            <a href="{{ route('hostws.shopping.order.show', $donationActivityAddress) }}">
                 <i class="fa fa-cart-plus" aria-hidden="true"> {{ count($orders) }}</i> &nbsp;
             </a>
         </div>
