@@ -4,6 +4,10 @@ use Carbon\Carbon;
 @endphp
 
 @section('title', 'Lịch sử mua hàng')
+
+@section('css')
+<link rel="stylesheet" href="{{asset('css/history_purchase.css')}}">
+@endsection
 @section('pageBreadcrumb')
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">

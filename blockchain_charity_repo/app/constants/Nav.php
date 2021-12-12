@@ -4,112 +4,65 @@ namespace App\Constants;
 
 class Nav
 {
-    const NAV_SUPPER_ADMIN = [
-        [
-            'url' => 'admin.dashboard.index',
-            'name' => 'Dashboard',
-        ],
-
-        [
-            'url' => 'admin.host.list',
-            'name' => 'List Host',
-        ],
-        [
-            'url' => 'admin.campaign.list',
-            'name' => 'List Campaign',
-        ],
-        [
-            'url' => '',
-            'name' => 'Requests',
-            'sub_menu' => [
-                [
-                    'url' => 'admin.open-campaign-request.list',
-                    'name' => 'Approve Campaign',
-                ],
-                [
-                    'url' => 'admin.validate-host-request.list',
-                    'name' => 'Approve Host',
-                ],
-                [
-                    'url' => 'admin.create-donationActivity-request.list',
-                    'name' => 'Approve DonationActivity',
-                ],
-                [
-                    'url' => 'admin.create-donationActivityCashout-request.list',
-                    'name' => 'Approve DonationActivity Cashout',
-                ],
-                [
-                    'url' => 'admin.create-donationActivityOrder-request.list',
-                    'name' => 'Approve DonationActivity Order',
-                ],
-            ]
-        ],
-
-        [
-            'url' => 'admin.logout',
-            'name' => 'Logout',
-        ]
-    ];
-
     const NAV_SUPPER_AUTHORITY = [
         [
             'url' => '',
-            'name' => 'Dashboard',
+            'name' => 'Trang chủ',
         ],
 
         [
             'url' => '',
-            'name' => 'Requests',
+            'name' => 'Danh sách yêu cầu',
         ],
         [
             'url' => 'authority.logout',
-            'name' => 'Logout',
+            'name' => 'Đăng xuất',
         ],
     ];
 
     const NAV_ADMIN_DONATOR = [
         [
             'url' => 'donator.home',
-            'name' => 'Home',
+            'name' => 'Trang chủ',
         ],
         [
             'url' => 'donator.campaign',
-            'name' => 'List Campaign',
+            'name' => 'Dự án',
         ],
         [
             'url' => 'wallet',
-            'name' => 'My Wallet',
+            'name' => 'Tài khoản',
         ],
         [
             'url' => 'user.profile',
-            'name' => 'Profile',
+            'name' => 'Thông tin cá nhân',
         ],
         [
             'url' => 'logout',
-            'name' => 'Logout',
+            'name' => 'Đăng xuất',
         ],
     ];
 
     const NAV_ADMIN_DONATOR_WS = [
         [
             'url' => 'donatorws.home',
-            'name' => 'Home',
+            'name' => 'Trang chủ',
         ],
         [
             'url' => 'donatorws.campaign',
-            'name' => 'List Campaign',
+            'name' => 'Dự án',
         ],
         [
             'url' => 'wallet',
-            'name' => 'My Wallet',
+            'name' => 'Tài khoản',
         ],
         [
             'url' => 'user.profile',
-            'name' => 'Profile',
+            'name' => 'Thông tin cá nhân',
         ],
         [
             'url' => 'logout',
-            'name' => 'Logout',
+            'name' => 'Đăng xuất',
         ],
     ];
 
@@ -117,36 +70,36 @@ class Nav
     const NAV_ADMIN_HOST = [
         [
             'url' => 'host.home',
-            'name' => 'Home',
+            'name' => 'Trang chủ',
         ],
         [
             'url' => 'host.campaign',
-            'name' => 'List Campaign',
+            'name' => 'Dự án',
         ],
         [
             'url' => 'host.validate.host',
-            'name' => 'Validate Account',
+            'name' => 'Xác nhận tài khoản',
         ],
         [
             'url' => 'host.campaign.create',
-            'name' => 'Create Campaign',
+            'name' => 'Tạo dự án',
         ],
         [
             'url' => 'host.list.request',
-            'name' => 'List Requests',
+            'name' => 'Danh sách yêu cầu',
         ],
         [
             'url' => 'user.profile',
-            'name' => 'Profile',
+            'name' => 'Thông tin cá nhân',
         ],
         [
             'url' => 'wallet',
-            'name' => 'My Wallet',
+            'name' => 'Tài khoản',
             //'icon' => 'images/icons/walet.png'
         ],
         [
             'url' => 'logout',
-            'name' => 'Logout',
+            'name' => 'Đăng xuất',
         ],
 
     ];
@@ -155,36 +108,36 @@ class Nav
     const NAV_ADMIN_HOST_WS = [
         [
             'url' => 'hostws.home',
-            'name' => 'Home',
+            'name' => 'Trang chủ',
         ],
         [
             'url' => 'hostws.campaign',
-            'name' => 'List Campaign',
+            'name' => 'Dự án',
         ],
         [
             'url' => 'hostws.validate.host',
-            'name' => 'Validate Account',
+            'name' => 'Xác thực tài khoản',
         ],
         [
             'url' => 'hostws.campaign.create',
-            'name' => 'Create Campaign',
+            'name' => 'Tạo dự án',
         ],
         [
             'url' => 'hostws.list.request',
-            'name' => 'List Requests',
+            'name' => 'Danh sách yêu cầu',
         ],
         [
             'url' => 'user.profile',
-            'name' => 'Profile',
+            'name' => 'Thông tin cá nhân',
         ],
         [
             'url' => 'wallet',
-            'name' => 'My Wallet',
+            'name' => 'Tài khoản',
             //'icon' => 'images/icons/walet.png'
         ],
         [
             'url' => 'logout',
-            'name' => 'Logout',
+            'name' => 'Đăng xuất',
         ],
 
     ];
@@ -193,62 +146,27 @@ class Nav
     const NAV_HOME = [
         [
             'url' => 'home',
-            'name' => 'Home',
-        ],
-        [
-            'url' => '',
-            'name' => 'About',
+            'name' => 'Trang chủ',
         ],
         [
             'url' => 'campaign',
-            'name' => 'Campaign',
+            'name' => 'Dự án',
         ],
         [
             'url' => '',
-            'name' => 'Help',
+            'name' => 'Hỗ trợ',
         ],
         [
             'url' => '',
-            'name' => 'Contact',
+            'name' => 'Liên hệ',
         ],
         [
             'url' => 'login',
-            'name' => 'Login',
+            'name' => 'Đăng nhập',
         ],
         [
             'url' => 'register',
-            'name' => 'Register',
-        ]
-    ];
-
-    const NAV_RETAILER = [
-        [
-            'url' => 'retailer.index',
-            'name' => 'Home',
-        ],
-        [
-            'url' => '',
-            'name' => 'About',
-        ],
-        [
-            'url' => 'retailer.product.list',
-            'name' => 'retailer.product',
-        ],
-        [
-            'url' => 'retailer.order',
-            'name' => 'Order',
-        ],
-        [
-            'url' => '',
-            'name' => 'Contact',
-        ],
-        [
-            'url' => 'retailer.logout',
-            'name' => 'Login',
-        ],
-        [
-            'url' => 'retailer.profile',
-            'name' => 'Profile',
+            'name' => 'Đăng kí',
         ]
     ];
 }
