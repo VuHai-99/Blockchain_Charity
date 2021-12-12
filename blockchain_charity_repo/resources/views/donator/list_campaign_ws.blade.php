@@ -1,4 +1,5 @@
 @extends('layouts.default')
+@section('title', 'Danh sách dự án')
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/host_list_project.css') }}">
@@ -8,8 +9,8 @@
 @section('pageBreadcrumb')
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item "><a style="color:black" href="{{ route('donatorws.home') }}">Home</a></li>
-            <li class="breadcrumb-item "><a style="color:black" href="#">List Campaign</a></li>
+            <li class="breadcrumb-item "><a style="color:black" href="{{ route('donatorws.home') }}">Trang chủ</a></li>
+            <li class="breadcrumb-item "><a style="color:black" href="#">Dự án</a></li>
         </ol>
     </nav>
 @endsection
@@ -48,7 +49,7 @@
                         </div>
                         <div class="donate">
                             <a class="btn btn-donate"
-                                href="{{ route('donatorws.campaign.detail', $campaign->campaign_address) }}">DONATE</a>
+                                href="{{ route('donatorws.campaign.detail', $campaign->campaign_address) }}">QUYÊN GÓP</a>
                         </div>
                     </div>
                 </div>

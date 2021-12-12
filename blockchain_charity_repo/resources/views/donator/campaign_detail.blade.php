@@ -12,9 +12,9 @@
 
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item "><a style="color:black" href="{{ route('donator.home') }}">Home</a></li>
-            <li class="breadcrumb-item "><a style="color:black" href="{{ route('donator.campaign') }}">List Campaign</a></li>
-            <li class="breadcrumb-item "><a style="color:black" href="#">Campaign Detail</a></li>
+            <li class="breadcrumb-item "><a style="color:black" href="{{ route('donator.home') }}">Trang chủ</a></li>
+            <li class="breadcrumb-item "><a style="color:black" href="{{ route('donator.campaign') }}">Dự án</a></li>
+            <li class="breadcrumb-item "><a style="color:black" href="#">Chi tiết dự án</a></li>
         </ol>
     </nav>
 @endsection
@@ -112,10 +112,10 @@
                         <div class="card-body">
                             <div class="row my-4">
                                 <div class="col-md-8">
-                                    <h4 class="text-sm-left">Name: <b>{{$campaign->user->name}}</b></h4>
-                                    <p class="text-sm-left">Address : {{$campaign->host_address}}</p>
+                                    <h4 class="text-sm-left">Nhà từ thiện: <b>{{$campaign->user->name}}</b></h4>
+                                    <p class="text-sm-left">Địa chỉ : {{$campaign->host_address}}</p>
                                     <p class="text-sm-left">Email : {{$campaign->user->email}}</p>
-                                    <p class="text-sm-left">Phone : {{$campaign->user->phone}}</p>
+                                    <p class="text-sm-left">Số điện thoại : {{$campaign->user->phone}}</p>
                                 </div>
                                 <div class="col-md-4 mt-3 pt-2">
                                     <div class="view z-depth-1">

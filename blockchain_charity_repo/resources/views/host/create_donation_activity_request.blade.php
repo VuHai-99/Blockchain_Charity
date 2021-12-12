@@ -1,5 +1,7 @@
 @extends('layouts.default')
 
+@section('Tạo hoạt động từ thiện')
+
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/create_campaign.css') }}">
 @endsection
@@ -8,9 +10,9 @@
 @section('pageBreadcrumb')
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item "><a style="color:black" href="{{ route('host.home') }}">Home</a></li>
-            <li class="breadcrumb-item "><a style="color:black" href="{{ route('host.campaign.detail',$campaign->campaign_address) }}">Campaign Detail</a></li>
-            <li class="breadcrumb-item "><a style="color:black" href="#">Request Donation Activity</a></li>
+            <li class="breadcrumb-item "><a style="color:black" href="{{ route('host.home') }}">Trang chủ</a></li>
+            <li class="breadcrumb-item "><a style="color:black" href="{{ route('host.campaign.detail',$campaign->campaign_address) }}">Chi tiết dự án</a></li>
+            <li class="breadcrumb-item "><a style="color:black" href="#">Tạo hoạt động từ thiện</a></li>
         </ol>
     </nav>
 @endsection
@@ -68,7 +70,7 @@
                 <input type="hidden" id="host_address" name="host_address"  value="{{Auth::user()->user_address}}">
                 <input type="hidden" id="campaign_address" name="campaign_address"  value="{{$campaign->campaign_address}}">
                 <div class="form-group col-6" >
-                    <button type="submit" class="btn btn-primary" onclick="App.requestToCreateDonationActivity(); return false">Tạo Request Mở Donation Activity</button>
+                    <button type="submit" class="btn btn-primary" onclick="App.requestToCreateDonationActivity(); return false">Tạo hoạt động</button>
                 </div>
                 </div>
             </form>

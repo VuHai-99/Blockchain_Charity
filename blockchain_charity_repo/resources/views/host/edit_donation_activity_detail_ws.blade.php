@@ -1,5 +1,7 @@
 @extends('layouts.default')
 
+@section('title', 'Chỉnh sửa thông tin hoạt động')
+
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/create_campaign.css') }}">
 @endsection
@@ -8,11 +10,11 @@
 @section('pageBreadcrumb')
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item "><a style="color:black" href="{{ route('hostws.home') }}">Home</a></li>
-        <li class="breadcrumb-item "><a style="color:black" href="{{ route('hostws.campaign') }}">List Campaign</a></li>
-        <li class="breadcrumb-item "><a style="color:black" href="{{ route('hostws.campaign.detail', $campaign->campaign_address) }}">Campaign</a></li>
-        <li class="breadcrumb-item "><a style="color:black" href="{{ route('hostws.donationActivity.detail',['blockchainAddress' => $campaign->campaign_address,'donationActivityAddress'=>$donationActivity->donation_activity_address]) }}">Donation Activity Detail</a></li>
-        <li class="breadcrumb-item "><a style="color:black" href="#">Edit Donation Activity</a></li>
+        <li class="breadcrumb-item "><a style="color:black" href="{{ route('hostws.home') }}">Trang chủ</a></li>
+        <li class="breadcrumb-item "><a style="color:black" href="{{ route('hostws.campaign') }}">Dự án</a></li>
+        <li class="breadcrumb-item "><a style="color:black" href="{{ route('hostws.campaign.detail', $campaign->campaign_address) }}">Chi tiết dự án</a></li>
+        <li class="breadcrumb-item "><a style="color:black" href="{{ route('hostws.donationActivity.detail',['blockchainAddress' => $campaign->campaign_address,'donationActivityAddress'=>$donationActivity->donation_activity_address]) }}">Chi tiết hoạt động</a></li>
+        <li class="breadcrumb-item "><a style="color:black" href="#">Chỉnh sửa hoạt động</a></li>
     </ol>
 </nav>
 @endsection
@@ -125,7 +127,7 @@
                     </div>
                 </div>
                 <div class="form-group col-6">
-                    <button type="submit" class="btn btn-primary">Update Donation Activity</button>
+                    <button type="submit" class="btn btn-primary">Chỉnh sửa</button>
                 </div>
             </div>
         </form>

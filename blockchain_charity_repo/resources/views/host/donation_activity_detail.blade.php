@@ -1,6 +1,6 @@
 @extends('layouts.default')
 
-@section('title', 'Chi tiết dự án')
+@section('title', 'Chi tiết hoạt động từ thiện')
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/project_detail.css') }}">
@@ -14,11 +14,11 @@
             @php
                 $temp = explode('/', Request::url());
             @endphp
-            <li class="breadcrumb-item "><a style="color:black" href="{{ route('host.home') }}">Home</a></li>
-            <li class="breadcrumb-item "><a style="color:black" href="{{ route('host.campaign') }}">List Campaign</a></li>
+            <li class="breadcrumb-item "><a style="color:black" href="{{ route('host.home') }}">Trang chủ</a></li>
+            <li class="breadcrumb-item "><a style="color:black" href="{{ route('host.campaign') }}">Dự án</a></li>
             <li class="breadcrumb-item "><a style="color:black"
-                    href="{{ route('host.campaign.detail', $temp[6]) }}">Campaign</a></li>
-            <li class="breadcrumb-item "><a style="color:black" href="#">Donation Activity Detail</a></li>
+                    href="{{ route('host.campaign.detail', $temp[6]) }}">Chi tiết dự án</a></li>
+            <li class="breadcrumb-item "><a style="color:black" href="#">Chi tiết hoạt động</a></li>
         </ol>
     </nav>
 @endsection
@@ -108,7 +108,7 @@
                     @if ($donationActivity->host_address == Auth::user()->user_address)
                         <div class="card-footer text-center">
                             <a href="{{ route('host.donation_activity_detail.edit', $donationActivity->donation_activity_address) }}"
-                                class="btn btn-warning" role="button">Edit Donation Activity Information</a>
+                                class="btn btn-warning" role="button">chỉnh sửa thông tin hoạt động</a>
                         </div>
                     @endif
                 </div>
@@ -157,10 +157,9 @@
                         @if ($donationActivity->host_address == Auth::user()->user_address)
                             <div class="card-footer text-center">
                                 <a href="{{ route('host.shopping.cart', $donationActivityAddress) }}" class="btn btn-warning"
-                                    role="button">Request to create
-                                    Donation Activity Order</a>
+                                    role="button">Yêu cầu mua hàng</a>
                                 <a href="{{ route('host.donationActivity.cashout.create.request', $donationActivity->donation_activity_address) }}"
-                                    class="btn btn-warning" role="button">Request to create Donation Activity CashOut</a>
+                                    class="btn btn-warning" role="button">Tạo yêu cầu rút tiền</a>
                             </div>
                         @endif
                     </div>
@@ -178,10 +177,10 @@
                         <div class="card-body">
                             <div class="row my-4">
                                 <div class="col-md-8">
-                                    <h4 class="text-sm-left">Name: <b>{{ $campaign->user->name }}</b></h4>
-                                    <p class="text-sm-left">Address : {{ $donationActivity->host_address }}</p>
+                                    <h4 class="text-sm-left">Nhà từ thiện: <b>{{ $campaign->user->name }}</b></h4>
+                                    <p class="text-sm-left">Địa chỉ : {{ $donationActivity->host_address }}</p>
                                     <p class="text-sm-left">Email : {{ $campaign->user->email }}</p>
-                                    <p class="text-sm-left">Phone : {{ $campaign->user->phone }}</p>
+                                    <p class="text-sm-left">Số điện thoại : {{ $campaign->user->phone }}</p>
                                 </div>
                                 <div class="col-md-4 mt-3 pt-2">
                                     <div class="view z-depth-1">

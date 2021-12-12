@@ -22533,8 +22533,7 @@
                             while (index--) {
                                 args[index] = arguments[index];
                             }
-                            var holders = (length < 3 && args[0] !== placeholder && args[length - 1] !== placeholder) ?
-                                [] :
+                            var holders = (length < 3 && args[0] !== placeholder && args[length - 1] !== placeholder) ? [] :
                                 replaceHolders(args, placeholder);
 
                             length -= holders.length;
@@ -23689,8 +23688,7 @@
                      */
                     function initCloneObject(object) {
                         return (typeof object.constructor == 'function' && !isPrototype(object)) ?
-                            baseCreate(getPrototype(object)) :
-                            {};
+                            baseCreate(getPrototype(object)) : {};
                     }
 
                     /**
@@ -24475,8 +24473,7 @@
                      */
                     var difference = baseRest(function(array, values) {
                         return isArrayLikeObject(array) ?
-                            baseDifference(array, baseFlatten(values, 1, isArrayLikeObject, true)) :
-                            [];
+                            baseDifference(array, baseFlatten(values, 1, isArrayLikeObject, true)) : [];
                     });
 
                     /**
@@ -24511,8 +24508,7 @@
                             iteratee = undefined;
                         }
                         return isArrayLikeObject(array) ?
-                            baseDifference(array, baseFlatten(values, 1, isArrayLikeObject, true), getIteratee(iteratee, 2)) :
-                            [];
+                            baseDifference(array, baseFlatten(values, 1, isArrayLikeObject, true), getIteratee(iteratee, 2)) : [];
                     });
 
                     /**
@@ -24544,8 +24540,7 @@
                             comparator = undefined;
                         }
                         return isArrayLikeObject(array) ?
-                            baseDifference(array, baseFlatten(values, 1, isArrayLikeObject, true), undefined, comparator) :
-                            [];
+                            baseDifference(array, baseFlatten(values, 1, isArrayLikeObject, true), undefined, comparator) : [];
                     });
 
                     /**
@@ -24654,8 +24649,7 @@
                      */
                     function dropRightWhile(array, predicate) {
                         return (array && array.length) ?
-                            baseWhile(array, getIteratee(predicate, 3), true, true) :
-                            [];
+                            baseWhile(array, getIteratee(predicate, 3), true, true) : [];
                     }
 
                     /**
@@ -24695,8 +24689,7 @@
                      */
                     function dropWhile(array, predicate) {
                         return (array && array.length) ?
-                            baseWhile(array, getIteratee(predicate, 3), true) :
-                            [];
+                            baseWhile(array, getIteratee(predicate, 3), true) : [];
                     }
 
                     /**
@@ -25027,8 +25020,7 @@
                     var intersection = baseRest(function(arrays) {
                         var mapped = arrayMap(arrays, castArrayLikeObject);
                         return (mapped.length && mapped[0] === arrays[0]) ?
-                            baseIntersection(mapped) :
-                            [];
+                            baseIntersection(mapped) : [];
                     });
 
                     /**
@@ -25064,8 +25056,7 @@
                             mapped.pop();
                         }
                         return (mapped.length && mapped[0] === arrays[0]) ?
-                            baseIntersection(mapped, getIteratee(iteratee, 2)) :
-                            [];
+                            baseIntersection(mapped, getIteratee(iteratee, 2)) : [];
                     });
 
                     /**
@@ -25098,8 +25089,7 @@
                             mapped.pop();
                         }
                         return (mapped.length && mapped[0] === arrays[0]) ?
-                            baseIntersection(mapped, undefined, comparator) :
-                            [];
+                            baseIntersection(mapped, undefined, comparator) : [];
                     });
 
                     /**
@@ -25624,8 +25614,7 @@
                      */
                     function sortedUniq(array) {
                         return (array && array.length) ?
-                            baseSortedUniq(array) :
-                            [];
+                            baseSortedUniq(array) : [];
                     }
 
                     /**
@@ -25646,8 +25635,7 @@
                      */
                     function sortedUniqBy(array, iteratee) {
                         return (array && array.length) ?
-                            baseSortedUniq(array, getIteratee(iteratee, 2)) :
-                            [];
+                            baseSortedUniq(array, getIteratee(iteratee, 2)) : [];
                     }
 
                     /**
@@ -25774,8 +25762,7 @@
                      */
                     function takeRightWhile(array, predicate) {
                         return (array && array.length) ?
-                            baseWhile(array, getIteratee(predicate, 3), false, true) :
-                            [];
+                            baseWhile(array, getIteratee(predicate, 3), false, true) : [];
                     }
 
                     /**
@@ -25815,8 +25802,7 @@
                      */
                     function takeWhile(array, predicate) {
                         return (array && array.length) ?
-                            baseWhile(array, getIteratee(predicate, 3)) :
-                            [];
+                            baseWhile(array, getIteratee(predicate, 3)) : [];
                     }
 
                     /**
@@ -26062,8 +26048,7 @@
                      */
                     var without = baseRest(function(array, values) {
                         return isArrayLikeObject(array) ?
-                            baseDifference(array, values) :
-                            [];
+                            baseDifference(array, values) : [];
                     });
 
                     /**
@@ -27167,10 +27152,12 @@
                      */
                     var partition = createAggregator(function(result, value, key) {
                         result[key ? 0 : 1].push(value);
-                    }, function() { return [
+                    }, function() {
+                        return [
                             [],
                             []
-                        ]; });
+                        ];
+                    });
 
                     /**
                      * Reduces `collection` to a value which is the accumulated result of running

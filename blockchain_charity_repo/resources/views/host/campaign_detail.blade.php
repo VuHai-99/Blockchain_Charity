@@ -11,9 +11,9 @@
 @section('pageBreadcrumb')
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item "><a style="color:black" href="{{ route('host.home') }}">Home</a></li>
-            <li class="breadcrumb-item "><a style="color:black" href="{{ route('host.campaign') }}">List Campaign</a></li>
-            <li class="breadcrumb-item "><a style="color:black" href="#">Campaign Detail</a></li>
+            <li class="breadcrumb-item "><a style="color:black" href="{{ route('host.home') }}">Trang chủ</a></li>
+            <li class="breadcrumb-item "><a style="color:black" href="{{ route('host.campaign') }}">Dự án</a></li>
+            <li class="breadcrumb-item "><a style="color:black" href="#" class="active">Chi tiết dự án</a></li>
 
         </ol>
     </nav>
@@ -76,7 +76,7 @@
                         @if ($campaign->host_address == Auth::user()->user_address)
                             <div class="card-footer text-center">
                                 <a href="{{ route('host.campaign_detail.edit', $campaign->campaign_address) }}"
-                                    class="btn btn-warning" role="button">Edit Campaign Information</a>
+                                    class="btn btn-warning" role="button">Chỉnh sửa thông tin dự án</a>
                             </div>
                         @endif
                     </div>
@@ -109,7 +109,7 @@
                         @if ($campaign->host_address == Auth::user()->user_address)
                             <div class="card-footer text-center">
                                 <a href="{{ route('host.donationActivity.create.request', $campaign->campaign_address) }}"
-                                    class="btn btn-warning" role="button">Request to create Donation Activity.</a>
+                                    class="btn btn-warning" role="button">Yêu cầu tạo hoạt động từ thiện.</a>
                             </div>
                         @endif
                     </div>
@@ -127,10 +127,10 @@
                         <div class="card-body">
                             <div class="row my-4">
                                 <div class="col-md-8">
-                                    <h4 class="text-sm-left">Name: <b>{{ $campaign->user->name }}</b></h4>
-                                    <p class="text-sm-left">Address : {{ $campaign->host_address }}</p>
+                                    <h4 class="text-sm-left">Tên nhà từ thiện: <b>{{ $campaign->user->name }}</b></h4>
+                                    <p class="text-sm-left">Địa chỉ : {{ $campaign->host_address }}</p>
                                     <p class="text-sm-left">Email : {{ $campaign->user->email }}</p>
-                                    <p class="text-sm-left">Phone : {{ $campaign->user->phone }}</p>
+                                    <p class="text-sm-left">Số điện thoại : {{ $campaign->user->phone }}</p>
                                 </div>
                                 <div class="col-md-4 mt-3 pt-2">
                                     <div class="view z-depth-1">
@@ -172,17 +172,16 @@
             <div class="btn-donate">
                 <input class="form-control" placeholder="Amount of donation" id="donation_amount" name="donation_amount">
                 <br>
-                <button class="btn" onclick="App.donateCampaign('{{ $campaign->campaign_address }}')">DONATE
-                    NOW</button>
+                <button class="btn" onclick="App.donateCampaign('{{ $campaign->campaign_address }}')">Quyên góp ngay</button>
             </div>
             <hr>
             <div class="list-donator">
                 <div class="title">
                     <div class="donate-once">
-                        Top Donator
+                        Quyên góp nhiều nhất
                     </div>
                     <div class="donate-monthly">
-                        Donate Monthly
+                        Quyên góp gần đây
                     </div>
                 </div>
                 <ul class="list-donator-item" id="monthly-donator">
