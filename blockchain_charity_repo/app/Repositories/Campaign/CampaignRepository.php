@@ -25,23 +25,23 @@ class CampaignRepository extends BaseRepository implements RepositoryInterface
         return $campaigns;
     }
 
-    public function getListUserTopDonate($campaignAddress)
+    public function getListUserTopDonate($campaignAddress, $limit)
     {
         $transactions = $this->model->select(
             'transactions.sender_address',
-            DB::raw('sum(transactions.amount) as total_donate')
+            DB::raw('sum(transactions.amount) as total_donate'),
         )
             ->join('transactions', 'transactions.receiver_address', '=', 'campaigns.campaign_address')
             ->where('campaigns.campaign_address', $campaignAddress)
             ->groupBy('transactions.sender_address')
             ->orderByDesc('total_donate');
         $users = DB::table('users')
-            ->select('users.name', 'transaction.total_donate', 'users.user_address')
+            ->select('users.name', 'transaction.total_donate', 'users.user_address', 'users.home_address')
             ->joinSub($transactions, 'transaction', function ($join) {
                 $join->on('transaction.sender_address', '=', 'users.user_address');
             })
             ->skip(0)
-            ->take(10)
+            ->take($limit)
             ->get();
         return $users;
     }
@@ -51,6 +51,7 @@ class CampaignRepository extends BaseRepository implements RepositoryInterface
         $users =  $this->model->select(
             'users.name',
             'users.user_address',
+            'users.home_address',
             'transactions.amount',
             DB::raw("DATE_FORMAT(transactions.created_at, '%d/%m/%Y') as donated_at")
         )

@@ -131,6 +131,7 @@ Route::prefix('authority')
     ->group(function () {
         Route::get('login', 'AuthorityController@login')->name('login');
         Route::post('login', 'AuthorityController@validateAuthority')->name('validate');
+        Route::get('logout', 'AuthorityController@logout')->name('logout');
         Route::get('', 'AuthorityController@index')->name('index');
         Route::get('list/cashout-request', 'AuthorityController@listDonationActivityCashoutRequest')->name('cashout_request.list');
     });
@@ -158,6 +159,8 @@ Route::prefix('retailer')
 Route::get('/', 'FrontEndController@home')->name('home');
 Route::get('/campaign', 'FrontendController@campaign')->name('campaign');
 Route::get('/campaign/{id}', 'FrontendController@detail')->name('campaign.detail');
+Route::get('/campaign/{id}/top-donator', 'HostController@getDonatorTop')->name('campaign.top.donator');
+Route::get('/campaign/{id}/monthly-donator', 'HostController@getDonatorMonthly')->name('campaign.monthly.donator');
 Auth::routes(['verify' => true]);
 
 Route::get('my-wallet', 'DonatorController@myWallet')->name('wallet')->middleware('auth');
@@ -166,13 +169,13 @@ Route::post('api/change-key', 'Api\ResetKeyController@changeKey')->name('api.cha
 Route::prefix('shopping')
     ->middleware('host')
     ->group(function () {
-        Route::get('', 'ShoppingController@shoppingCart')->name('shopping');
-        Route::get('/{category}', 'ShoppingController@getProductByCategory')->name('search.category');
+        Route::get('{donation_address}', 'ShoppingController@shoppingCart')->name('shopping');
+        Route::get('/{donationActivityAddress}/{category}', 'ShoppingController@getProductByCategory')->name('search.category');
         Route::post('/order', 'ShoppingController@order')->name('order');
-        Route::get('/order/detail', 'ShoppingController@showCart')->name('order.show');
+        Route::get('/{donation_address}/order/detail', 'ShoppingController@showCart')->name('order.show');
         Route::get('order/{id}/delete', 'ShoppingController@deleteOrder')->name('order.delete');
-        Route::get('order/delete/cart', 'ShoppingController@deleteCart')->name('order.delete.cart');
-        Route::get('oder/confirm', 'ShoppingController@confirmOrder')->name('order.confirm');
+        Route::get('order/{donationActivityAddress}/delete/cart', 'ShoppingController@deleteCart')->name('order.delete.cart');
+        Route::get('oder/{donationActivityAddress}/confirm', 'ShoppingController@confirmOrder')->name('order.confirm');
     });
 Route::get('order/{id}/update', 'Api\OrderController@updateQuantityOrder')->name('order.update');
-Route::get('history/purchase/{user}', 'ShoppingController@historyPurchase')->name('order.history');
+Route::get('history/purchase/{orderId}', 'ShoppingController@historyPurchase')->name('order.history');

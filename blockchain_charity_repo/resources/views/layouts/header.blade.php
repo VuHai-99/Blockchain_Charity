@@ -4,9 +4,7 @@
 $navs = [];
 if (Auth::guard('admin')->check()) {
     $navs = $NAV::NAV_SUPPER_ADMIN;
-}
-
-if (Auth::check()) {
+} elseif (Auth::check()) {
     if (Auth::user()->role == 1) {
         if (Auth::user()->wallet_type == 0) {
             $navs = $NAV::NAV_ADMIN_HOST;
@@ -20,13 +18,9 @@ if (Auth::check()) {
             $navs = $NAV::NAV_ADMIN_DONATOR_WS;
         }
     }
-}
-
-if (Auth::guard('authority')->check()) {
+} elseif (Auth::guard('authority')->check()) {
     $navs = $NAV::NAV_SUPPER_AUTHORITY;
-}
-
-if (!Auth::check() && !Auth::guard('admin')->check()) {
+} else {
     $navs = $NAV::NAV_HOME;
 }
 @endphp
