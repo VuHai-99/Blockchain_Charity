@@ -63,6 +63,16 @@ To get a local copy up and running follow these simple example steps.
    In .env add CAMPAIGN_FACTORY_ADDRESS="<<current campaign factory address>>"
    ```
 
+7. Default testing wallet ( ít nhất 6 tài khoản )
+Owner	0xdB9d76207E8398f140c3346B8A03745e720Bc152
+Admin	0x4C713A3983548984D6B9F5adBB2328CC6c3c0530
+Authority	0x2821E40a6cddc5c217B1DFDceB587a81ee1d325d
+Retailer	0xeF1f703ad77d3c3B0fe8e6BE6735D734f0EFCada
+Host_1 (Cold-Wallet)	0x9EF5f229045f9aB196188ebf80bBf80450777816
+Host_2 (Hot-Wallet)(website tự tạo cho người dùng)
+Donator_1 (Cold-Wallet)	0x93C790c75bC431Aa548BB788786408e9aAC776d4
+Donator_2 (Hot-Wallet)(website tự tạo cho người dùng)
+
 
 ## Usage
 
@@ -84,4 +94,5 @@ To get a local copy up and running follow these simple example steps.
    node Autofetch_Blockchain.js
    cd ../
    ```
+
 
