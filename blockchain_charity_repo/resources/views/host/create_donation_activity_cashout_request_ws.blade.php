@@ -1,5 +1,7 @@
 @extends('layouts.default')
 
+@section('title', 'Tạo yêu cầu rút tiền')
+
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/create_campaign.css') }}">
 @endsection
@@ -8,11 +10,11 @@
 @section('pageBreadcrumb')
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item "><a style="color:black" href="{{ route('hostws.home') }}">Home</a></li>
-            <li class="breadcrumb-item "><a style="color:black" href="{{ route('hostws.campaign') }}">List Campaign</a></li>
-            <li class="breadcrumb-item "><a style="color:black" href="{{ route('hostws.campaign.detail', $donationActivity->campaign_address) }}">Campaign</a></li>
-            <li class="breadcrumb-item "><a style="color:black" href="{{ route('hostws.donationActivity.detail', ['blockchainAddress'=>$donationActivity->campaign_address,'donationActivityAddress'=>$donationActivity->donation_activity_address]) }}">Donation Activity Detail</a></li>
-            <li class="breadcrumb-item "><a style="color:black" href="#">Donation Activity Cashout Request</a></li>
+            <li class="breadcrumb-item "><a style="color:black" href="{{ route('hostws.home') }}">Trang chủ</a></li>
+            <li class="breadcrumb-item "><a style="color:black" href="{{ route('hostws.campaign') }}">Dự án</a></li>
+            <li class="breadcrumb-item "><a style="color:black" href="{{ route('hostws.campaign.detail', $donationActivity->campaign_address) }}">Chi tiết dự án</a></li>
+            <li class="breadcrumb-item "><a style="color:black" href="{{ route('hostws.donationActivity.detail', ['blockchainAddress'=>$donationActivity->campaign_address,'donationActivityAddress'=>$donationActivity->donation_activity_address]) }}">Chi tiết hoạt động</a></li>
+            <li class="breadcrumb-item "><a style="color:black" href="#">Yêu cầu rút tiền</a></li>
         </ol>
     </nav>
 @endsection
@@ -52,12 +54,10 @@
                 <input name="campaign_address" id="campaign_address" class="form-control" value="{{$donationActivity->campaign_address}}" type="hidden">
                 <input name="validated_host_address" id="validated_host_address" class="form-control" value="{{Auth::user()->user_address}}" type="hidden">
                 <div class="form-group col-6" >
-                    <button class="btn btn-primary" type="submit">Tạo Request Cashout</button>
+                    <button class="btn btn-primary" type="submit">Tạo yêu cầu rút tiền</button>
                 </div>
                 </div>
             </form>
-
-
         </div>
        
     </div>

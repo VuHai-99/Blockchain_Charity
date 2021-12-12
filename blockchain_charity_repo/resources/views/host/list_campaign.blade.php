@@ -4,17 +4,17 @@
     <link rel="stylesheet" href="{{ asset('css/host_list_project.css') }}">
     <link rel="stylesheet" href="{{ asset('css/frontend_event.css') }}">
 @endsection
-@section('page-name', 'Danh sách sự kiện')
+@section('title', 'Danh sách sự kiện')
 
 @section('pageBreadcrumb')
     <div class="group-button-top">
         <a href="{{ route('host.list.request') }}" class="btn btn-ct-primary active-primary action float-right"
-            role="button">List Request</a>
+            role="button">Yêu cầu</a>
     </div>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item "><a style="color:black" href="{{ route('host.home') }}">Home</a></li>
-            <li class="breadcrumb-item "><a style="color:black" href="#">List Campaign</a></li>
+            <li class="breadcrumb-item "><a style="color:black" href="{{ route('host.home') }}">Trang chủ</a></li>
+            <li class="breadcrumb-item "><a style="color:black" href="#">Dự án</a></li>
         </ol>
     </nav>
 @endsection
