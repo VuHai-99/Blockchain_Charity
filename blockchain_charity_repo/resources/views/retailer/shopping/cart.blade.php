@@ -36,7 +36,7 @@
             @foreach ($categories as $cate)
                 <li class="nav-item">
                     <a class="nav-link"
-                        href="{{ route('search.category', [$cate->slug, $donationActivityAddress]) }}">{{ $cate->category_name }}</a>
+                        href="{{ route('search.category', [$donationActivityAddress, $cate->slug]) }}">{{ $cate->category_name }}</a>
                 </li>
             @endforeach
         </ul>
