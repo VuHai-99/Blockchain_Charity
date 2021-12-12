@@ -15,15 +15,14 @@
                         <div class="main-menu">
                             <nav>
                                 <ul id="navigation">
-                                    <li><a href="{{ asset(route('home')) }}" class="nav-link {{strpos(\Request::route()->getName(), 'home') !== false ? 'active' : '' }}">home</a></li>
-                                    <li><a href="#">About</a></li>
+                                    <li><a href="{{ asset(route('home')) }}" class="nav-link {{strpos(\Request::route()->getName(), 'home') !== false ? 'active' : '' }}">Trang chủ</a></li>
                                     <li>
-                                        <a href="{{ asset(route('campaign')) }}" class="nav-link {{strpos(\Request::route()->getName(), 'event') !== false ? 'active' : '' }}">Campaign </i></a>
+                                        <a href="{{ asset(route('campaign')) }}" class="nav-link {{strpos(\Request::route()->getName(), 'event') !== false ? 'active' : '' }}">Dự án </i></a>
                                     </li>
                                     <li>
-                                        <a href="#" class="nav-link {{strpos(\Request::route()->getName(), 'help') !== false ? 'active' : '' }}">Help </i></a>
+                                        <a href="#" class="nav-link {{strpos(\Request::route()->getName(), 'help') !== false ? 'active' : '' }}">Trợ giúp </i></a>
                                     </li>
-                                    <li><a href="#" class="nav-link {{strpos(\Request::route()->getName(), 'contact') !== false ? 'active' : '' }}">Contact</a></li>
+                                    <li><a href="#" class="nav-link {{strpos(\Request::route()->getName(), 'contact') !== false ? 'active' : '' }}">Liên hệ</a></li>
                                     <li><a href="{{ route('login') }}">Login</a></li>
                                     <li><a href="{{ route('register') }}">Register</a></li>
                                 </ul>

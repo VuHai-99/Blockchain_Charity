@@ -1,5 +1,7 @@
 @extends('layouts.default')
 
+@section('title', 'Tạo dự án')
+
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/create_campaign.css') }}">
 @endsection
@@ -7,12 +9,12 @@
 
 @section('pageBreadcrumb')
     <div class="group-button-top">
-        <a href="{{ route('host.list.request') }}" class="btn btn-ct-primary active-primary action float-right" role="button">List Request</a>
+        <a href="{{ route('host.list.request') }}" class="btn btn-ct-primary active-primary action float-right" role="button">Yêu cầu</a>
     </div>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item "><a style="color:black" href="{{ route('host.home') }}">Home</a></li>
-            <li class="breadcrumb-item "><a style="color:black" href="#">Create Campaign</a></li>
+            <li class="breadcrumb-item "><a style="color:black" href="{{ route('host.home') }}">Trang chủ</a></li>
+            <li class="breadcrumb-item "><a style="color:black" href="#">Tạo dự án</a></li>
         </ol>
     </nav>
 @endsection
@@ -75,7 +77,7 @@
                 </div>
                 
                 <div class="form-group col-6" >
-                    <button type="submit" class="btn btn-primary" onclick="App.createCampaign(); return false">Tạo Request Mở Campaign</button>
+                    <button type="submit" class="btn btn-primary" onclick="App.createCampaign(); return false">Thêm</button>
                 </div>
                 </div>
             </form>

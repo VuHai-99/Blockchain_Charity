@@ -10,9 +10,9 @@ use Carbon\Carbon;
             @php
                 $temp = explode('/', Request::url());
             @endphp
-            <li class="breadcrumb-item "><a style="color:black" href="{{ route('home') }}">Home</a></li>
-            <li class="breadcrumb-item "><a style="color:black" href="{{ route('campaign') }}">Campaign</a></li>
-            <li class="breadcrumb-item active"><a style="color:black" href="#">History Order</a></li>
+            <li class="breadcrumb-item "><a style="color:black" href="{{ route('home') }}">Trang chủ</a></li>
+            <li class="breadcrumb-item "><a style="color:black" href="{{ route('campaign') }}">Dự án</a></li>
+            <li class="breadcrumb-item active"><a style="color:black" href="#">Lịch sử mua hàng</a></li>
         </ol>
     </nav>
 @endsection
@@ -20,11 +20,11 @@ use Carbon\Carbon;
     <div class="row table-responsive">
         <table class="table table-hover table-bordered">
             <thead>
-                <th>Donation Activity Address</th>
+                <th>Địa chỉ hoạt động</th>
                 <th>URL</th>
-                <th>Retailer</th>
+                <th>Nhà cung ứng</th>
                 <th>Tổng tiền</th>
-                <th>Confirm order đăng lên blockchain</th>
+                <th>Xác nhận đơn hàng đăng lên blockchain</th>
             </thead>
             <tbody>
                 @foreach ($order_donation_activities as $order)
@@ -34,7 +34,7 @@ use Carbon\Carbon;
                         <td>{{ $order->retailer_address }}</td>
                         <td>{{ $order->total_amount }}</td>
                         <td>
-                            <button onclick="App.hostOrderDonationActivity('{{ $order->donation_activity_address }}','{{ $order->total_amount }}','{{ $order->retailer_address }}','{{ $order->receipt_url }}','{{ $order->donation_activity->donation_activity_address }}'); return false">Tạo request order</button>
+                            <button onclick="App.hostOrderDonationActivity('{{ $order->donation_activity_address }}','{{ $order->total_amount }}','{{ $order->retailer_address }}','{{ $order->receipt_url }}','{{ $order->donation_activity->donation_activity_address }}'); return false">Tạo yêu cầu mua hàng</button>
                         </td>
                     </tr>
                 @endforeach
@@ -54,7 +54,6 @@ use Carbon\Carbon;
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script type="text/javascript" src="{{ asset('js/laroute.js') }}"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 
 @endpush
 @stack('scripts')

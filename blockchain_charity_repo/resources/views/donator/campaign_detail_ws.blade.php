@@ -112,10 +112,10 @@
                         <div class="card-body">
                             <div class="row my-4">
                                 <div class="col-md-8">
-                                    <h4 class="text-sm-left">Name: <b>{{$campaign->user->name}}</b></h4>
-                                    <p class="text-sm-left">Address : {{$campaign->host_address}}</p>
+                                    <h4 class="text-sm-left">Nhà từ thiện: <b>{{$campaign->user->name}}</b></h4>
+                                    <p class="text-sm-left">Địa chỉ : {{$campaign->host_address}}</p>
                                     <p class="text-sm-left">Email : {{$campaign->user->email}}</p>
-                                    <p class="text-sm-left">Phone : {{$campaign->user->phone}}</p>
+                                    <p class="text-sm-left">Số điện thoại : {{$campaign->user->phone}}</p>
                                 </div>
                                 <div class="col-md-4 mt-3 pt-2">
                                     <div class="view z-depth-1">
@@ -162,22 +162,22 @@
                     @error('donation_amount')
                         <p class="text-error">{{ $message }}</p>
                     @enderror
-                    <button class="btn">DONATE NOW</button>
+                    <button class="btn">QUYÊN GÓP</button>
                 </div>
             </form>
             <div class="list-donator">
                 <div class="title">
                     <div class="donate-once">
-                        <a href="">Top Donator</a>
+                        <a href="">Quyên góp nhiều nhất
                     </div>
                     <div class="donate-monthly">
-                        <a href="">Donate Monthly</a>
+                        <a href="">Quyên góp gần đây</a>
                     </div>
                 </div>
                 <ul class="list-donator-item">
                     @for ($i = 0; $i < 15; $i++)
                         <li class="item">
-                            <div class="money"> ${{ 10 * (15 - $i) }} coins</div>
+                            <div class="money"> ${{ 10 * (15 - $i) }} wei</div>
                             <div class="donator-name">Phạm Văn Thiện</div>
                             <div class="next">
                                 <a href=""><i class="fa fa-chevron-right" aria-hidden="true"></i></a>

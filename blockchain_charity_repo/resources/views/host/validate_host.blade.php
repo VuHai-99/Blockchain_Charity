@@ -7,8 +7,8 @@
 @section('pageBreadcrumb')
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item "><a style="color:black" href="{{ route('host.home') }}">Home</a></li>
-            <li class="breadcrumb-item "><a style="color:black" href="#">Validate Account</a></li>
+            <li class="breadcrumb-item "><a style="color:black" href="{{ route('host.home') }}">Trang chủ</a></li>
+            <li class="breadcrumb-item "><a style="color:black" href="#">Xác nhận tài khoản</a></li>
         </ol>
     </nav>
 @endsection

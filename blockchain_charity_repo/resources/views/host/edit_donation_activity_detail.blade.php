@@ -1,4 +1,5 @@
 @extends('layouts.default')
+@section('title', 'Chỉnh sửa thông tin hoạt động')
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/create_campaign.css') }}">
@@ -8,11 +9,11 @@
 @section('pageBreadcrumb')
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item "><a style="color:black" href="{{ route('host.home') }}">Home</a></li>
-        <li class="breadcrumb-item "><a style="color:black" href="{{ route('host.campaign') }}">List Campaign</a></li>
-        <li class="breadcrumb-item "><a style="color:black" href="{{ route('host.campaign.detail', $campaign->campaign_address) }}">Campaign</a></li>
-        <li class="breadcrumb-item "><a style="color:black" href="{{ route('host.donationActivity.detail',['blockchainAddress' => $campaign->campaign_address,'donationActivityAddress'=>$donationActivity->donation_activity_address]) }}">Donation Activity Detail</a></li>
-        <li class="breadcrumb-item "><a style="color:black" href="#">Edit Donation Activity</a></li>
+        <li class="breadcrumb-item "><a style="color:black" href="{{ route('host.home') }}">Trang chủ</a></li>
+        <li class="breadcrumb-item "><a style="color:black" href="{{ route('host.campaign') }}">Dự án</a></li>
+        <li class="breadcrumb-item "><a style="color:black" href="{{ route('host.campaign.detail', $campaign->campaign_address) }}">Chi tiết dự án</a></li>
+        <li class="breadcrumb-item "><a style="color:black" href="{{ route('host.donationActivity.detail',['blockchainAddress' => $campaign->campaign_address,'donationActivityAddress'=>$donationActivity->donation_activity_address]) }}">Chi tiết hoạt động</a></li>
+        <li class="breadcrumb-item "><a style="color:black" href="#">Chỉnh sửa thông tin hoạt động</a></li>
     </ol>
 </nav>
 @endsection
@@ -125,7 +126,7 @@
                     </div>
                 </div>
                 <div class="form-group col-6">
-                    <button type="submit" class="btn btn-primary">Update Donation Activity</button>
+                    <button type="submit" class="btn btn-primary">Chỉnh sửa</button>
                 </div>
             </div>
         </form>

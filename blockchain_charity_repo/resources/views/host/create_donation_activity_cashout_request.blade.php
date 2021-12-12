@@ -1,5 +1,7 @@
 @extends('layouts.default')
 
+@section('title', 'Tạo yêu cầu rút tiền')
+
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/create_campaign.css') }}">
 @endsection
@@ -8,11 +10,11 @@
 @section('pageBreadcrumb')
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item "><a style="color:black" href="{{ route('host.home') }}">Home</a></li>
-            <li class="breadcrumb-item "><a style="color:black" href="{{ route('host.campaign') }}">List Campaign</a></li>
-            <li class="breadcrumb-item "><a style="color:black" href="{{ route('host.campaign.detail', $donationActivity->campaign_address) }}">Campaign</a></li>
-            <li class="breadcrumb-item "><a style="color:black" href="{{ route('host.donationActivity.detail', ['blockchainAddress'=>$donationActivity->campaign_address,'donationActivityAddress'=>$donationActivity->donation_activity_address]) }}">Donation Activity Detail</a></li>
-            <li class="breadcrumb-item "><a style="color:black" href="#">Donation Activity Cashout Request</a></li>
+            <li class="breadcrumb-item "><a style="color:black" href="{{ route('host.home') }}">Trang chủ</a></li>
+            <li class="breadcrumb-item "><a style="color:black" href="{{ route('host.campaign') }}">Dự án</a></li>
+            <li class="breadcrumb-item "><a style="color:black" href="{{ route('host.campaign.detail', $donationActivity->campaign_address) }}">Chi tiết dự án</a></li>
+            <li class="breadcrumb-item "><a style="color:black" href="{{ route('host.donationActivity.detail', ['blockchainAddress'=>$donationActivity->campaign_address,'donationActivityAddress'=>$donationActivity->donation_activity_address]) }}">Chi tiết hoạt động</a></li>
+            <li class="breadcrumb-item "><a style="color:black" href="#">Tạo yêu cầu rút tiền</a></li>
         </ol>
     </nav>
 @endsection
@@ -51,12 +53,10 @@
                 <input name="donation_activity_address" id="donation_activity_address" class="form-control" value="{{$donationActivity->donation_activity_address}}" type="hidden">
                 <input name="campaign_address" id="campaign_address" class="form-control" value="{{$donationActivity->campaign_address}}" type="hidden">
                 <div class="form-group col-6" >
-                    <button type="submit" class="btn btn-primary" onclick="App.requestToCreateDonationActivityCashout(); return false">Tạo Request Cashout</button>
+                    <button type="submit" class="btn btn-primary" onclick="App.requestToCreateDonationActivityCashout(); return false">Tạo yêu cầu rút tiền</button>
                 </div>
                 </div>
             </form>
-
-
         </div>
        
     </div>
@@ -75,7 +75,5 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script type="text/javascript" src="{{ asset('js/laroute.js') }}"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-
 @endpush
 @stack('scripts')
