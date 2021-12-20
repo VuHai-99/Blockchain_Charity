@@ -148,8 +148,22 @@
         </div>
         <div class="donator col-md-4">
             <div class="coin">
-                <span class="coin-donated">{{ $campaign->current_balance }} (wei)</span>/
-                {{ $campaign->target_contribution_amount }}(wei)
+                <span class="coin-donated">
+                    @if ($campaign->current_balance > pow(10, 17))
+                        {{ number_format($campaign->current_balance / pow(10, 17)) }} (Ether)
+                    @elseif($campaign->current_balance > pow(10,8))
+                        {{ number_format($campaign->current_balance / pow(10, 8)) }} (Gwei)
+                    @else
+                        {{ number_format($campaign->current_balance) }} (wei)
+                    @endif
+                </span>/
+                @if ($campaign->target_contribution_amount > pow(10, 17))
+                    {{ number_format($campaign->target_contribution_amount / pow(10, 17)) }} (Ether)
+                @elseif($campaign->target_contribution_amount > pow(10,8))
+                    {{ number_format($campaign->target_contribution_amount / pow(10, 8)) }} (Gwei)
+                @else
+                    {{ number_format($campaign->target_contribution_amount) }} (wei)
+                @endif
                 <div class="goal">
                     <div class="progress">
                         <div class="progress-bar bg-warning" role="progressbar"

@@ -14,9 +14,9 @@ use Carbon\Carbon;
             @php
                 $temp = explode('/', Request::url());
             @endphp
-            <li class="breadcrumb-item "><a style="color:black" href="{{ route('home') }}">Home</a></li>
-            <li class="breadcrumb-item "><a style="color:black" href="{{ route('campaign') }}">Campaign</a></li>
-            <li class="breadcrumb-item active"><a style="color:black" href="#">History Order</a></li>
+            <li class="breadcrumb-item "><a style="color:black" href="{{ route('home') }}">Trang chủ</a></li>
+            <li class="breadcrumb-item "><a style="color:black" href="{{ route('campaign') }}">Dự án</a></li>
+            <li class="breadcrumb-item active"><a style="color:black" href="#">Lịch sử mua hàng</a></li>
         </ol>
     </nav>
 @endsection
@@ -37,7 +37,19 @@ use Carbon\Carbon;
                         <td>{{ $order->donation_activity_name }}</td>
                         <td>{{ $order->product_name }}</td>
                         <td>{{ $order->quantity }}</td>
-                        <td>{{ $order->total_receipt }}</td>
+                        <td>
+                            <b>
+                                @if ($order->total_receipt > pow(10, 17))
+                                    {{ number_format($order->total_receipt / pow(10, 17)) }}
+                                    (Ether)
+                                @elseif($order->total_receipt > pow(10,8))
+                                    {{ number_format($order->total_receipt / pow(10, 8)) }}
+                                    (Gwei)
+                                @else
+                                    {{ number_format($order->total_receipt) }} (wei)
+                                @endif
+                            </b>
+                        </td>
                         <td>{{ $order->retailer_name }}</td>
                         <td>{{ Carbon::parse($order->date_of_payment)->format('d-m-Y') }}</td>
                     </tr>

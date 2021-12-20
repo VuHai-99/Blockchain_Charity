@@ -63,6 +63,7 @@ class ProductRepository extends BaseRepository
             $query .= " quantity = CASE WHEN products.id = $order->product_id THEN quantity - $order->quantity END ,";
         }
         $query = rtrim($query, ', ');
+        // dd($query);
         return DB::statement($query);
     }
 }

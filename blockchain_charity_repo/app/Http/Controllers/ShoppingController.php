@@ -95,6 +95,7 @@ class ShoppingController extends Controller
         $orders = $this->orderReceipt->getProductOrder($donationActivityAddress);
         DB::transaction(function () use ($hostAddress, $donationActivityAddress, $dataUpdateOrder, $orders, $amountRemain) {
             $this->orderReceipt->confirmOrder($donationActivityAddress, $dataUpdateOrder);
+            dd(1);
             $this->userRepository->updateUser($hostAddress, ['amount_of_money' => $amountRemain]);
             $this->productRepository->updateQuantityProduct($orders);
         });

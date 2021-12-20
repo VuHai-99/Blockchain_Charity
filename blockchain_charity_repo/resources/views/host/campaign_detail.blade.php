@@ -148,8 +148,22 @@
         </div>
         <div class="donator col-md-4">
             <div class="coin">
-                <span class="coin-donated">{{ $campaign->current_balance }} (wei)</span>/
-                {{ $campaign->target_contribution_amount }}(wei)
+                <span class="coin-donated">
+                    @if ($campaign->current_balance > pow(10, 17))
+                        {{ number_format($campaign->current_balance / pow(10, 17)) }} (Ether)
+                    @elseif($campaign->current_balance > pow(10,8))
+                        {{ number_format($campaign->current_balance / pow(10, 8)) }} (Gwei)
+                    @else
+                        {{ number_format($campaign->current_balance) }} (wei)
+                    @endif
+                </span>/
+                @if ($campaign->target_contribution_amount > pow(10, 17))
+                    {{ number_format($campaign->target_contribution_amount / pow(10, 17)) }} (Ether)
+                @elseif($campaign->target_contribution_amount > pow(10,8))
+                    {{ number_format($campaign->target_contribution_amount / pow(10, 8)) }} (Gwei)
+                @else
+                    {{ number_format($campaign->target_contribution_amount) }} (wei)
+                @endif
                 <div class="goal">
                     <div class="progress">
                         <div class="progress-bar bg-warning" role="progressbar"
@@ -172,7 +186,8 @@
             <div class="btn-donate">
                 <input class="form-control" placeholder="Amount of donation" id="donation_amount" name="donation_amount">
                 <br>
-                <button class="btn" onclick="App.donateCampaign('{{ $campaign->campaign_address }}')">Quyên góp ngay</button>
+                <button class="btn" onclick="App.donateCampaign('{{ $campaign->campaign_address }}')">Quyên
+                    góp ngay</button>
             </div>
             <hr>
             <div class="list-donator">

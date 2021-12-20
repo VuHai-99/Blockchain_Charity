@@ -17,8 +17,8 @@
             <li class="breadcrumb-item "><a style="color:black" href="{{ route('hostws.home') }}">Trang chủ</a></li>
             <li class="breadcrumb-item "><a style="color:black" href="{{ route('hostws.campaign') }}">Dự án</a>
             </li>
-            <li class="breadcrumb-item "><a style="color:black"
-                    href="{{ route('hostws.campaign.detail', $temp[6]) }}">Chi tiết dự án</a></li>
+            <li class="breadcrumb-item "><a style="color:black" href="{{ route('hostws.campaign.detail', $temp[6]) }}">Chi
+                    tiết dự án</a></li>
             <li class="breadcrumb-item "><a style="color:black" href="#">Chi tiết hoạt động từ thiện</a></li>
         </ol>
     </nav>
@@ -67,39 +67,38 @@
                                     </p>
                                 </div>
                                 <br>
-                                
+
+                                <div class="col-md-6">
+                                    <div class="view z-depth-1">
+                                        <img src="{{ isset($campaign_main_pic) == true ? url($campaign_main_pic->file_path) : '' }}"
+                                            alt="" class="img-fluid">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <p class="text-sm-left">
+                                        <strong class="text-sm-left">Thông tin: </strong>
+                                        {{ $donationActivity->donation_activity_description }}
+                                    </p>
+                                    <p class="text-sm-left">
+                                        <strong class="text-sm-left">Thời gian: </strong>
+                                        From {{ $donationActivity->date_start }} To
+                                        {{ $donationActivity->date_end }}
+                                    </p>
+                                    <p class="text-sm-left">
+                                        <strong class="text-sm-left">Địa Điểm: </strong>
+                                        {{ $donationActivity->authority->authority_location_name }}
+                                    </p>
+                                </div>
+                                <br>
+                                @if (!empty($campaign_side_pic))
+                                    @foreach ($campaign_side_pic as $side_pic)
                                         <div class="col-md-6">
                                             <div class="view z-depth-1">
-                                                <img src="{{ isset($campaign_main_pic) == true ? url($campaign_main_pic->file_path) : '' }}"
-                                                    alt="" class="img-fluid">
+                                                <img src="{{ url($side_pic->file_path) }}" alt="" class="img-fluid">
                                             </div>
                                         </div>
-                                        <div class="col-md-12">
-                                            <p class="text-sm-left">
-                                                <strong class="text-sm-left">Thông tin: </strong>
-                                                {{ $donationActivity->donation_activity_description }}
-                                            </p>
-                                            <p class="text-sm-left">
-                                                <strong class="text-sm-left">Thời gian: </strong>
-                                                From {{ $donationActivity->date_start }} To
-                                                {{ $donationActivity->date_end }}
-                                            </p>
-                                            <p class="text-sm-left">
-                                                <strong class="text-sm-left">Địa Điểm: </strong>
-                                                {{ $donationActivity->authority->authority_location_name }}
-                                            </p>
-                                        </div>
-                                        <br>
-                                        @if (!empty($campaign_side_pic))
-                                            @foreach ($campaign_side_pic as $side_pic)
-                                                <div class="col-md-6">
-                                                    <div class="view z-depth-1">
-                                                        <img src="{{ url($side_pic->file_path) }}" alt=""
-                                                            class="img-fluid">
-                                                    </div>
-                                                </div>
-                                            @endforeach
-                                        @endif
+                                    @endforeach
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -147,7 +146,15 @@
                                             @foreach ($donationActivityCashouts as $cashout)
                                                 <p class="text-sm-left">
                                                     <strong class="text-sm-left">Tiền mặt: </strong>
-                                                    {{ $cashout->cashout_amount }}(wei)
+                                                    @if ($cashout->cashout_amount > pow(10, 17))
+                                                        {{ number_format($cashout->cashout_amount / pow(10, 17)) }}
+                                                        (Ether)
+                                                    @elseif($cashout->cashout_amount > pow(10,8))
+                                                        {{ number_format($cashout->cashout_amount / pow(10, 8)) }}
+                                                        (Gwei)
+                                                    @else
+                                                        {{ number_format($cashout->cashout_amount) }} (wei)
+                                                    @endif
                                                 </p>
                                             @endforeach
                                         @endif
@@ -164,8 +171,8 @@
                         </div>
                         @if ($donationActivity->host_address == Auth::user()->user_address)
                             <div class="card-footer text-center">
-                                <a href="{{ route('hostws.shopping.cart', $donationActivityAddress) }}" class="btn btn-warning"
-                                    role="button"> Yêu cầu mua hàng</a>
+                                <a href="{{ route('hostws.shopping.cart', $donationActivityAddress) }}"
+                                    class="btn btn-warning" role="button"> Yêu cầu mua hàng</a>
                                 <a href="{{ route('hostws.donationActivity.cashout.create.request', $donationActivity->donation_activity_address) }}"
                                     class="btn btn-warning" role="button">Tạo yêu cầu rút tiền</a>
                             </div>

@@ -37,12 +37,12 @@
             @foreach ($categories as $cate)
                 <li class="nav-item">
                     <a class="nav-link"
-                    href="{{ route('hostws.shopping.cart.byCategory', [$donationActivityAddress, $cate->slug]) }}">{{ $cate->category_name }}</a>
+                    href="{{ route('host.shopping.cart.byCategory', [$donationActivityAddress, $cate->slug]) }}">{{ $cate->category_name }}</a>
                 </li>
             @endforeach
         </ul>
         <div id="search" class="col-md-5 col-sm-12 col-xs-12">
-            <form action="{{ route('hostws.shopping.cart', $donationActivityAddress) }}" method="GET">
+            <form action="{{ route('host.shopping.cart', $donationActivityAddress) }}" method="GET">
                 <input type="text" name="product_name" placeholder="Nhập tên sản phẩm">
                 <input type="submit" value="Tìm kiếm">
             </form>
@@ -106,8 +106,18 @@
                                                                 <div class="price-product">
                                                                     <p>
                                                                         <span product-price="{{ $product->price }}"
-                                                                            class="text-infor total_money">{{ number_format($product->price) }}
-                                                                            wei
+                                                                            class="text-infor total_money">
+                                                                            <b>
+                                                                                @if ($product->price > pow(10, 17))
+                                                                                    {{ number_format($product->price / pow(10, 17)) }}
+                                                                                    (Ether)
+                                                                                @elseif($product->price > pow(10,8))
+                                                                                    {{ number_format($product->price / pow(10, 8)) }}
+                                                                                    (Gwei)
+                                                                                @else
+                                                                                    {{ number_format($product->price) }} (wei)
+                                                                                @endif
+                                                                            </b>
                                                                         </span>
                                                                     </p>
                                                                 </div>

@@ -13,9 +13,9 @@ const parsed= JSON.parse(file);
 const abi = parsed.abi;
 
 //Ganache
-// const web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
-//creatorChain
-const web3 = new Web3(new Web3.providers.HttpProvider('https://rpc.magnet.creatorchain.network'));
+const web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
+// creatorChain
+// const web3 = new Web3(new Web3.providers.HttpProvider('https://rpc.magnet.creatorchain.network'));
 
 exports.donateToCampaign = async (req, res) => {
   if (!req.body) {
