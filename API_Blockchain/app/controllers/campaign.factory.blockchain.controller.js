@@ -9,16 +9,16 @@ const Campaign = require("../models/campaign.model.js");
 const { bufferToHex } = require('ethereumjs-util');
 const { recoverPersonalSignature } = require('eth-sig-util');
 //Ganache
-// const web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
+const web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
 //creatorChain
-const web3 = new Web3(new Web3.providers.HttpProvider('https://rpc.magnet.creatorchain.network'));
+// const web3 = new Web3(new Web3.providers.HttpProvider('https://rpc.magnet.creatorchain.network'));
 const jsonFile = "../../contracts/CampaignFactory.json";
 const file = fs.readFileSync(path.resolve(__dirname,jsonFile));
 const parsed= JSON.parse(file);
 //Ganache
-// const contract_address = parsed.networks['5777'].address;
+const contract_address = parsed.networks['5777'].address;
 //creatorChain
-const contract_address = parsed.networks['1509'].address;
+// const contract_address = parsed.networks['1509'].address;
 const abi = parsed.abi;
 // console.log(parsed.networks['5777'].address) // Contract Address
 

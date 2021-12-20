@@ -37,12 +37,12 @@
             @foreach ($categories as $cate)
                 <li class="nav-item">
                     <a class="nav-link"
-                    href="{{ route('hostws.shopping.cart.byCategory', [$donationActivityAddress, $cate->slug]) }}">{{ $cate->category_name }}</a>
+                    href="{{ route('host.shopping.cart.byCategory', [$donationActivityAddress, $cate->slug]) }}">{{ $cate->category_name }}</a>
                 </li>
             @endforeach
         </ul>
         <div id="search" class="col-md-5 col-sm-12 col-xs-12">
-            <form action="{{ route('hostws.shopping.cart', $donationActivityAddress) }}" method="GET">
+            <form action="{{ route('host.shopping.cart', $donationActivityAddress) }}" method="GET">
                 <input type="text" name="product_name" placeholder="Nhập tên sản phẩm">
                 <input type="submit" value="Tìm kiếm">
             </form>

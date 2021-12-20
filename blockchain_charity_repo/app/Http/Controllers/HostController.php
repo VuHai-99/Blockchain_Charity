@@ -307,6 +307,7 @@ class HostController extends Controller
         }
         $amountRemain = $amount - $totalReceipt;
         $orders = $this->orderReceipt->getProductOrder($donationActivityAddress);
+        // dd($orders);
         if(count($orders)!=0){
             $product_id= $orders[0]->product_id;
             $retailerAddress = (Product::findOrFail($product_id))->retailer_address;
