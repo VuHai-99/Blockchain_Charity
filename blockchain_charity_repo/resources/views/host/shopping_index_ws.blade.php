@@ -37,7 +37,7 @@
             @foreach ($categories as $cate)
                 <li class="nav-item">
                     <a class="nav-link"
-                    href="{{ route('hostws.shopping.cart.byCategory', [$donationActivityAddress, $cate->slug]) }}">{{ $cate->category_name }}</a>
+                        href="{{ route('hostws.shopping.cart.byCategory', [$donationActivityAddress, $cate->slug]) }}">{{ $cate->category_name }}</a>
                 </li>
             @endforeach
         </ul>
@@ -75,7 +75,17 @@
                                         <br>
                                         {{ $product->product_name }}
                                         <br>
-                                        <b>{{ number_format($product->price) }}</b> wei
+                                        <b>
+                                            @if ($product->price > pow(10, 17))
+                                                {{ number_format($product->price / pow(10, 17)) }}
+                                                (Ether)
+                                            @elseif($product->price > pow(10,8))
+                                                {{ number_format($product->price / pow(10, 8)) }}
+                                                (Gwei)
+                                            @else
+                                                {{ number_format($product->price) }} (wei)
+                                            @endif
+                                        </b>
                                         <br>
                                         {{ $product->retailer_name }}
                                         <br><br>

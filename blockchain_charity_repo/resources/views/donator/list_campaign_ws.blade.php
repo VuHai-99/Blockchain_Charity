@@ -30,8 +30,20 @@
                             <span>by</span> <span class="host-name">{{ $campaign->user->name }}</span>
                         </div>
                         <div class="coin">
-                            {{ $campaign->current_balance }} (wei)/ mục tiêu
-                            {{ $campaign->target_contribution_amount }}(wei)
+                            @if ($campaign->current_balance > pow(10, 17))
+                                {{ number_format($campaign->current_balance / pow(10, 17)) }} (Ether)/ mục tiêu
+                            @elseif($campaign->current_balance > pow(10,8))
+                                {{ number_format($campaign->current_balance / pow(10, 8)) }} (Gwei)/ mục tiêu
+                            @else
+                                {{ number_format($campaign->current_balance) }} (wei)/ mục tiêu
+                            @endif
+                            @if ($campaign->target_contribution_amount > pow(10, 17))
+                                {{ number_format($campaign->target_contribution_amount / pow(10, 17)) }} (Ether)/ mục tiêu
+                            @elseif($campaign->target_contribution_amount > pow(10,8))
+                                {{ number_format($campaign->target_contribution_amount / pow(10, 8)) }} (Gwei)/ mục tiêu
+                            @else
+                                {{ number_format($campaign->target_contribution_amount) }} (wei)/ mục tiêu
+                            @endif
                             <div class="goal">
                                 <div class="progress">
                                     <div class="progress-bar bg-warning" role="progressbar"

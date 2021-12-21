@@ -118,11 +118,7 @@ if (Auth::check()) {
                         <div class="slider_text ">
                             <span>Get Started Today.</span>
                             <h3> Help the children When They Need</h3>
-                            <p>With so much to consume and such little time, coming up <br> with relevant title ideas is
-                                essential
-                            </p>
-                            <a href="#" class="boxed-btn3">Learn More
-                            </a>
+                            
                         </div>
                     </div>
                 </div>

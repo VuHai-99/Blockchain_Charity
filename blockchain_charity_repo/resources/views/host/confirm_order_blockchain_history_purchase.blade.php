@@ -32,9 +32,19 @@ use Carbon\Carbon;
                         <td>{{ $order->donation_activity_address }}</td>
                         <td>{{ $order->receipt_url }}</td>
                         <td>{{ $order->retailer_address }}</td>
-                        <td>{{ $order->total_amount }}</td>
                         <td>
-                            <button onclick="App.hostOrderDonationActivity('{{ $order->donation_activity_address }}','{{ $order->total_amount }}','{{ $order->retailer_address }}','{{ $order->receipt_url }}','{{ $order->donation_activity->donation_activity_address }}'); return false">Tạo yêu cầu mua hàng</button>
+                            @if ($order->total_amount > pow(10, 17))
+                                {{ number_format($order->total_amount / pow(10, 17)) }} (Ether)
+                            @elseif($order->total_amount > pow(10,8))
+                                {{ number_format($order->total_amount / pow(10, 8)) }} (Gwei)
+                            @else
+                                {{ number_format($order->total_amount) }} (wei)
+                            @endif
+                        </td>
+                        <td>
+                            <button
+                                onclick="App.hostOrderDonationActivity('{{ $order->donation_activity_address }}','{{ $order->total_amount }}','{{ $order->retailer_address }}','{{ $order->receipt_url }}','{{ $order->donation_activity->donation_activity_address }}'); return false">Tạo
+                                yêu cầu mua hàng</button>
                         </td>
                     </tr>
                 @endforeach

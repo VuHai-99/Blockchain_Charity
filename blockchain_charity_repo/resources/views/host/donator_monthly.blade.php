@@ -26,7 +26,17 @@
                     <tr>
                         <td>{{ $donator->name }}</td>
                         <td>{{ $donator->home_address }}</td>
-                        <td>{{ $donator->amount }}</td>
+                        <td>
+                            @if ($donator->amount > pow(10, 17))
+                                {{ number_format($donator->amount / pow(10, 17)) }}
+                                (Ether)
+                            @elseif($donator->amount > pow(10,8))
+                                {{ number_format($donator->amount / pow(10, 8)) }}
+                                (Gwei)
+                            @else
+                                {{ number_format($donator->amount) }} (wei)
+                            @endif
+                        </td>
                         <td>{{ $donator->donated_at }}</td>
                     </tr>
                 @endforeach

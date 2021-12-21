@@ -106,8 +106,18 @@
                                                                 <div class="price-product">
                                                                     <p>
                                                                         <span product-price="{{ $product->price }}"
-                                                                            class="text-infor total_money">{{ number_format($product->price) }}
-                                                                            wei
+                                                                            class="text-infor total_money">
+                                                                            <b>
+                                                                                @if ($product->price > pow(10, 17))
+                                                                                    {{ number_format($product->price / pow(10, 17)) }}
+                                                                                    (Ether)
+                                                                                @elseif($product->price > pow(10,8))
+                                                                                    {{ number_format($product->price / pow(10, 8)) }}
+                                                                                    (Gwei)
+                                                                                @else
+                                                                                    {{ number_format($product->price) }} (wei)
+                                                                                @endif
+                                                                            </b>
                                                                         </span>
                                                                     </p>
                                                                 </div>

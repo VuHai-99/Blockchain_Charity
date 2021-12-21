@@ -16,8 +16,8 @@
             @endphp
             <li class="breadcrumb-item "><a style="color:black" href="{{ route('host.home') }}">Trang chủ</a></li>
             <li class="breadcrumb-item "><a style="color:black" href="{{ route('host.campaign') }}">Dự án</a></li>
-            <li class="breadcrumb-item "><a style="color:black"
-                    href="{{ route('host.campaign.detail', $temp[6]) }}">Chi tiết dự án</a></li>
+            <li class="breadcrumb-item "><a style="color:black" href="{{ route('host.campaign.detail', $temp[6]) }}">Chi
+                    tiết dự án</a></li>
             <li class="breadcrumb-item "><a style="color:black" href="#">Chi tiết hoạt động</a></li>
         </ol>
     </nav>
@@ -130,7 +130,16 @@
                                             @foreach ($donationActivityCashouts as $cashout)
                                                 <p class="text-sm-left">
                                                     <strong class="text-sm-left">Tiền mặt:
-                                                        {{ number_format($cashout->cashout_amount) }}(wei)</strong>
+                                                        @if ($cashout->cashout_amount > pow(10, 17))
+                                                            {{ number_format($cashout->cashout_amount / pow(10, 17)) }}
+                                                            (Ether)
+                                                        @elseif($cashout->cashout_amount > pow(10,8))
+                                                            {{ number_format($cashout->cashout_amount / pow(10, 8)) }}
+                                                            (Gwei)
+                                                        @else
+                                                            {{ number_format($cashout->cashout_amount) }} (wei)
+                                                        @endif
+                                                    </strong>
                                                 </p>
                                             @endforeach
                                         @endif
@@ -156,8 +165,8 @@
                         </div>
                         @if ($donationActivity->host_address == Auth::user()->user_address)
                             <div class="card-footer text-center">
-                                <a href="{{ route('host.shopping.cart', $donationActivityAddress) }}" class="btn btn-warning"
-                                    role="button">Yêu cầu mua hàng</a>
+                                <a href="{{ route('host.shopping.cart', $donationActivityAddress) }}"
+                                    class="btn btn-warning" role="button">Yêu cầu mua hàng</a>
                                 <a href="{{ route('host.donationActivity.cashout.create.request', $donationActivity->donation_activity_address) }}"
                                     class="btn btn-warning" role="button">Tạo yêu cầu rút tiền</a>
                             </div>
