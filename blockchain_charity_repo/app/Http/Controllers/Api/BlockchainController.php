@@ -346,5 +346,17 @@ class BlockChainController extends Controller
         
     }
 
-    
+    public function confirmDonationActivityRequest(Request $request){
+        $orderDonationActivity = OrderDonationActivity::where('order_code',$request->orderID)->first();
+        // dd($orderDonationActivity);
+        $typeOfRequest = $request->request_type;
+        if($typeOfRequest == 'authority-confirm-order'){
+            $orderDonationActivity->authority_confirmation = 1;
+            $orderDonationActivity->save();
+        } elseif($typeOfRequest == 'host-confirm-order'){
+
+        } elseif($typeOfRequest == 'retailer-confirm-delivering'){
+            
+        }
+    }
 }

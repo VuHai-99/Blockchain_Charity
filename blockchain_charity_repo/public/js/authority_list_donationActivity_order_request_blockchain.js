@@ -82,10 +82,10 @@ App = {
 
   render: async () => {
 
-    await App.renderAllRequestCreateDonationActivityCashout(); 
+    await App.renderAllRequestCreateDonationActivityOrder(); 
   },
 
-  renderAllRequestCreateDonationActivityCashout: async () => {
+  renderAllRequestCreateDonationActivityOrder: async () => {
     let current_authority;
     App.getAccounts(function (result) {
         current_authority = result[0];
@@ -93,7 +93,7 @@ App = {
     
     const totalCampaign = await App.campaignfactory.getCampaignList();
     // console.log(totalRequestOpenCampaign);
-    const campaignTemplate = $('#recentRequestCashoutDonationActivity');
+    const campaignTemplate = $('#recentRequestOrderDonationActivity');
     campaignTemplate.html('');
     for (let  i = 0; i < totalCampaign.length; i++) {
       // console.log(totalCampaign[i]);
@@ -105,27 +105,31 @@ App = {
         console.log(totalDonationActivity[j]);
         let author = await c.getAuthority();
         if(author === current_authority){
-          let totalCashout = await c.getCashOutList();
-          for(let k=0; k<totalCashout.length;k++){
+          let totalOrder = await c.getOrderList();
+          for(let k=0; k<totalOrder.length;k++){
             
-            let cashout = await c.getCashOutByCode(totalCashout[k]);
-            // console.log(cashout.toNumber())
-            console.log(cashout);
-            if(cashout[1] == true){
+            let order = await c.getOrderByCode(totalOrder[k]);
+            // console.log(order.toNumber())
+            console.log(order);
+            if(order[4] == true){
               let campaignItem =
               `<div class="col-md-12">
                 <form>
                   <div class="card mt-4">
                       <div class="card-header">
-                        <h5 class="card-title">REQUEST CASHOUT ĐỢT TỪ THIỆN <b>(Finished)</b></h5>
+                        <h5 class="card-title">REQUEST ORDER ĐỢT TỪ THIỆN <b>(Finished)</b></h5>
                       </div>
                       <div class="card-body">
                           <h4 class="card-title"><strong><i class="fa fa-calendar text-muted" aria-hidden="true"></i></strong></h4>
                           <hr>
-                          <h6 class="card-subtitle mb-2"><span class="text-muted">Cashout Request Bytes32 ID:</span> `+ totalCashout[k] +`</h6>
+                          <h6 class="card-subtitle mb-2"><span class="text-muted">Order Request Bytes32 ID:</span> `+ totalOrder[k] +`</h6>
                           <h6 class="card-subtitle mb-2" ><span class="text-muted">Campaign Address: `+ totalCampaign[i] +`</span></h6>
                           <h6 class="card-subtitle mb-2" ><span class="text-muted">Donation Activity Address: `+ totalDonationActivity[j] +`</span></h6>
-                          <h6 class="card-subtitle mb-2" ><span class="text-muted">Cashout Amount: `+ (cashout[0].toNumber()).toString()+`</span></h6>
+                          <h6 class="card-subtitle mb-2" ><span class="text-muted">Order Amount: `+ (order[0].toNumber()).toString()+`</span></h6>  
+                          <h6 class="card-subtitle mb-2" ><span class="text-muted">Order Url: `+ order[1]+`</span></h6>  
+                          <h6 class="card-subtitle mb-2" ><span class="text-muted">Retailer Address:`+ order[2]+`<span></h6> 
+                          <h6 class="card-subtitle mb-2" ><span class="text-muted">Order State:`+ (order[3].toNumber()).toString()+`<span></h6> 
+                          <h6 class="card-subtitle mb-2" ><span class="text-muted">Authority Confirmation:`+ order[4]+`<span></h6>  
                       </div>
                   </div>
                 </form>
@@ -137,18 +141,22 @@ App = {
                 <form>
                   <div class="card mt-4">
                       <div class="card-header">
-                        <h5 class="card-title">REQUEST CASHOUT ĐỢT TỪ THIỆN</h5>
+                        <h5 class="card-title">REQUEST ORDER ĐỢT TỪ THIỆN</h5>
                       </div>
                       <div class="card-body">
                           <h4 class="card-title"><strong><i class="fa fa-calendar text-muted" aria-hidden="true"></i></strong></h4>
                           <hr>
-                          <h6 class="card-subtitle mb-2"><span class="text-muted">Cashout Request Bytes32 ID:</span> `+ totalCashout[k] +`</h6>
+                          <h6 class="card-subtitle mb-2"><span class="text-muted">Order Request Bytes32 ID:</span> `+ totalOrder[k] +`</h6>
                           <h6 class="card-subtitle mb-2" ><span class="text-muted">Campaign Address: `+ totalCampaign[i] +`</span></h6>
                           <h6 class="card-subtitle mb-2" ><span class="text-muted">Donation Activity Address: `+ totalDonationActivity[j] +`</span></h6>
-                          <h6 class="card-subtitle mb-2" ><span class="text-muted">Cashout Amount: `+ (cashout[0].toNumber()).toString()+`</span></h6>
-                      </div>
+                          <h6 class="card-subtitle mb-2" ><span class="text-muted">Order Amount: `+ (order[0].toNumber()).toString()+`</span></h6>
+                          <h6 class="card-subtitle mb-2" ><span class="text-muted">Order Url:`+ order[1]+`<span></h6>  
+                          <h6 class="card-subtitle mb-2" ><span class="text-muted">Retailer Address:`+ order[2]+`<span></h6> 
+                          <h6 class="card-subtitle mb-2" ><span class="text-muted">Order State:`+ (order[3].toNumber()).toString()+`<span></h6> 
+                          <h6 class="card-subtitle mb-2" ><span class="text-muted">Authority Confirmation:`+ order[4]+`<span></h6>  
+                        </div>
                       <div class="card-footer">
-                        <a type="button" class="btn btn-success text-light" onclick="App.responseRequestCashoutDonationActivityCashout('`+totalCashout[k]+`','`+totalDonationActivity[j]+`',true); return false"> Đồng ý </a>
+                        <a type="button" class="btn btn-success text-light" onclick="App.responseRequestOrderDonationActivityOrder('`+totalOrder[k]+`','`+totalDonationActivity[j]+`',true); return false"> Đồng ý </a>
                         <a type="button" class="btn btn-danger text-light" onclick=""> Từ chối </a>
                       </div>
                   </div>
@@ -170,32 +178,32 @@ App = {
       
     }
   },
-  responseRequestCashoutDonationActivityCashout: async (cashoutID,donationActivity, response) => {
+  responseRequestOrderDonationActivityOrder: async (orderID,donationActivity, response) => {
     if(response == true){
       let c =  await App.contracts.DonationActivity.at(donationActivity);
-      await c.authorityConfirmReceivedCashOut(cashoutID)
+      await c.authorityConfirmReceivedOrder(orderID)
       .then((result) => {
         console.log(result);
         // const newDonationActivityAddress = result.logs[0].args.new_campaign_address;
 
         Swal.fire({
           title: 'Successful!',
-          text: 'Successfully create donation activity cashout',
+          text: 'Successfully create donation activity order',
           confirmButtonText: 'Close'
         })
 
 
-        axios.post(('/api/decide-cashout-request'), {
-          "cashoutID": cashoutID,
-          "decide": true
+        axios.post(('/api/confirm-donation-activity-request'), {
+          "orderID": orderID,
+          "request_type": 'authority-confirm-order'
         }).then(function(response){
           if(response.status == 200){
-            console.log('Successfully authority confirm cashout in database');
+            console.log('Successfully authority confirm order in database');
           } else {
-            console.log('UnSuccessfully authority confirm cashout in database');
+            console.log('UnSuccessfully authority confirm order in database');
           }
         })
-        App.renderAllRequestCreateDonationActivityCashout();
+        App.renderAllRequestCreateDonationActivityOrder();
       }).catch(error => {
         Swal.fire({
           title: 'Unsuccessful!',
@@ -208,11 +216,11 @@ App = {
       
     } else {
       // let b =  await App.contracts.Campaign.at(campaignAddress);
-      // await b.cancelCashOutFromDonationActivity(cashoutID)
+      // await b.cancelOrderFromDonationActivity(orderID)
       // .then((result) => {
       //   Swal.fire({
       //     title: 'Successful!',
-      //     text: 'Successfully Reject create donation activity Cashout',
+      //     text: 'Successfully Reject create donation activity Order',
       //     confirmButtonText: 'Close'
       //   })
       //   axios.post(('/api/decide-blockchain-request'), {
@@ -226,7 +234,7 @@ App = {
       //       console.log('UnSuccessfully Reject create donation activity in database');
       //     }
       //   })
-      //   App.renderAllRequestCreateDonationActivityCashout();
+      //   App.renderAllRequestCreateDonationActivityOrder();
       // }).catch(error => {
       //   Swal.fire({
       //     title: 'Unsuccessful!',

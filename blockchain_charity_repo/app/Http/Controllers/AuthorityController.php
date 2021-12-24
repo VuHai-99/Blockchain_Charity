@@ -48,4 +48,10 @@ class AuthorityController extends Controller
     {
         return view('authority.list_donation_activity_cashout_request');
     }
+
+    public function listDonationActivityOrderRequest()
+    {
+        return view('authority.list_donation_activity_order_request');
+    }
+    
 }

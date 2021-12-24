@@ -150,6 +150,7 @@ Route::prefix('authority')
         Route::get('logout', 'AuthorityController@logout')->name('logout');
         Route::get('', 'AuthorityController@index')->name('index');
         Route::get('list/cashout-request', 'AuthorityController@listDonationActivityCashoutRequest')->name('cashout_request.list');
+        Route::get('list/order-request', 'AuthorityController@listDonationActivityOrderRequest')->name('order_request.list');
     });
 
 
