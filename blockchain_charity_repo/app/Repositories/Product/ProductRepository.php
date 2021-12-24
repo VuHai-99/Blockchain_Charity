@@ -60,7 +60,8 @@ class ProductRepository extends BaseRepository
     {
         $query = "update products set ";
         foreach ($orders as $order) {
-            $query .= " quantity = CASE WHEN products.id = $order->product_id THEN quantity - $order->quantity END ,";
+            // $query .= " quantity = CASE WHEN products.id = $order->product_id THEN quantity - $order->quantity END ,";
+            $query .= " quantity = CASE WHEN products.id = $order->product_id THEN quantity - $order->quantity ELSE quantity END ,";
         }
         $query = rtrim($query, ', ');
         // dd($query);

@@ -81,17 +81,18 @@ if (Auth::check()) {
                                                 <a href="{{ route('admin.validate-host-request.list') }}"
                                                     class="nav-link">Xác nhận nhà từ thiện</a>
                                             </li>
-                                            <li class="item">
-                                                <a href="{{ route('admin.withdraw-money-request.list') }}"
-                                                    class="nav-link">Xác nhận rút tiền</a>
-                                            </li>
+                                            
                                             <li class="item">
                                                 <a href="{{ route('admin.create-donationActivity-request.list') }}"
-                                                    class="nav-link">Xác nhận hoạt động</a>
+                                                    class="nav-link">Xác nhận đợt từ thiện</a>
                                             </li>
                                             <li class="item">
                                                 <a href="{{ route('admin.create-donationActivityCashout-request.list') }}"
-                                                    class="nav-link">Xác nhận rút tiền</a>
+                                                    class="nav-link">Xác nhận sử dụng tiền mặt trong đợt từ thiện</a>
+                                            </li>
+                                            <li class="item">
+                                                <a href="{{ route('admin.create-donationActivityOrder-request.list') }}"
+                                                    class="nav-link">Xác nhận mua hàng trong đợt từ thiện</a>
                                             </li>
                                         </ul>
                                     </li>

@@ -64,7 +64,7 @@ class BlockChainController extends Controller
                     $url_analyze = explode('/', $request->url);
                     // dd(end($url_analyze));
                     $_order_donation_activity = OrderDonationActivity::where('order_code',end($url_analyze))->first();
-                    $_order_donation_activity->order_state = 4;
+                    $_order_donation_activity->order_state = 3;
                     $_order_donation_activity->save();
                 } 
             }
@@ -253,6 +253,13 @@ class BlockChainController extends Controller
                     
                     $newCashoutDonationActivity->save();
                 }
+                elseif ($blockchain_request->request_type == 5){
+                    // dd('asc');
+                    $newOrderDonationActivity = OrderDonationActivity::where('receipt_url',$blockchain_request->url)->first();
+                    $newOrderDonationActivity->order_code = $request->request_id;
+                    $newOrderDonationActivity->order_state = 0;                
+                    $newOrderDonationActivity->save();
+                }
                 $blockchain_request->delete();
             } elseif (($decide_type == 'Decline') || ($decide_type == 'Cancel')){
                 if($blockchain_request->request_type == 0){
@@ -268,8 +275,10 @@ class BlockChainController extends Controller
                    
                 } elseif($blockchain_request->request_type == 3){
                     // create donation activity
-                } elseif($blockchain_request->request_type == 3){
+                } elseif($blockchain_request->request_type == 4){
                     // create donation activity cashout
+                }elseif($blockchain_request->request_type == 5){
+                    // create donation activity order
                 }
                 $blockchain_request->delete();
             }
@@ -315,7 +324,7 @@ class BlockChainController extends Controller
             }
         }
         
-    }
+    } 
 
     public function decideCashoutRequest(Request $request){
         $cashOutRequest = CashoutDonationActivity::where('cashout_code',$request->cashoutID)->first();

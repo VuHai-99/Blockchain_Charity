@@ -43,7 +43,7 @@ use Carbon\Carbon;
                         </td>
                         <td>
                             <button
-                                onclick="App.hostOrderDonationActivity('{{ $order->donation_activity_address }}','{{ $order->total_amount }}','{{ $order->retailer_address }}','{{ $order->receipt_url }}','{{ $order->donation_activity->donation_activity_address }}'); return false">Tạo
+                                onclick="App.hostOrderDonationActivity('{{ $order->donation_activity_address }}','{{ $order->total_amount }}','{{ $order->retailer_address }}','{{ $order->receipt_url }}','{{ $order->donation_activity->campaign->campaign_address }}'); return false">Tạo
                                 yêu cầu mua hàng</button>
                         </td>
                     </tr>
