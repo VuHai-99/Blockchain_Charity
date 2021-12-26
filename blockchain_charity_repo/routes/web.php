@@ -169,7 +169,7 @@ Route::prefix('retailer')
             Route::post('edit/{id}', 'RetailerController@updateProduct')->name('product.update');
             Route::get('delete/{id}', 'RetailerController@deleteProduct')->name('product.delete');
         });
-        Route::get('order', 'RetailerController@listOrder')->name('order');
+        Route::get('order', 'RetailerController@listOrder')->name('order.list');
         Route::get('profile', 'RetailController@profile')->name('profile');
     });
 

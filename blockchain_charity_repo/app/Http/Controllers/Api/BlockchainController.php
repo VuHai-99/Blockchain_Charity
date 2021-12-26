@@ -354,9 +354,11 @@ class BlockChainController extends Controller
             $orderDonationActivity->authority_confirmation = 1;
             $orderDonationActivity->save();
         } elseif($typeOfRequest == 'host-confirm-order'){
-
+            $orderDonationActivity->order_state = 2;
+            $orderDonationActivity->save();
         } elseif($typeOfRequest == 'retailer-confirm-delivering'){
-            
+            $orderDonationActivity->order_state = 1;
+            $orderDonationActivity->save();
         }
     }
 }
