@@ -185,7 +185,7 @@ App = {
         })
 
         axios.post(('/api/confirm-donation-activity-request'), {
-          "orderID": orderID,
+          "orderID": requestIdBytes32,
           "request_type": 'retailer-confirm-delivering'
         }).then(function(response){
           if(response.status == 200){
