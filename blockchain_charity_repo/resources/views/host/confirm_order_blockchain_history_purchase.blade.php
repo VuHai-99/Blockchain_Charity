@@ -24,7 +24,8 @@ use Carbon\Carbon;
                 <th>URL</th>
                 <th>Nhà cung ứng</th>
                 <th>Tổng tiền</th>
-                <th>Xác nhận đơn hàng đăng lên blockchain</th>
+                <th>Xác nhận đơn hàng trên blockchain</th>
+                <th >Xác nhận hàng đã nhận</th>
             </thead>
             <tbody>
                 @foreach ($order_donation_activities as $order)
@@ -41,10 +42,28 @@ use Carbon\Carbon;
                                 {{ number_format($order->total_amount) }} (wei)
                             @endif
                         </td>
+
                         <td>
-                            <button
+                            @if($order->order_state == 3)
+                            <button type="button" class="btn btn-primary"
                                 onclick="App.hostOrderDonationActivity('{{ $order->donation_activity_address }}','{{ $order->total_amount }}','{{ $order->retailer_address }}','{{ $order->receipt_url }}','{{ $order->donation_activity->campaign->campaign_address }}'); return false">Tạo
                                 yêu cầu mua hàng</button>
+                            @else
+                            <button type="button" class="btn btn-success" disabled>Đã xác nhận</button>
+                            @endif
+                            
+                        </td>
+                        <td>
+                            @if($order->order_state == 2)
+                                <button type="button" class="btn btn-success" disabled>Đã xác nhận</button>
+                            @elseif($order->order_state == 3)
+
+                            @elseif($order->order_state == 4)
+                                <button type="button" class="btn btn-info" disabled>Đợi kiểm duyệt</button>
+                            @else
+                                <button type="button" class="btn btn-primary"
+                                onclick="App.hostConfirmReceiveOrderDonationActivity('{{ $order->donation_activity_address }}','{{ $order->order_code }}'); return false">Xác nhận</button>
+                            @endif
                         </td>
                     </tr>
                 @endforeach

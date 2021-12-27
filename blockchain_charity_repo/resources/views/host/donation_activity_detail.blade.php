@@ -131,14 +131,14 @@
                                             <table class="table">
                                                 <thead>
                                                     <tr>
-                                                    <th scope="col">Tổng số tiền mặt</th>
-                                                    <th scope="col">Authority Confirm</th>
+                                                    <th scope="col" >Tổng số tiền mặt</th>
+                                                    <th scope="col" >Authority Confirm</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                 @foreach ($donationActivityCashouts as $cashout)
                                                 <tr>
-                                                    <td>
+                                                    <td class="text-center">
                                                         @if ($cashout->cashout_amount > pow(10, 17))
                                                             {{ number_format($cashout->cashout_amount / pow(10, 17)) }}
                                                             (Ether)
@@ -149,7 +149,13 @@
                                                             {{ number_format($cashout->cashout_amount) }} (wei)
                                                         @endif
                                                     </td>
-                                                    <td>Otto</td>
+                                                    <td class="text-center">
+                                                        @if ($cashout->authority_confirmation == 1 )
+                                                            Yes
+                                                        @else
+                                                            No
+                                                        @endif
+                                                    </td>
                                                 </tr>
                                                 @endforeach
                                                 </tbody>
@@ -161,45 +167,45 @@
 
                                             @endforeach
                                         @endif
+                                        <br>
                                         <h3 class="full-left">Hoạt động mua hàng</h3>
-                                        @if ($orders)
-                                            @foreach ($orders as $index => $order)
-                                                <a href="{{ route('order.history', $order->order_id) }}"
-                                                    class="nav-link">Đơn hàng {{ ++$index }}</a>
-                                            @endforeach
-                                        @else
-                                            Chưa có đơn hàng
-                                        @endif
-                                        <!-- <table class="table">
+                                        <table class="table">
                                             <thead>
                                                 <tr>
-                                                <th scope="col">#</th>
-                                                <th scope="col">First</th>
-                                                <th scope="col">Last</th>
-                                                <th scope="col">Handle</th>
+                                                <th scope="col" >#</th>
+                                                <th scope="col" >Tổng tiền</th>
+                                                <th scope="col" >Hóa Đơn</th>
+                                                <th scope="col" >Đơn hàng trên blockchain</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                            @if ($orders)
+                                                @foreach ($orders as $index => $order)
                                                 <tr>
-                                                <th scope="row">1</th>
-                                                <td>Mark</td>
-                                                <td>Otto</td>
-                                                <td>@mdo</td>
+                                                    <td class="text-center">
+                                                        Đơn hàng {{ ++$index }}
+                                                        <!-- <a href="{{ route('order.history', $order->order_id) }}"
+                                                        class="nav-link">Đơn hàng {{ ++$index }}</a> -->
+                                                    </td>
+                                                    <td class="text-center">
+                                                        {{ $order->total_receipt }} (wei)
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <a href="{{ route('order.history', $order->order_id) }}"
+                                                        class="nav-link">Link</a>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <a href="{{ route('host.shopping.order.blockchain', $order->donation_activity_address) }}"
+                                                        class="nav-link">Link</a>
+                                                    </td>
+                                                   
                                                 </tr>
-                                                <tr>
-                                                <th scope="row">2</th>
-                                                <td>Jacob</td>
-                                                <td>Thornton</td>
-                                                <td>@fat</td>
-                                                </tr>
-                                                <tr>
-                                                <th scope="row">3</th>
-                                                <td>Larry</td>
-                                                <td>the Bird</td>
-                                                <td>@twitter</td>
-                                                </tr>
+                                                @endforeach
+                                            @else
+                                                Chưa có đơn hàng
+                                            @endif
                                             </tbody>
-                                        </table> -->
+                                        </table>
                                     @else
                                         <h4 class="font-weight-bold mb-3 black-text">Chưa có tài sản từ thiện nào.</h4>
                                     @endif
@@ -211,7 +217,7 @@
                                 <a href="{{ route('host.shopping.cart', $donationActivityAddress) }}"
                                     class="btn btn-warning" role="button">Yêu cầu mua hàng</a>
                                 <a href="{{ route('host.donationActivity.cashout.create.request', $donationActivity->donation_activity_address) }}"
-                                    class="btn btn-warning" role="button">Tạo yêu cầu rút tiền</a>
+                                    class="btn btn-warning" role="button">Tạo yêu cầu sử dụng tiền mặt</a>
                             </div>
                         @endif
                     </div>

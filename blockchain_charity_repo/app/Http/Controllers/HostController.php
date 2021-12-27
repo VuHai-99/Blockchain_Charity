@@ -189,6 +189,7 @@ class HostController extends Controller
         }
         $donation_activity_side_pic = CampaignImg::where('donation_activity_address', $donationActivityAddress)->where('photo_type', 3)->get();
         $orders = $this->orderReceipt->getOrderDonationActivition($donationActivityAddress);
+        // dd($orders);
         return view('host.donation_activity_detail', compact('donationActivityAddress', 'campaign', 'donationActivity', 'donationActivityCashouts', 'donation_activity_side_pic', 'donation_activity_main_pic', 'orders'));
     }
 
@@ -337,11 +338,11 @@ class HostController extends Controller
 
     public function confirmOrderBlockchain($donationActivityAddress)
     {
-        $order_donation_activities = OrderDonationActivity::where('donation_activity_address',$donationActivityAddress)->where('order_state',3)->get();
+        // $order_donation_activities = OrderDonationActivity::where('donation_activity_address',$donationActivityAddress)->where('order_state',3)->get();
+        $order_donation_activities = OrderDonationActivity::where('donation_activity_address',$donationActivityAddress)->get();
         // dd($order_donation_activities);
         return view('host.confirm_order_blockchain_history_purchase', compact('order_donation_activities'));
     }
-
 
     //WS
 
