@@ -108,7 +108,7 @@
                     @if ($donationActivity->host_address == Auth::user()->user_address)
                         <div class="card-footer text-center">
                             <a href="{{ route('host.donation_activity_detail.edit', $donationActivity->donation_activity_address) }}"
-                                class="btn btn-warning" role="button">chỉnh sửa thông tin hoạt động</a>
+                                class="btn btn-warning" role="button">Chỉnh sửa thông tin hoạt động</a>
                         </div>
                     @endif
                 </div>
@@ -127,9 +127,18 @@
                                 <div class="col-md-12">
                                     @if (isset($donationActivityOrders) == true || isset($donationActivityCashouts) == true)
                                         @if (isset($donationActivityCashouts) == true)
-                                            @foreach ($donationActivityCashouts as $cashout)
-                                                <p class="text-sm-left">
-                                                    <strong class="text-sm-left">Tiền mặt:
+                                            <h3 class="full-left">Sử dụng tiền mặt</h3>
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                    <th scope="col">Tổng số tiền mặt</th>
+                                                    <th scope="col">Authority Confirm</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                @foreach ($donationActivityCashouts as $cashout)
+                                                <tr>
+                                                    <td>
                                                         @if ($cashout->cashout_amount > pow(10, 17))
                                                             {{ number_format($cashout->cashout_amount / pow(10, 17)) }}
                                                             (Ether)
@@ -139,9 +148,13 @@
                                                         @else
                                                             {{ number_format($cashout->cashout_amount) }} (wei)
                                                         @endif
-                                                    </strong>
-                                                </p>
-                                            @endforeach
+                                                    </td>
+                                                    <td>Otto</td>
+                                                </tr>
+                                                @endforeach
+                                                </tbody>
+                                            </table>
+                                            
                                         @endif
                                         @if (isset($donationActivityOrders) == true)
                                             @foreach ($donationActivityOrders as $order)
@@ -157,6 +170,36 @@
                                         @else
                                             Chưa có đơn hàng
                                         @endif
+                                        <!-- <table class="table">
+                                            <thead>
+                                                <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">First</th>
+                                                <th scope="col">Last</th>
+                                                <th scope="col">Handle</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                <th scope="row">1</th>
+                                                <td>Mark</td>
+                                                <td>Otto</td>
+                                                <td>@mdo</td>
+                                                </tr>
+                                                <tr>
+                                                <th scope="row">2</th>
+                                                <td>Jacob</td>
+                                                <td>Thornton</td>
+                                                <td>@fat</td>
+                                                </tr>
+                                                <tr>
+                                                <th scope="row">3</th>
+                                                <td>Larry</td>
+                                                <td>the Bird</td>
+                                                <td>@twitter</td>
+                                                </tr>
+                                            </tbody>
+                                        </table> -->
                                     @else
                                         <h4 class="font-weight-bold mb-3 black-text">Chưa có tài sản từ thiện nào.</h4>
                                     @endif
