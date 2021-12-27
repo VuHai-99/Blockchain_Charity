@@ -74,21 +74,7 @@
                                                     alt="" class="img-fluid">
                                             </div>
                                         </div>
-                                        <div class="col-md-12">
-                                            <p class="text-sm-left">
-                                                <strong class="text-sm-left">Thông tin: </strong>
-                                                {{ $donationActivity->donation_activity_description }}
-                                            </p>
-                                            <p class="text-sm-left">
-                                                <strong class="text-sm-left">Thời gian: </strong>
-                                                From {{ $donationActivity->date_start }} To
-                                                {{ $donationActivity->date_end }}
-                                            </p>
-                                            <p class="text-sm-left">
-                                                <strong class="text-sm-left">Địa Điểm: </strong>
-                                                {{ $donationActivity->authority->authority_location_name }}
-                                            </p>
-                                        </div>
+                                        
                                         <br>
                                         @if (!empty($campaign_side_pic))
                                             @foreach ($campaign_side_pic as $side_pic)

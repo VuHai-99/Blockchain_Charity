@@ -61,6 +61,7 @@ To get a local copy up and running follow these simple example steps.
    replace 2 file Campaign.json and CampaignFactory.json in API_Blockchain\contracts with new Campaign.json and CampaignFactory.json in blockchain_charity_repo/public/
    Variable campaignFactoryAddress in API_Blockchain/Autofetch_Blockchain.js have to change to current deployed campaign.
    In .env add CAMPAIGN_FACTORY_ADDRESS="<<current campaign factory address>>"
+   Change "DB" field in /API_Blockchain/app/config/laravel_db.config to new DB name: "blockchain_charity_testnetwork"
    ```
 
 7. Default testing wallet ( ít nhất 6 tài khoản ). Database mẫu đi theo các tài khoản này.

@@ -67,38 +67,17 @@
                                     </p>
                                 </div>
                                 <br>
-
-                                <div class="col-md-6">
-                                    <div class="view z-depth-1">
-                                        <img src="{{ isset($campaign_main_pic) == true ? url($campaign_main_pic->file_path) : '' }}"
-                                            alt="" class="img-fluid">
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <p class="text-sm-left">
-                                        <strong class="text-sm-left">Thông tin: </strong>
-                                        {{ $donationActivity->donation_activity_description }}
-                                    </p>
-                                    <p class="text-sm-left">
-                                        <strong class="text-sm-left">Thời gian: </strong>
-                                        From {{ $donationActivity->date_start }} To
-                                        {{ $donationActivity->date_end }}
-                                    </p>
-                                    <p class="text-sm-left">
-                                        <strong class="text-sm-left">Địa Điểm: </strong>
-                                        {{ $donationActivity->authority->authority_location_name }}
-                                    </p>
-                                </div>
-                                <br>
-                                @if (!empty($campaign_side_pic))
-                                    @foreach ($campaign_side_pic as $side_pic)
+                                @if (!empty($donation_activity_side_pic))
+                                    @foreach ($donation_activity_side_pic as $side_pic)
                                         <div class="col-md-6">
                                             <div class="view z-depth-1">
-                                                <img src="{{ url($side_pic->file_path) }}" alt="" class="img-fluid">
+                                                <img src="{{ url($side_pic->file_path) }}" alt=""
+                                                    class="img-fluid">
                                             </div>
                                         </div>
                                     @endforeach
                                 @endif
+                                
                             </div>
                         </div>
                     </div>
@@ -109,16 +88,6 @@
                         </div>
                     @endif
                 </div>
-            </div>
-            <div class="card">
-                <div class="card-header blue lighten-3 z-depth-1" role="tab" id="heading97">
-                    <h5 class="text-uppercase mb-0 py-1">
-                        <a class="collapsed font-weight-bold white-text" data-toggle="collapse" href="#collapse97"
-                            aria-expanded="false" aria-controls="collapse97">
-                            Tổng các tài sản khuyên góp sử dụng cho đợt từ thiện
-                        </a>
-                    </h5>
-                </div>
                 <div class="card">
                     <div class="card-header blue lighten-3 z-depth-1" role="tab" id="heading97">
                         <h5 class="text-uppercase mb-0 py-1">
@@ -127,15 +96,6 @@
                                 Tổng các tài sản khuyên góp sử dụng cho đợt từ thiện
                             </a>
                         </h5>
-                        <h3>Hoạt động mua hàng</h3>
-                        @if ($orders)
-                            @foreach ($orders as $index => $order)
-                                <a href="{{ route('order.history', $order->order_id) }}" class="nav-link">Đơn hàng
-                                    {{ ++$index }}</a>
-                            @endforeach
-                        @else
-                            Chưa có đơn hàng
-                        @endif
                     </div>
                     <div id="collapse97" class="collapse" role="tabpanel" aria-labelledby="heading97">
                         <div class="card-body">
@@ -143,26 +103,83 @@
                                 <div class="col-md-12">
                                     @if (isset($donationActivityOrders) == true || isset($donationActivityCashouts) == true)
                                         @if (isset($donationActivityCashouts) == true)
-                                            @foreach ($donationActivityCashouts as $cashout)
-                                                <p class="text-sm-left">
-                                                    <strong class="text-sm-left">Tiền mặt: </strong>
-                                                    @if ($cashout->cashout_amount > pow(10, 17))
-                                                        {{ number_format($cashout->cashout_amount / pow(10, 17)) }}
-                                                        (Ether)
-                                                    @elseif($cashout->cashout_amount > pow(10,8))
-                                                        {{ number_format($cashout->cashout_amount / pow(10, 8)) }}
-                                                        (Gwei)
-                                                    @else
-                                                        {{ number_format($cashout->cashout_amount) }} (wei)
-                                                    @endif
-                                                </p>
-                                            @endforeach
+                                            <h3 class="full-left">Sử dụng tiền mặt</h3>
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                    <th scope="col" >Tổng số tiền mặt</th>
+                                                    <th scope="col" >Authority Confirm</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                @foreach ($donationActivityCashouts as $cashout)
+                                                <tr>
+                                                    <td class="text-center">
+                                                        @if ($cashout->cashout_amount > pow(10, 17))
+                                                            {{ number_format($cashout->cashout_amount / pow(10, 17)) }}
+                                                            (Ether)
+                                                        @elseif($cashout->cashout_amount > pow(10,8))
+                                                            {{ number_format($cashout->cashout_amount / pow(10, 8)) }}
+                                                            (Gwei)
+                                                        @else
+                                                            {{ number_format($cashout->cashout_amount) }} (wei)
+                                                        @endif
+                                                    </td>
+                                                    <td class="text-center">
+                                                        @if ($cashout->authority_confirmation == 1 )
+                                                            Yes
+                                                        @else
+                                                            No
+                                                        @endif
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                                </tbody>
+                                            </table>
+                                            
                                         @endif
                                         @if (isset($donationActivityOrders) == true)
-                                            @foreach ($donationActivityOrders as $order)
-
-                                            @endforeach
+                                        <br>
+                                        <h3 class="full-left">Hoạt động mua hàng</h3>
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                <th scope="col" >#</th>
+                                                <th scope="col" >Tổng tiền</th>
+                                                <th scope="col" >Hóa Đơn</th>
+                                                <th scope="col" >Đơn hàng trên blockchain</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            @if ($orders)
+                                                @foreach ($orders as $index => $order)
+                                                <tr>
+                                                    <td class="text-center">
+                                                        Đơn hàng {{ ++$index }}
+                                                        <!-- <a href="{{ route('order.history', $order->order_id) }}"
+                                                        class="nav-link">Đơn hàng {{ ++$index }}</a> -->
+                                                    </td>
+                                                    <td class="text-center">
+                                                        {{ $order->total_receipt }} (wei)
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <a href="{{ route('order.history', $order->order_id) }}"
+                                                        class="nav-link">Link</a>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <a href="{{ route('host.shopping.order.blockchain', $order->donation_activity_address) }}"
+                                                        class="nav-link">Link</a>
+                                                    </td>
+                                                   
+                                                </tr>
+                                                @endforeach
+                                            @else
+                                                Chưa có đơn hàng
+                                            @endif
                                         @endif
+                                        
+                                            </tbody>
+                                        </table>
                                     @else
                                         <h4 class="font-weight-bold mb-3 black-text">Chưa có tài sản từ thiện nào.</h4>
                                     @endif
@@ -172,9 +189,9 @@
                         @if ($donationActivity->host_address == Auth::user()->user_address)
                             <div class="card-footer text-center">
                                 <a href="{{ route('hostws.shopping.cart', $donationActivityAddress) }}"
-                                    class="btn btn-warning" role="button"> Yêu cầu mua hàng</a>
+                                    class="btn btn-warning" role="button">Yêu cầu mua hàng</a>
                                 <a href="{{ route('hostws.donationActivity.cashout.create.request', $donationActivity->donation_activity_address) }}"
-                                    class="btn btn-warning" role="button">Tạo yêu cầu rút tiền</a>
+                                    class="btn btn-warning" role="button">Tạo yêu cầu sử dụng tiền mặt</a>
                             </div>
                         @endif
                     </div>

@@ -45,9 +45,15 @@ use Carbon\Carbon;
 
                         <td>
                             @if($order->order_state == 3)
-                            <button type="button" class="btn btn-primary"
-                                onclick="App.hostOrderDonationActivity('{{ $order->donation_activity_address }}','{{ $order->total_amount }}','{{ $order->retailer_address }}','{{ $order->receipt_url }}','{{ $order->donation_activity->campaign->campaign_address }}'); return false">Tạo
-                                yêu cầu mua hàng</button>
+                            <form method="POST" action="{{ route('hostws.shopping.send.order.request.blockchain') }}">
+                                @csrf
+                                <input id="campaign_address" name="campaign_address" value="{{$order->donation_activity->campaign_address}}" hidden>
+                                <input id="donation_activity_address" name="donation_activity_address" value="{{$order->donation_activity_address}}" hidden>
+                                <input id="retailer_address" name="retailer_address" value="{{$order->retailer_address}}" hidden>
+                                <input id="receipt_url" name="receipt_url" value="{{$order->receipt_url}}" hidden>
+                                <input id="total_amount" name="total_amount" value="{{$order->total_amount}}" hidden>
+                                <button class="btn btn-primary" type="submit">Tạo yêu cầu mua hàng</button>
+                            </form>
                             @else
                             <button type="button" class="btn btn-success" disabled>Đã xác nhận</button>
                             @endif
@@ -61,8 +67,7 @@ use Carbon\Carbon;
                             @elseif($order->order_state == 4)
                                 <button type="button" class="btn btn-info" disabled>Đợi kiểm duyệt</button>
                             @else
-                                <button type="button" class="btn btn-primary"
-                                onclick="App.hostConfirmReceiveOrderDonationActivity('{{ $order->donation_activity_address }}','{{ $order->order_code }}'); return false">Xác nhận</button>
+                                <button type="button" class="btn btn-primary">Xác nhận</button>
                             @endif
                         </td>
                     </tr>
@@ -72,17 +77,3 @@ use Carbon\Carbon;
     </div>
 @endsection
 
-@push('scripts')
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="{{ asset('js/bn.js') }}"></script>
-    <script src="{{ asset('js/app.js') }}"></script>
-    <script src="{{ asset('js/host_confirm_order_blockchain_history_purchase.js') }}"></script>
-    <!-- <script src="{{ asset('js/contract.js') }}"></script> -->
-    <script src="{{ asset('js/web3.min.js') }}"></script>
-    <script src="{{ asset('js/truffle-contract.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-    <script type="text/javascript" src="{{ asset('js/laroute.js') }}"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-@endpush
-@stack('scripts')

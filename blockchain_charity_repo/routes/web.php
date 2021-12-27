@@ -135,6 +135,8 @@ Route::prefix('charity')
                 Route::get('shopping/order/{id}/delete', 'HostController@WS_shoppingCartDeleteOrder')->name('shopping.order.delete');
                 Route::get('shopping/order/{donationActivityAddress}/delete/cart', 'HostController@WS_shoppingCartDeleteCart')->name('shopping.order.delete.cart');
                 Route::get('shopping/order/{donationActivityAddress}/confirm', 'HostController@WS_shoppingCartConfirmOrder')->name('shopping.order.confirm');
+                Route::get('comfirm/blockchain_order/{donationActivityAddress}', 'HostController@WS_listOrderBlockchain')->name('shopping.order.blockchain');
+                Route::post('send/blockchain_order', 'HostController@WS_createDonationActivityOrderRequest')->name('shopping.send.order.request.blockchain');
             });
         Route::get('campaign/list-donator', 'DonatorController@listDonator')->name('campaign.donator');
         Route::get('profile', 'UserController@profile')->name('user.profile');
