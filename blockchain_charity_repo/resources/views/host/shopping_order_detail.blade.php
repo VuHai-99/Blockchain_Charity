@@ -99,10 +99,30 @@
                                             </div>
                                         </td>
                                         <td>
-                                            {{ number_format($item->price) }} wei
+                                            <b>
+                                                @if ($item->price > pow(10, 17))
+                                                    {{ number_format($item->price / pow(10, 17)) }}
+                                                    (Ether)
+                                                @elseif($item->price > pow(10,8))
+                                                    {{ number_format($item->price / pow(10, 8)) }}
+                                                    (Gwei)
+                                                @else
+                                                    {{ number_format($item->price) }} (wei)
+                                                @endif
+                                            </b>
                                         </td>
                                         <td>
-                                            {{ number_format($item->total_receipt) }} wei
+                                            <b>
+                                                @if ($item->total_receipt > pow(10, 17))
+                                                    {{ number_format($item->total_receipt / pow(10, 17)) }}
+                                                    (Ether)
+                                                @elseif($item->total_receipt > pow(10,8))
+                                                    {{ number_format($item->total_receipt / pow(10, 8)) }}
+                                                    (Gwei)
+                                                @else
+                                                    {{ number_format($item->total_receipt) }} (wei)
+                                                @endif
+                                            </b>
                                         </td>
                                         <td><a href="{{ route('host.shopping.order.delete', $item->order_id) }}"
                                                 class="btn btn-danger link-delete-cart"
@@ -116,8 +136,18 @@
                         </table>
                         <div class="row" id="total-price">
                             <div class="col-md-6 col-sm-12 col-xs-12">
-                                <h4>Tổng thanh toán: <span class="price"> {{ number_format($total) }}
-                                        wei</span>
+                                <h4>Tổng thanh toán: 
+                                    <span class="price">
+                                        @if ($total > pow(10, 17))
+                                            {{ number_format($total / pow(10, 17)) }}
+                                            (Ether)
+                                        @elseif($total > pow(10,8))
+                                            {{ number_format($total / pow(10, 8)) }}
+                                            (Gwei)
+                                        @else
+                                            {{ number_format($total) }} (wei)
+                                        @endif
+                                    </span>
                                 </h4>
 
                             </div>

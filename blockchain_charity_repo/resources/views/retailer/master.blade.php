@@ -18,7 +18,7 @@
         <div class="container-fluid">
             <div class="navbar-header row">
                 <div class="logo col-md-6 col-sm-12 col-xs-12">
-                    <a href="#"><img width="150px" src="{{ asset('frontend/img/home/logo.png') }}" alt=""></a>
+                    <a href="#"></a>
                 </div>
                 <div class="col-md-6 col-sm-12 col-xs-12" id="user">
                     @if (Auth::guard('retailer')->check())
@@ -68,7 +68,7 @@
                     href="{{ route('retailer.product.list') }}"><svg class="glyph stroked calendar">
                         <use xlink:href="#stroked-calendar"></use>
                     </svg> Sản phẩm </a></li>
-            <li><a href=""><svg class="glyph stroked line-graph">
+            <li><a href="{{ route('retailer.order.list') }}"><svg class="glyph stroked line-graph">
                         <use xlink:href="#stroked-line-graph"></use>
                     </svg> Danh mục</a></li>
             <li><a href=""><i class="fa fa-list-alt" aria-hidden="true">

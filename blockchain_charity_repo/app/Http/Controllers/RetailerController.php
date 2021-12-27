@@ -66,6 +66,10 @@ class RetailerController extends Controller
         $categories = $this->categoryRepository->getAll();
         return view('retailer.product.create', compact('categories'));
     }
+    public function listOrder()
+    {
+        return view('retailer.order.listOrder');
+    }
 
     public function storeProduct(ProductRequest $request)
     {

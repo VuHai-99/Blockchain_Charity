@@ -42,10 +42,10 @@
 
 .slider_area {
     .slider_bg_1 {
-        background-image: url('../images/banner_header.jpg');
+        background-image: url('../images/banner_main.jpg');
     }
     .single_slider {
-        height: 742px;
+        height: 400px;
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center center;
@@ -68,8 +68,8 @@
             }
             p {
                 font-size: 16px;
-                font-weight: 400;
-                color: #FFFFFF;
+                font-weight: 600;
+                color: #000;
                 margin-bottom: 40px;
                 margin-top: 10px;
             }

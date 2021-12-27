@@ -189,6 +189,7 @@ class HostController extends Controller
         }
         $donation_activity_side_pic = CampaignImg::where('donation_activity_address', $donationActivityAddress)->where('photo_type', 3)->get();
         $orders = $this->orderReceipt->getOrderDonationActivition($donationActivityAddress);
+        // dd($orders);
         return view('host.donation_activity_detail', compact('donationActivityAddress', 'campaign', 'donationActivity', 'donationActivityCashouts', 'donation_activity_side_pic', 'donation_activity_main_pic', 'orders'));
     }
 
@@ -307,6 +308,7 @@ class HostController extends Controller
         }
         $amountRemain = $amount - $totalReceipt;
         $orders = $this->orderReceipt->getProductOrder($donationActivityAddress);
+        // dd($orders);
         if(count($orders)!=0){
             $product_id= $orders[0]->product_id;
             $retailerAddress = (Product::findOrFail($product_id))->retailer_address;
@@ -336,11 +338,11 @@ class HostController extends Controller
 
     public function confirmOrderBlockchain($donationActivityAddress)
     {
-        $order_donation_activities = OrderDonationActivity::where('donation_activity_address',$donationActivityAddress)->where('order_state',3)->get();
+        // $order_donation_activities = OrderDonationActivity::where('donation_activity_address',$donationActivityAddress)->where('order_state',3)->get();
+        $order_donation_activities = OrderDonationActivity::where('donation_activity_address',$donationActivityAddress)->get();
         // dd($order_donation_activities);
         return view('host.confirm_order_blockchain_history_purchase', compact('order_donation_activities'));
     }
-
 
     //WS
 
@@ -678,7 +680,9 @@ class HostController extends Controller
             $donation_activity_main_pic = null;
         }
         $donation_activity_side_pic = CampaignImg::where('donation_activity_address', $donationActivityAddress)->where('photo_type', 3)->get();
+        
         $orders = $this->orderReceipt->getOrderDonationActivition($donationActivityAddress);
+        // dd($orders);
         return view('host.donation_activity_detail_ws', compact('donationActivityAddress', 'campaign', 'donationActivity', 'donationActivityCashouts', 'donation_activity_main_pic', 'donation_activity_side_pic', 'orders'));
     }
 
@@ -692,6 +696,13 @@ class HostController extends Controller
     {
         $withdrawAPI = 'http://localhost:3000/host/create/donationActivityCashout/request';
 
+        $a = [
+            'validated_host_address' => Auth::user()->user_address,
+            'campaign_address' => $request->campaign_address,
+            'donation_activity_address' => $donationActivityAddress,
+            'cashout_value' => $request->cashout_value
+        ];
+        dd($a);
         $response = Http::post($withdrawAPI, [
             'validated_host_address' => Auth::user()->user_address,
             'campaign_address' => $request->campaign_address,
@@ -929,6 +940,85 @@ class HostController extends Controller
         return view('host.donator_top', compact('donators'));
     }
 
+    public function WS_listOrderBlockchain($donationActivityAddress)
+    {
+        $order_donation_activities = OrderDonationActivity::where('donation_activity_address',$donationActivityAddress)->get();
+        // dd($order_donation_activities);
+        return view('host.confirm_order_blockchain_history_purchase_ws', compact('order_donation_activities'));
+    }
     
+    public function WS_createDonationActivityOrderRequest(Request $request)
+    {
+        $withdrawAPI = 'http://localhost:3000/host/create/donationActivityOrder/request';
+
+        $response = Http::post($withdrawAPI, [
+            // 'donator_address' => Auth::user()->user_address,
+            'campaign_address'=>$request->campaign_address,
+            'validated_host_address' => Auth::user()->user_address,
+            'donation_activity_address'=>$request->donation_activity_address,
+            'retailer_address'=>$request->retailer_address,
+            'receipt_url'=>$request->receipt_url,
+            'total_amount'=>$request->total_amount
+        ]);
+        if ($response->status() == 200) {
+            $notification = array(
+                'message' => 'Request to Create Donation Activity Order Successfully',
+                'alert-type' => 'success'
+            );
+
+            $transaction_info = $response->json();
+            $requestToCreateDonationActivity = new BlockchainRequest();
+            $requestToCreateDonationActivity->request_id = $transaction_info['request_id'];
+            $requestToCreateDonationActivity->amount = $request->total_amount;
+            $requestToCreateDonationActivity->requested_user_address = Auth::user()->user_address;
+            $requestToCreateDonationActivity->donation_activity_address = $request->donation_activity_address;
+            $requestToCreateDonationActivity->retailer_address = $request->retailer_address;
+            $requestToCreateDonationActivity->url = $request->receipt_url;
+            $requestToCreateDonationActivity->request_type = 5;
+            $requestToCreateDonationActivity->save();
+
+
+            $orderDonationActivity = OrderDonationActivity::where('receipt_url',$request->receipt_url)->first();
+            $orderDonationActivity->order_code =  $transaction_info['request_id'];
+            $orderDonationActivity->order_state = 4;
+            $orderDonationActivity->save();
+            return redirect()->back()->with($notification);
+        } else {
+            $notification = array(
+                'message' => 'Request to Create Donation Activity Order Unsuccessfully',
+                'alert-type' => 'error'
+            );
+            return redirect()->back()->with($notification);
+        }
+    }
+
+    public function WS_confirmReceivedDonationActivityOrder(Request $request)
+    {
+        $withdrawAPI = 'http://localhost:3000/host/confirm/received/donationActivityOrder';
+
+        $response = Http::post($withdrawAPI, [
+            // 'donator_address' => Auth::user()->user_address,
+            'validated_host_address' => Auth::user()->user_address,
+            'donation_activity_address'=>$request->donation_activity_address,
+            'order_code'=>$request->order_code
+        ]);
+        if ($response->status() == 200) {
+            $notification = array(
+                'message' => 'Host confirm received Donation Activity Order Successfully',
+                'alert-type' => 'success'
+            );
+
+            $orderDonationActivity = OrderDonationActivity::where('receipt_url',$request->receipt_url)->first();
+            $orderDonationActivity->order_state = 2;
+            $orderDonationActivity->save();
+            return redirect()->back()->with($notification);
+        } else {
+            $notification = array(
+                'message' => 'Request to Create Donation Activity Order Unsuccessfully',
+                'alert-type' => 'error'
+            );
+            return redirect()->back()->with($notification);
+        }
+    }
     
 }

@@ -8,7 +8,8 @@
 
 @section('pageBreadcrumb')
     <div class="group-button-top">
-        <a href="{{ route('hostws.campaign') }}" class="btn btn-ct-primary active-primary action float-right" role="button">Dự án</a>
+        <a href="{{ route('hostws.campaign') }}" class="btn btn-ct-primary active-primary action float-right"
+            role="button">Dự án</a>
     </div>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -23,7 +24,8 @@
         <div class="event-happend">
             <h3>Yêu cầu mở dự án</h3>
             @foreach ($listRequestOpenCampaign as $requestOpenCampaign)
-                <form method="POST" action="{{ route('hostws.cancel.request.openCampaign', $requestOpenCampaign->request_id) }}">
+                <form method="POST"
+                    action="{{ route('hostws.cancel.request.openCampaign', $requestOpenCampaign->request_id) }}">
                     @csrf
                     <div class="event-item row">
                         <div class="image">
@@ -34,9 +36,27 @@
                             <div class="campaign-name">Tên dự án: {{ $requestOpenCampaign->campaign_name }}</div>
                             <div class="campaign-address">Địa chỉ: {{ $requestOpenCampaign->campaign_address }}</div>
                             <div class="coin">
-                                Số tiền: {{ $requestOpenCampaign->amount }} (wei)
+                                Số tiền:
+                                @if ($requestOpenCampaign->amount > pow(10, 17))
+                                    {{ number_format($requestOpenCampaign->amount / pow(10, 17)) }}
+                                    (Ether)
+                                @elseif($requestOpenCampaign->amount > pow(10,8))
+                                    {{ number_format($requestOpenCampaign->amount / pow(10, 8)) }}
+                                    (Gwei)
+                                @else
+                                    {{ number_format($requestOpenCampaign->amount) }} (wei)
+                                @endif
                                 <br>
-                                Mục tiêu: {{ $requestOpenCampaign->target_contribution_amount }}(wei)
+                                Mục tiêu:
+                                @if ($requestOpenCampaign->target_contribution_amount > pow(10, 17))
+                                    {{ number_format($requestOpenCampaign->target_contribution_amount / pow(10, 17)) }}
+                                    (Ether)
+                                @elseif($requestOpenCampaign->target_contribution_amount > pow(10,8))
+                                    {{ number_format($requestOpenCampaign->target_contribution_amount / pow(10, 8)) }}
+                                    (Gwei)
+                                @else
+                                    {{ number_format($requestOpenCampaign->target_contribution_amount) }} (wei)
+                                @endif
                             </div>
                             <div class="descripton">
                                 <p class="text-description">Mô tả: {{ $requestOpenCampaign->description }}</p>
@@ -48,8 +68,8 @@
                                 <button class="btn btn-cancel" type="submit">HỦY</button>
                             </div>
                         </div>
-                    
-                        
+
+
                     </div>
                 </form>
                 <br> <br>
@@ -58,7 +78,8 @@
             @endforeach
             <h3>Yêu cầu mở hoạt động từ thiện</h3>
             @foreach ($listRequestOpenDonationActivity as $requestOpenDonationActivity)
-                <form method="POST" action="{{ route('hostws.cancel.request.openDonationActivity', $requestOpenDonationActivity->request_id) }}">
+                <form method="POST"
+                    action="{{ route('hostws.cancel.request.openDonationActivity', $requestOpenDonationActivity->request_id) }}">
                     @csrf
                     <div class="event-item row">
                         <div class="image">
@@ -66,18 +87,24 @@
                                 alt="" style="width:400px;height:300px;">
                         </div>
                         <div class="information">
-                            <div class="campaign-name">Trực thuộc dự án : {{ $requestOpenDonationActivity->campaign->name }}</div>
-                            <div class="campaign-address">Địa chỉ dự án: {{ $requestOpenDonationActivity->campaign->campaign_address }}</div>
-                            <div class="campaign-address">Địa điểm dự kiến: {{ $requestOpenDonationActivity->authority->authority_local_name }}</div>
-                            <input type="hidden" id="campaign_address" name="campaign_address" value="{{ $requestOpenDonationActivity->campaign->campaign_address }}">
-                            <div class="campaign-address">Thời gian diễn ra dự kiến From: {{ $requestOpenDonationActivity->date_start }} To: {{ $requestOpenDonationActivity->date_end }}</div>
+                            <div class="campaign-name">Trực thuộc dự án :
+                                {{ $requestOpenDonationActivity->campaign->name }}</div>
+                            <div class="campaign-address">Địa chỉ dự án:
+                                {{ $requestOpenDonationActivity->campaign->campaign_address }}</div>
+                            <div class="campaign-address">Địa điểm dự kiến:
+                                {{ $requestOpenDonationActivity->authority->authority_local_name }}</div>
+                            <input type="hidden" id="campaign_address" name="campaign_address"
+                                value="{{ $requestOpenDonationActivity->campaign->campaign_address }}">
+                            <div class="campaign-address">Thời gian diễn ra dự kiến From:
+                                {{ $requestOpenDonationActivity->date_start }} To:
+                                {{ $requestOpenDonationActivity->date_end }}</div>
                             <div class="campaign-address">Mô tả: {{ $requestOpenDonationActivity->description }}</div>
                             <div class="cancel">
                                 <button class="btn btn-cancel" type="submit">HỦY</button>
                             </div>
                         </div>
-                    
-                        
+
+
                     </div>
                 </form>
                 <br> <br>
@@ -86,7 +113,8 @@
             @endforeach
             <h3>Yêu cầu rút tiền</h3>
             @foreach ($listRequestCreateDonationActivityCashout as $requestCreateDonationActivityCashout)
-                <form method="POST" action="{{ route('hostws.cancel.request.createDonationActivityCashout', $requestCreateDonationActivityCashout->request_id) }}">
+                <form method="POST"
+                    action="{{ route('hostws.cancel.request.createDonationActivityCashout', $requestCreateDonationActivityCashout->request_id) }}">
                     @csrf
                     <div class="event-item row">
                         <div class="image">
@@ -94,12 +122,21 @@
                                 alt="" style="width:400px;height:300px;">
                         </div>
                         <div class="information">
-                            <div class="campaign-name">Trực thuộc dự án : {{ $requestCreateDonationActivityCashout->donation_activity->campaign->name }}</div>
-                            <div class="campaign-address">Địa chỉ dự án: {{ $requestCreateDonationActivityCashout->donation_activity->campaign->campaign_address }}</div>
-                            <div class="campaign-address">Trong đợt từ thiện : {{ $requestCreateDonationActivityCashout->donation_activity->donation_activity_name }}</div>
-                            <input type="hidden" id="campaign_address" name="campaign_address" value="{{ $requestCreateDonationActivityCashout->donation_activity->campaign->campaign_address  }}">
-                            <div class="campaign-address">Địa chỉ đợt từ thiện : {{ $requestCreateDonationActivityCashout->donation_activity->donation_activity_address }}</div>
-                            <div class="campaign-address">Số tiền mặt muốn sử dụng : {{ $requestCreateDonationActivityCashout->amount }}(wei)</div>
+                            <div class="campaign-name">Trực thuộc dự án :
+                                {{ $requestCreateDonationActivityCashout->donation_activity->campaign->name }}</div>
+                            <div class="campaign-address">Địa chỉ dự án:
+                                {{ $requestCreateDonationActivityCashout->donation_activity->campaign->campaign_address }}
+                            </div>
+                            <div class="campaign-address">Trong đợt từ thiện :
+                                {{ $requestCreateDonationActivityCashout->donation_activity->donation_activity_name }}
+                            </div>
+                            <input type="hidden" id="campaign_address" name="campaign_address"
+                                value="{{ $requestCreateDonationActivityCashout->donation_activity->campaign->campaign_address }}">
+                            <div class="campaign-address">Địa chỉ đợt từ thiện :
+                                {{ $requestCreateDonationActivityCashout->donation_activity->donation_activity_address }}
+                            </div>
+                            <div class="campaign-address">Số tiền mặt muốn sử dụng :
+                                {{ $requestCreateDonationActivityCashout->amount }}(wei)</div>
                             <div class="cancel">
                                 <button class="btn btn-cancel" type="submit">HỦY</button>
                             </div>

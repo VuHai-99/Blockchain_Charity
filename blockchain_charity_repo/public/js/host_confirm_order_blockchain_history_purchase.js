@@ -71,6 +71,10 @@ App = {
     const campaign = await $.getJSON('/contracts/Campaign.json')
     App.contracts.Campaign = TruffleContract(campaign)
     App.contracts.Campaign.setProvider(App.web3Provider)
+
+    const donationActivity = await $.getJSON('/contracts/DonationActivity.json')
+    App.contracts.DonationActivity = TruffleContract(donationActivity)
+    App.contracts.DonationActivity.setProvider(App.web3Provider)
   },
 
   render: async () => {
@@ -97,14 +101,14 @@ App = {
                     + String(currentdate.getSeconds());
     datetime = Number(datetime)
     let newContractRequestId = "0x"+(new BN(String(datetime))).toTwos(256).toString('hex',64);
-    console.log((newContractRequestId+'-'+donationActivityAddress+'-'+retailerAddress+'-'+url+'-'+totalAmount))
+    console.log((newContractRequestId+' - '+donationActivityAddress+' - '+retailerAddress+' - '+url+' - '+totalAmount))
     let b = App.contracts.Campaign.at(campaignAddress);
     await b.requestToCreateOrderFromDonationActivity(newContractRequestId,donationActivityAddress,retailerAddress,url,totalAmount)
       .then((result) => {
         console.log(result)
         toastr.success("Successfully create request to order in donation activity");
         
-        axios.post(('/api/store-blockchain-request'), {
+        axios.post(('/api/decide-blockchain-request'), {
           "request_id": newContractRequestId,
           "request_type": 5,
           "requested_user_address":current_account,
@@ -132,7 +136,42 @@ App = {
         console.log(error)
       });
   },
+  hostConfirmReceiveOrderDonationActivity: async (donationActivityAddress,orderCode) => {
+    // console.log(donationActivityAddress);
 
+    let c = App.contracts.DonationActivity.at(donationActivityAddress);
+    await c.hostConfirmReceivedOrder(orderCode)
+    .then((result) => {
+      console.log(result);
+      // const newDonationActivityAddress = result.logs[0].args.new_campaign_address;
+
+      Swal.fire({
+        title: 'Successful!',
+        text: 'Successfully confirm receive order',
+        confirmButtonText: 'Close'
+      })
+
+
+      axios.post(('/api/confirm-donation-activity-request'), {
+        "orderID": orderCode,
+        "request_type": 'host-confirm-receive-order'
+      }).then(function(response){
+        if(response.status == 200){
+          console.log('Successfully authority confirm order in database');
+        } else {
+          console.log('UnSuccessfully authority confirm order in database');
+        }
+      })
+
+    }).catch(error => {
+      Swal.fire({
+        title: 'Unsuccessful!',
+        text: error.message,
+        icon: 'error',
+        confirmButtonText: 'Close'
+      })
+    });
+  },
 
 }
 

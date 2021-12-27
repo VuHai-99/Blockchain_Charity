@@ -51,7 +51,8 @@ class OrderReceiptRepository extends BaseRepository
 
     public function confirmOrder($donationActivityAddress, $data)
     {
-        return $this->model->where('donation_activity_address', $donationActivityAddress)
+        //dd(1);
+         return $this->model->where('donation_activity_address', $donationActivityAddress)
             ->whereNull('date_of_payment')
             ->update($data);
     }
@@ -80,7 +81,7 @@ class OrderReceiptRepository extends BaseRepository
 
     public function getOrderDonationActivition($donationAddress)
     {
-        return $this->model->select('order_id')
+        return $this->model->select('*')
             ->where('donation_activity_address', $donationAddress)
             ->distinct('order_id')
             ->get();

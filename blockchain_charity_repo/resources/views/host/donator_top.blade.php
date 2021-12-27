@@ -6,9 +6,9 @@
             @php
                 $temp = explode('/', Request::url());
             @endphp
-             <li class="breadcrumb-item "><a style="color:black" href="{{ route('home') }}">Trang chủ</a></li>
-             <li class="breadcrumb-item "><a style="color:black" href="{{ route('campaign') }}">Dự án</a></li>
-             <li class="breadcrumb-item "><a style="color:black" href="#">Danh sách nhà tài trợ</a></li>
+            <li class="breadcrumb-item "><a style="color:black" href="{{ route('home') }}">Trang chủ</a></li>
+            <li class="breadcrumb-item "><a style="color:black" href="{{ route('campaign') }}">Dự án</a></li>
+            <li class="breadcrumb-item "><a style="color:black" href="#">Danh sách nhà tài trợ</a></li>
         </ol>
     </nav>
 @endsection
@@ -25,7 +25,17 @@
                     <tr>
                         <td>{{ $donator->name }}</td>
                         <td>{{ $donator->home_address }}</td>
-                        <td>{{ $donator->total_donate }}</td>
+                        <td>
+                            @if ($donator->total_donate > pow(10, 17))
+                                {{ number_format($donator->total_donate / pow(10, 17)) }}
+                                (Ether)
+                            @elseif($donator->total_donate > pow(10,8))
+                                {{ number_format($donator->total_donate / pow(10, 8)) }}
+                                (Gwei)
+                            @else
+                                {{ number_format($donator->total_donate) }} (wei)
+                            @endif
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

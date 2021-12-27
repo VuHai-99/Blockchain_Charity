@@ -61,17 +61,27 @@ To get a local copy up and running follow these simple example steps.
    replace 2 file Campaign.json and CampaignFactory.json in API_Blockchain\contracts with new Campaign.json and CampaignFactory.json in blockchain_charity_repo/public/
    Variable campaignFactoryAddress in API_Blockchain/Autofetch_Blockchain.js have to change to current deployed campaign.
    In .env add CAMPAIGN_FACTORY_ADDRESS="<<current campaign factory address>>"
+   Change "DB" field in /API_Blockchain/app/config/laravel_db.config to new DB name: "blockchain_charity_testnetwork"
    ```
 
-7. Default testing wallet ( ít nhất 6 tài khoản )
-Owner	0xdB9d76207E8398f140c3346B8A03745e720Bc152
-Admin	0x4C713A3983548984D6B9F5adBB2328CC6c3c0530
-Authority	0x2821E40a6cddc5c217B1DFDceB587a81ee1d325d
-Retailer	0xeF1f703ad77d3c3B0fe8e6BE6735D734f0EFCada
-Host_1 (Cold-Wallet)	0x9EF5f229045f9aB196188ebf80bBf80450777816
-Host_2 (Hot-Wallet)(website tự tạo cho người dùng)
-Donator_1 (Cold-Wallet)	0x93C790c75bC431Aa548BB788786408e9aAC776d4
-Donator_2 (Hot-Wallet)(website tự tạo cho người dùng)
+7. Default testing wallet ( ít nhất 6 tài khoản ). Database mẫu đi theo các tài khoản này.
+Owner	: 0xdB9d76207E8398f140c3346B8A03745e720Bc152 - d5465f170d72256a0dc232da94875ac7898a8b8d9e86f1f381b86b9f957966d2
+Admin	:
+   - 0x4C713A3983548984D6B9F5adBB2328CC6c3c0530 - 68fd73040a937fb06864ebcaf6fe40ffcc33188a3a189bd2878d8999faa498ab
+   - Username : admin1@gmail.com
+   - Password : 11111111
+   - Login URL : /admin/login
+Authority :
+   - 0x2821E40a6cddc5c217B1DFDceB587a81ee1d325d -65184ebbb02f4f6f251a3d05b2476991f58f2ca12144d7b6307120b41ff34ed7
+   - Username : authority1@gmail.com
+   - Password : 11111111
+   - Login URL : /authority/login
+Retailer	: 
+   - 0xeF1f703ad77d3c3B0fe8e6BE6735D734f0EFCada - 039f7d537f4c48bf7e93b49a64fc381f8ec97e5110b5d51eeaa766ef8033eebc
+   - Username : retailer1@gmail.com
+   - Password : 11111111
+   - Login URL : /retailer/login
+
 
 
 ## Usage

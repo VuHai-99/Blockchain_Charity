@@ -44,7 +44,7 @@ if (Auth::check()) {
                     </div>
                     <div class="col-xl-7 col-lg-7 main-menu">
                         <nav>
-                            @if (!Auth::guard('admin')->check())
+                            @if (!Auth::guard('admin')->check() && !Auth::guard('authority')->check())
                                 <ul id="navigation">
                                     @foreach ($navs as $nav)
                                         @php
@@ -81,17 +81,18 @@ if (Auth::check()) {
                                                 <a href="{{ route('admin.validate-host-request.list') }}"
                                                     class="nav-link">Xác nhận nhà từ thiện</a>
                                             </li>
-                                            <li class="item">
-                                                <a href="{{ route('admin.withdraw-money-request.list') }}"
-                                                    class="nav-link">Xác nhận rút tiền</a>
-                                            </li>
+                                            
                                             <li class="item">
                                                 <a href="{{ route('admin.create-donationActivity-request.list') }}"
-                                                    class="nav-link">Xác nhận hoạt động</a>
+                                                    class="nav-link">Xác nhận đợt từ thiện</a>
                                             </li>
                                             <li class="item">
                                                 <a href="{{ route('admin.create-donationActivityCashout-request.list') }}"
-                                                    class="nav-link">Xác nhận rút tiền</a>
+                                                    class="nav-link">Xác nhận sử dụng tiền mặt trong đợt từ thiện</a>
+                                            </li>
+                                            <li class="item">
+                                                <a href="{{ route('admin.create-donationActivityOrder-request.list') }}"
+                                                    class="nav-link">Xác nhận mua hàng trong đợt từ thiện</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -99,6 +100,32 @@ if (Auth::check()) {
                                         <a href="{{ route('admin.logout') }}" class="nav-link">Đăng xuất</a>
                                     </li>
                                 </ul>
+
+                            @elseif(Auth::guard('authority')->check())
+                                <ul id="navigation">
+                                    <li class="item">
+                                        <a href="{{ route('admin.dashboard.index') }}"
+                                            class="nav-link">Trang chủ</a>
+                                    </li>
+                                    <li class="item btn-group">
+                                        <a href="" class="nav-link dropdown-toggle" data-toggle="dropdown">Yêu cầu</a>
+                                        <ul class="dropdown-menu">
+                                            <li class="item">
+                                                <a href="{{ route('authority.cashout_request.list') }}"
+                                                    class="nav-link">Xác nhận sử dụng tiền mặt trong đợt từ thiện</a>
+                                            </li>
+                                            <li class="item">
+                                                <a href="{{ route('authority.order_request.list') }}"
+                                                    class="nav-link">Xác nhận mua hàng trong đợt từ thiện</a>
+                                            </li>
+                                            
+                                        </ul>
+                                    </li>
+                                    <li class="item">
+                                        <a href="{{ route('authority.logout') }}" class="nav-link">Đăng xuất</a>
+                                    </li>
+                                </ul>
+                            
                             @endif
                         </nav>
                     </div>
@@ -118,11 +145,7 @@ if (Auth::check()) {
                         <div class="slider_text ">
                             <span>Get Started Today.</span>
                             <h3> Help the children When They Need</h3>
-                            <p>With so much to consume and such little time, coming up <br> with relevant title ideas is
-                                essential
-                            </p>
-                            <a href="#" class="boxed-btn3">Learn More
-                            </a>
+                            
                         </div>
                     </div>
                 </div>

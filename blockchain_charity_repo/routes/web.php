@@ -135,6 +135,9 @@ Route::prefix('charity')
                 Route::get('shopping/order/{id}/delete', 'HostController@WS_shoppingCartDeleteOrder')->name('shopping.order.delete');
                 Route::get('shopping/order/{donationActivityAddress}/delete/cart', 'HostController@WS_shoppingCartDeleteCart')->name('shopping.order.delete.cart');
                 Route::get('shopping/order/{donationActivityAddress}/confirm', 'HostController@WS_shoppingCartConfirmOrder')->name('shopping.order.confirm');
+                Route::get('comfirm/blockchain_order/{donationActivityAddress}', 'HostController@WS_listOrderBlockchain')->name('shopping.order.blockchain');
+                Route::post('send/blockchain_order', 'HostController@WS_createDonationActivityOrderRequest')->name('shopping.send.order.request.blockchain');
+                Route::post('confirm/received/blockchain_order', 'HostController@WS_confirmReceivedDonationActivityOrder')->name('confirm.received.donationActivity.order');
             });
         Route::get('campaign/list-donator', 'DonatorController@listDonator')->name('campaign.donator');
         Route::get('profile', 'UserController@profile')->name('user.profile');
@@ -150,6 +153,7 @@ Route::prefix('authority')
         Route::get('logout', 'AuthorityController@logout')->name('logout');
         Route::get('', 'AuthorityController@index')->name('index');
         Route::get('list/cashout-request', 'AuthorityController@listDonationActivityCashoutRequest')->name('cashout_request.list');
+        Route::get('list/order-request', 'AuthorityController@listDonationActivityOrderRequest')->name('order_request.list');
     });
 
 
@@ -168,7 +172,7 @@ Route::prefix('retailer')
             Route::post('edit/{id}', 'RetailerController@updateProduct')->name('product.update');
             Route::get('delete/{id}', 'RetailerController@deleteProduct')->name('product.delete');
         });
-        Route::get('order', 'RetailerController@listOrder')->name('order');
+        Route::get('order', 'RetailerController@listOrder')->name('order.list');
         Route::get('profile', 'RetailController@profile')->name('profile');
     });
 

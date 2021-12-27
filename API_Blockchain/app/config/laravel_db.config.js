@@ -2,5 +2,5 @@ module.exports = {
     HOST: "localhost",
     USER: "root",
     PASSWORD: "",
-    DB: "blockchain_charity_demo2"
+    DB: "blockchain_charity_testnetwork"
   };
