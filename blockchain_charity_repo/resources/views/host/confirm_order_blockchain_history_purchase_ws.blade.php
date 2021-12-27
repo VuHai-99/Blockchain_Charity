@@ -67,7 +67,13 @@ use Carbon\Carbon;
                             @elseif($order->order_state == 4)
                                 <button type="button" class="btn btn-info" disabled>Đợi kiểm duyệt</button>
                             @else
-                                <button type="button" class="btn btn-primary">Xác nhận</button>
+                                <form method="POST" action="{{ route('hostws.confirm.received.donationActivity.order') }}">
+                                    @csrf
+                                    <input id="donation_activity_address" name="donation_activity_address" value="{{$order->donation_activity_address}}" hidden>
+                                    <input id="order_code" name="order_code" value="{{$order->order_code}}" hidden>
+                                    <input id="receipt_url" name="receipt_url" value="{{$order->receipt_url}}" hidden>
+                                    <button class="btn btn-primary" type="submit">Xác nhận</button>
+                                </form>
                             @endif
                         </td>
                     </tr>

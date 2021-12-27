@@ -991,4 +991,34 @@ class HostController extends Controller
             return redirect()->back()->with($notification);
         }
     }
+
+    public function WS_confirmReceivedDonationActivityOrder(Request $request)
+    {
+        $withdrawAPI = 'http://localhost:3000/host/confirm/received/donationActivityOrder';
+
+        $response = Http::post($withdrawAPI, [
+            // 'donator_address' => Auth::user()->user_address,
+            'validated_host_address' => Auth::user()->user_address,
+            'donation_activity_address'=>$request->donation_activity_address,
+            'order_code'=>$request->order_code
+        ]);
+        if ($response->status() == 200) {
+            $notification = array(
+                'message' => 'Host confirm received Donation Activity Order Successfully',
+                'alert-type' => 'success'
+            );
+
+            $orderDonationActivity = OrderDonationActivity::where('receipt_url',$request->receipt_url)->first();
+            $orderDonationActivity->order_state = 2;
+            $orderDonationActivity->save();
+            return redirect()->back()->with($notification);
+        } else {
+            $notification = array(
+                'message' => 'Request to Create Donation Activity Order Unsuccessfully',
+                'alert-type' => 'error'
+            );
+            return redirect()->back()->with($notification);
+        }
+    }
+    
 }
