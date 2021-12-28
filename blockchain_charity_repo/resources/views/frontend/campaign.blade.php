@@ -13,7 +13,7 @@
                 <div class="event-item row">
                     <div class="image">
                         <a href="{{ route('campaign.detail', $campaign->campaign_address) }}"><img
-                                src="{{ asset('images/' . $campaign->file_path) }}" alt=""></a>
+                                src="{{ asset($campaign->file_path) }}" alt=""></a>
                     </div>
                     <div class="information">
                         <div class="campaign-name">{{ $campaign->name }}</div>
