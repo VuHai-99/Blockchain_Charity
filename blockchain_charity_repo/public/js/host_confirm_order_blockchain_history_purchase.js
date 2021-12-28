@@ -140,9 +140,12 @@ App = {
         console.log(error)
       });
   },
-  hostConfirmReceiveOrderDonationActivity: async (donationActivityAddress,orderCode) => {
+  hostConfirmReceiveOrderDonationActivity: async (donationActivityAddress,orderCode,campaignAddress) => {
     // console.log(donationActivityAddress);
-
+    let current_account;
+    App.getAccounts(function (result) {
+        current_account = result[0];
+    });
     let c = App.contracts.DonationActivity.at(donationActivityAddress);
     await c.hostConfirmReceivedOrder(orderCode)
     .then((result) => {
@@ -155,6 +158,7 @@ App = {
         confirmButtonText: 'Close'
       })
 
+      
 
       axios.post(('/api/confirm-donation-activity-request'), {
         "orderID": orderCode,
@@ -167,6 +171,11 @@ App = {
         }
       })
 
+      let syncBalanceAccountUrl = '/api/sync/balance/account/'.concat(current_account);
+      axios.get((syncBalanceAccountUrl));
+      let syncBalanceCampaignUrl = '/api/sync/balance/campaign/'.concat(campaignAddress);
+      axios.get((syncBalanceCampaignUrl));
+      location.reload();
     }).catch(error => {
       Swal.fire({
         title: 'Unsuccessful!',
