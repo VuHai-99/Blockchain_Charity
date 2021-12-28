@@ -14,4 +14,9 @@ class OrderDonationActivity extends Model
     {
         return $this->belongsTo(DonationActivity::class, 'donation_activity_address', 'donation_activity_address');
     }
+
+    public function retailer()
+    {
+        return $this->belongsTo(Retailer::class, 'retailer_address', 'retailer_address');
+    }
 }

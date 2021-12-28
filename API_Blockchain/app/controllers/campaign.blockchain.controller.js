@@ -5,6 +5,7 @@ const path = require("path");
 const BN = require('bn.js');
 
 const User = require("../models/user.model.js");
+const Campaign = require("../models/campaign.model.js");
 
 
 const jsonFile = "../../contracts/Campaign.json";
@@ -179,6 +180,42 @@ exports.syncBalanceAccount = async (req, res) => {
       web3.eth.getBalance(user_address)
       .then((r) => {
         User.updateBalance(user_address,r, (suc) => {
+          if (suc) {
+            res.send('Success')
+          } else {
+            res.status(500).send({
+              message:
+                err.message || "Error Happend."
+            });
+            return;
+          }
+        })
+      })
+    } catch (error) {
+      res.status(500).send({
+        message:
+        error.message || "Invalid Donator Address."
+      });
+    }
+  
+  }
+
+  
+};
+
+exports.syncBalanceCampaign = async (req, res) => {
+  if(!req.params.campaign_address){
+    res.status(400).send({
+      message: "campaign_address can not be empty!"
+    });
+    return;
+  } else {
+
+    const campaign_address = req.params.campaign_address
+    try {
+      web3.eth.getBalance(campaign_address)
+      .then((r) => {
+        Campaign.updateBalance(campaign_address,r, (suc) => {
           if (suc) {
             res.send('Success')
           } else {
@@ -590,6 +627,87 @@ exports.cancelRequestCreateDonationActivityCashout = async (req, res) => {
         privKey = currentUserJson.private_key
         console.log(
             `Attempting to Cancel Donation Activity Cashout Request from ${validated_host_address}}`
+        );
+
+        // console.log(req.body.amoutOfEthereum)
+
+        const createTransaction = web3.eth.accounts.signTransaction(
+          {
+              from: validated_host_address,
+              to: req.body.campaign_address,
+              gas: 2000000,
+              data: encodedABI,
+          },
+          privKey
+        );
+        createTransaction.then((signedTx) => {  
+
+            const sentTx = web3.eth.sendSignedTransaction(signedTx.raw || signedTx.rawTransaction);  
+            
+            sentTx.on("receipt", receipt => {
+              console.log(receipt)
+              res.send({
+                "request_id":request_id
+              });
+            });
+            
+            sentTx.on("error", err => {
+              console.log(err)
+              res.status(500).send({
+                message:
+                  err['data']['stack'] || "Some error occurred in transaction process."
+              });
+            });
+            
+        }).catch((err) => {
+          console.log(err)
+          res.status(500).send({
+            message:
+              err.message || "Invalid Host Address."
+          });
+          // console.log(err)
+          
+        });
+      }
+    });
+    
+  
+  }
+
+  
+};
+
+exports.cancelRequestCreateDonationActivityOrder = async (req, res) => {
+
+
+  if (!req.body) {
+    res.status(400).send({
+      message: "Content can not be empty!"
+    });
+    return;
+  } else {
+    // Create a Campaign
+    
+    const request_id = req.body.request_id;
+    const validated_host_address = req.body.validated_host_address;
+    const contract = new Contract(abi, web3.utils.toChecksumAddress(req.body.campaign_address));
+
+    const encodedABI = contract.methods.cancelOrderFromDonationActivity(request_id).encodeABI();
+
+
+
+    User.queryHostFindByAddress(validated_host_address, (err, current_user) => {
+      if (err) {
+        res.status(500).send({
+          message:
+            err.message || "Host address is not valid."
+        });
+        return;
+      } else {
+        currentUserJson = JSON.parse(current_user)
+        privKey = currentUserJson.private_key
+        console.log(
+            `Attempting to Cancel Donation Activity Order Request from ${validated_host_address}}`
         );
 
         // console.log(req.body.amoutOfEthereum)

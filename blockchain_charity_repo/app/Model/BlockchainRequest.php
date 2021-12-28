@@ -19,6 +19,9 @@ class BlockchainRequest extends Model
     public function authority(){
         return $this->belongsTo(Authority::class,'authority_address','authority_address');
     }
+    public function retailer(){
+        return $this->belongsTo(Retailer::class,'retailer_address','retailer_address');
+    }
     public function donation_activity(){
         return $this->belongsTo(DonationActivity::class,'donation_activity_address','donation_activity_address');
     }

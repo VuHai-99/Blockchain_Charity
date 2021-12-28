@@ -24,6 +24,8 @@ Route::post('/store-transaction', 'Api\BlockchainController@storeTransaction')->
 Route::post('/decide-cashout-request', 'Api\BlockchainController@decideCashoutRequest')->name('decide.cashout.request'); 
 Route::get('/shopping/order/{donationActivityAddress}/confirm', 'Api\ShoppingController@shoppingCartConfirmOrder')->name('shopping.order.confirm');
 Route::post('/confirm-donation-activity-request', 'Api\BlockchainController@confirmDonationActivityRequest')->name('confirm.donation.activity.request'); 
+Route::get('/sync/balance/account/{user_address}', 'Api\BlockchainController@syncBalanceAccount')->name('sync.balance.account');
+Route::get('/sync/balance/campaign/{campaign_address}', 'Api\BlockchainController@syncBalanceCampaign')->name('sync.balance.campaign');
 // Route::post('/donate/campaign', 'Api\BlockchainController@donateToCampaign')->name('donate.campaign');
 // Route::post('/withdraw/campaign', 'Api\BlockchainController@withdrawCampaign')->name('withdraw.campaign');
 // Route::post('/host/validate/request', 'Api\BlockchainController@hostValidateRequest')->name('validate.tobehost.request');

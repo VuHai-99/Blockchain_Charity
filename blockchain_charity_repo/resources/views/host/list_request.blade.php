@@ -85,7 +85,7 @@
                 <br>
                 <br>
             @endforeach
-            <h3>Yêu cầu rút tiền</h3>
+            <h3>Yêu cầu sử dụng tiền mặt</h3>
             @foreach ($listRequestCreateDonationActivityCashout as $requestCreateDonationActivityCashout)
 
                 <div class="event-item row">
@@ -117,6 +117,56 @@
                             <div class="cancel">
                                 <button class="btn btn-cancel"
                                     onclick="App.cancelCreateDonationCampaignCashoutRequest('{{ $requestCreateDonationActivityCashout->request_id }}','{{ $requestCreateDonationActivityCashout->donation_activity->campaign->campaign_address }}')">HỦY</button>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <br> <br>
+                    <br>
+                    <br>
+            @endforeach
+            <h3>Yêu cầu mua hàng</h3>
+            @foreach ($listRequestCreateDonationActivityOrder as $requestCreateDonationActivityOrder)
+
+                <div class="event-item row">
+                    <div class="image">
+                        <img src="https://images.squarespace-cdn.com/content/v1/5572e6e3e4b013344d656d71/1511784011833-2J9DC8R6DL7A7KNSTY63/request-box.jpg?format=1500w"
+                            alt="" style="width:400px;height:300px;">
+                    </div>
+                    <div class="information">
+                        <div class="campaign-name">Trực thuộc dự án :
+                            {{ $requestCreateDonationActivityOrder->donation_activity->campaign->name }}</div>
+                        <div class="campaign-address">Địa chỉ dự án:
+                            {{ $requestCreateDonationActivityOrder->donation_activity->campaign->campaign_address }}
+                        </div>
+                        <div class="campaign-address">Trong đợt từ thiện :
+                            {{ $requestCreateDonationActivityOrder->donation_activity->donation_activity_name }}</div>
+                        <div class="campaign-address">Địa chỉ đợt từ thiện :
+                            {{ $requestCreateDonationActivityOrder->donation_activity->donation_activity_address }}
+                        </div>
+                        <div class="campaign-address">Tên nhà bán lẻ :
+                            {{ $requestCreateDonationActivityOrder->retailer->name }}
+                        </div>
+                        <div class="campaign-address">Địa chỉ nhà bán lẻ :
+                            {{ $requestCreateDonationActivityOrder->retailer_address}}
+                        </div>
+                        <div class="campaign-address">Hóa đơn mua hàng :
+                            {{ $requestCreateDonationActivityOrder->url}}
+                        </div>
+                        <div class="campaign-address">Tổng hóa đơn :
+                            @if ($requestCreateDonationActivityOrder->amount > pow(10, 17))
+                                {{ number_format($requestCreateDonationActivityOrder->amount / pow(10, 17)) }}
+                                (Ether)
+                            @elseif($requestCreateDonationActivityOrder->amount > pow(10,8))
+                                {{ number_format($requestCreateDonationActivityOrder->amount / pow(10, 8)) }}
+                                (Gwei)
+                            @else
+                                {{ number_format($requestCreateDonationActivityOrder->amount) }} (wei)
+                            @endif
+                            <div class="cancel">
+                                <button class="btn btn-cancel"
+                                    onclick="App.cancelCreateDonationCampaignOrderRequest('{{ $requestCreateDonationActivityOrder->request_id }}','{{ $requestCreateDonationActivityOrder->donation_activity->campaign->campaign_address }}')">HỦY</button>
                             </div>
                         </div>
 

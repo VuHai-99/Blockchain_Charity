@@ -5,5 +5,6 @@ module.exports = app => {
     app.get("/create/newAccount", campaignFactoryBlockchain.createNewWallet);
     app.get("/fetch/balance/:user_address", campaignBlockchain.fetchBalanceAccount);
     app.get("/sync/balance/:user_address", campaignBlockchain.syncBalanceAccount);
+    app.get("/sync/balance/campaign/:campaign_address", campaignBlockchain.syncBalanceCampaign);
     app.post("/validate/metaMaskSignature", campaignFactoryBlockchain.validateSignature);
 };

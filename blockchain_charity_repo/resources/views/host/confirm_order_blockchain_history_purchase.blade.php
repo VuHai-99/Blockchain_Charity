@@ -62,7 +62,7 @@ use Carbon\Carbon;
                                 <button type="button" class="btn btn-info" disabled>Đợi kiểm duyệt</button>
                             @else
                                 <button type="button" class="btn btn-primary"
-                                onclick="App.hostConfirmReceiveOrderDonationActivity('{{ $order->donation_activity_address }}','{{ $order->order_code }}'); return false">Xác nhận</button>
+                                onclick="App.hostConfirmReceiveOrderDonationActivity('{{ $order->donation_activity_address }}','{{ $order->order_code }}','{{ $order->donation_activity->campaign_address }}'); return false">Xác nhận</button>
                             @endif
                         </td>
                     </tr>

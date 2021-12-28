@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Http;
 
 class TowFactorController extends Controller
 {
@@ -51,12 +52,21 @@ class TowFactorController extends Controller
             return redirect(route('login'))->with('notify', 'Mã OTP của bạn đã hết hạn, vui lòng đăng nhập lại.');
         }
         if ($user->role == EnumUser::ROLE_HOST && $user->wallet_type == EnumUser::WALLET_HARD) {
+            // dd($user);
+            $currentBalanceURL = 'http://localhost:3000/sync/balance/'.strval($user->user_address);
+            Http::get($currentBalanceURL);
             return redirect()->route('host.home')->with($notification);
         } else if ($user->role == EnumUser::ROLE_HOST && $user->wallet_type == EnumUser::WALLET_SOFT) {
+            $currentBalanceURL = 'http://localhost:3000/sync/balance/'.strval($user->user_address);
+            Http::get($currentBalanceURL);
             return redirect()->route('hostws.home')->with($notification);
         } else if ($user->role == EnumUser::ROLE_DONATOR && $user->wallet_type == EnumUser::WALLET_SOFT) {
+            $currentBalanceURL = 'http://localhost:3000/sync/balance/'.strval($user->user_address);
+            Http::get($currentBalanceURL);
             return redirect()->route('donatorws.home')->with($notification);
         } else {
+            $currentBalanceURL = 'http://localhost:3000/sync/balance/'.strval($user->user_address);
+            Http::get($currentBalanceURL);
             return redirect()->route('donator.home')->with($notification);
         }
     }

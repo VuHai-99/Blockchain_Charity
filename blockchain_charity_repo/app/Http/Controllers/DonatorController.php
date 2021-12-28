@@ -95,6 +95,12 @@ class DonatorController extends Controller
             $currentCampaign->current_balance = strval(gmp_add($currentCampaign->current_balance, $request->donation_amount));
             $currentCampaign->save();
 
+            $currentBalanceURL = 'http://localhost:3000/sync/balance/'.strval(Auth::user()->user_address);
+            Http::get($currentBalanceURL);
+            $currentCampaignURL = 'http://localhost:3000/sync/balance/campaign/'.strval($campaign_address);
+            Http::get($currentCampaignURL);
+
+
             return redirect()->back()->with($notification);
         } else {
             $notification = array(

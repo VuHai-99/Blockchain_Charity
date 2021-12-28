@@ -81,6 +81,7 @@ App = {
     let current_account;
     App.getAccounts(function (result) {
         current_account = result[0];
+
     });
     let campaign_name = $('[name="campaign_name"]').val();
     let target_contribution_amount = $('[name="target_contribution_amount"]').val();
@@ -136,7 +137,9 @@ App = {
             console.log('UnSuccessfully store new validated request in database');
           }
         })
-      }).catch(error => {   
+        let syncBalanceAccountUrl = '/api/sync/balance/account/'.concat(current_account);
+        axios.get((syncBalanceAccountUrl));
+      }).catch(error => {
         Swal.fire({
           title: 'Unsuccessful!',
           text: error.message,

@@ -109,6 +109,7 @@ App = {
           for(let k=0; k<totalCashout.length;k++){
             
             let cashout = await c.getCashOutByCode(totalCashout[k]);
+            let hostAddress = await c.getHost();
             // console.log(cashout.toNumber())
             console.log(cashout);
             if(cashout[1] == true){
@@ -148,7 +149,7 @@ App = {
                           <h6 class="card-subtitle mb-2" ><span class="text-muted">Cashout Amount: `+ (cashout[0].toNumber()).toString()+`</span></h6>
                       </div>
                       <div class="card-footer">
-                        <a type="button" class="btn btn-success text-light" onclick="App.responseRequestCashoutDonationActivityCashout('`+totalCashout[k]+`','`+totalDonationActivity[j]+`',true); return false"> Đồng ý </a>
+                        <a type="button" class="btn btn-success text-light" onclick="App.responseRequestCashoutDonationActivityCashout('`+totalCashout[k]+`','`+totalDonationActivity[j]+`','`+hostAddress+`',true); return false"> Đồng ý </a>
                         <a type="button" class="btn btn-danger text-light" onclick=""> Từ chối </a>
                       </div>
                   </div>
@@ -170,7 +171,7 @@ App = {
       
     }
   },
-  responseRequestCashoutDonationActivityCashout: async (cashoutID,donationActivity, response) => {
+  responseRequestCashoutDonationActivityCashout: async (cashoutID,donationActivity,hostAddress, response) => {
     if(response == true){
       let c =  await App.contracts.DonationActivity.at(donationActivity);
       await c.authorityConfirmReceivedCashOut(cashoutID)
@@ -195,6 +196,8 @@ App = {
             console.log('UnSuccessfully authority confirm cashout in database');
           }
         })
+        let syncBalanceAccountUrl = '/api/sync/balance/account/'.concat(hostAddress);
+        axios.get((syncBalanceAccountUrl));
         App.renderAllRequestCreateDonationActivityCashout();
       }).catch(error => {
         Swal.fire({
