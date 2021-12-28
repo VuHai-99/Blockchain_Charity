@@ -108,6 +108,9 @@ App = {
         console.log(result)
         toastr.success("Successfully create request to order in donation activity");
         
+        let syncBalanceAccountUrl = '/api/sync/balance/account/'.concat(current_account);
+        axios.get((syncBalanceAccountUrl));
+
         axios.post(('/api/decide-blockchain-request'), {
           "request_id": newContractRequestId,
           "request_type": 5,
@@ -120,6 +123,7 @@ App = {
         }).then(function(response){
           if(response.status == 200){
             console.log('Successfully create request to order request in database');
+            location.reload();
             // let pathArray = window.location.pathname.split( 'create' );
             // window.location.href = pathArray[0].concat("", "list-request");
           } else {

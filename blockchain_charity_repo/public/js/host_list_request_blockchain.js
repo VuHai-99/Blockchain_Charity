@@ -195,6 +195,44 @@ App = {
         
     },
 
+    cancelCreateDonationCampaignOrderRequest: async (request_id,campaign_address) => {
+      let current_account;
+      App.getAccounts(function (result) {
+          current_account = result[0];
+      });
+      // let b = App.contracts.Campaign.at(address);
+      let b = App.contracts.Campaign.at(campaign_address);
+      await b.cancelOrderFromDonationActivity(request_id)
+      .then((result) => {
+
+        toastr.success("Successfully cancel request create donation activity order");
+        let syncBalanceAccountUrl = '/api/sync/balance/account/'.concat(current_account);
+        axios.get((syncBalanceAccountUrl));
+        axios.post(('/api/store-blockchain-request'), {
+          "request_id": request_id,
+          "amount": "",
+          "request_type": 5,
+          "cancel" : true
+        }).then(function(response){
+          if(response.status == 200){
+            console.log('Successfully cancel request create donation activity order in database');
+            location.reload();
+          } else {
+            console.log('UnSuccessfully cancel request create donation activity order in database');
+          }
+        })
+      }).catch(error => {   
+        Swal.fire({
+          title: 'Unsuccessful!',
+          text: error.message,
+          icon: 'error',
+          confirmButtonText: 'Close'
+        })
+        console.log(error)
+      });
+      
+  },
+
 }
 
 

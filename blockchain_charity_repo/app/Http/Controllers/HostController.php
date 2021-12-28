@@ -83,7 +83,8 @@ class HostController extends Controller
         $requestValidateHost = BlockchainRequest::where('requested_user_address', Auth::user()->user_address)->where('request_type', 0)->get();
         $listRequestOpenDonationActivity = BlockchainRequest::where('requested_user_address', Auth::user()->user_address)->where('request_type', 3)->get();
         $listRequestCreateDonationActivityCashout = BlockchainRequest::where('requested_user_address', Auth::user()->user_address)->where('request_type', 4)->get();
-        return view('host.list_request', compact('listRequestOpenCampaign', 'requestValidateHost', 'listRequestOpenDonationActivity', 'listRequestCreateDonationActivityCashout'));
+        $listRequestCreateDonationActivityOrder = BlockchainRequest::where('requested_user_address', Auth::user()->user_address)->where('request_type', 5)->get();
+        return view('host.list_request', compact('listRequestOpenCampaign', 'requestValidateHost', 'listRequestOpenDonationActivity', 'listRequestCreateDonationActivityCashout','listRequestCreateDonationActivityOrder'));
     }
 
 
