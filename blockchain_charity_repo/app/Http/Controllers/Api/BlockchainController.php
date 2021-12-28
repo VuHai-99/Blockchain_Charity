@@ -361,4 +361,17 @@ class BlockChainController extends Controller
             $orderDonationActivity->save();
         }
     }
+
+    public function syncBalanceAccount($user_address)
+    {
+        $currentBalanceURL = 'http://localhost:3000/sync/balance/'.strval($user_address);
+        // dd($currentBalanceURL);
+        Http::get($currentBalanceURL);
+    }
+
+    public function syncBalanceCampaign($campaign_address)
+    {
+        $currentCampaignURL = 'http://localhost:3000/sync/balance/campaign/'.strval($campaign_address);
+        Http::get($currentCampaignURL);
+    }
 }

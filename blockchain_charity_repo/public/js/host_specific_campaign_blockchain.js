@@ -111,6 +111,10 @@ App = {
               console.log('UnSuccessfully store donation info in database');
             }
           })
+          let syncBalanceAccountUrl = '/api/sync/balance/account/'.sender_contract_address;
+          let syncBalanceCampaignUrl = '/api/sync/balance/campaign/'.campaign_contract_address;
+          axios.get((syncBalanceAccountUrl));
+          axios.get((syncBalanceCampaignUrl));
         }).catch(error => {
           Swal.fire({
             title: 'Unsuccessful!',  

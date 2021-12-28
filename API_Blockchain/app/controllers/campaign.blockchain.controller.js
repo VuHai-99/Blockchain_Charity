@@ -5,6 +5,7 @@ const path = require("path");
 const BN = require('bn.js');
 
 const User = require("../models/user.model.js");
+const Campaign = require("../models/campaign.model.js");
 
 
 const jsonFile = "../../contracts/Campaign.json";
@@ -179,6 +180,42 @@ exports.syncBalanceAccount = async (req, res) => {
       web3.eth.getBalance(user_address)
       .then((r) => {
         User.updateBalance(user_address,r, (suc) => {
+          if (suc) {
+            res.send('Success')
+          } else {
+            res.status(500).send({
+              message:
+                err.message || "Error Happend."
+            });
+            return;
+          }
+        })
+      })
+    } catch (error) {
+      res.status(500).send({
+        message:
+        error.message || "Invalid Donator Address."
+      });
+    }
+  
+  }
+
+  
+};
+
+exports.syncBalanceCampaign = async (req, res) => {
+  if(!req.params.campaign_address){
+    res.status(400).send({
+      message: "campaign_address can not be empty!"
+    });
+    return;
+  } else {
+
+    const campaign_address = req.params.campaign_address
+    try {
+      web3.eth.getBalance(campaign_address)
+      .then((r) => {
+        Campaign.updateBalance(campaign_address,r, (suc) => {
           if (suc) {
             res.send('Success')
           } else {

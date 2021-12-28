@@ -99,7 +99,7 @@ Route::prefix('charity')
                 Route::get('shopping/order/{donationActivityAddress}/delete/cart', 'HostController@shoppingCartDeleteCart')->name('shopping.order.delete.cart');
                 Route::get('shopping/order/{donationActivityAddress}/confirm', 'HostController@shoppingCartConfirmOrder')->name('shopping.order.confirm');
                 Route::get('comfirm/blockchain_order/{orderId}', 'HostController@confirmOrderBlockchain')->name('shopping.order.blockchain');
-                // Route::get('shopping/order/{donationActivityAddress}/blockchain/confirm', 'HostController@shoppingCartBlockchainConfirm')->name('shopping.order.blockchain.confirm');
+                // Route::get('shopping/order/{donationActivityAddress}/confirm', 'HostController@shoppingCartConfirmOrder')->name('shopping.order.confirm');
                 
             });
         Route::get('delete/request/{id}', 'HostController@deleteRequest')->name('host.delete.request')->middleware('auth');

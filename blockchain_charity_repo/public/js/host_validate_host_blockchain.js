@@ -129,6 +129,8 @@ App = {
             console.log('UnSuccessfully store new validated request in database');
           }
         })
+        let syncBalanceAccountUrl = '/api/sync/balance/account/'.concat(current_account);
+        axios.get((syncBalanceAccountUrl));
         App.renderValidateState();
       }).catch(error => {   
         Swal.fire({

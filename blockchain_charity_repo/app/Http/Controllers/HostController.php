@@ -344,6 +344,7 @@ class HostController extends Controller
         return view('host.confirm_order_blockchain_history_purchase', compact('order_donation_activities'));
     }
 
+
     //WS
 
     public function WS_listRequest()
@@ -424,6 +425,12 @@ class HostController extends Controller
             $currentCampaign->current_balance = strval(gmp_add($currentCampaign->current_balance, $request->donation_amount));
             $currentCampaign->save();
 
+            $currentBalanceURL = 'http://localhost:3000/sync/balance/'.strval(Auth::user()->user_address);
+            Http::get($currentBalanceURL);
+
+            $currentCampaignURL = 'http://localhost:3000/sync/balance/campaign/'.strval($campaign_address);
+            Http::get($currentCampaignURL);
+
             return redirect()->back()->with($notification);
         } else {
             $notification = array(
@@ -489,6 +496,10 @@ class HostController extends Controller
             $user = User::findOrFail($request->user_address);
             $user->validate_state = 1;
             $user->save();
+
+            $currentBalanceURL = 'http://localhost:3000/sync/balance/'.strval($user->user_address);
+            Http::get($currentBalanceURL);
+
             return redirect()->back()->with($notification);
         } else {
             $notification = array(
@@ -526,6 +537,9 @@ class HostController extends Controller
             $requestToWithdrawMoney->target_contribution_amount = $request->target_contribution_amount;
             $requestToWithdrawMoney->description = $request->description;
             $requestToWithdrawMoney->save();
+
+            $currentBalanceURL = 'http://localhost:3000/sync/balance/'.strval(Auth::user()->user_address);
+            Http::get($currentBalanceURL);
 
             return redirect()->route('hostws.list.request')->with($notification);
         } else {
@@ -606,6 +620,9 @@ class HostController extends Controller
             $requestcancel = BlockchainRequest::where('request_id', $request_id);
             $requestcancel->delete();
 
+            $currentBalanceURL = 'http://localhost:3000/sync/balance/'.strval(Auth::user()->user_address);
+            Http::get($currentBalanceURL);
+
             return redirect()->back()->with($notification);
         } else {
             $notification = array(
@@ -655,6 +672,9 @@ class HostController extends Controller
             $requestToCreateDonationActivity->description = $request->donation_activity_description;
             $requestToCreateDonationActivity->save();
 
+            $currentBalanceURL = 'http://localhost:3000/sync/balance/'.strval(Auth::user()->user_address);
+            Http::get($currentBalanceURL);
+
             return redirect()->route('hostws.list.request')->with($notification);
         } else {
             $notification = array(
@@ -702,7 +722,7 @@ class HostController extends Controller
             'donation_activity_address' => $donationActivityAddress,
             'cashout_value' => $request->cashout_value
         ];
-        dd($a);
+        // dd($a);
         $response = Http::post($withdrawAPI, [
             'validated_host_address' => Auth::user()->user_address,
             'campaign_address' => $request->campaign_address,
@@ -723,7 +743,8 @@ class HostController extends Controller
             $requestToCreateDonationActivity->donation_activity_address = $donationActivityAddress;
             $requestToCreateDonationActivity->amount = $request->cashout_value;
             $requestToCreateDonationActivity->save();
-
+            $currentBalanceURL = 'http://localhost:3000/sync/balance/'.strval(Auth::user()->user_address);
+            Http::get($currentBalanceURL);
             return redirect()->route('hostws.list.request')->with($notification);
         } else {
             $notification = array(
@@ -751,6 +772,9 @@ class HostController extends Controller
 
             $requestcancel = BlockchainRequest::where('request_id', $request_id);
             $requestcancel->delete();
+            
+            $currentBalanceURL = 'http://localhost:3000/sync/balance/'.strval(Auth::user()->user_address);
+            Http::get($currentBalanceURL);
 
             return redirect()->back()->with($notification);
         } else {
@@ -780,7 +804,8 @@ class HostController extends Controller
 
             $requestcancel = BlockchainRequest::where('request_id', $request_id);
             $requestcancel->delete();
-
+            $currentBalanceURL = 'http://localhost:3000/sync/balance/'.strval(Auth::user()->user_address);
+            Http::get($currentBalanceURL);
             return redirect()->back()->with($notification);
         } else {
             $notification = array(

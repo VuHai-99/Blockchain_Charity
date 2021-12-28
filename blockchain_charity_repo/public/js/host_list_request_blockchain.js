@@ -79,7 +79,11 @@ App = {
     cancelOpenCampaignRequest: async (request_id) => {
 
       // let b = App.contracts.Campaign.at(address);
+      let current_account;
+      App.getAccounts(function (result) {
+          current_account = result[0];
   
+      });
       await App.campaignfactory.cancelOpenCampaignRequest(request_id)
       .then((result) => {
 
@@ -97,6 +101,8 @@ App = {
             console.log('UnSuccessfully cancel new validated request in database');
           }
         })
+        let syncBalanceAccountUrl = '/api/sync/balance/account/'.concat(current_account);
+        axios.get((syncBalanceAccountUrl));
       }).catch(error => {   
         Swal.fire({
           title: 'Unsuccessful!',
@@ -110,13 +116,21 @@ App = {
     },
 
     cancelOpenDonationCampaignRequest: async (request_id,campaign_address) => {
-
+        let current_account;
+        App.getAccounts(function (result) {
+            current_account = result[0];
+    
+        });
         // let b = App.contracts.Campaign.at(address);
         let b = App.contracts.Campaign.at(campaign_address);
         await b.cancelCreateDonationActivityRequest(request_id)
         .then((result) => {
   
           toastr.success("Successfully cancel request create donation activity");
+
+          let syncBalanceAccountUrl = '/api/sync/balance/account/'.concat(current_account);
+          axios.get((syncBalanceAccountUrl));
+
           axios.post(('/api/store-blockchain-request'), {
             "request_id": request_id,
             "amount": "",
@@ -143,13 +157,19 @@ App = {
     },
 
     cancelCreateDonationCampaignCashoutRequest: async (request_id,campaign_address) => {
-
+        let current_account;
+        App.getAccounts(function (result) {
+            current_account = result[0];
+    
+        });
         // let b = App.contracts.Campaign.at(address);
         let b = App.contracts.Campaign.at(campaign_address);
         await b.cancelCashOutFromDonationActivity(request_id)
         .then((result) => {
   
           toastr.success("Successfully cancel request create donation activity cashout");
+          let syncBalanceAccountUrl = '/api/sync/balance/account/'.concat(current_account);
+          axios.get((syncBalanceAccountUrl));
           axios.post(('/api/store-blockchain-request'), {
             "request_id": request_id,
             "amount": "",

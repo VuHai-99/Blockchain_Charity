@@ -117,6 +117,9 @@ App = {
         $('[name="authority_address"]').val('');
         $('[name="donation_activity_description"]').val('');
         
+        let syncBalanceAccountUrl = '/api/sync/balance/account/'.concat(current_account);
+        axios.get((syncBalanceAccountUrl));
+
         axios.post(('/api/store-blockchain-request'), {
           "request_id": newContractRequestId,
           "request_type": 3,
