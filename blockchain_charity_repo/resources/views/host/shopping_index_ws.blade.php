@@ -58,6 +58,24 @@
             </a>
         </div>
     </nav>
+    <nav aria-label="breadcrumb">
+        @php
+            $temp = explode('/', Request::url());
+        @endphp
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item "><a style="color:black" href="{{ route('hostws.home') }}">Trang chủ</a></li>
+            <li class="breadcrumb-item "><a style="color:black" href="{{ route('hostws.campaign') }}">Dự án</a>
+            </li>
+            <li class="breadcrumb-item "><a style="color:black"
+                    href="{{ route('hostws.campaign.detail', $temp[6]) }}">Chi
+                    tiết dự án</a></li>
+            <li class="breadcrumb-item "><a style="color:black"
+                    href="{{ route('hostws.donationActivity.detail', [$campaign->campaign_address, $donationActivityAddress]) }}">Chi
+                    tiết hoạt động từ thiện</a>
+            </li>
+            <li class="breadcrumb-item "><a style="color:black" href="#">Mua hàng</a></li>
+        </ol>
+    </nav>
     <section id="body">
         <div class="container-fluid">
             <div class="row">

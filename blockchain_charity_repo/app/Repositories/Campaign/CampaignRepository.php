@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Campaign;
 
+use App\Enums\EnumCampaign;
 use App\Model\Campaign;
 use App\Repositories\BaseRepository;
 use App\Repositories\RepositoryInterface;
@@ -16,8 +17,10 @@ class CampaignRepository extends BaseRepository implements RepositoryInterface
 
     public function getListCampaign($keyWord)
     {
-        $campaigns = $this->model->select('campaigns.*', 'users.name as host_name')
+        $campaigns = $this->model->select('campaigns.*', 'users.name as host_name', 'users.wallet_type', 'campaign_imgs.file_path')
             ->join('users', 'users.user_address', '=', 'campaigns.host_address')
+            ->join('campaign_imgs', 'campaign_imgs.campaign_address', '=', 'campaigns.campaign_address')
+            ->where('campaign_imgs.photo_type', EnumCampaign::IMAGE_MAIN)
             ->when($keyWord, function ($query) use ($keyWord) {
                 return $query->where('campaigns.name', 'like', '%' . $keyWord . '%');
             })
@@ -63,5 +66,45 @@ class CampaignRepository extends BaseRepository implements RepositoryInterface
             $users = $users->skip(0)->take($limit);
         }
         return $users->get();
+    }
+
+    public function getCampaignDetail($campaignAddress)
+    {
+        return $this->model->select(
+            'campaigns.*',
+            'users.name as host_name',
+            'users.user_address',
+            'users.email as host_email',
+            'users.phone as host_phone'
+        )
+            ->join('users', 'users.user_address', '=', 'campaigns.host_address')
+            ->where('campaigns.campaign_address', $campaignAddress)
+            ->first();
+    }
+
+    public function getMainPicCampaign($campaignAddress)
+    {
+        return $this->model->select('campaign_imgs.file_path')
+            ->join('campaign_imgs', 'campaign_imgs.campaign_address', '=', 'campaigns.campaign_address')
+            ->where('campaigns.campaign_address', $campaignAddress)
+            ->where('campaign_imgs.photo_type', EnumCampaign::IMAGE_MAIN)
+            ->first();
+    }
+
+    public function getSidePicCampaign($campaignAddress)
+    {
+        return $this->model->select('campaign_imgs.file_path')
+            ->join('campaign_imgs', 'campaign_imgs.campaign_address', '=', 'campaigns.campaign_address')
+            ->where('campaigns.campaign_address', $campaignAddress)
+            ->where('campaign_imgs.photo_type', '!=', EnumCampaign::IMAGE_MAIN)
+            ->get();
+    }
+
+    public function getCampaignByDonationActivity($donationActivityAddress)
+    {
+        return $this->model->select('campaigns.*')
+            ->join('donation_activities', 'donation_activities.campaign_address', '=', 'campaigns.campaign_address')
+            ->where('donation_activities.donation_activity_address', $donationActivityAddress)
+            ->first();
     }
 }

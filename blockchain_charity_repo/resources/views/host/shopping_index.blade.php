@@ -37,7 +37,7 @@
             @foreach ($categories as $cate)
                 <li class="nav-item">
                     <a class="nav-link"
-                    href="{{ route('host.shopping.cart.byCategory', [$donationActivityAddress, $cate->slug]) }}">{{ $cate->category_name }}</a>
+                        href="{{ route('host.shopping.cart.byCategory', [$donationActivityAddress, $cate->slug]) }}">{{ $cate->category_name }}</a>
                 </li>
             @endforeach
         </ul>
@@ -57,6 +57,23 @@
                 <i class="fa fa-list" aria-hidden="true"></i> &nbsp;
             </a>
         </div>
+    </nav>
+    <nav aria-label="breadcrumb">
+        @php
+            $temp = explode('/', Request::url());
+        @endphp
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item "><a style="color:black" href="{{ route('host.home') }}">Trang chủ</a></li>
+            <li class="breadcrumb-item "><a style="color:black" href="{{ route('host.campaign') }}">Dự án</a>
+            </li>
+            <li class="breadcrumb-item "><a style="color:black" href="{{ route('host.campaign.detail', $temp[6]) }}">Chi
+                    tiết dự án</a></li>
+            <li class="breadcrumb-item "><a style="color:black"
+                    href="{{ route('host.donationActivity.detail', [$campaign->campaign_address, $donationActivityAddress]) }}">Chi
+                    tiết hoạt động từ thiện</a>
+            </li>
+            <li class="breadcrumb-item "><a style="color:black" href="#">Mua hàng</a></li>
+        </ol>
     </nav>
     <section id="body">
         <div class="container-fluid">
@@ -115,7 +132,8 @@
                                                                                     {{ number_format($product->price / pow(10, 8)) }}
                                                                                     (Gwei)
                                                                                 @else
-                                                                                    {{ number_format($product->price) }} (wei)
+                                                                                    {{ number_format($product->price) }}
+                                                                                    (wei)
                                                                                 @endif
                                                                             </b>
                                                                         </span>

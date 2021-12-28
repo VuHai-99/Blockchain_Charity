@@ -81,33 +81,39 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./resources/js/pages/header/index.js":
-/*!********************************************!*\
-  !*** ./resources/js/pages/header/index.js ***!
-  \********************************************/
+/***/ "./resources/js/pages/campaign_fe/index.js":
+/*!*************************************************!*\
+  !*** ./resources/js/pages/campaign_fe/index.js ***!
+  \*************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
 $(function () {
-  $('.item').click(function () {// $('.dropdown-menu').toggle();
+  $("input[name='donate']").keypress(function (e) {
+    if (e.keyCode == 13) {
+      window.location.replace(laroute.route('login'));
+    }
+  });
+  $('#btn_donate').click(function (e) {
+    window.location.replace(laroute.route('login'));
   });
 });
 
 /***/ }),
 
-/***/ 3:
-/*!**************************************************!*\
-  !*** multi ./resources/js/pages/header/index.js ***!
-  \**************************************************/
+/***/ 2:
+/*!*******************************************************!*\
+  !*** multi ./resources/js/pages/campaign_fe/index.js ***!
+  \*******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! F:\xampp\htdocs\blockchain_charity_repo1\blockchain_charity_repo\resources\js\pages\header\index.js */"./resources/js/pages/header/index.js");
+module.exports = __webpack_require__(/*! F:\xampp\htdocs\blockchain_charity_repo1\blockchain_charity_repo\resources\js\pages\campaign_fe\index.js */"./resources/js/pages/campaign_fe/index.js");
 
 
 /***/ })

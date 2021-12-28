@@ -21,12 +21,18 @@ class FrontEndController extends Controller
     public function campaign(Request $request)
     {
         $keyWord = $request->key_word;
-        $campaign = $this->campaignRepository->getListCampaign($keyWord);
-        return view('frontEnd.campaign', compact($campaign));
+        $campaigns = $this->campaignRepository->getListCampaign($keyWord);
+        return view('frontEnd.campaign', compact('campaigns'));
     }
 
-    public function detail($id)
+    public function detail($campaignAddress)
     {
-        return view('frontEnd.campaign_detail');
+        $campaign = $this->campaignRepository->getCampaignDetail($campaignAddress);
+        $mainPic = $this->campaignRepository->getMainPicCampaign($campaignAddress);
+        $sidePics = $this->campaignRepository->getSidePicCampaign($campaignAddress);
+        $limit = 10;
+        $userTopDonate = $this->campaignRepository->getListUserTopDonate($campaignAddress, $limit);
+        $userDonateMonthLy = $this->campaignRepository->getListUserDonate($campaignAddress, $limit);
+        return view('frontEnd.campaign_detail', compact('campaign', 'mainPic', 'sidePics', 'userDonateMonthLy', 'userTopDonate', 'campaignAddress'));
     }
 }
