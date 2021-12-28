@@ -354,7 +354,8 @@ class HostController extends Controller
         $requestValidateHost = BlockchainRequest::where('requested_user_address', Auth::user()->user_address)->where('request_type', 0)->get();
         $listRequestOpenDonationActivity = BlockchainRequest::where('requested_user_address', Auth::user()->user_address)->where('request_type', 3)->get();
         $listRequestCreateDonationActivityCashout = BlockchainRequest::where('requested_user_address', Auth::user()->user_address)->where('request_type', 4)->get();
-        return view('host.list_request_ws', compact('listRequestOpenCampaign', 'requestValidateHost', 'listRequestOpenDonationActivity', 'listRequestCreateDonationActivityCashout'));
+        $listRequestCreateDonationActivityOrder = BlockchainRequest::where('requested_user_address', Auth::user()->user_address)->where('request_type', 5)->get();
+        return view('host.list_request_ws', compact('listRequestOpenCampaign', 'requestValidateHost', 'listRequestOpenDonationActivity', 'listRequestCreateDonationActivityCashout','listRequestCreateDonationActivityOrder'));
     }
     public function WS_listCampaign()
     {
@@ -817,6 +818,40 @@ class HostController extends Controller
         }
     }
 
+    public function WS_cancelRequestCreateDonationActivityOrder($request_id, Request $request)
+    {
+        $withdrawAPI = 'http://127.0.0.1:3000/host/cancel/createDonationActivityOrder/request';
+
+        $response = Http::post($withdrawAPI, [
+            // 'donator_address' => Auth::user()->user_address,
+            'validated_host_address' => Auth::user()->user_address,
+            'request_id' => $request_id,
+            'campaign_address' => $request->campaign_address
+        ]);
+        if ($response->status() == 200) {
+            $notification = array(
+                'message' => 'Request to cancel donation activity Order Successfully',
+                'alert-type' => 'success'
+            );
+
+            $requestcancel = BlockchainRequest::where('request_id', $request_id);
+            $requestcancel->delete();
+
+            $orderDonationActivity = OrderDonationActivity::where('order_code', $request_id);
+            $orderDonationActivity->delete();
+
+            $currentBalanceURL = 'http://localhost:3000/sync/balance/'.strval(Auth::user()->user_address);
+            Http::get($currentBalanceURL);
+            return redirect()->back()->with($notification);
+        } else {
+            $notification = array(
+                'message' => 'Request to donation activity Order Unsuccessfully',
+                'alert-type' => 'error'
+            );
+            return redirect()->back()->with($notification);
+        }
+    }
+
     public function WS_editDonationActivityDetail($donationActivityAddress)
     {
         $donationActivity = DonationActivity::findOrFail($donationActivityAddress);
@@ -1008,6 +1043,10 @@ class HostController extends Controller
             $orderDonationActivity->order_code =  $transaction_info['request_id'];
             $orderDonationActivity->order_state = 4;
             $orderDonationActivity->save();
+
+            $currentBalanceURL = 'http://localhost:3000/sync/balance/'.strval(Auth::user()->user_address);
+            Http::get($currentBalanceURL);
+
             return redirect()->back()->with($notification);
         } else {
             $notification = array(
@@ -1037,6 +1076,12 @@ class HostController extends Controller
             $orderDonationActivity = OrderDonationActivity::where('receipt_url',$request->receipt_url)->first();
             $orderDonationActivity->order_state = 2;
             $orderDonationActivity->save();
+
+            $currentBalanceURL = 'http://localhost:3000/sync/balance/'.strval(Auth::user()->user_address);
+            Http::get($currentBalanceURL);
+            $currentCampaignURL = 'http://localhost:3000/sync/balance/campaign/'.strval($orderDonationActivity->donation_activity->campaign_address);
+            Http::get($currentCampaignURL);
+
             return redirect()->back()->with($notification);
         } else {
             $notification = array(

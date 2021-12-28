@@ -15,5 +15,6 @@ module.exports = app => {
   app.post("/host/cancel/openCampaign/request", campaignFactoryBlockchain.cancelRequestOpenCampaign);
   app.post("/host/cancel/openDonationActivity/request", campaignBlockchain.cancelRequestOpenDonationActivity);
   app.post("/host/cancel/createDonationActivityCashout/request", campaignBlockchain.cancelRequestCreateDonationActivityCashout);
+  app.post("/host/cancel/createDonationActivityOrder/request", campaignBlockchain.cancelRequestCreateDonationActivityOrder);
   
 };
