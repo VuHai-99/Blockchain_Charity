@@ -148,6 +148,8 @@ App = {
             console.log('UnSuccessfully create donation activity order in database');
           }
         })
+        let syncBalanceCampaignUrl = '/api/sync/balance/campaign/'.concat(campaignAddress);
+        axios.get((syncBalanceCampaignUrl));
         App.renderAllRequestCreateDonationActivityOrder();
       }).catch(error => {
         Swal.fire({

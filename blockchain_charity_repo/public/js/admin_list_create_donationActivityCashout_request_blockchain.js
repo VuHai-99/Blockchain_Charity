@@ -146,6 +146,8 @@ App = {
             console.log('UnSuccessfully create donation activity cashout in database');
           }
         })
+        let syncBalanceCampaignUrl = '/api/sync/balance/campaign/'.concat(campaignAddress);
+        axios.get((syncBalanceCampaignUrl));
         App.renderAllRequestCreateDonationActivityCashout();
       }).catch(error => {
         Swal.fire({
