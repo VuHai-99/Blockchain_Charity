@@ -9,6 +9,10 @@ body {
     color: #666;
 }
 
+header {
+    font-size: 0.9rem;
+}
+
 a:hover {
     text-decoration: none;
 }

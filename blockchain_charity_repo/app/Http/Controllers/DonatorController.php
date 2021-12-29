@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Model\Campaign;
 use App\Model\CampaignImg;
 use App\Model\Transaction;
+use App\Repositories\Campaign\CampaignRepository;
+use App\Repositories\DonationActivity\DonationActivityRepository;
+use App\Repositories\OrderReceipt\OrderReceiptRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -12,14 +15,24 @@ use Illuminate\Support\Facades\Http;
 class DonatorController extends Controller
 {
 
+    public function __construct(
+        CampaignRepository $campaignRepository,
+        DonationActivityRepository $donationActivityRepository,
+        OrderReceiptRepository $orderReceipt
+    ) {
+        $this->campaignRepository = $campaignRepository;
+        $this->donationActivityRepository = $donationActivityRepository;
+        $this->orderReceipt = $orderReceipt;
+    }
     public function home()
     {
         return view('frontend.home');
     }
 
-    public function listCampaign()
+    public function listCampaign(Request $request)
     {
-        $campaigns = Campaign::all();
+        $keyWord = $request->key_word;
+        $campaigns = $this->campaignRepository->getListCampaign($keyWord);
         return view('donator.list_campaign', compact('campaigns'));
     }
 
@@ -28,17 +41,21 @@ class DonatorController extends Controller
         return view('donator.specific_project');
     }
 
-    public function campaignDetail(String $blockchainAddress)
+    public function campaignDetail(String $campaignAddress)
     {
-        $campaign = Campaign::findOrFail($blockchainAddress);
-        $campaign_main_pic = CampaignImg::where('campaign_address', $blockchainAddress)->where('photo_type', 0)->get();
+        $campaign = Campaign::findOrFail($campaignAddress);
+        $campaign_main_pic = CampaignImg::where('campaign_address', $campaignAddress)->where('photo_type', 0)->get();
         if (count($campaign_main_pic) != 0) {
             $campaign_main_pic = $campaign_main_pic[0];
         } else {
             $campaign_main_pic = null;
         }
-        $campaign_side_pic = CampaignImg::where('campaign_address', $blockchainAddress)->where('photo_type', 1)->get();
-        return view('donator.campaign_detail', compact('campaign', 'campaign_main_pic', 'campaign_side_pic'));
+        $limit = 10;
+        $campaign_side_pic = CampaignImg::where('campaign_address', $campaignAddress)->where('photo_type', 1)->get();
+        $userTopDonate = $this->campaignRepository->getListUserTopDonate($campaignAddress, $limit);
+        $userDonateMonthLy = $this->campaignRepository->getListUserDonate($campaignAddress, $limit);
+        $donationActivities = $this->campaignRepository->getListDonationActivity($campaignAddress);
+        return view('donator.campaign_detail', compact('campaign', 'campaignAddress', 'campaign_main_pic', 'campaign_side_pic', 'userTopDonate', 'userDonateMonthLy', 'donationActivities'));
     }
 
     //WS 
@@ -48,17 +65,21 @@ class DonatorController extends Controller
         return view('donator.list_campaign_ws', compact('campaigns'));
     }
 
-    public function WS_campaignDetail(String $blockchainAddress)
+    public function WS_campaignDetail(String $campaignAddress)
     {
-        $campaign = Campaign::findOrFail($blockchainAddress);
-        $campaign_main_pic = CampaignImg::where('campaign_address', $blockchainAddress)->where('photo_type', 0)->get();
+        $campaign = Campaign::findOrFail($campaignAddress);
+        $campaign_main_pic = CampaignImg::where('campaign_address', $campaignAddress)->where('photo_type', 0)->get();
         if (count($campaign_main_pic) != 0) {
             $campaign_main_pic = $campaign_main_pic[0];
         } else {
             $campaign_main_pic = null;
         }
-        $campaign_side_pic = CampaignImg::where('campaign_address', $blockchainAddress)->where('photo_type', 1)->get();
-        return view('donator.campaign_detail_ws', compact('campaign', 'campaign_main_pic', 'campaign_side_pic'));
+        $limit = 10;
+        $campaign_side_pic = CampaignImg::where('campaign_address', $campaignAddress)->where('photo_type', 1)->get();
+        $userTopDonate = $this->campaignRepository->getListUserTopDonate($campaignAddress, $limit);
+        $userDonateMonthLy = $this->campaignRepository->getListUserDonate($campaignAddress, $limit);
+        $donationActivities = $this->campaignRepository->getListDonationActivity($campaignAddress);
+        return view('donator.campaign_detail_ws', compact('campaign',  'campaignAddress','campaign_main_pic', 'campaign_side_pic','userTopDonate', 'userDonateMonthLy', 'donationActivities'));
     }
 
     public function myWallet()
@@ -109,5 +130,15 @@ class DonatorController extends Controller
             );
             return redirect()->back()->with($notification);
         }
+    }
+
+    public function donationActivityDetail($donationActivityAddress)
+    {
+        $donationActivity = $this->donationActivityRepository->getInforDonationActivity($donationActivityAddress);
+        $listCashOut = $this->donationActivityRepository->getListCashOut($donationActivityAddress);
+        $donation_activity_main_pic = $this->donationActivityRepository->getMainPicDonation($donationActivityAddress);
+        $donation_activity_side_pic = $this->donationActivityRepository->getSidePicDonation($donationActivityAddress);
+        $orders = $this->orderReceipt->getOrderDonationActivition($donationActivityAddress);
+        return view('donator.donation_activity_detail', compact('donationActivity', 'listCashOut', 'donation_activity_main_pic', 'donation_activity_side_pic', 'orders'));
     }
 }

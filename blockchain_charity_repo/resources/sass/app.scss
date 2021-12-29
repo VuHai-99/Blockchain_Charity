@@ -144,11 +144,19 @@ ul li {
 table th,
 tr,
 td {
-    font-size: 1 rem;
+    font-size: 1rem !important;
 }
 
 th {
     text-align: center;
+    font-size: 1.2rem !important;
+    font-weight: bold;
+}
+
+.table-bordered td,
+th,
+tr {
+    border: 1px solid $black !important;
 }
 
 .manage {

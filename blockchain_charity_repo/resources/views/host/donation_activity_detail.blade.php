@@ -114,7 +114,7 @@
                                     @if (isset($donationActivityOrders) == true || isset($donationActivityCashouts) == true)
                                         @if (isset($donationActivityCashouts) == true)
                                             <h3 class="full-left">Sử dụng tiền mặt</h3>
-                                            <table class="table">
+                                            <table class="table table-hover table-bordered">
                                                 <thead>
                                                     <tr>
                                                     <th scope="col" >Tổng số tiền mặt</th>
@@ -155,7 +155,7 @@
                                         @endif
                                         <br>
                                         <h3 class="full-left">Hoạt động mua hàng</h3>
-                                        <table class="table">
+                                        <table class="table table-hover table-bordered">
                                             <thead>
                                                 <tr>
                                                 <th scope="col" >#</th>

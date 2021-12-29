@@ -46,6 +46,10 @@
                     }
                 }
             }
+            .description {
+                max-height: 50px;
+                overflow: hidden;
+            }
             .read-more {
                 color: $blue;
                 font-weight: 600;

@@ -170,7 +170,6 @@ class HostController extends Controller
     {
         $campaign = Campaign::findOrFail($blockchainAddress);
         $authorities = Authority::all();
-        // dd($authorities);
         return view('host.create_donation_activity_request', compact('campaign', 'authorities'));
     }
     public function donationActivityDetail($blockchainAddress, $donationActivityAddress)
@@ -182,7 +181,6 @@ class HostController extends Controller
             $donationActivityCashouts = null;
         }
         $donation_activity_main_pic = CampaignImg::where('donation_activity_address', $donationActivityAddress)->where('photo_type', 2)->get();
-        // dd($donation_activity_main_pic);
         if (count($donation_activity_main_pic) != 0) {
             $donation_activity_main_pic = $donation_activity_main_pic[0];
         } else {
@@ -190,7 +188,6 @@ class HostController extends Controller
         }
         $donation_activity_side_pic = CampaignImg::where('donation_activity_address', $donationActivityAddress)->where('photo_type', 3)->get();
         $orders = $this->orderReceipt->getOrderDonationActivition($donationActivityAddress);
-        // dd($orders);
         return view('host.donation_activity_detail', compact('donationActivityAddress', 'campaign', 'donationActivity', 'donationActivityCashouts', 'donation_activity_side_pic', 'donation_activity_main_pic', 'orders'));
     }
 
@@ -252,13 +249,15 @@ class HostController extends Controller
         return back()->with($notification);
     }
 
-    public function shoppingCart($donationActivityAddress,Request $request){
+    public function shoppingCart($donationActivityAddress, Request $request)
+    {
         $user = Auth::user();
         $keyWord = $request->product_name;
         $products = $this->productRepository->getAll('', $keyWord);
         $categories = $this->categoryRepository->getAll();
         $orders = $this->orderReceipt->getOrderByRetailer($donationActivityAddress);
-        return view('host.shopping_index', compact('products', 'categories', 'orders', 'donationActivityAddress'));
+        $campaign = $this->campaignRepository->getCampaignByDonationActivity($donationActivityAddress);
+        return view('host.shopping_index', compact('products', 'categories', 'orders', 'donationActivityAddress', 'campaign'));
     }
 
     public function shoppingCartByCategory($donationActivityAddress, $categoryName)
@@ -284,7 +283,7 @@ class HostController extends Controller
         $this->orderReceipt->delete($orderId);
         return back()->with('messages', 'Xóa sản phẩm thành công');
     }
-    
+
     public function shoppingCartDeleteCart($donationActivityAddress)
     {
         $hostAddress = Auth::user()->user_address;
@@ -292,13 +291,13 @@ class HostController extends Controller
         return redirect()->back()->with('messages', 'Xóa giỏ hàng thành công');
     }
     public function shoppingCartConfirmOrder($donationActivityAddress)
-    {   
+    {
         $hostAddress = Auth::user()->user_address;
         $donationActivity = DonationActivity::findOrFail($donationActivityAddress);
         $campaign = Campaign::findOrFail($donationActivity->campaign_address);
         $amount = $campaign->current_balance;
         $totalReceipt = $this->orderReceipt->getTotalOrder($hostAddress);
-        
+
         $orderID = strtotime(now());
         $dataUpdateOrder = [
             'order_id' => $orderID,
@@ -310,11 +309,11 @@ class HostController extends Controller
         $amountRemain = $amount - $totalReceipt;
         $orders = $this->orderReceipt->getProductOrder($donationActivityAddress);
         // dd($orders);
-        if(count($orders)!=0){
-            $product_id= $orders[0]->product_id;
+        if (count($orders) != 0) {
+            $product_id = $orders[0]->product_id;
             $retailerAddress = (Product::findOrFail($product_id))->retailer_address;
             // dd($retailerAddress);
-            $url = 'http://127.0.0.1:8000/history/purchase/'.strval($orderID);
+            $url = 'http://127.0.0.1:8000/history/purchase/' . strval($orderID);
             DB::transaction(function () use ($hostAddress, $donationActivityAddress, $dataUpdateOrder, $orders, $amountRemain) {
                 $this->orderReceipt->confirmOrder($donationActivityAddress, $dataUpdateOrder);
                 $this->productRepository->updateQuantityProduct($orders);
@@ -332,15 +331,15 @@ class HostController extends Controller
 
             $campaign->current_balance = $amount - $totalReceipt;
             $campaign->save();
-            
-            return redirect()->back()->with('message','Mua hang thanh cong');
+
+            return redirect()->back()->with('message', 'Mua hang thanh cong');
         }
     }
 
     public function confirmOrderBlockchain($donationActivityAddress)
     {
         // $order_donation_activities = OrderDonationActivity::where('donation_activity_address',$donationActivityAddress)->where('order_state',3)->get();
-        $order_donation_activities = OrderDonationActivity::where('donation_activity_address',$donationActivityAddress)->get();
+        $order_donation_activities = OrderDonationActivity::where('donation_activity_address', $donationActivityAddress)->get();
         // dd($order_donation_activities);
         return view('host.confirm_order_blockchain_history_purchase', compact('order_donation_activities'));
     }
@@ -517,7 +516,6 @@ class HostController extends Controller
         $withdrawAPI = 'http://localhost:3000/host/create/campaign/request';
 
         $response = Http::post($withdrawAPI, [
-            // 'donator_address' => Auth::user()->user_address,
             'validated_host_address' => Auth::user()->user_address,
             "minimum_contribution" => $request->minimum_contribution
         ]);
@@ -609,7 +607,6 @@ class HostController extends Controller
         $withdrawAPI = 'http://127.0.0.1:3000/host/cancel/openCampaign/request';
 
         $response = Http::post($withdrawAPI, [
-            // 'donator_address' => Auth::user()->user_address,
             'host_address' => Auth::user()->user_address,
             "request_id" => $request_id
         ]);
@@ -640,7 +637,6 @@ class HostController extends Controller
         $campaign = Campaign::findOrFail($blockchainAddress);
         $authorities = Authority::all();
         $campaign_address_ = $blockchainAddress;
-        // dd($authorities);
         return view('host.create_donation_activity_request_ws', compact('campaign', 'authorities', 'campaign_address_'));
     }
 
@@ -649,7 +645,6 @@ class HostController extends Controller
         $withdrawAPI = 'http://localhost:3000/host/create/donationActivity/request';
 
         $response = Http::post($withdrawAPI, [
-            // 'donator_address' => Auth::user()->user_address,
             'validated_host_address' => Auth::user()->user_address,
             'campaign_address' => $campaignAddress,
             'authority_address' => $request->authority_address,
@@ -702,9 +697,8 @@ class HostController extends Controller
             $donation_activity_main_pic = null;
         }
         $donation_activity_side_pic = CampaignImg::where('donation_activity_address', $donationActivityAddress)->where('photo_type', 3)->get();
-        
+
         $orders = $this->orderReceipt->getOrderDonationActivition($donationActivityAddress);
-        // dd($orders);
         return view('host.donation_activity_detail_ws', compact('donationActivityAddress', 'campaign', 'donationActivity', 'donationActivityCashouts', 'donation_activity_main_pic', 'donation_activity_side_pic', 'orders'));
     }
 
@@ -724,7 +718,6 @@ class HostController extends Controller
             'donation_activity_address' => $donationActivityAddress,
             'cashout_value' => $request->cashout_value
         ];
-        // dd($a);
         $response = Http::post($withdrawAPI, [
             'validated_host_address' => Auth::user()->user_address,
             'campaign_address' => $request->campaign_address,
@@ -793,7 +786,6 @@ class HostController extends Controller
         $withdrawAPI = 'http://127.0.0.1:3000/host/cancel/createDonationActivityCashout/request';
 
         $response = Http::post($withdrawAPI, [
-            // 'donator_address' => Auth::user()->user_address,
             'validated_host_address' => Auth::user()->user_address,
             'request_id' => $request_id,
             'campaign_address' => $request->campaign_address
@@ -902,13 +894,15 @@ class HostController extends Controller
         return back()->with($notification);
     }
 
-    public function WS_shoppingCart($donationActivityAddress,Request $request){
+    public function WS_shoppingCart($donationActivityAddress, Request $request)
+    {
         $user = Auth::user();
         $keyWord = $request->product_name;
         $products = $this->productRepository->getAll('', $keyWord);
         $categories = $this->categoryRepository->getAll();
         $orders = $this->orderReceipt->getOrderByRetailer($donationActivityAddress);
-        return view('host.shopping_index_ws', compact('products', 'categories', 'orders', 'donationActivityAddress'));
+        $campaign = $this->campaignRepository->getCampaignByDonationActivity($donationActivityAddress);
+        return view('host.shopping_index_ws', compact('products', 'categories', 'orders', 'donationActivityAddress', 'campaign'));
     }
 
 
@@ -927,7 +921,6 @@ class HostController extends Controller
         $user = Auth::user();
         $orders = $this->orderReceipt->getOrderByRetailer($donationActivityAddress);
         $categories = $this->categoryRepository->getAll();
-        // $order_donation_activities = OrderDonationActivity::where()
         return view('host.shopping_order_detail_ws', compact('orders', 'categories', 'donationActivityAddress'));
     }
 
@@ -945,13 +938,13 @@ class HostController extends Controller
     }
 
     public function WS_shoppingCartConfirmOrder($donationActivityAddress)
-    {   
+    {
         $hostAddress = Auth::user()->user_address;
         $donationActivity = DonationActivity::findOrFail($donationActivityAddress);
         $campaign = Campaign::findOrFail($donationActivity->campaign_address);
         $amount = $campaign->current_balance;
         $totalReceipt = $this->orderReceipt->getTotalOrder($hostAddress);
-        
+
         $orderID = strtotime(now());
         $dataUpdateOrder = [
             'order_id' => $orderID,
@@ -962,11 +955,10 @@ class HostController extends Controller
         }
         $amountRemain = $amount - $totalReceipt;
         $orders = $this->orderReceipt->getProductOrder($donationActivityAddress);
-        if(count($orders)!=0){
-            $product_id= $orders[0]->product_id;
+        if (count($orders) != 0) {
+            $product_id = $orders[0]->product_id;
             $retailerAddress = (Product::findOrFail($product_id))->retailer_address;
-            // dd($retailerAddress);
-            $url = 'http://127.0.0.1:8000/history/purchase/'.strval($orderID);
+            $url = 'http://127.0.0.1:8000/history/purchase/' . strval($orderID);
             DB::transaction(function () use ($hostAddress, $donationActivityAddress, $dataUpdateOrder, $orders, $amountRemain) {
                 $this->orderReceipt->confirmOrder($donationActivityAddress, $dataUpdateOrder);
                 $this->productRepository->updateQuantityProduct($orders);
@@ -984,8 +976,8 @@ class HostController extends Controller
 
             $campaign->current_balance = $amount - $totalReceipt;
             $campaign->save();
-            
-            return redirect()->back()->with('message','Mua hang thanh cong');
+
+            return redirect()->back()->with('message', 'Mua hang thanh cong');
         }
     }
 
@@ -1003,23 +995,21 @@ class HostController extends Controller
 
     public function WS_listOrderBlockchain($donationActivityAddress)
     {
-        $order_donation_activities = OrderDonationActivity::where('donation_activity_address',$donationActivityAddress)->get();
-        // dd($order_donation_activities);
+        $order_donation_activities = OrderDonationActivity::where('donation_activity_address', $donationActivityAddress)->get();
         return view('host.confirm_order_blockchain_history_purchase_ws', compact('order_donation_activities'));
     }
-    
+
     public function WS_createDonationActivityOrderRequest(Request $request)
     {
         $withdrawAPI = 'http://localhost:3000/host/create/donationActivityOrder/request';
 
         $response = Http::post($withdrawAPI, [
-            // 'donator_address' => Auth::user()->user_address,
-            'campaign_address'=>$request->campaign_address,
+            'campaign_address' => $request->campaign_address,
             'validated_host_address' => Auth::user()->user_address,
-            'donation_activity_address'=>$request->donation_activity_address,
-            'retailer_address'=>$request->retailer_address,
-            'receipt_url'=>$request->receipt_url,
-            'total_amount'=>$request->total_amount
+            'donation_activity_address' => $request->donation_activity_address,
+            'retailer_address' => $request->retailer_address,
+            'receipt_url' => $request->receipt_url,
+            'total_amount' => $request->total_amount
         ]);
         if ($response->status() == 200) {
             $notification = array(
@@ -1039,7 +1029,7 @@ class HostController extends Controller
             $requestToCreateDonationActivity->save();
 
 
-            $orderDonationActivity = OrderDonationActivity::where('receipt_url',$request->receipt_url)->first();
+            $orderDonationActivity = OrderDonationActivity::where('receipt_url', $request->receipt_url)->first();
             $orderDonationActivity->order_code =  $transaction_info['request_id'];
             $orderDonationActivity->order_state = 4;
             $orderDonationActivity->save();
@@ -1062,10 +1052,9 @@ class HostController extends Controller
         $withdrawAPI = 'http://localhost:3000/host/confirm/received/donationActivityOrder';
 
         $response = Http::post($withdrawAPI, [
-            // 'donator_address' => Auth::user()->user_address,
             'validated_host_address' => Auth::user()->user_address,
-            'donation_activity_address'=>$request->donation_activity_address,
-            'order_code'=>$request->order_code
+            'donation_activity_address' => $request->donation_activity_address,
+            'order_code' => $request->order_code
         ]);
         if ($response->status() == 200) {
             $notification = array(
@@ -1073,7 +1062,7 @@ class HostController extends Controller
                 'alert-type' => 'success'
             );
 
-            $orderDonationActivity = OrderDonationActivity::where('receipt_url',$request->receipt_url)->first();
+            $orderDonationActivity = OrderDonationActivity::where('receipt_url', $request->receipt_url)->first();
             $orderDonationActivity->order_state = 2;
             $orderDonationActivity->save();
 
@@ -1091,5 +1080,4 @@ class HostController extends Controller
             return redirect()->back()->with($notification);
         }
     }
-    
 }

@@ -65,6 +65,7 @@ Route::prefix('charity')
                 Route::get('campaign', 'DonatorController@listCampaign')->name('campaign');
                 Route::get('campaign-detail/{id}', 'DonatorController@campaignDetail')->name('campaign.detail');
             });
+        Route::get('donation-activity/{id}/detail', 'DonatorController@donationActivityDetail')->name('donator.donation_activity.detail');
         Route::prefix('donatorws')
             ->middleware('donator-wallet-soft')
             ->name('donatorws.')
@@ -101,6 +102,8 @@ Route::prefix('charity')
                 Route::get('comfirm/blockchain_order/{orderId}', 'HostController@confirmOrderBlockchain')->name('shopping.order.blockchain');
                 // Route::get('shopping/order/{donationActivityAddress}/confirm', 'HostController@shoppingCartConfirmOrder')->name('shopping.order.confirm');
                 
+                // Route::get('shopping/order/{donationActivityAddress}/blockchain/confirm', 'HostController@shoppingCartBlockchainConfirm')->name('shopping.order.blockchain.confirm');
+
             });
         Route::get('delete/request/{id}', 'HostController@deleteRequest')->name('host.delete.request')->middleware('auth');
         Route::prefix('hostws')
@@ -182,6 +185,7 @@ Route::get('/campaign', 'FrontendController@campaign')->name('campaign');
 Route::get('/campaign/{id}', 'FrontendController@detail')->name('campaign.detail');
 Route::get('/campaign/{id}/top-donator', 'HostController@getDonatorTop')->name('campaign.top.donator');
 Route::get('/campaign/{id}/monthly-donator', 'HostController@getDonatorMonthly')->name('campaign.monthly.donator');
+Route::get('donation_activity/{donation_activity_address}/detail', 'FrontendController@donationActivityDetail')->name('donation_activity.detail');
 Auth::routes(['verify' => true]);
 
 Route::get('my-wallet', 'DonatorController@myWallet')->name('wallet')->middleware('auth');

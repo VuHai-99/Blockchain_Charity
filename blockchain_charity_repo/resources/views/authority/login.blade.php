@@ -37,7 +37,7 @@
                             <div class="group-text">
                                 Don't have an account ? <a href="{{ route('register') }}">Sign up</a>
                                 <br>
-                                <a href="">Forgot your password ?</a>
+                                <a href="{{ route('password.request') }}">Forgot your password ?</a>
                             </div>
                         </form>
                     </div>

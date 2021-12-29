@@ -81,45 +81,39 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 5);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./resources/js/pages/project_detail/index.js":
-/*!****************************************************!*\
-  !*** ./resources/js/pages/project_detail/index.js ***!
-  \****************************************************/
+/***/ "./resources/js/pages/campaign_fe/index.js":
+/*!*************************************************!*\
+  !*** ./resources/js/pages/campaign_fe/index.js ***!
+  \*************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
 $(function () {
-  $('.donate-once').click(function () {
-    $('.donate-monthly').removeClass('action-donator');
-    $('.donate-monthly').css('background-color', '#484646');
-    $(this).addClass('action-donator');
-    $('#top-donator').show();
-    $('#monthly-donator').hide();
+  $("input[name='donate']").keypress(function (e) {
+    if (e.keyCode == 13) {
+      window.location.replace(laroute.route('login'));
+    }
   });
-  $('.donate-monthly').click(function () {
-    $('.donate-once').removeClass('action-donator');
-    $('.donate-once').css('background-color', '#484646');
-    $(this).addClass('action-donator');
-    $('#top-donator').hide();
-    $('#monthly-donator').show();
+  $('#btn_donate').click(function (e) {
+    window.location.replace(laroute.route('login'));
   });
 });
 
 /***/ }),
 
-/***/ 5:
-/*!**********************************************************!*\
-  !*** multi ./resources/js/pages/project_detail/index.js ***!
-  \**********************************************************/
+/***/ 2:
+/*!*******************************************************!*\
+  !*** multi ./resources/js/pages/campaign_fe/index.js ***!
+  \*******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\js\pages\project_detail\index.js */"./resources/js/pages/project_detail/index.js");
+module.exports = __webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\js\pages\campaign_fe\index.js */"./resources/js/pages/campaign_fe/index.js");
 
 
 /***/ })
