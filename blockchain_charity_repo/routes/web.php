@@ -65,6 +65,7 @@ Route::prefix('charity')
                 Route::get('campaign', 'DonatorController@listCampaign')->name('campaign');
                 Route::get('campaign-detail/{id}', 'DonatorController@campaignDetail')->name('campaign.detail');
             });
+        Route::get('donation-activity/{id}/detail', 'DonatorController@donationActivityDetail')->name('donator.donation_activity.detail');
         Route::prefix('donatorws')
             ->middleware('donator-wallet-soft')
             ->name('donatorws.')
