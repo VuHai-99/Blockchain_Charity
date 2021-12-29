@@ -58,6 +58,7 @@
                                 </div>
                             </div>
                         </div>
+                        <br>
                         <div class="descripton" style="max-height: 90px; overflow: hidden;">
                             {{ $campaign->description }}... <a class="read-more"
                                 href="{{ route('hostws.campaign.detail', $campaign->campaign_address) }}">xem thêm</a>

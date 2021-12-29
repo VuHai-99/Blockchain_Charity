@@ -136,7 +136,7 @@ $(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! F:\xampp\htdocs\blockchain_charity_repo1\blockchain_charity_repo\resources\js\pages\verify_otp\index.js */"./resources/js/pages/verify_otp/index.js");
+module.exports = __webpack_require__(/*! D:\UNI\Dự Án\Main Project\blockchain_charity_repo\blockchain_charity_repo\resources\js\pages\verify_otp\index.js */"./resources/js/pages/verify_otp/index.js");
 
 
 /***/ })
