@@ -24,7 +24,7 @@
                 <div class="event-item row">
                     <div class="image">
                         <a href="{{ route('donator.campaign.detail', $campaign->campaign_address) }}"><img
-                            src="{{ (!empty($campaign->main_pic)) ? url($campaign->main_pic->file_path) : url('images/CharityCampaignMainPicDefault.png') }}"
+                                src="{{ !empty($campaign->main_pic) ? url($campaign->main_pic->file_path) : url('images/CharityCampaignMainPicDefault.png') }}"
                                 alt=""></a>
                     </div>
                     <div class="information">
@@ -41,7 +41,8 @@
                                 {{ number_format($campaign->current_balance) }} (wei)/ mục tiêu
                             @endif
                             @if ($campaign->target_contribution_amount > pow(10, 17))
-                                {{ number_format($campaign->target_contribution_amount / pow(10, 17)) }} (Ether)/ mục tiêu
+                                {{ number_format($campaign->target_contribution_amount / pow(10, 17)) }} (Ether)/ mục
+                                tiêu
                             @elseif($campaign->target_contribution_amount > pow(10,8))
                                 {{ number_format($campaign->target_contribution_amount / pow(10, 8)) }} (Gwei)/ mục tiêu
                             @else
@@ -50,17 +51,18 @@
                             <div class="goal">
                                 <div class="progress">
                                     <div class="progress-bar bg-warning" role="progressbar"
-                                        style="width: {{($campaign->current_balance / $campaign->target_contribution_amount >= 100) ? 100 : ($campaign->current_balance / $campaign->target_contribution_amount)}}%"
+                                        style="width: {{ $campaign->current_balance / $campaign->target_contribution_amount >= 100 ? 100 : $campaign->current_balance / $campaign->target_contribution_amount }}%"
                                         aria-valuenow="{{ $campaign->current_balance }}" aria-valuemin="0"
-                                        aria-valuemax="{{$campaign->target_contribution_amount}}"></div>
+                                        aria-valuemax="{{ $campaign->target_contribution_amount }}"></div>
                                 </div>
                             </div>
                             <br>
                         </div>
-                        <div class="descripton">
-                            {{ $campaign->description }}... <a class="read-more"
-                                href="{{ route('donator.campaign.detail', $campaign->campaign_address) }}">xem thêm</a>
+                        <div class="description">
+                            {{ $campaign->description }}
                         </div>
+                        ... <a class="read-more"
+                            href="{{ route('donator.campaign.detail', $campaign->campaign_address) }}">xem thêm</a>
                         <div class="donate">
                             <a class="btn btn-donate"
                                 href="{{ route('donator.campaign.detail', $campaign->campaign_address) }}">DONATE</a>

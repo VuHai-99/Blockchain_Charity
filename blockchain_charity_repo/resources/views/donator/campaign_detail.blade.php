@@ -38,7 +38,7 @@
                             <div class="row my-4">
                                 <div class="col-md-12">
                                     <div class="view z-depth-1">
-                                        <img src="{{ (isset($campaign_main_pic) == true) ? url($campaign_main_pic->file_path) : url('images/CharityCampaignMainPicDefault.png') }}"
+                                        <img src="{{ isset($campaign_main_pic) == true ? url($campaign_main_pic->file_path) : url('images/CharityCampaignMainPicDefault.png') }}"
                                             alt="" class="img-fluid">
                                     </div>
                                 </div>
@@ -47,34 +47,35 @@
                                         {{ $campaign->description }}
                                     </p>
                                 </div>
-                                @if(!empty($campaign_side_pic))
-                                @foreach($campaign_side_pic as $side_pic)
-                                <div class="col-md-6">
-                                    <div class="view z-depth-1">
-                                        <img src="{{url($side_pic->file_path)}}" alt="" class="img-fluid">
-                                    </div>
-                                </div>
-                                @endforeach
+                                @if (!empty($campaign_side_pic))
+                                    @foreach ($campaign_side_pic as $side_pic)
+                                        <div class="col-md-6">
+                                            <div class="view z-depth-1">
+                                                <img src="{{ url($side_pic->file_path) }}" alt="" class="img-fluid">
+                                            </div>
+                                        </div>
+                                    @endforeach
                                 @else
-                                <div class="col-md-6">
-                                    <div class="view z-depth-1">
-                                        <img src="{{url('images/CharityCampaignSidePicDefault.png')}}" alt=""
-                                            class="img-fluid">
+                                    <div class="col-md-6">
+                                        <div class="view z-depth-1">
+                                            <img src="{{ url('images/CharityCampaignSidePicDefault.png') }}" alt=""
+                                                class="img-fluid">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="view z-depth-1">
-                                        <img src="{{url('images/CharityCampaignSidePicDefault.png')}}" alt=""
-                                            class="img-fluid">
+                                    <div class="col-md-6">
+                                        <div class="view z-depth-1">
+                                            <img src="{{ url('images/CharityCampaignSidePicDefault.png') }}" alt=""
+                                                class="img-fluid">
+                                        </div>
                                     </div>
-                                </div>
                                 @endif
                             </div>
                         </div>
-                        @if($campaign->host_address == Auth::user()->user_address)
-                        <div class="card-footer text-center">
-                            <a href="{{ route('host.campaign_detail.edit',$campaign->campaign_address) }}" class="btn btn-warning" role="button">Edit Campaign Information</a>
-                        </div>
+                        @if ($campaign->host_address == Auth::user()->user_address)
+                            <div class="card-footer text-center">
+                                <a href="{{ route('host.campaign_detail.edit', $campaign->campaign_address) }}"
+                                    class="btn btn-warning" role="button">Edit Campaign Information</a>
+                            </div>
                         @endif
                     </div>
                 </div>
@@ -91,9 +92,15 @@
                         <div class="card-body">
                             <div class="row my-4">
                                 <div class="col-md-12">
-                                    <h4 class="font-weight-bold mb-3 black-text"><a href="#">Từ Thiện Đợt 1</a></h4>
-                                    <h4 class="font-weight-bold mb-3 black-text"><a href="#">Từ Thiện Đợt 2</a></h4>
-                                    <h4 class="font-weight-bold mb-3 black-text"><a href="#">Từ Thiện Đợt 3</a></h4>
+                                    @if ($donationActivities)
+                                        @foreach ($donationActivities as $donationActivity)
+                                            <h4 class="font-weight-bold mb-3 black-text"><a
+                                                    href="{{ route('donator.donation_activity.detail', $donationActivity->donation_activity_address) }}">{{ $donationActivity->donation_activity_name }}</a>
+                                            </h4>
+                                        @endforeach
+                                    @else
+                                        <h4 class="font-weight-bold mb-3 black-text">Chưa có đợt từ thiện nào.</h4>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -112,10 +119,10 @@
                         <div class="card-body">
                             <div class="row my-4">
                                 <div class="col-md-8">
-                                    <h4 class="text-sm-left">Nhà từ thiện: <b>{{$campaign->user->name}}</b></h4>
-                                    <p class="text-sm-left">Địa chỉ : {{$campaign->host_address}}</p>
-                                    <p class="text-sm-left">Email : {{$campaign->user->email}}</p>
-                                    <p class="text-sm-left">Số điện thoại : {{$campaign->user->phone}}</p>
+                                    <h4 class="text-sm-left">Nhà từ thiện: <b>{{ $campaign->user->name }}</b></h4>
+                                    <p class="text-sm-left">Địa chỉ : {{ $campaign->host_address }}</p>
+                                    <p class="text-sm-left">Email : {{ $campaign->user->email }}</p>
+                                    <p class="text-sm-left">Số điện thoại : {{ $campaign->user->phone }}</p>
                                 </div>
                                 <div class="col-md-4 mt-3 pt-2">
                                     <div class="view z-depth-1">
@@ -133,50 +140,87 @@
         </div>
         <div class="donator col-md-4">
             <div class="coin">
-                <span class="coin-donated">{{ $campaign->current_balance }} (wei)</span>/
-                {{ $campaign->target_contribution_amount }}(wei)
+                <span class="coin-donated">
+                    @if ($campaign->current_balance > pow(10, 17))
+                        {{ number_format($campaign->current_balance / pow(10, 17)) }} (Ether)
+                    @elseif($campaign->current_balance > pow(10,8))
+                        {{ number_format($campaign->current_balance / pow(10, 8)) }} (Gwei)
+                    @else
+                        {{ number_format($campaign->current_balance) }} (wei)
+                    @endif
+                </span>/
+                @if ($campaign->target_contribution_amount > pow(10, 17))
+                    {{ number_format($campaign->target_contribution_amount / pow(10, 17)) }} (Ether)
+                @elseif($campaign->target_contribution_amount > pow(10,8))
+                    {{ number_format($campaign->target_contribution_amount / pow(10, 8)) }} (Gwei)
+                @else
+                    {{ number_format($campaign->target_contribution_amount) }} (wei)
+                @endif
                 <div class="goal">
-                <div class="progress">
+                    <div class="progress">
                         <div class="progress-bar bg-warning" role="progressbar"
-                            style="width: {{($campaign->current_balance / $campaign->target_contribution_amount >= 100) ? 100 : ($campaign->current_balance / $campaign->target_contribution_amount)}}%"
+                            style="width: {{ $campaign->current_balance / $campaign->target_contribution_amount >= 1 ? 100 : ($campaign->current_balance * 100) / $campaign->target_contribution_amount }}%"
                             aria-valuenow="{{ $campaign->current_balance }}" aria-valuemin="0"
-                            aria-valuemax="{{$campaign->target_contribution_amount}}"></div>
+                            aria-valuemax="{{ $campaign->target_contribution_amount }}"></div>
                     </div>
                 </div>
                 <br>
                 <div class="number-donator">
-                    <span class="number">300 donations</span>
-                    <span class="amount">$2000 to go</span>
+                    <!-- <span class="number">300 donations</span> -->
+                    <span
+                        class="amount">${{ $campaign->target_contribution_amount - $campaign->current_balance < 0 ? 0 : $campaign->target_contribution_amount - $campaign->current_balance < 0 }}
+                        to go</span>
                 </div>
                 <div class="triangle triangle_bottom triangle_white">
 
                 </div>
             </div>
             <div class="btn-donate">
-                <input placeholder="Amount of donation" id="donation_amount" name="donation_amount">
-                <button class="btn" onclick="App.donateCampaign('{{ $campaign->campaign_address }}')">DONATE
-                    NOW</button>
+                <input class="form-control" placeholder="Amount of donation" id="donation_amount" name="donate">
+                <br>
+                <button class="btn" type="submit" id="btn_donate">
+                    Quyên góp ngay
+                </button>
             </div>
+            <hr>
             <div class="list-donator">
                 <div class="title">
                     <div class="donate-once">
-                        <a href="">Top Donator</a>
+                        Quyên góp nhiều nhất
                     </div>
                     <div class="donate-monthly">
-                        <a href="">Donate Monthly</a>
+                        Quyên góp gần đây
                     </div>
                 </div>
-                <ul class="list-donator-item">
-                    @for ($i = 0; $i < 15; $i++)
+                <ul class="list-donator-item" id="monthly-donator">
+                    @foreach ($userDonateMonthLy as $user)
                         <li class="item">
-                            <div class="money"> ${{ 10 * (15 - $i) }} coins</div>
-                            <div class="donator-name">Phạm Văn Thiện</div>
+                            <div class="money"> {{ $user->amount }} wei</div>
+                            <div class="donator-name ml-2">
+                                {{ $user->name }} <br>
+                            </div>
                             <div class="next">
                                 <a href=""><i class="fa fa-chevron-right" aria-hidden="true"></i></a>
                             </div>
                         </li>
-                    @endfor
-                    <li class="read-more"> <a href="{{ route('campaign.donator') }}">Xem chi tiết</a></li>
+                    @endforeach
+                    <li class="read-more"> <a href="{{ route('campaign.monthly.donator', $campaignAddress) }}">Xem
+                            chi tiết</a></li>
+                </ul>
+                <ul class="list-donator-item" id="top-donator">
+                    @foreach ($userTopDonate as $user)
+                        <li class="item">
+                            <div class="money"> {{ $user->total_donate }} wei</div>
+                            <div class="donator-name ml-2">
+                                {{ $user->name }} <br>
+                            </div>
+                            <div class="next">
+                                <a href=""><i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+                            </div>
+                        </li>
+                    @endforeach
+                    <li class="read-more"> <a href="{{ route('campaign.top.donator', $campaignAddress) }}">Xem chi
+                            tiết</a></li>
                 </ul>
             </div>
         </div>
@@ -223,7 +267,7 @@
         </div>
     </div>
 @endsection
-@push('scripts')
+@section('scripts')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="{{ asset('js/bn.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
@@ -234,5 +278,5 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script type="text/javascript" src="{{ asset('js/laroute.js') }}"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-@endpush
-@stack('scripts')
+    <script src="{{ asset('js/page_project_detail.js') }}"></script>
+@endsection

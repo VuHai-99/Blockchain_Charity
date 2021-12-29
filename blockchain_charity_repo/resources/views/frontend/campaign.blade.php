@@ -40,10 +40,11 @@
                                 <div class="coin-current"></div>
                             </div>
                         </div>
-                        <div class="descripton" style="max-height: 50px; overflow: hidden;">
+                        <div class="description">
                             {{ $campaign->description }}
                         </div>
-                        <a class="read-more" href="{{ route('campaign.detail', $campaign->campaign_address) }}">xem
+                        <a class="read-more"
+                            href="{{ route('campaign.detail', $campaign->campaign_address) }}">...xem
                             thêm</a>
                         <div class="donate">
                             <a href="{{ route('login') }}" class="btn btn-donate"> Quyên góp </a>
