@@ -65,17 +65,21 @@ class DonatorController extends Controller
         return view('donator.list_campaign_ws', compact('campaigns'));
     }
 
-    public function WS_campaignDetail(String $blockchainAddress)
+    public function WS_campaignDetail(String $campaignAddress)
     {
-        $campaign = Campaign::findOrFail($blockchainAddress);
-        $campaign_main_pic = CampaignImg::where('campaign_address', $blockchainAddress)->where('photo_type', 0)->get();
+        $campaign = Campaign::findOrFail($campaignAddress);
+        $campaign_main_pic = CampaignImg::where('campaign_address', $campaignAddress)->where('photo_type', 0)->get();
         if (count($campaign_main_pic) != 0) {
             $campaign_main_pic = $campaign_main_pic[0];
         } else {
             $campaign_main_pic = null;
         }
-        $campaign_side_pic = CampaignImg::where('campaign_address', $blockchainAddress)->where('photo_type', 1)->get();
-        return view('donator.campaign_detail_ws', compact('campaign', 'campaign_main_pic', 'campaign_side_pic'));
+        $limit = 10;
+        $campaign_side_pic = CampaignImg::where('campaign_address', $campaignAddress)->where('photo_type', 1)->get();
+        $userTopDonate = $this->campaignRepository->getListUserTopDonate($campaignAddress, $limit);
+        $userDonateMonthLy = $this->campaignRepository->getListUserDonate($campaignAddress, $limit);
+        $donationActivities = $this->campaignRepository->getListDonationActivity($campaignAddress);
+        return view('donator.campaign_detail_ws', compact('campaign',  'campaignAddress','campaign_main_pic', 'campaign_side_pic','userTopDonate', 'userDonateMonthLy', 'donationActivities'));
     }
 
     public function myWallet()
