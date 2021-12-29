@@ -181,6 +181,7 @@ Route::get('/campaign', 'FrontendController@campaign')->name('campaign');
 Route::get('/campaign/{id}', 'FrontendController@detail')->name('campaign.detail');
 Route::get('/campaign/{id}/top-donator', 'HostController@getDonatorTop')->name('campaign.top.donator');
 Route::get('/campaign/{id}/monthly-donator', 'HostController@getDonatorMonthly')->name('campaign.monthly.donator');
+Route::get('donation_activity/{donation_activity_address}/detail', 'FrontendController@donationActivityDetail')->name('donation_activity.detail');
 Auth::routes(['verify' => true]);
 
 Route::get('my-wallet', 'DonatorController@myWallet')->name('wallet')->middleware('auth');

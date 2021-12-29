@@ -76,6 +76,33 @@
                     </div>
                 </div>
                 <div class="card">
+                    <div class="card-header blue lighten-3 z-depth-1" role="tab" id="heading97">
+                        <h5 class="text-uppercase mb-0 py-1">
+                            <a class="collapsed font-weight-bold white-text" data-toggle="collapse" href="#collapse97"
+                                aria-expanded="false" aria-controls="collapse97">
+                                Quá Trình Từ Thiện
+                            </a>
+                        </h5>
+                    </div>
+                    <div id="collapse97" class="collapse" role="tabpanel" aria-labelledby="heading97">
+                        <div class="card-body">
+                            <div class="row my-4">
+                                <div class="col-md-12">
+                                    @if ($donationActivities)
+                                        @foreach ($donationActivities as $donationActivity)
+                                            <h4 class="font-weight-bold mb-3 black-text"><a
+                                                    href="{{ route('donation_activity.detail', $donationActivity->donation_activity_address) }}">{{ $donationActivity->donation_activity_name }}</a>
+                                            </h4>
+                                        @endforeach
+                                    @else
+                                        <h4 class="font-weight-bold mb-3 black-text">Chưa có đợt từ thiện nào.</h4>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
                     <div class="card-header blue lighten-3 z-depth-1" role="tab" id="heading98">
                         <h5 class="text-uppercase mb-0 py-1">
                             <a class="collapsed font-weight-bold white-text" data-toggle="collapse" href="#collapse98"

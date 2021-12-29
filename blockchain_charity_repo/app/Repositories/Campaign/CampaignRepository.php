@@ -96,7 +96,7 @@ class CampaignRepository extends BaseRepository implements RepositoryInterface
         return $this->model->select('campaign_imgs.file_path')
             ->join('campaign_imgs', 'campaign_imgs.campaign_address', '=', 'campaigns.campaign_address')
             ->where('campaigns.campaign_address', $campaignAddress)
-            ->where('campaign_imgs.photo_type', '!=', EnumCampaign::IMAGE_MAIN)
+            ->where('campaign_imgs.photo_type', EnumCampaign::IMAGE_SIDE)
             ->get();
     }
 
@@ -106,5 +106,16 @@ class CampaignRepository extends BaseRepository implements RepositoryInterface
             ->join('donation_activities', 'donation_activities.campaign_address', '=', 'campaigns.campaign_address')
             ->where('donation_activities.donation_activity_address', $donationActivityAddress)
             ->first();
+    }
+
+    public function getListDonationActivity($campaignAddress)
+    {
+        $donationActivities = DB::table('donation_activities')
+            ->select('donation_activities.*')
+            ->where('donation_activities.campaign_address', $campaignAddress)
+            ->whereNull('donation_activities.deleted_at')
+            ->orderByDesc('donation_activities.created_at')
+            ->get();
+        return $donationActivities;
     }
 }
