@@ -105,4 +105,7 @@ Retailer	:
    cd ../
    ```
 
+## Video Demo
+https://drive.google.com/file/d/1tA8dKvI6z5KSUg7ogOt1OgJTjEBcQcSA/view?usp=sharing
+
 
