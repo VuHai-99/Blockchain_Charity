@@ -1,5 +1,6 @@
 ## Blockchain Charity
-
+Blockchain Charity Website is the supporting charity process with the power of blockchain. 
+https://docs.google.com/presentation/d/1L_7aGqbHQs3dhXAY0p1u_DM_8q0ydqfH/edit?usp=sharing&ouid=111080727189804967357&rtpof=true&sd=true
 
 ## Getting Started
 
